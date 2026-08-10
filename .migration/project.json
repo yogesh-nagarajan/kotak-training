@@ -1,0 +1,12 @@
+{
+  "sites": {
+    "kotak-training": {
+      "previewOrg": "yogesh-nagarajan",
+      "previewSite": "kotak-training",
+      "aemSitePath": "/content/kotak-training",
+      "aemAssetsFolderPath": "/content/dam/kotak-training",
+      "aemSiteName": "kotak-training",
+      "aemSiteTitle": "Kotak Training"
+    }
+  }
+}
