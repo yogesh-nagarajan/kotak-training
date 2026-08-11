@@ -5,42 +5,56 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * Merged hero + cards block.
  *
  * Expected authored structure (one column table):
- *   Row 1: background image (picture/img only)      -> banner background
- *   Row 2: hero text (eyebrow, H1, subtext, CTA)     -> banner content overlay
- *   Row 3..N: one card per row = image cell + text cell (icon + label)
+ *   Row 1: desktop banner image (picture/img only)  -> banner background (desktop)
+ *   Row 2: mobile banner image (picture/img only)    -> banner image (mobile) [optional]
+ *   Row 3: hero text (eyebrow, H1, subtext, CTA)      -> banner content overlay
+ *   Row 4..N: one card per row = image cell + text cell (icon + label)
  *
- * Renders the banner with the image full-bleed behind the text, and a row of
- * cards that overlaps the bottom edge of the banner.
+ * Renders the banner with the image full-bleed behind the text (desktop) or
+ * stacked below it (mobile), and a row of cards that overlaps the banner. On
+ * mobile the cards become a horizontal scroll slider (handled in CSS).
  *
  * @param {Element} block The supermoney-hero block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
 
-  // Hero background image: first image-only row (falls back to first row with an image).
-  const imageRow = rows.find((row) => {
+  // Image-only rows (no heading, single cell with a picture/img). The first is
+  // the desktop banner, the optional second is the mobile banner.
+  const imageRows = rows.filter((row) => {
     const cells = [...row.children];
     return cells.length === 1
       && cells[0].querySelector('picture, img')
       && !cells[0].textContent.trim();
-  }) || rows.find((row) => row.querySelector('picture, img') && !row.querySelector('h1'));
+  });
+  const [desktopImageRow, mobileImageRow] = imageRows;
 
   // Hero text row: the one carrying the main heading.
   const textRow = rows.find((row) => row.querySelector('h1'));
 
-  // Everything else is a card.
-  const cardRows = rows.filter((row) => row !== imageRow && row !== textRow);
+  // Everything else (not an image-only row, not the text row) is a card.
+  const cardRows = rows.filter((row) => !imageRows.includes(row) && row !== textRow);
 
   // --- Banner ---
   const banner = document.createElement('div');
   banner.className = 'supermoney-hero-banner';
 
-  if (imageRow) {
+  if (desktopImageRow) {
     const image = document.createElement('div');
-    image.className = 'supermoney-hero-image';
-    const pic = imageRow.querySelector('picture, img');
+    image.className = 'supermoney-hero-image supermoney-hero-image-desktop';
+    const pic = desktopImageRow.querySelector('picture, img');
     if (pic) image.append(pic.closest('picture') || pic);
     banner.append(image);
+  }
+
+  if (mobileImageRow) {
+    const image = document.createElement('div');
+    image.className = 'supermoney-hero-image supermoney-hero-image-mobile';
+    const pic = mobileImageRow.querySelector('picture, img');
+    if (pic) image.append(pic.closest('picture') || pic);
+    banner.append(image);
+    // flag that a dedicated mobile image exists so CSS can swap the two
+    banner.classList.add('has-mobile-image');
   }
 
   if (textRow) {

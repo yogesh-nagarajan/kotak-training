@@ -48,6 +48,10 @@ var CustomImportScript = (() => {
     if (bgImage) {
       cells.push([[document.createComment(" field:image "), bgImage]]);
     }
+    const mobileImage = element.querySelector('img[class*="mobile-display"]');
+    if (mobileImage && mobileImage !== bgImage) {
+      cells.push([[document.createComment(" field:imageMobile "), mobileImage]]);
+    }
     const eyebrow = element.querySelector('p[class*="banner_text"]');
     const heading = element.querySelector("h1");
     const subtext = element.querySelector('div[class*="description"], p[class*="description"]');

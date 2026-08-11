@@ -25,6 +25,13 @@ export default function parse(element, { document }) {
     cells.push([[document.createComment(' field:image '), bgImage]]);
   }
 
+  // Mobile banner image (separate portrait art on the live page). Only emit it
+  // when it is a distinct element from the desktop image.
+  const mobileImage = element.querySelector('img[class*="mobile-display"]');
+  if (mobileImage && mobileImage !== bgImage) {
+    cells.push([[document.createComment(' field:imageMobile '), mobileImage]]);
+  }
+
   // Hero text: eyebrow paragraph, heading, subtext, CTA.
   const eyebrow = element.querySelector('p[class*="banner_text"]');
   const heading = element.querySelector('h1');
