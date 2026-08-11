@@ -161,16 +161,16 @@
 }
 
 @media (width >= 900px) {
-  /* Do not clip on desktop — the banner image spills 160px below the banner so
-     it renders behind the overlapping cards, matching the live page. */
+  /* Do not clip on desktop — the banner image spills below the banner so it
+     renders behind the overlapping cards, matching the live page. */
   .supermoney-hero .supermoney-hero-banner {
     overflow: visible;
-    padding: 67px 0 0;
-    min-height: 500px;
+    padding: 40px 0 0;
+    min-height: 300px;
   }
 
   .supermoney-hero .supermoney-hero-image {
-    inset: 60px 0 -160px;
+    inset: 20px 0 -60px;
   }
 
   .supermoney-hero .supermoney-hero-image picture,
@@ -179,7 +179,7 @@
   }
 
   .supermoney-hero .supermoney-hero-content {
-    padding: 50px 32px;
+    padding: 30px 32px 40px;
   }
 
   .supermoney-hero .supermoney-hero-content h1 {
