@@ -185,6 +185,10 @@
   .supermoney-hero .supermoney-hero-content h1 {
     font-size: 48px;
     line-height: 57.6px;
+
+    /* wrap to two lines in the left column, clear of the card graphic
+       (live single-line width is ~793px; cap keeps it on the left) */
+    max-width: 540px;
   }
 
   .supermoney-hero .supermoney-hero-cards {
