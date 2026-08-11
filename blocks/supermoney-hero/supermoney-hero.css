@@ -112,15 +112,14 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
-  gap: 12px;
+  gap: 16px;
   max-width: 1120px;
   margin: -20px auto 0;
 
-  /* extra left inset so the slider starts indented from the edge */
+  /* left inset so the slider starts indented from the edge (matches ref) */
   padding: 0 16px 8px 24px;
   position: relative;
   z-index: 1;
-  scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -129,10 +128,15 @@
   display: none;
 }
 
+/* trailing spacer so the last card isn't flush to the right edge */
+.supermoney-hero .supermoney-hero-cards::after {
+  content: '';
+  flex: 0 0 8px;
+}
+
 .supermoney-hero .supermoney-hero-cards > li {
   flex: 0 0 auto;
   width: 185px;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
