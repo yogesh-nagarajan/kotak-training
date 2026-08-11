@@ -13,7 +13,7 @@
   align-items: flex-start;
   gap: 12px;
   padding: 30px 24px;
-  background-color: #fff;
+  background-color: var(--background-color);
   border-radius: 6px;
   box-shadow: 2px 4px 9px rgb(0 0 0 / 12%);
 }
@@ -43,7 +43,7 @@
 
 .cards .cards-card-body p {
   margin: 8px 0 0;
-  color: #222;
+  color: var(--text-color);
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;

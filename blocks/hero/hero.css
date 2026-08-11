@@ -30,7 +30,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
-  max-width: 1200px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: 24px 0 40px;
 }
@@ -40,8 +40,9 @@
 }
 
 .hero .hero-content h1 {
-  color: #222;
-  font-size: 32px;
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xxl);
   font-weight: 700;
   line-height: 1.2;
 }
@@ -49,7 +50,7 @@
 /* subtext (paragraph or text directly after the heading) */
 .hero .hero-content h1 + p,
 .hero .hero-content h1 + div {
-  color: #222;
+  color: var(--text-color);
   font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
@@ -57,7 +58,7 @@
 
 /* eyebrow (first paragraph) */
 .hero .hero-content > p:first-child {
-  color: #ff0049;
+  color: var(--brand-pink);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -72,7 +73,7 @@
 
 .hero .hero-content a.button {
   display: inline-block;
-  background-color: #3857ff;
+  background-color: var(--brand-blue);
   color: #fff;
   border: 0;
   border-radius: 12px;
@@ -84,7 +85,7 @@
 }
 
 .hero .hero-content a.button:hover {
-  background-color: #1d3ecf;
+  background-color: var(--link-hover-color);
   text-decoration: none;
 }
 

@@ -20,6 +20,12 @@
     ]
   },
   {
+    "id": "accordion-faq",
+    "components": [
+      "accordion-faq-item"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
@@ -38,6 +44,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "supermoney-hero",
+    "components": [
+      "supermoney-hero-card"
     ]
   }
 ]

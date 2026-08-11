@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "super-money-credit-card",
+      "urls": [
+        "https://www.kotak811.bank.in/credit-cards/811-super-money-credit-card"
+      ],
+      "coverageGaps": [],
+      "description": "Kotak811 super.money credit-card product/detail page: hero banner, cashback feature cards, SEO rich-text content, feature callouts, how-to-get-started steps, eligibility/fees tables, and an FAQ accordion.",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            "main.Credit_card.SuperMoney_main__c7k8L > section.SuperMoney_heroBan__rCeAx",
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(12)"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "main.Credit_card.SuperMoney_main__c7k8L > section.z-pos-fix\\]"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(4)",
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(5)",
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(6)",
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(7)",
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(8)",
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(9)",
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(10)"
+          ]
+        },
+        {
+          "name": "accordion-faq",
+          "instances": [
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(13)"
+          ]
+        },
+        {
+          "name": "section-how-it-works",
+          "instances": [
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(9)"
+          ],
+          "section": "accent"
+        },
+        {
+          "name": "section-how-to-get-started",
+          "instances": [
+            "main.Credit_card.SuperMoney_main__c7k8L > section:nth-of-type(10)"
+          ],
+          "section": "grey"
+        }
+      ]
+    }
+  ]
+}

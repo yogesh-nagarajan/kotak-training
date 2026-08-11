@@ -1,0 +1,29 @@
+/*
+ * brand.css — design tokens extracted from
+ * https://www.kotak811.bank.in/credit-cards/811-super-money-credit-card
+ * Font: Manrope (Google Fonts). Brand pink #ff0049, brand blue #3857ff.
+ */
+:root {
+  /* fonts */
+  --heading-font-family: manrope, -apple-system, system-ui, sans-serif;
+  --body-font-family: manrope, -apple-system, system-ui, sans-serif;
+
+  /* colors */
+  --background-color: #fff;
+  --text-color: #222;
+  --brand-pink: #ff0049;
+  --brand-blue: #3857ff;
+  --link-color: #3857ff;
+  --link-hover-color: #1d3ecf;
+
+  /* spacing */
+  --nav-height: 67px;
+
+  /* heading sizes (desktop) */
+  --heading-size-xxl: 48px;
+  --heading-size-xl: 32px;
+  --heading-size-l: 24px;
+  --heading-size-m: 20px;
+  --heading-size-s: 18px;
+  --heading-size-xs: 16px;
+}
