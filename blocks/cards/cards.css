@@ -57,7 +57,8 @@
 
 @media (width >= 900px) {
   .cards > ul {
-    grid-template-columns: repeat(4, 1fr);
+    /* fit up to four cards per row; fewer cards fill the row evenly */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
   }
 
