@@ -1,0 +1,134 @@
+/* supermoney-footer — matches the live Kotak811 super.money footer */
+
+/* stylelint-disable no-descending-specificity */
+
+/* Link rules are grouped by footer section (brand / columns / legal) rather
+   than by specificity; they target non-conflicting elements, so the
+   descending-specificity ordering rule is disabled for this file. */
+
+.supermoney-footer-container .supermoney-footer-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.supermoney-footer .supermoney-footer-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 40px 16px 24px;
+  font-family: var(--body-font-family);
+  color: var(--text-color);
+}
+
+/* brand row (logo + social) */
+.supermoney-footer .supermoney-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.supermoney-footer .supermoney-footer-brand img {
+  height: 32px;
+  width: auto;
+}
+
+.supermoney-footer .supermoney-footer-brand ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 16px;
+}
+
+.supermoney-footer .supermoney-footer-brand a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* link columns */
+.supermoney-footer .supermoney-footer-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.supermoney-footer .supermoney-footer-column h3 {
+  margin: 0 0 8px;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.supermoney-footer .supermoney-footer-column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.supermoney-footer .supermoney-footer-column li {
+  margin: 0 0 6px;
+}
+
+.supermoney-footer .supermoney-footer-column a {
+  color: var(--text-color);
+  font-size: 12px;
+  line-height: 18px;
+  text-decoration: none;
+}
+
+.supermoney-footer .supermoney-footer-column a:hover {
+  color: var(--brand-blue);
+}
+
+/* legal bar */
+.supermoney-footer .supermoney-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding-top: 16px;
+  font-size: 12px;
+}
+
+.supermoney-footer .supermoney-footer-legal ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.supermoney-footer .supermoney-footer-legal a {
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.supermoney-footer .supermoney-footer-legal a:hover {
+  color: var(--brand-blue);
+}
+
+@media (width >= 600px) {
+  .supermoney-footer .supermoney-footer-columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .supermoney-footer .supermoney-footer-inner {
+    padding: 48px 32px 24px;
+  }
+
+  .supermoney-footer .supermoney-footer-brand {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .supermoney-footer .supermoney-footer-columns {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

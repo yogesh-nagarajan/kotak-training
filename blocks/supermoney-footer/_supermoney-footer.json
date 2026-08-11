@@ -1,0 +1,55 @@
+{
+  "definitions": [
+    {
+      "title": "Supermoney Footer",
+      "id": "supermoney-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Supermoney Footer",
+              "model": "supermoney-footer"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "supermoney-footer",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "logo",
+          "label": "Logo",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "logoAlt",
+          "label": "Logo Alt",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "name": "columns",
+          "value": "",
+          "label": "Footer Columns",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "legal",
+          "value": "",
+          "label": "Legal Bar",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
