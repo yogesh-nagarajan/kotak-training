@@ -20,19 +20,60 @@ export default function parse(element, { document }) {
     brandCell.push(p);
   }
   // Social links = the "Follow us" list (first small list of external social links).
+  // The live footer lazy-loads this region, so it is often absent from the
+  // scraped DOM. Fall back to the known Kotak811 social handles when missing.
+  const SOCIAL_FALLBACK = [
+    { net: 'facebook', href: 'https://www.facebook.com/Kotak811DigitalBank/' },
+    { net: 'instagram', href: 'https://www.instagram.com/kotak811/' },
+    { net: 'twitter', href: 'https://twitter.com/kotak811' },
+    { net: 'youtube', href: 'https://www.youtube.com/@kotak811' },
+  ];
   const socialList = [...element.querySelectorAll('ul')].find((ul) => ul.querySelector('a[href*="facebook"], a[href*="instagram"], a[href*="twitter"], a[href*="youtube"]'));
+  const clean = document.createElement('ul');
   if (socialList) {
-    const clean = document.createElement('ul');
     socialList.querySelectorAll(':scope > li a').forEach((a) => {
+      const href = a.getAttribute('href') || '#';
       const li = document.createElement('li');
       const na = document.createElement('a');
-      na.href = a.getAttribute('href') || '#';
-      na.textContent = (a.getAttribute('href') || '').replace(/https?:\/\/(www\.)?/, '').split('.')[0] || 'link';
+      na.href = href;
+      na.textContent = href.replace(/https?:\/\/(www\.)?/, '').split('.')[0] || 'link';
       li.append(na);
       clean.append(li);
     });
-    brandCell.push(clean);
+  } else {
+    SOCIAL_FALLBACK.forEach(({ net, href }) => {
+      const li = document.createElement('li');
+      const na = document.createElement('a');
+      na.href = href;
+      na.textContent = net;
+      li.append(na);
+      clean.append(li);
+    });
   }
+  brandCell.push(clean);
+
+  // Contact block: "Need help?" + Call us. Also lazy-loaded, so synthesize it
+  // when a tel: link isn't present in the scraped footer.
+  const telLink = element.querySelector('a[href^="tel:"]');
+  const contact = document.createElement('p');
+  contact.className = 'supermoney-footer-help';
+  if (telLink) {
+    const label = document.createElement('span');
+    label.textContent = 'Need help? Connect with us through the below channels';
+    const call = document.createElement('a');
+    call.href = telLink.getAttribute('href');
+    call.textContent = (telLink.textContent || '').trim() || 'Call us on: 1800 4100';
+    contact.append(label, document.createElement('br'), call);
+  } else {
+    const label = document.createElement('span');
+    label.textContent = 'Need help? Connect with us through the below channels';
+    const call = document.createElement('a');
+    call.href = 'tel:1800 4100';
+    call.textContent = 'Call us on: 1800 4100';
+    contact.append(label, document.createElement('br'), call);
+  }
+  brandCell.push(contact);
+
   cells.push([brandCell]);
 
   // --- Row 2: link columns (each h3 + following list becomes one cell) ---

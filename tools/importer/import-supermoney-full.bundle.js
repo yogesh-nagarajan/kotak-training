@@ -152,19 +152,54 @@ var CustomImportScript = (() => {
       p.append(logo);
       brandCell.push(p);
     }
+    const SOCIAL_FALLBACK = [
+      { net: "facebook", href: "https://www.facebook.com/Kotak811DigitalBank/" },
+      { net: "instagram", href: "https://www.instagram.com/kotak811/" },
+      { net: "twitter", href: "https://twitter.com/kotak811" },
+      { net: "youtube", href: "https://www.youtube.com/@kotak811" }
+    ];
     const socialList = [...element.querySelectorAll("ul")].find((ul) => ul.querySelector('a[href*="facebook"], a[href*="instagram"], a[href*="twitter"], a[href*="youtube"]'));
+    const clean = document.createElement("ul");
     if (socialList) {
-      const clean = document.createElement("ul");
       socialList.querySelectorAll(":scope > li a").forEach((a) => {
+        const href = a.getAttribute("href") || "#";
         const li = document.createElement("li");
         const na = document.createElement("a");
-        na.href = a.getAttribute("href") || "#";
-        na.textContent = (a.getAttribute("href") || "").replace(/https?:\/\/(www\.)?/, "").split(".")[0] || "link";
+        na.href = href;
+        na.textContent = href.replace(/https?:\/\/(www\.)?/, "").split(".")[0] || "link";
         li.append(na);
         clean.append(li);
       });
-      brandCell.push(clean);
+    } else {
+      SOCIAL_FALLBACK.forEach(({ net, href }) => {
+        const li = document.createElement("li");
+        const na = document.createElement("a");
+        na.href = href;
+        na.textContent = net;
+        li.append(na);
+        clean.append(li);
+      });
     }
+    brandCell.push(clean);
+    const telLink = element.querySelector('a[href^="tel:"]');
+    const contact = document.createElement("p");
+    contact.className = "supermoney-footer-help";
+    if (telLink) {
+      const label = document.createElement("span");
+      label.textContent = "Need help? Connect with us through the below channels";
+      const call = document.createElement("a");
+      call.href = telLink.getAttribute("href");
+      call.textContent = (telLink.textContent || "").trim() || "Call us on: 1800 4100";
+      contact.append(label, document.createElement("br"), call);
+    } else {
+      const label = document.createElement("span");
+      label.textContent = "Need help? Connect with us through the below channels";
+      const call = document.createElement("a");
+      call.href = "tel:1800 4100";
+      call.textContent = "Call us on: 1800 4100";
+      contact.append(label, document.createElement("br"), call);
+    }
+    brandCell.push(contact);
     cells.push([brandCell]);
     const columnCells = [];
     element.querySelectorAll("h3").forEach((h3) => {
@@ -176,24 +211,24 @@ var CustomImportScript = (() => {
       const newH3 = document.createElement("h3");
       newH3.textContent = heading;
       cell.push(newH3);
-      const clean = document.createElement("ul");
+      const clean2 = document.createElement("ul");
       list.querySelectorAll(":scope > li a").forEach((a) => {
         const li = document.createElement("li");
         const na = document.createElement("a");
         na.href = a.getAttribute("href") || "#";
         na.textContent = (a.textContent || "").trim();
         li.append(na);
-        clean.append(li);
+        clean2.append(li);
       });
-      if (clean.children.length) {
-        cell.push(clean);
+      if (clean2.children.length) {
+        cell.push(clean2);
         columnCells.push(cell);
       }
     });
     if (columnCells.length) cells.push(columnCells);
     const legalList = [...element.querySelectorAll("ul")].reverse().find((ul) => ul.querySelector('a[href*="privacy"], a[href*="terms"], a[href*="disclaimer"]'));
     if (legalList) {
-      const clean = document.createElement("ul");
+      const clean2 = document.createElement("ul");
       legalList.querySelectorAll(":scope > li").forEach((li) => {
         const a = li.querySelector("a");
         const newLi = document.createElement("li");
@@ -205,9 +240,9 @@ var CustomImportScript = (() => {
         } else {
           newLi.textContent = (li.textContent || "").trim();
         }
-        clean.append(newLi);
+        clean2.append(newLi);
       });
-      cells.push([[clean]]);
+      cells.push([[clean2]]);
     }
     const block = WebImporter.Blocks.createBlock(document, { name: "supermoney-footer", cells });
     element.replaceWith(block);
