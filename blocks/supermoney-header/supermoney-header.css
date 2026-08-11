@@ -1,5 +1,11 @@
 /* supermoney-header — matches the live Kotak811 super.money top bar */
 
+/* stylelint-disable no-descending-specificity */
+
+/* Top-level nav links and megamenu links are grouped by region (bar vs
+   dropdown) rather than by specificity; they target non-conflicting elements,
+   so the descending-specificity ordering rule is disabled for this file. */
+
 .supermoney-header-container .supermoney-header-wrapper {
   max-width: unset;
   padding: 0;
@@ -32,12 +38,18 @@
 }
 
 /* nav links */
-.supermoney-header .supermoney-header-links ul {
+.supermoney-header .supermoney-header-links > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   gap: 24px;
+}
+
+.supermoney-header .supermoney-header-links > ul > li {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .supermoney-header .supermoney-header-links a {
@@ -48,8 +60,66 @@
   white-space: nowrap;
 }
 
-.supermoney-header .supermoney-header-links a:hover {
+.supermoney-header .supermoney-header-links > ul > li > a:hover {
   color: var(--brand-blue);
+}
+
+/* caret on items with a megamenu */
+.supermoney-header .supermoney-header-links .has-megamenu > a::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 6px;
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  transform: translateY(-2px) rotate(45deg);
+  opacity: 0.6;
+}
+
+/* ---- Megamenu dropdown ---- */
+.supermoney-header .supermoney-header-megamenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  min-width: 260px;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+}
+
+.supermoney-header .supermoney-header-links .has-megamenu:hover .supermoney-header-megamenu,
+.supermoney-header .supermoney-header-links .has-megamenu:focus-within .supermoney-header-megamenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.supermoney-header .supermoney-header-megamenu li {
+  display: block;
+}
+
+.supermoney-header .supermoney-header-megamenu a {
+  display: block;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.supermoney-header .supermoney-header-megamenu a:hover {
+  color: var(--brand-blue);
+  background-color: #f5f6ff;
 }
 
 /* CTA button */

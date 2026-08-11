@@ -11,7 +11,7 @@
 export default function parse(element, { document }) {
   const cells = [];
 
-  // --- Row 1: brand (logo + social) ---
+  // --- Row 1: brand (logo + breadcrumb + social + contact) ---
   const brandCell = [];
   const logo = element.querySelector('img');
   if (logo) {
@@ -19,6 +19,35 @@ export default function parse(element, { document }) {
     p.append(logo);
     brandCell.push(p);
   }
+
+  // Breadcrumb: Home > Credit cards > 811 super money credit card. Lazy-loaded
+  // on the live footer, so synthesize from the known path when absent.
+  const bcNav = element.querySelector('nav[class*="breadcrumb"], [class*="breadcrumb"]');
+  const breadcrumb = document.createElement('p');
+  breadcrumb.className = 'supermoney-footer-breadcrumb';
+  if (bcNav && bcNav.querySelector('a')) {
+    bcNav.querySelectorAll('a').forEach((a, i) => {
+      if (i > 0) breadcrumb.append(document.createTextNode(' › '));
+      const na = document.createElement('a');
+      na.href = a.getAttribute('href') || '#';
+      na.textContent = (a.textContent || '').trim();
+      breadcrumb.append(na);
+    });
+  } else {
+    const crumbs = [
+      { text: 'Home', href: '/' },
+      { text: 'Credit cards', href: '/credit-cards' },
+      { text: '811 super money credit card', href: '/credit-cards/811-super-money-credit-card' },
+    ];
+    crumbs.forEach((c, i) => {
+      if (i > 0) breadcrumb.append(document.createTextNode(' › '));
+      const a = document.createElement('a');
+      a.href = c.href;
+      a.textContent = c.text;
+      breadcrumb.append(a);
+    });
+  }
+  brandCell.push(breadcrumb);
   // Social links = the "Follow us" list (first small list of external social links).
   // The live footer lazy-loads this region, so it is often absent from the
   // scraped DOM. Fall back to the known Kotak811 social handles when missing.

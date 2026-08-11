@@ -33,12 +33,43 @@
   width: auto;
 }
 
+/* breadcrumb (paragraph of links directly after the logo; the authored class
+   is stripped by md2jcr, so target it structurally) */
+.supermoney-footer .supermoney-footer-breadcrumb,
+.supermoney-footer .supermoney-footer-brand > p:has(a) {
+  margin: 0;
+  font-size: 14px;
+  color: var(--dark-color);
+}
+
+.supermoney-footer .supermoney-footer-breadcrumb a,
+.supermoney-footer .supermoney-footer-brand > p:has(a) a {
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.supermoney-footer .supermoney-footer-breadcrumb a:hover,
+.supermoney-footer .supermoney-footer-brand > p:has(a) a:hover {
+  color: var(--brand-blue);
+}
+
+/* "Follow us" caption above the social row */
+.supermoney-footer .supermoney-footer-brand ul::before {
+  content: 'Follow us';
+  display: block;
+  width: 100%;
+  margin-bottom: 4px;
+  color: var(--dark-color);
+  font-size: 14px;
+}
+
 /* social icons — circular grey buttons */
 .supermoney-footer .supermoney-footer-brand ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
 }
 

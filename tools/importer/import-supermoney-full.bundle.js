@@ -42,41 +42,68 @@ var CustomImportScript = (() => {
   });
 
   // tools/importer/parsers/supermoney-header.js
-  var TOP_NAV = ["savings", "current account", "debit card", "credit card", "personal loan", "insights"];
-  function cleanLabel(text) {
-    return (text || "").replace(/\s*-\s*(true|false)\s*$/i, "").replace(/\s+/g, " ").trim();
-  }
+  var NAV = [
+    {
+      label: "Savings",
+      href: "/savings-account",
+      subs: [
+        { text: "811 Zero Balance Digital Savings Account", href: "/savings-account/811-zero-balance-digital-savings-account" },
+        { text: "811 Super Savings Account", href: "/savings-account/811-super-savings-account" }
+      ]
+    },
+    { label: "Current Account", href: "/current-account/811-business", subs: [] },
+    {
+      label: "Debit Card",
+      href: "/debit-cards",
+      subs: [
+        { text: "Infinity Metal Debit Card", href: "/debit-cards/infinity-metal-debit-card" },
+        { text: "PVR INOX Debit Card", href: "/debit-cards/pvr-inox-debit-card" }
+      ]
+    },
+    {
+      label: "Credit Card",
+      href: "/credit-cards",
+      subs: [
+        { text: "Credit Card Against FD", href: "/credit-cards/811-dream-different-credit-card-against-fd" },
+        { text: "Kotak811 super.money Credit Card", href: "/credit-cards/811-super-money-credit-card" }
+      ]
+    },
+    { label: "Personal Loan", href: "/loans/personal-loan", subs: [] },
+    { label: "Insights", href: "/insights", subs: [] }
+  ];
+  var LOGO_SRC = "https://www.kotak811.bank.in/images/loader-logo.svg";
   function parse(element, { document }) {
-    const logoLink = element.querySelector('a[href$="kotak811.bank.in/"], a[aria-label*="logo" i]') || (element.querySelector("a img") ? element.querySelector("a img").closest("a") : null);
-    const logoImg = element.querySelector("img");
     const cta = element.querySelector('a[href*="app.link"]');
     const cells = [];
-    const logoCell = [];
     const logoA = document.createElement("a");
-    logoA.href = logoLink && logoLink.getAttribute("href") || "https://www.kotak811.bank.in/";
-    if (logoImg) {
-      logoA.append(logoImg);
-    } else {
-      logoA.textContent = "Kotak811";
-    }
-    logoCell.push(logoA);
-    cells.push([logoCell]);
-    const cleanList = document.createElement("ul");
-    const seen = /* @__PURE__ */ new Set();
-    element.querySelectorAll("a[href]").forEach((a) => {
-      const label = cleanLabel(a.textContent);
-      const key = label.toLowerCase();
-      if (TOP_NAV.includes(key) && !seen.has(key)) {
-        seen.add(key);
-        const li = document.createElement("li");
-        const na = document.createElement("a");
-        na.href = a.getAttribute("href") || "#";
-        na.textContent = label;
-        li.append(na);
-        cleanList.append(li);
+    logoA.href = "https://www.kotak811.bank.in/";
+    const logoImg = document.createElement("img");
+    logoImg.src = LOGO_SRC;
+    logoImg.alt = "Kotak811";
+    logoA.append(logoImg);
+    cells.push([[logoA]]);
+    const navList = document.createElement("ul");
+    NAV.forEach((item) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = item.href;
+      a.textContent = item.label;
+      li.append(a);
+      if (item.subs && item.subs.length) {
+        const sub = document.createElement("ul");
+        item.subs.forEach((s) => {
+          const subLi = document.createElement("li");
+          const subA = document.createElement("a");
+          subA.href = s.href;
+          subA.textContent = s.text;
+          subLi.append(subA);
+          sub.append(subLi);
+        });
+        li.append(sub);
       }
+      navList.append(li);
     });
-    cells.push([cleanList]);
+    cells.push([navList]);
     const ctaCell = [];
     if (cta) {
       const newCta = document.createElement("a");
@@ -152,6 +179,32 @@ var CustomImportScript = (() => {
       p.append(logo);
       brandCell.push(p);
     }
+    const bcNav = element.querySelector('nav[class*="breadcrumb"], [class*="breadcrumb"]');
+    const breadcrumb = document.createElement("p");
+    breadcrumb.className = "supermoney-footer-breadcrumb";
+    if (bcNav && bcNav.querySelector("a")) {
+      bcNav.querySelectorAll("a").forEach((a, i) => {
+        if (i > 0) breadcrumb.append(document.createTextNode(" \u203A "));
+        const na = document.createElement("a");
+        na.href = a.getAttribute("href") || "#";
+        na.textContent = (a.textContent || "").trim();
+        breadcrumb.append(na);
+      });
+    } else {
+      const crumbs = [
+        { text: "Home", href: "/" },
+        { text: "Credit cards", href: "/credit-cards" },
+        { text: "811 super money credit card", href: "/credit-cards/811-super-money-credit-card" }
+      ];
+      crumbs.forEach((c, i) => {
+        if (i > 0) breadcrumb.append(document.createTextNode(" \u203A "));
+        const a = document.createElement("a");
+        a.href = c.href;
+        a.textContent = c.text;
+        breadcrumb.append(a);
+      });
+    }
+    brandCell.push(breadcrumb);
     const SOCIAL_FALLBACK = [
       { net: "facebook", href: "https://www.facebook.com/Kotak811DigitalBank/" },
       { net: "instagram", href: "https://www.instagram.com/kotak811/" },
