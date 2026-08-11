@@ -13,6 +13,11 @@
   justify-content: center;
   overflow: hidden;
   box-sizing: border-box;
+
+  /* full-bleed: break out of the centered section column to span the viewport */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   min-height: 360px;
   padding: 80px 24px 100px;
   background-color: var(--hero-video-bg);
@@ -52,6 +57,7 @@
   margin: 8px 0 0;
   color: var(--hero-video-title-color);
   font-weight: 700;
+  font-size: 40px;
   line-height: 1.1;
 }
 
@@ -125,8 +131,20 @@
     padding: 140px 32px 120px;
   }
 
+  .hero-video-content {
+    max-width: 900px;
+  }
+
+  .hero-video-title {
+    font-size: 64px;
+  }
+
   .hero-video-features {
     gap: 12px 40px;
     margin-top: 24px;
+  }
+
+  .hero-video-features li {
+    font-size: var(--body-font-size-m);
   }
 }
