@@ -14,69 +14,119 @@
 .supermoney-footer .supermoney-footer-inner {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 40px 16px 24px;
+  padding: 32px 16px 24px;
   font-family: var(--body-font-family);
   color: var(--text-color);
 }
 
-/* brand row (logo + social) */
+/* ---- Brand row (logo + social) ---- */
 .supermoney-footer .supermoney-footer-brand {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-bottom: 24px;
+  gap: 16px;
+  padding-bottom: 32px;
   border-bottom: 1px solid #e9e9e9;
 }
 
 .supermoney-footer .supermoney-footer-brand img {
-  height: 32px;
+  height: 34px;
   width: auto;
 }
 
+/* social icons — circular grey buttons */
 .supermoney-footer .supermoney-footer-brand ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 16px;
+  gap: 12px;
 }
 
 .supermoney-footer .supermoney-footer-brand a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f1f1f3;
   color: var(--text-color);
+  font-size: 0;
   text-decoration: none;
 }
 
-/* link columns */
+.supermoney-footer .supermoney-footer-brand a::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background: currentcolor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+.supermoney-footer .supermoney-footer-brand a.social-facebook::before {
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 22v-8h2.5l.5-3H13V9c0-.9.3-1.5 1.6-1.5H16V4.9c-.3 0-1.2-.1-2.2-.1-2.2 0-3.8 1.4-3.8 3.9V11H7.5v3H10v8h3z"/></svg>');
+}
+
+.supermoney-footer .supermoney-footer-brand a.social-instagram::before {
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1012 18.6 6.6 6.6 0 0012 5.4zm0 10.9a4.3 4.3 0 110-8.6 4.3 4.3 0 010 8.6zm6.8-11.2a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg>');
+}
+
+.supermoney-footer .supermoney-footer-brand a.social-twitter::before {
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.1l7.6-8.7L1.5 2h6.8l4.7 6.2L18.9 2zm-1.2 18h1.8L7.3 3.8H5.4L17.7 20z"/></svg>');
+}
+
+.supermoney-footer .supermoney-footer-brand a.social-youtube::before {
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23 7.5c-.1-1-.5-1.7-1.5-1.9C19.7 5.2 12 5.2 12 5.2s-7.7 0-9.5.4C1.5 5.8 1.1 6.5 1 7.5.6 9.3.6 12 .6 12s0 2.7.4 4.5c.1 1 .5 1.7 1.5 1.9 1.8.4 9.5.4 9.5.4s7.7 0 9.5-.4c1-.2 1.4-.9 1.5-1.9.4-1.8.4-4.5.4-4.5s0-2.7-.4-4.5zM9.8 15.3V8.7l6.3 3.3-6.3 3.3z"/></svg>');
+}
+
+/* ---- Link columns: full-width rows of pink bullet-separated links ---- */
 .supermoney-footer .supermoney-footer-columns {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px 0;
   border-bottom: 1px solid #e9e9e9;
 }
 
 .supermoney-footer .supermoney-footer-column h3 {
-  margin: 0 0 5px;
+  margin: 0 0 10px;
   color: var(--text-color);
   font-family: var(--body-font-family);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .supermoney-footer .supermoney-footer-column ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
 }
 
 .supermoney-footer .supermoney-footer-column li {
-  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+}
+
+/* pink bullet before every link except the first in a row */
+.supermoney-footer .supermoney-footer-column li:not(:first-child)::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  margin-right: 18px;
+  border-radius: 50%;
+  background-color: var(--brand-pink);
 }
 
 .supermoney-footer .supermoney-footer-column a {
   color: var(--text-color);
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 13px;
+  line-height: 1.4;
   text-decoration: none;
 }
 
@@ -84,13 +134,14 @@
   color: var(--brand-blue);
 }
 
-/* legal bar */
+/* ---- Legal bar ---- */
 .supermoney-footer .supermoney-footer-legal {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
-  padding-top: 16px;
-  font-size: 12px;
+  gap: 8px 24px;
+  padding-top: 20px;
+  font-size: 13px;
+  color: var(--dark-color);
 }
 
 .supermoney-footer .supermoney-footer-legal ul {
@@ -99,7 +150,7 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  gap: 8px 24px;
 }
 
 .supermoney-footer .supermoney-footer-legal a {
@@ -111,25 +162,8 @@
   color: var(--brand-blue);
 }
 
-@media (width >= 600px) {
-  .supermoney-footer .supermoney-footer-columns {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @media (width >= 900px) {
   .supermoney-footer .supermoney-footer-inner {
-    padding: 48px 32px 24px;
-  }
-
-  .supermoney-footer .supermoney-footer-brand {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .supermoney-footer .supermoney-footer-columns {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
+    padding: 40px 32px 24px;
   }
 }

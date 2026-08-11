@@ -26,6 +26,16 @@ export default function decorate(block) {
     [...brandRow.children].forEach((cell) => {
       while (cell.firstElementChild) brand.append(cell.firstElementChild);
     });
+    // Tag social links by network so CSS can render the right icon.
+    const NETWORKS = ['facebook', 'instagram', 'twitter', 'youtube'];
+    brand.querySelectorAll('a[href]').forEach((a) => {
+      const href = (a.getAttribute('href') || '').toLowerCase();
+      const net = NETWORKS.find((n) => href.includes(n)) || (href.includes('x.com') ? 'twitter' : null);
+      if (net) {
+        a.classList.add(`social-${net}`);
+        a.setAttribute('aria-label', net);
+      }
+    });
     footer.append(brand);
   }
 
