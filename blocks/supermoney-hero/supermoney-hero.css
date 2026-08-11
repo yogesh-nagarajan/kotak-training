@@ -12,28 +12,30 @@
 }
 
 /* ============================================================
-   MOBILE-FIRST: stacked + centered layout.
-   Text on top (centered), card graphic in flow below it.
+   MOBILE-FIRST: text overlays the top of the banner image.
+   The mobile banner art is a tall portrait (gradient at top, card
+   + coins lower down); the text sits over the gradient, centered.
    ============================================================ */
 .supermoney-hero .supermoney-hero-banner {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 32px 16px 0;
 }
 
-/* Card + coins graphic — in normal flow, below the text on mobile */
+/* Banner image = full-bleed background of the banner on mobile */
 .supermoney-hero .supermoney-hero-image {
-  order: 2;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   line-height: 0;
-  margin-top: 16px;
 }
 
 .supermoney-hero .supermoney-hero-image picture,
 .supermoney-hero .supermoney-hero-image img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
 /* On mobile: if a dedicated mobile image was authored, show it and hide the
@@ -42,15 +44,15 @@
   display: none;
 }
 
-/* Hero text — centered on mobile */
+/* Hero text — centered, over the top of the banner image */
 .supermoney-hero .supermoney-hero-content {
-  order: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   max-width: 1120px;
   margin: 0 auto;
+  padding: 32px 16px 300px;
 }
 
 .supermoney-hero .supermoney-hero-content > * {
@@ -113,7 +115,9 @@
   gap: 12px;
   max-width: 1120px;
   margin: -20px auto 0;
-  padding: 0 16px 8px;
+
+  /* extra left inset so the slider starts indented from the edge */
+  padding: 0 16px 8px 24px;
   position: relative;
   z-index: 1;
   scroll-snap-type: x mandatory;
