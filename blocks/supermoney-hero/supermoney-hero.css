@@ -11,39 +11,41 @@
   padding: 0;
 }
 
-/* ---- Banner ---- */
+/* ============================================================
+   MOBILE-FIRST: stacked + centered layout.
+   Text on top (centered), card graphic in flow below it.
+   ============================================================ */
 .supermoney-hero .supermoney-hero-banner {
   position: relative;
-  overflow: hidden;
-  padding: 40px 16px;
-  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 16px 0;
 }
 
-/* Background banner image (card + coins on gradient). On desktop it extends
-   below the banner so the graphic shows behind the overlapping cards. */
+/* Card + coins graphic — in normal flow, below the text on mobile */
 .supermoney-hero .supermoney-hero-image {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+  order: 2;
   line-height: 0;
+  margin-top: 16px;
 }
 
 .supermoney-hero .supermoney-hero-image picture,
 .supermoney-hero .supermoney-hero-image img {
   width: 100%;
-  height: 100%;
+  height: 230px;
   object-fit: cover;
-  object-position: center top;
+  object-position: 70% center;
 }
 
-/* Hero text overlay */
+/* Hero text — centered on mobile */
 .supermoney-hero .supermoney-hero-content {
+  order: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 24px 0;
 }
 
 .supermoney-hero .supermoney-hero-content > * {
@@ -51,33 +53,32 @@
 }
 
 .supermoney-hero .supermoney-hero-content h1 {
-  margin-top: 10px;
+  margin-top: 8px;
   color: var(--text-color);
   font-family: var(--heading-font-family);
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   line-height: 1.2;
-  text-align: left;
 }
 
 /* subtext (paragraph/div right after the heading) */
 .supermoney-hero .supermoney-hero-content h1 + p,
 .supermoney-hero .supermoney-hero-content h1 + div {
-  margin: 8px 0 20px;
+  margin: 8px 0 16px;
   color: var(--text-color);
   font-size: 16px;
   font-weight: 500;
-  line-height: 29px;
+  line-height: 1.6;
 }
 
 /* eyebrow (first paragraph) */
 .supermoney-hero .supermoney-hero-content > p:first-child {
   color: var(--brand-pink);
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 5px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  line-height: 24px;
+  line-height: 1.5;
 }
 
 .supermoney-hero .supermoney-hero-content a.button {
@@ -98,14 +99,14 @@
   text-decoration: none;
 }
 
-/* ---- Cards (overlap the banner bottom) ---- */
+/* ---- Cards (2-up on mobile, overlapping the banner bottom) ---- */
 .supermoney-hero .supermoney-hero-cards {
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
   max-width: 1120px;
-  margin: -30px auto 0;
+  margin: -20px auto 0;
   padding: 0 16px;
   position: relative;
   z-index: 1;
@@ -116,7 +117,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
-  padding: 30px 24px;
+  padding: 20px 16px;
   background-color: var(--background-color);
   border-radius: 6px;
   box-shadow: 2px 4px 9px rgb(0 0 0 / 12%);
@@ -128,7 +129,7 @@
 
 .supermoney-hero .supermoney-hero-card-image img {
   width: auto;
-  max-height: 70px;
+  max-height: 60px;
   object-fit: contain;
 }
 
@@ -141,9 +142,9 @@
   margin: 0;
   color: #000;
   font-family: var(--body-font-family);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
-  line-height: 26px;
+  line-height: 1.5;
 }
 
 .supermoney-hero .supermoney-hero-card-body p {
@@ -154,35 +155,44 @@
   line-height: 1.5;
 }
 
-@media (width >= 600px) {
-  .supermoney-hero .supermoney-hero-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
+/* ============================================================
+   DESKTOP (>= 900px): text left, card graphic as a full-bleed
+   background that the cards overlap.
+   ============================================================ */
 @media (width >= 900px) {
-  /* Do not clip on desktop — the banner image spills below the banner so it
-     renders behind the overlapping cards, matching the live page. */
   .supermoney-hero .supermoney-hero-banner {
+    display: block;
     overflow: visible;
     padding: 40px 0 0;
     min-height: 300px;
   }
 
+  /* Background banner image spills below the banner so it renders behind the
+     overlapping cards, matching the live page. */
   .supermoney-hero .supermoney-hero-image {
+    order: 0;
+    position: absolute;
     inset: 20px 0 -60px;
+    z-index: -1;
+    margin-top: 0;
   }
 
   .supermoney-hero .supermoney-hero-image picture,
   .supermoney-hero .supermoney-hero-image img {
+    width: 100%;
+    height: 100%;
     object-position: center;
   }
 
   .supermoney-hero .supermoney-hero-content {
-    padding: 30px 32px 40px;
+    order: 0;
+    align-items: flex-start;
+    text-align: left;
+    padding: 60px 32px;
   }
 
   .supermoney-hero .supermoney-hero-content h1 {
+    margin-top: 10px;
     font-size: 48px;
     line-height: 57.6px;
 
@@ -191,16 +201,32 @@
     max-width: 540px;
   }
 
+  .supermoney-hero .supermoney-hero-content h1 + p,
+  .supermoney-hero .supermoney-hero-content h1 + div {
+    margin: 8px 0 20px;
+    line-height: 29px;
+  }
+
+  .supermoney-hero .supermoney-hero-content > p:first-child {
+    font-size: 16px;
+    letter-spacing: 5px;
+    line-height: 24px;
+  }
+
   .supermoney-hero .supermoney-hero-cards {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-
-    /* -50px like the live page; the image already extends 160px lower, giving
-       the ~210px visual overlap without pulling cards into the text. */
-    margin-top: -50px;
+    gap: 20px;
+    margin-top: -30px;
     padding: 0 32px;
   }
 
   .supermoney-hero .supermoney-hero-cards > li {
     padding: 50px 42px 66px;
+  }
+
+  .supermoney-hero .supermoney-hero-card-body h2,
+  .supermoney-hero .supermoney-hero-card-body h3 {
+    font-size: 16px;
+    line-height: 26px;
   }
 }
