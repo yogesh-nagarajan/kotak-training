@@ -1,13 +1,12 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
- * Resolve the background video URL from the authored cell. The video is a DAM
- * reference, so it can arrive as a link (<a href>), an image (<img src>) or as
- * plain text containing the asset path.
+ * Extract a video URL from an authored cell. Handles a DAM reference (link,
+ * image, or plain text with the asset path) as well as a plain URL field.
  * @param {Element} cell
  * @returns {string}
  */
-function resolveVideoUrl(cell) {
+function readVideoCell(cell) {
   if (!cell) return '';
   return (
     cell.querySelector('a')?.getAttribute('href')
@@ -19,6 +18,20 @@ function resolveVideoUrl(cell) {
 }
 
 /**
+ * Resolve the background video URL, preferring an absolute URL (reliable on the
+ * published site) over the DAM reference (which renders in the editor but may
+ * not be served by Edge Delivery).
+ * @param {Element} damCell
+ * @param {Element} urlCell
+ * @returns {string}
+ */
+function resolveVideoUrl(damCell, urlCell) {
+  const url = readVideoCell(urlCell);
+  if (url) return url;
+  return readVideoCell(damCell);
+}
+
+/**
  * loads and decorates the hero-video block
  *
  * The authoring model groups the foreground copy (pretitle, title, points, note)
@@ -27,12 +40,14 @@ function resolveVideoUrl(cell) {
  *   Row 1: content group -> pretitle (p), title (p), points (ul/ol), note (p)
  *   Row 2: ctaLink (anchor, collapsed with ctaLinkText)
  *   Row 3: video (DAM reference)
+ *   Row 4: videoUrl (absolute MP4 URL, preferred on the published site)
  *
  * @param {Element} block The block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
-  const [contentCell, ctaCell, videoCell] = rows.map((row) => row.firstElementChild);
+  const [contentCell, ctaCell, videoCell, videoUrlCell] = rows
+    .map((row) => row.firstElementChild);
 
   const content = document.createElement('div');
   content.className = 'hero-video-content';
@@ -91,8 +106,8 @@ export default function decorate(block) {
     }
   }
 
-  // background video (DAM reference)
-  const videoUrl = resolveVideoUrl(videoCell);
+  // background video: prefer the absolute URL, fall back to the DAM reference
+  const videoUrl = resolveVideoUrl(videoCell, videoUrlCell);
 
   block.textContent = '';
   block.append(content);

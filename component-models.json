@@ -280,9 +280,17 @@
         "component": "reference",
         "valueType": "string",
         "name": "video",
-        "label": "Background Video",
-        "description": "MP4 video asset from DAM",
+        "label": "Background Video (DAM)",
+        "description": "MP4 video asset from DAM. Shows in the editor; may not play on the published site unless DAM video delivery is enabled. Prefer the URL field below for published pages.",
         "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "videoUrl",
+        "label": "Background Video URL",
+        "description": "Absolute URL to an MP4 (e.g. https://...mp4). Used on the published site; takes priority over the DAM asset.",
+        "value": ""
       }
     ]
   },
