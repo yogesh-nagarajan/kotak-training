@@ -51,7 +51,8 @@
         "hero-video",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "img-container"
       ]
     }
   ]
