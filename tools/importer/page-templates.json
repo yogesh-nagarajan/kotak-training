@@ -1,0 +1,73 @@
+{
+  "templates": [
+    {
+      "name": "811-business",
+      "description": "Kotak811 Business Account landing page: alternating hero banners and benefit card grids.",
+      "urls": [
+        "http://localhost:3000/drafts/811-business.plain.html"
+      ],
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            "div.hero"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "div.cards"
+          ]
+        },
+        {
+          "name": "img-container",
+          "instances": [
+            "div.img-container"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Intro hero",
+          "selector": "div:nth-of-type(1)",
+          "style": "",
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Core benefits cards",
+          "selector": "div:nth-of-type(2)",
+          "style": "",
+          "blocks": [
+            "cards"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "Secondary hero",
+          "selector": "div:nth-of-type(3)",
+          "style": "",
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-4",
+          "name": "Business tools cards",
+          "selector": "div:nth-of-type(4)",
+          "style": "",
+          "blocks": [
+            "cards"
+          ],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}
