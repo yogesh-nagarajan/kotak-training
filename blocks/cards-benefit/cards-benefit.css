@@ -1,0 +1,54 @@
+/*
+ * cards-benefit — text-only feature highlights.
+ * Values extracted from source computed styles:
+ * https://www1.citibank.com.sg/cardbenefit/cashbackplus/888_450
+ * Desktop: 3 equal centered columns, 20px gap, bold 21px titles.
+ * Mobile: stacked, left-aligned, 30px gap, 16px titles.
+ */
+
+.cards-benefit > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* source mobile card margin-bottom */
+}
+
+.cards-benefit > ul > li {
+  text-align: left; /* source mobile: text-align start */
+}
+
+.cards-benefit .cards-benefit-card-body h3 {
+  margin: 0 0 4px; /* ~3px title→paragraph gap in source */
+  font-size: 16px; /* source mobile title */
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+.cards-benefit .cards-benefit-card-body p {
+  margin: 0 0 12px; /* source description paragraphs carry a 12px bottom margin */
+  font-size: var(--body-font-size-s); /* 16px */
+  font-weight: 400;
+  line-height: 1.62; /* source 25.888px on 16px */
+  color: var(--text-color);
+}
+
+@media (width >= 900px) {
+  .cards-benefit > ul {
+    flex-direction: row;
+    gap: 20px; /* source 20px inter-card gap */
+    justify-content: center;
+  }
+
+  .cards-benefit > ul > li {
+    flex: 1; /* three equal-width columns */
+    text-align: center;
+  }
+
+  .cards-benefit .cards-benefit-card-body h3 {
+    font-size: 21px; /* source desktop title */
+    line-height: 27px;
+  }
+}

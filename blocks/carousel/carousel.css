@@ -1,0 +1,220 @@
+/*
+ * Carousel block — full-bleed banner slides with left-aligned overlay content
+ * (heading + body copy + CTA). One slide visible at a time; slides cross-fade;
+ * arrows + dots switch between them.
+ */
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Neutralise the section wrapper padding so the banner runs edge-to-edge. */
+.carousel-container .carousel-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+/* Slides sit side-by-side in a row; the track slides horizontally. */
+.carousel .carousel-slides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+/* --- Slides (compact mobile height; slide in/out horizontally) --- */
+.carousel .carousel-slide {
+  position: relative;
+  flex: 0 0 100%; /* each slide fills the viewport width */
+  min-width: 100%;
+  min-height: 220px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel .carousel-slides {
+    transition: none;
+  }
+}
+
+/* Background image fills the slide */
+.carousel .carousel-slide-image {
+  position: absolute;
+  inset: 0;
+  line-height: 0;
+}
+
+.carousel .carousel-slide-image picture,
+.carousel .carousel-slide-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Dark scrim so light text stays legible over any photo */
+.carousel .carousel-slide-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 25%) 55%, rgb(0 0 0 / 10%) 100%);
+  pointer-events: none;
+}
+
+/* --- Overlay content: left-aligned with a margin --- */
+.carousel .carousel-slide-content {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 220px;
+  max-width: 640px;
+  padding: 20px 24px;
+  color: rgb(255 255 255);
+  text-align: left;
+}
+
+.carousel .carousel-slide-content h1 {
+  margin: 0 0 12px;
+  color: rgb(255 255 255);
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.carousel .carousel-slide-content p {
+  margin: 0 0 16px;
+  color: rgb(255 255 255);
+  font-size: var(--body-font-size-s);
+  line-height: 1.4;
+}
+
+/* CTA sits last; keep its own bottom margin tidy */
+.carousel .carousel-slide-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* CTA button — red (#FA1432) with white text */
+.carousel .carousel-slide-content a.button,
+.carousel .carousel-slide-content a.button:any-link {
+  border-color: #fa1432;
+  background-color: #fa1432;
+  color: #fff;
+}
+
+.carousel .carousel-slide-content a.button:hover,
+.carousel .carousel-slide-content a.button:focus-visible {
+  border-color: #e00d29;
+  background-color: #e00d29;
+  color: #fff;
+}
+
+/*
+ * Navigation arrows: no background, dark chevrons.
+ * Hidden on mobile/tablet: the content is left-aligned with only a small margin,
+ * so a left arrow would overlap the heading/CTA. Dots handle navigation on
+ * narrow screens; arrows are revealed at >= 900px where there's room.
+ */
+.carousel .carousel-nav-buttons {
+  display: none;
+}
+
+@media (width >= 900px) {
+  .carousel .carousel-nav-buttons {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none; /* only the buttons themselves are clickable */
+  }
+}
+
+.carousel .carousel-nav-prev,
+.carousel .carousel-nav-next {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  margin: 0 8px;
+  padding: 0;
+  border: none;
+  background: none; /* no background */
+  cursor: pointer;
+  position: relative;
+}
+
+/* Dark chevron drawn from two borders; subtle white glow keeps it visible on any photo */
+.carousel .carousel-nav-prev::after,
+.carousel .carousel-nav-next::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-right: 3px solid rgb(0 0 0 / 80%);
+  border-bottom: 3px solid rgb(0 0 0 / 80%);
+  filter: drop-shadow(0 0 2px rgb(255 255 255 / 70%));
+}
+
+.carousel .carousel-nav-prev::after {
+  transform: translate(-30%, -50%) rotate(135deg);
+}
+
+.carousel .carousel-nav-next::after {
+  transform: translate(-70%, -50%) rotate(-45deg);
+}
+
+.carousel .carousel-nav-prev:hover::after,
+.carousel .carousel-nav-next:hover::after,
+.carousel .carousel-nav-prev:focus-visible::after,
+.carousel .carousel-nav-next:focus-visible::after {
+  border-color: rgb(0 0 0);
+}
+
+/* --- Dots --- */
+.carousel .carousel-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  z-index: 3; /* above the slide content (z-index 1) so dots are clickable */
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.carousel .carousel-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 50%);
+  cursor: pointer;
+}
+
+.carousel .carousel-dot[aria-selected="true"] {
+  background-color: rgb(255 255 255);
+}
+
+@media (width >= 900px) {
+  /* Compact banner height on desktop so the main banner fits without scrolling. */
+  .carousel .carousel-slide,
+  .carousel .carousel-slide-content {
+    min-height: 340px;
+  }
+
+  .carousel .carousel-slide-content {
+    padding: 32px 80px; /* larger left margin on desktop, tighter vertically */
+  }
+
+  .carousel .carousel-slide-content h1 {
+    font-size: 44px;
+  }
+}

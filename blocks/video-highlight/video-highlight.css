@@ -1,0 +1,168 @@
+/*
+ * Video Highlight block — two columns on a grey (#ECECED) section:
+ *   left  = clickable video card that opens a modal YouTube player
+ *   right = white content box (heading + image + text)
+ */
+
+/* Grey section backdrop */
+.section.video-highlight-container {
+  background-color: #ececed;
+  margin: 0;
+  padding: 40px 0;
+}
+
+.video-highlight > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* --- Left: video card --- */
+.video-highlight .video-highlight-video {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 10%);
+}
+
+.video-highlight .video-highlight-play {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.video-highlight .video-highlight-play picture,
+.video-highlight .video-highlight-play img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* YouTube-style play button overlaid on the poster */
+.video-highlight .video-highlight-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: rgb(33 33 33 / 80%);
+  transition: background-color 0.2s ease;
+}
+
+.video-highlight .video-highlight-play-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  border-style: solid;
+  border-width: 10px 0 10px 18px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.video-highlight .video-highlight-play:hover .video-highlight-play-icon,
+.video-highlight .video-highlight-play:focus-visible .video-highlight-play-icon {
+  background-color: #d50e25; /* YouTube-red on hover */
+}
+
+/* --- Right: content box --- */
+.video-highlight .video-highlight-content {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 32px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 10%);
+}
+
+.video-highlight .video-highlight-content h2 {
+  margin: 0 0 20px;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.video-highlight .video-highlight-content picture,
+.video-highlight .video-highlight-content img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.video-highlight .video-highlight-content p {
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  line-height: 1.55;
+}
+
+/* --- Modal popup --- */
+.video-highlight-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgb(0 0 0 / 70%);
+}
+
+.video-highlight-modal-inner {
+  position: relative;
+  width: min(960px, 100%);
+}
+
+.video-highlight-modal .video-highlight-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.video-highlight-modal .video-highlight-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-highlight-modal .video-highlight-close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  color: #333;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.video-highlight-modal .video-highlight-close:hover,
+.video-highlight-modal .video-highlight-close:focus-visible {
+  background-color: #ececed;
+}
+
+/* --- Desktop: two columns side by side (video wider than content) --- */
+@media (width >= 900px) {
+  .video-highlight > div {
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+  }
+}

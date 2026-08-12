@@ -21,6 +21,12 @@
     ]
   },
   {
+    "id": "cards-benefit",
+    "components": [
+      "card"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

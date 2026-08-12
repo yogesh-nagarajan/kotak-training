@@ -1,0 +1,39 @@
+{
+  "variantName": "hero-product",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-10T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www1.citibank.com.sg/cardbenefit/cashbackplus/888_450",
+    "originPage": "Citi Cash Back+ credit card benefit landing page",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "spacious",
+    "purpose": "product-hero",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "eyebrow + heading + product-image",
+    "buttonCount": 0,
+    "imageCount": 2
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "credit card / product benefit landing pages",
+      "hero banners with a full-bleed background photo and an eyebrow label",
+      "product-promo heroes that showcase a product image beneath the headline"
+    ],
+    "notSuitableFor": [
+      "text-only heroes with no background image",
+      "video-background heroes (use hero-video)",
+      "heroes requiring a prominent CTA button"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cardbenefit/cashbackplus/888-450"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-10T00:00:00.000Z"
+  }
+}

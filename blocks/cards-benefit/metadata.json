@@ -1,0 +1,39 @@
+{
+  "variantName": "cards-benefit",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-10T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www1.citibank.com.sg/cardbenefit/cashbackplus/888_450",
+    "originPage": "Citi Cash Back+ credit card benefit landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "feature",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "title + description",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "text-only benefit / feature highlight grids",
+      "3-up 'why choose' style value propositions",
+      "product benefit callouts with a bold title and short description"
+    ],
+    "notSuitableFor": [
+      "card grids that require images or icons per item",
+      "free-form side-by-side prose (use columns)",
+      "single standalone highlights"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cardbenefit/cashbackplus/888-450"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-10T00:00:00.000Z"
+  }
+}

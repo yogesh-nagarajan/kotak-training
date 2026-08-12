@@ -1,0 +1,175 @@
+/*
+ * Hero Product block
+ * Values extracted from source computed styles:
+ * https://www1.citibank.com.sg/cardbenefit/cashbackplus/888_450
+ *
+ * Layout: full-bleed photographic banner with a light eyebrow + white H1
+ * overlaid, sitting on a solid Citi-blue band; the credit-card product image
+ * is centred and overlaps the bottom of the banner, hanging onto white below.
+ */
+
+/* Full-bleed: neutralise the section's max-width / padding wrapper. */
+.hero-product-container .hero-product-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.hero-product {
+  position: relative;
+}
+
+/* --- Banner (blue band behind a full-width photo) --- */
+.hero-product .hero-product-banner {
+  position: relative;
+  background-color: rgb(5 109 174); /* source blue band #056dae */
+  padding-bottom: 32px; /* blue strip revealed below the photo (mobile) */
+
+  /*
+   * Mobile: the source swaps in a tall portrait hero image; we only have the
+   * wide desktop photo, which would collapse too short and let the headline
+   * overflow onto the product card. Give the banner a min-height and let the
+   * photo cover it so the overlaid text always has room.
+   */
+  min-height: 340px;
+}
+
+.hero-product .hero-product-media {
+  position: absolute;
+  inset: 0 0 32px; /* fill the banner above the blue strip */
+  line-height: 0;
+}
+
+/*
+ * Subtle dark scrim over the photo so the light eyebrow/headline stay legible
+ * on bright images. Sits above the photo but below the text overlay (which is
+ * a later sibling in the DOM).
+ */
+.hero-product .hero-product-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgb(0 0 0 / 35%), rgb(0 0 0 / 20%));
+  pointer-events: none;
+}
+
+.hero-product .hero-product-media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-product .hero-product-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /*
+   * Mobile crops the wide desktop photo to the banner box. The subject (person)
+   * sits on the LEFT of the 1910x550 image, so anchor the crop left-of-centre —
+   * anchoring right (as desktop does) would show only the empty wall and read
+   * as a blank grey banner.
+   */
+  object-position: 25% 50%;
+}
+
+/* --- Text overlay (eyebrow + headline) --- */
+.hero-product .hero-product-content {
+  position: absolute;
+  inset: 0 0 32px; /* map overlay to the photo area (exclude blue strip) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 24px 20px;
+  color: rgb(255 255 255);
+  text-align: center;
+}
+
+.hero-product .hero-product-eyebrow {
+  margin: 0 0 20px;
+  color: rgb(255 255 255);
+  font-size: 16px; /* source mobile eyebrow */
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: normal;
+}
+
+.hero-product .hero-product-content h1 {
+  margin: 0;
+  color: rgb(255 255 255);
+  font-size: 42px; /* source mobile headline */
+  line-height: 50px; /* source mobile */
+  text-align: center;
+}
+
+/* --- Product card image (overlaps banner bottom, hangs onto white) --- */
+.hero-product .hero-product-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: -48px; /* overlap the banner bottom */
+  padding: 0 20px;
+}
+
+.hero-product .hero-product-card picture,
+.hero-product .hero-product-card img {
+  display: block;
+  width: 260px;
+  max-width: 80%;
+  height: auto;
+}
+
+@media (width >= 900px) {
+  .hero-product .hero-product-banner {
+    /*
+     * Desktop: the wide photo is tall enough to hold the text, so restore the
+     * intrinsic-height behaviour — the photo flows normally and sizes the
+     * banner (verified ~97% match to source). Only mobile needs the min-height
+     * + object-fit:cover treatment above.
+     */
+    min-height: 0;
+    padding-bottom: 55px; /* source: ~55px blue strip below the photo */
+  }
+
+  .hero-product .hero-product-media {
+    position: static;
+    inset: auto;
+  }
+
+  .hero-product .hero-product-media picture,
+  .hero-product .hero-product-media img {
+    height: auto;
+  }
+
+  .hero-product .hero-product-content {
+    inset: 0 0 55px;
+    justify-content: flex-start;
+    padding: 80px 24px 0; /* eyebrow pinned ~80px from top (source) */
+  }
+
+  .hero-product .hero-product-eyebrow {
+    margin: 0 0 112px; /* source gap: h1 top at ~224px from banner top */
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  .hero-product .hero-product-content h1 {
+    margin: 0 0 16px; /* source h1 margin */
+    font-size: 68px; /* source */
+    line-height: 76px; /* source */
+  }
+
+  .hero-product .hero-product-card {
+    margin-top: -85px; /* card top 30px above photo bottom (source) */
+    padding: 0;
+  }
+
+  .hero-product .hero-product-card picture,
+  .hero-product .hero-product-card img {
+    width: 350px; /* source rendered card width */
+    max-width: none;
+  }
+}

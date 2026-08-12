@@ -1,0 +1,191 @@
+/*
+ * Knowledge Hub block — grey (#ECECED) section with a centred "Knowledge Hub"
+ * heading, a large featured story card on the left and a "Stories in focus"
+ * list box on the right.
+ */
+
+/* Grey section backdrop */
+.section.knowledge-hub-container {
+  background-color: #ececed;
+  margin: 0;
+  padding: 40px 0;
+}
+
+/* Centred section heading (default content above the block) */
+.section.knowledge-hub-container h2 {
+  color: #0f3464;
+  text-align: center;
+  margin: 0 0 32px;
+}
+
+/* --- Block layout: featured + stories --- */
+.knowledge-hub {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* --- Left: featured card --- */
+.knowledge-hub .knowledge-hub-featured {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+.knowledge-hub .knowledge-hub-featured-image {
+  position: absolute;
+  inset: 0;
+  line-height: 0;
+}
+
+.knowledge-hub .knowledge-hub-featured-image picture,
+.knowledge-hub .knowledge-hub-featured-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Gradient so the overlaid text stays readable at the bottom */
+.knowledge-hub .knowledge-hub-featured-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 70%) 0%, rgb(0 0 0 / 10%) 45%, rgb(0 0 0 / 0%) 70%);
+  pointer-events: none;
+}
+
+.knowledge-hub .knowledge-hub-featured-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 300px;
+  padding: 32px;
+  color: #fff;
+}
+
+.knowledge-hub .knowledge-hub-featured-content p {
+  margin: 0 0 8px;
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+}
+
+.knowledge-hub .knowledge-hub-featured-content h3 {
+  margin: 0 0 24px;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.knowledge-hub .knowledge-hub-readmore {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.knowledge-hub .knowledge-hub-readmore::after {
+  content: " \203A"; /* › */
+  font-weight: 400;
+}
+
+.knowledge-hub .knowledge-hub-readmore:hover,
+.knowledge-hub .knowledge-hub-readmore:focus-visible {
+  text-decoration: underline;
+}
+
+/* --- Right: stories box --- */
+.knowledge-hub .knowledge-hub-stories {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 10%);
+}
+
+.knowledge-hub .knowledge-hub-stories-title {
+  margin: 0 0 16px;
+  font-size: 20px;
+  color: #333;
+}
+
+.knowledge-hub .knowledge-hub-stories-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.knowledge-hub .knowledge-hub-story {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.knowledge-hub .knowledge-hub-story-thumb {
+  flex: 0 0 64px;
+  line-height: 0;
+}
+
+.knowledge-hub .knowledge-hub-story-thumb picture,
+.knowledge-hub .knowledge-hub-story-thumb img {
+  display: block;
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.knowledge-hub .knowledge-hub-story-title {
+  flex: 1;
+}
+
+.knowledge-hub .knowledge-hub-story-title a {
+  color: #0f3464;
+  text-decoration: none;
+  font-size: var(--body-font-size-s);
+  line-height: 1.4;
+}
+
+.knowledge-hub .knowledge-hub-story-title a:hover,
+.knowledge-hub .knowledge-hub-story-title a:focus-visible {
+  text-decoration: underline;
+}
+
+.knowledge-hub .knowledge-hub-viewall {
+  display: inline-block;
+  margin-top: 16px;
+  color: #d50e25;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.knowledge-hub .knowledge-hub-viewall::after {
+  content: " \203A"; /* › */
+}
+
+.knowledge-hub .knowledge-hub-viewall:hover,
+.knowledge-hub .knowledge-hub-viewall:focus-visible {
+  color: #0f3464; /* matches the "Knowledge Hub" heading colour on hover */
+  text-decoration: underline;
+}
+
+/* --- Desktop: featured (wider) + stories side by side --- */
+@media (width >= 900px) {
+  .knowledge-hub {
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+  }
+
+  .knowledge-hub .knowledge-hub-featured,
+  .knowledge-hub .knowledge-hub-featured-content {
+    min-height: 440px;
+  }
+
+  .knowledge-hub .knowledge-hub-featured-content h3 {
+    font-size: 34px;
+  }
+}

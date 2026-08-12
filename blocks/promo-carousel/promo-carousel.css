@@ -1,0 +1,86 @@
+/*
+ * Promo Carousel block — a slim, image-only promo banner carousel.
+ * One slide visible at a time; dots below switch slides (no arrows).
+ * Slides slide horizontally. The same single image is used across all breakpoints.
+ */
+
+.promo-carousel {
+  position: relative;
+  overflow: hidden; /* clip the off-screen slides in the row */
+}
+
+/* Grey backdrop for the whole promo section (image-only banner sits on #ECECED). */
+.section.promo-carousel-container {
+  background-color: #ececed;
+  margin: 0;
+  padding: 40px 0;
+}
+
+/* Slides sit side-by-side in a row; the track slides horizontally. */
+.promo-carousel .promo-carousel-slides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  transition: transform 0.5s ease;
+  cursor: grab;
+  touch-action: pan-y; /* keep vertical scroll; capture horizontal swipe */
+  user-select: none; /* avoid text/image selection while dragging */
+}
+
+.promo-carousel .promo-carousel-slides.promo-carousel-dragging {
+  cursor: grabbing;
+}
+
+/* --- Slides (side-by-side; slide in/out horizontally) --- */
+.promo-carousel .promo-carousel-slide {
+  flex: 0 0 100%; /* each slide fills the full width */
+  min-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-carousel .promo-carousel-slides {
+    transition: none;
+  }
+}
+
+.promo-carousel .promo-carousel-image {
+  line-height: 0;
+}
+
+.promo-carousel .promo-carousel-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  pointer-events: none; /* let the swipe handler on the track catch the drag */
+}
+
+/* --- Dots --- */
+.promo-carousel .promo-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.promo-carousel .promo-carousel-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 1px solid #d50e25;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.promo-carousel .promo-carousel-dot[aria-selected="true"] {
+  background-color: #d50e25;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .promo-carousel .promo-carousel-slide {
+    transition: none;
+  }
+}

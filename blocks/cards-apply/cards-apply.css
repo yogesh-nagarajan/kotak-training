@@ -1,0 +1,120 @@
+/*
+ * Cards Apply block — 6 equal cards in a 3-column grid (2 rows of 3).
+ * Each card: image (top half) + text (bottom half), a centred Kotak symbol at
+ * the boundary, and an "Apply Now >" link. Cards zoom slightly on hover.
+ */
+
+.cards-apply > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* --- Card --- */
+.cards-apply .cards-apply-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Zoom effect on hover */
+.cards-apply .cards-apply-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 18%);
+}
+
+/* --- Top half: image --- */
+.cards-apply .cards-apply-card-image {
+  margin: 0;
+  line-height: 0;
+}
+
+.cards-apply .cards-apply-card-image picture,
+.cards-apply .cards-apply-card-image img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* --- Red Kotak symbol, sitting low on the image near the bottom edge --- */
+.cards-apply .cards-apply-symbol {
+  position: absolute;
+  top: 150px; /* image height */
+  left: 50%;
+  transform: translate(-50%, -85%); /* sits mostly on the image, slightly lower */
+  z-index: 1;
+  line-height: 0;
+}
+
+.cards-apply .cards-apply-symbol svg {
+  width: 84px; /* larger, more prominent */
+  height: auto;
+}
+
+/* --- Bottom half: text (left-aligned, like the source) --- */
+.cards-apply .cards-apply-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 20px 16px 16px;
+}
+
+.cards-apply .cards-apply-card-body h2,
+.cards-apply .cards-apply-card-body h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.cards-apply .cards-apply-card-body p {
+  margin: 0 0 12px;
+  font-size: var(--body-font-size-s);
+  line-height: 1.45;
+}
+
+/* --- Apply Now link --- */
+.cards-apply .cards-apply-card-body p:last-child {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+.cards-apply .cards-apply-apply {
+  color: #d50e25;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cards-apply .cards-apply-apply::after {
+  content: " >";
+}
+
+.cards-apply .cards-apply-apply:hover,
+.cards-apply .cards-apply-apply:focus-visible {
+  color: #036;
+  text-decoration: none;
+}
+
+/* Tablet: 2 columns */
+@media (width >= 600px) {
+  .cards-apply > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: 3 columns -> 6 cards become 2 rows of 3 */
+@media (width >= 900px) {
+  .cards-apply > ul {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
