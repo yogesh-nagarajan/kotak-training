@@ -14,6 +14,10 @@
       "title",
       "hero",
       "hero-video",
+      "pvr-hero",
+      "pvr-benefits",
+      "pvr-feature",
+      "pvr-cta",
       "cards",
       "columns",
       "fragment"
@@ -38,6 +42,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "pvr-benefits",
+    "components": [
+      "pvr-benefit"
     ]
   }
 ]

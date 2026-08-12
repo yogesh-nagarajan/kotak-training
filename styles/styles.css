@@ -53,6 +53,12 @@
   src: local('Arial');
 }
 
+@font-face {
+  font-family: manrope-fallback;
+  size-adjust: 83.209%;
+  src: local('Arial');
+}
+
 @media (width >= 900px) {
   :root {
     /* body sizes */

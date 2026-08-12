@@ -1,0 +1,155 @@
+/*
+ * PVR CTA — full-bleed banner with background image + centered heading & button.
+ * Matches the live Kotak PVR INOX "Exclusive rewards, ultimate entertainment!"
+ * section (https://www.kotak811.bank.in/debit-cards/pvr-inox-debit-card).
+ *
+ * Verified against live computed styles (Manrope):
+ *   - full-bleed (edge-to-edge viewport), no border-radius, no padding
+ *   - desktop: fixed 600px height, bg image object-fit cover
+ *   - heading 44/700/lh52/ls -1.1px white, centered; button #3857ff radius 12,
+ *     padding 16px 68px; 40px gap between heading and button
+ *   - mobile: portrait banner (1125 / 1200 ratio), heading 28/lh39
+ *   - image + text share one grid cell (image behind, content on top)
+ */
+
+.pvr-cta {
+  --pvr-cta-font: manrope, manrope-fallback, helvetica, arial, sans-serif;
+  --pvr-cta-button-bg: #3857ff;
+  --pvr-cta-button-hover-bg: #2740d6;
+
+  box-sizing: border-box;
+
+  /* full-bleed: break out of the centered section wrapper to span the full
+     viewport width. The scrollbar-width overshoot on the right is absorbed by
+     `overflow-x: clip` on the section container (rule below), so a vertical
+     page scrollbar never produces a horizontal scroller. */
+  width: 100vw;
+  margin-right: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
+  max-width: none;
+
+  /* gap above the CTA, matching live (40px mobile, 100px desktop) */
+  margin-top: 40px;
+
+  /* image and content stacked in the same grid cell */
+  display: grid;
+  grid-template-areas: "stack";
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--pvr-cta-font);
+
+  /* mobile: portrait banner ratio drives the block height (deterministic,
+     independent of image load state) */
+  aspect-ratio: 1125 / 1200;
+}
+
+/* Absorb the ~scrollbar-width overshoot from the 100vw full-bleed so the page
+   never gains a horizontal scrollbar. `clip` (not `hidden`) does not create a
+   scroll container and never touches vertical overflow. Scoped to this block's
+   own section container. */
+.pvr-cta-container {
+  overflow-x: clip;
+}
+
+.pvr-cta > .pvr-cta-media,
+.pvr-cta > .pvr-cta-content {
+  grid-area: stack;
+}
+
+/* ===== Background image layer ===== */
+.pvr-cta .pvr-cta-media {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  z-index: 0;
+}
+
+.pvr-cta .pvr-cta-media picture,
+.pvr-cta .pvr-cta-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pvr-cta .pvr-cta-media img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ===== Overlay content ===== */
+.pvr-cta .pvr-cta-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.pvr-cta .pvr-cta-title {
+  margin: 0;
+  max-width: 20ch;
+  color: #fff;
+  font-family: var(--pvr-cta-font);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 39px;
+  letter-spacing: -0.7px;
+}
+
+/* ===== Button ===== */
+.pvr-cta a.pvr-cta-button.button.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 51px;
+  margin: 0;
+  padding: 16px 68px;
+  border: 0;
+  border-radius: 12px;
+  background-color: var(--pvr-cta-button-bg);
+  color: #fff;
+  font-family: var(--pvr-cta-font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.pvr-cta a.pvr-cta-button.button.primary:hover,
+.pvr-cta a.pvr-cta-button.button.primary:focus-visible {
+  background-color: var(--pvr-cta-button-hover-bg);
+  color: #fff;
+}
+
+/* ===== Desktop (>= 1024px): fixed 600px tall band, larger heading ===== */
+@media (width >= 1024px) {
+  .pvr-cta {
+    height: 600px;
+    aspect-ratio: auto;
+    margin-top: 100px;
+  }
+
+  .pvr-cta .pvr-cta-title {
+    /* Force the same two-line wrap as live ("Exclusive rewards," /
+       "ultimate entertainment!"). Live's widest line is 491px and the
+       "…rewards, ultimate" run is 552px, so a max-width in between breaks
+       after the comma while staying centered — instead of running one wide
+       line into the card artwork. */
+    max-width: 520px;
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -1.1px;
+  }
+
+  .pvr-cta .pvr-cta-content {
+    gap: 40px;
+    padding: 64px 24px;
+  }
+}

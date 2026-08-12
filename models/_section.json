@@ -49,6 +49,10 @@
         "title",
         "hero",
         "hero-video",
+        "pvr-hero",
+        "pvr-benefits",
+        "pvr-feature",
+        "pvr-cta",
         "cards",
         "columns",
         "fragment"

@@ -1,0 +1,159 @@
+/*
+ * PVR Hero — matches the live Kotak PVR INOX Debit Card hero
+ * (https://www.kotak811.bank.in/debit-cards/pvr-inox-debit-card).
+ *
+ * Typography verified against the live page's computed styles (Manrope 500/600/700).
+ *
+ * Card-image behaviour mirrors the live static card (its `lg:hidden` class):
+ *   - < 1024px  → card image is shown (tablet / mobile), like the live page.
+ *   - >= 1024px → card image container is hidden (display:none); the text
+ *                 content uses the full available width, left-aligned.
+ * Responsive behaviour is driven entirely by CSS media queries.
+ */
+
+.pvr-hero {
+  /* Block-scoped design tokens (from live computed styles) */
+  --pvr-hero-font: manrope, manrope-fallback, helvetica, arial, sans-serif;
+  --pvr-hero-eyebrow-color: #ff0049;
+  --pvr-hero-heading-color: #222;
+  --pvr-hero-text-color: #222;
+  --pvr-hero-button-bg: #3857ff;
+  --pvr-hero-button-hover-bg: #2740d6;
+  --pvr-hero-button-color: #fff;
+  --pvr-hero-button-radius: 12px;
+  --pvr-hero-card-ratio: 3 / 2;
+
+  box-sizing: border-box;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-block: 40px;
+  font-family: var(--pvr-hero-font);
+
+  /* mobile-first: single column, centered, card image visible below content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ===== Content column ===== */
+.pvr-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+}
+
+.pvr-hero-eyebrow {
+  margin: 0 0 12px;
+  color: var(--pvr-hero-eyebrow-color);
+  font-family: var(--pvr-hero-font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 3px;
+}
+
+.pvr-hero-title {
+  margin: 0 0 16px;
+  color: var(--pvr-hero-heading-color);
+  font-family: var(--pvr-hero-font);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 42px;
+  letter-spacing: -0.85px;
+}
+
+.pvr-hero-description {
+  margin: 0 0 28px;
+  max-width: 40ch;
+  color: var(--pvr-hero-text-color);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 29px;
+}
+
+.pvr-hero-description p {
+  margin: 0 0 8px;
+  color: inherit;
+}
+
+.pvr-hero-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== Call to action ===== */
+.pvr-hero-button.button.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 230px;
+  margin: 0;
+  padding: 16px 41px;
+  border: 0;
+  border-radius: var(--pvr-hero-button-radius);
+  background-color: var(--pvr-hero-button-bg);
+  color: var(--pvr-hero-button-color);
+  font-family: var(--pvr-hero-font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pvr-hero-button.button.primary:hover,
+.pvr-hero-button.button.primary:focus-visible {
+  background-color: var(--pvr-hero-button-hover-bg);
+  color: var(--pvr-hero-button-color);
+}
+
+/* ===== Media column (card image) — shown < 1024px ===== */
+.pvr-hero-media {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 32px;
+
+  /* Reserve space to prevent CLS while the card image loads. */
+  aspect-ratio: var(--pvr-hero-card-ratio);
+}
+
+.pvr-hero-media picture,
+.pvr-hero-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pvr-hero-media img {
+  object-fit: contain;
+  object-position: center;
+}
+
+/* ===== Desktop (>= 1024px): hide card, text uses full width, left-aligned ===== */
+@media (width >= 1024px) {
+  .pvr-hero {
+    align-items: flex-start;
+    padding-block: 80px;
+    text-align: left;
+  }
+
+  .pvr-hero-content {
+    align-items: flex-start;
+    max-width: none;
+  }
+
+  .pvr-hero-title {
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -1.1px;
+  }
+
+  /* Hide the card image entirely; no reserved space left behind. */
+  .pvr-hero-media {
+    display: none;
+  }
+}

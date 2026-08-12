@@ -1,0 +1,167 @@
+/*
+ * PVR Feature — alternating text/image row, matching the live Kotak PVR INOX
+ * feature sections (https://www.kotak811.bank.in/debit-cards/pvr-inox-debit-card).
+ *
+ * Verified against live computed styles (Manrope):
+ *   - heading 44/700/lh52/ls -1.1px (#222); text 16/500/lh29 (#222)
+ *   - desktop 2-col grid, align-items center, 40px gap, container 1120px
+ *   - image contain; ~8/7 aspect ratio
+ *   - mobile (<1024px): stacked, IMAGE ABOVE TEXT, heading 28/lh39
+ *   - default = image right; `.pvr-feature-reverse` = image left
+ */
+
+.pvr-feature {
+  --pvr-feature-font: manrope, manrope-fallback, helvetica, arial, sans-serif;
+  --pvr-feature-heading-color: #222;
+  --pvr-feature-text-color: #222;
+  --pvr-feature-img-ratio: 8 / 7;
+
+  box-sizing: border-box;
+  max-width: 1120px;
+  margin-inline: auto;
+
+  /* mobile row spacing: 45px top+bottom -> 90px gap between adjacent plain rows,
+     matching live's mobile inter-row gap. Desktop overrides this to 40px below. */
+  padding-block: 45px;
+  font-family: var(--pvr-feature-font);
+
+  /* mobile-first: single column, image above text */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== Media ===== */
+.pvr-feature .pvr-feature-media {
+  width: 100%;
+}
+
+.pvr-feature .pvr-feature-media picture {
+  display: block;
+  width: 100%;
+}
+
+.pvr-feature .pvr-feature-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--pvr-feature-img-ratio);
+  object-fit: contain;
+}
+
+/* ===== Content ===== */
+.pvr-feature .pvr-feature-title {
+  margin: 0;
+  color: var(--pvr-feature-heading-color);
+  font-family: var(--pvr-feature-font);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 39px;
+  letter-spacing: -0.7px;
+}
+
+.pvr-feature .pvr-feature-text {
+  margin: 16px 0 0;
+  color: var(--pvr-feature-text-color);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 29px;
+}
+
+.pvr-feature .pvr-feature-text p {
+  margin: 0 0 12px;
+  color: inherit;
+}
+
+.pvr-feature .pvr-feature-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== Desktop (>= 1024px): two columns, text + image =====
+   Matches live (stacks below ~1024; fixed 560px image needs the room). */
+@media (width >= 1024px) {
+  /* Live layout: text fills the remaining space, image is a fixed 560px box
+     flush to the outer edge of the 1120px container. Fixed image column keeps
+     every row a uniform height regardless of the source image dimensions. */
+  .pvr-feature {
+    display: grid;
+    grid-template-columns: 1fr 560px;
+    align-items: center;
+    gap: 40px;
+    padding-block: 40px;
+  }
+
+  /* default: content left (col 1), image right (col 2) */
+  .pvr-feature .pvr-feature-content {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .pvr-feature .pvr-feature-media {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* reverse: image left (fixed 560px), content right */
+  .pvr-feature.pvr-feature-reverse {
+    grid-template-columns: 560px 1fr;
+  }
+
+  .pvr-feature.pvr-feature-reverse .pvr-feature-media {
+    grid-column: 1;
+  }
+
+  .pvr-feature.pvr-feature-reverse .pvr-feature-content {
+    grid-column: 2;
+  }
+
+  .pvr-feature .pvr-feature-title {
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -1.1px;
+  }
+
+  .pvr-feature .pvr-feature-text {
+    margin-top: 20px;
+  }
+}
+
+/* ===== Dark variant (pvr-feature-dark) — the "Kotak PVR INOX Debit Card
+   benefits" row on the live page. Full black section, white text, rounded
+   corners, and each benefit on its own line (pre-line renders the authored
+   newlines). The image asset already contains the black cinema scene, so it
+   blends seamlessly into the section background. ===== */
+.pvr-feature.pvr-feature-dark {
+  --pvr-feature-heading-color: #fff;
+  --pvr-feature-text-color: #fff;
+
+  background-color: #000;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* Each benefit on its own line: honour the authored line breaks. */
+.pvr-feature.pvr-feature-dark .pvr-feature-text {
+  white-space: pre-line;
+}
+
+/* mobile-first inner padding so text isn't flush to the black edge */
+.pvr-feature.pvr-feature-dark .pvr-feature-content {
+  padding: 24px 24px 0;
+}
+
+.pvr-feature.pvr-feature-dark .pvr-feature-media {
+  align-self: end;
+}
+
+@media (width >= 1024px) {
+  /* On desktop the text sits inset from the left (live uses ~60px). The image
+     column keeps its fixed 560px flush to the right edge of the black panel. */
+  .pvr-feature.pvr-feature-dark .pvr-feature-content {
+    padding: 0 0 0 60px;
+  }
+
+  .pvr-feature.pvr-feature-dark .pvr-feature-media {
+    align-self: center;
+  }
+}

@@ -6,7 +6,8 @@
       "aemSitePath": "/content/kotak-training",
       "aemAssetsFolderPath": "/content/dam/kotak-training",
       "aemSiteName": "kotak-training",
-      "aemSiteTitle": "Kotak Training"
+      "aemSiteTitle": "Kotak Training",
+      "baseUrl": "https://www.kotak811.bank.in/debit-cards/pvr-inox-debit-card"
     }
   }
 }

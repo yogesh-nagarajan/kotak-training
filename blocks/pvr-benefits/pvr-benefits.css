@@ -1,0 +1,137 @@
+/*
+ * PVR Benefits — 4 benefit cards, matching the live Kotak PVR INOX page
+ * (https://www.kotak811.bank.in/debit-cards/pvr-inox-debit-card).
+ *
+ * Verified against the live page's computed styles:
+ *   - Card: white, border-radius 6px, box-shadow 2px 4px 9px rgba(0,0,0,.12)
+ *   - Icon ~70px tall at top; heading 16px/500 (Manrope), left-aligned
+ *   - Section max-width 1120px
+ *   - < 768px: horizontal-scroll carousel of fixed 185px cards (native swipe,
+ *     no arrows/dots) — reproduces the live mobile behaviour.
+ *   - >= 768px: 4 equal-height cards in one row.
+ */
+
+.pvr-benefits {
+  --pvr-benefits-font: manrope, manrope-fallback, helvetica, arial, sans-serif;
+  --pvr-benefits-title-color: #222;
+  --pvr-benefits-card-bg: #fff;
+  --pvr-benefits-card-radius: 6px;
+  --pvr-benefits-card-shadow: 2px 4px 9px 0 rgb(0 0 0 / 12%);
+  --pvr-benefits-card-min-h: 204px;
+
+  box-sizing: border-box;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-block: 24px;
+  font-family: var(--pvr-benefits-font);
+}
+
+/* ===== List: mobile-first horizontal-scroll carousel ===== */
+.pvr-benefits .pvr-benefits-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  margin: 0;
+  padding: 4px 4px 15px;
+  list-style: none;
+
+  /* native horizontal scroll (swipe) — no arrows/dots, like the live page */
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+
+  /* hide the scrollbar/slider track while keeping swipe scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge/IE */
+}
+
+.pvr-benefits .pvr-benefits-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* ===== Card ===== */
+.pvr-benefits .pvr-benefits-item {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 0 0 auto;
+  width: 185px;
+  min-height: var(--pvr-benefits-card-min-h);
+  padding: 24px 20px 28px;
+  background-color: var(--pvr-benefits-card-bg);
+  border-radius: var(--pvr-benefits-card-radius);
+  box-shadow: var(--pvr-benefits-card-shadow);
+  scroll-snap-align: start;
+}
+
+/* ===== Icon ===== */
+.pvr-benefits .pvr-benefits-icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 65px;
+  margin-bottom: 16px;
+}
+
+.pvr-benefits .pvr-benefits-icon img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* ===== Title ===== */
+.pvr-benefits .pvr-benefits-title {
+  margin: 0;
+  color: var(--pvr-benefits-title-color);
+  font-family: var(--pvr-benefits-font);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: normal;
+  text-align: left;
+}
+
+/* ===== Tablet / desktop (>= 768px): 4 equal cards in one row ===== */
+@media (width >= 768px) {
+  .pvr-benefits {
+    padding-block: 40px;
+  }
+
+  .pvr-benefits .pvr-benefits-list {
+    gap: 40px;
+    padding: 4px;
+
+    /* no carousel — cards share the row equally */
+    overflow-x: visible;
+  }
+
+  .pvr-benefits .pvr-benefits-item {
+    flex: 1 1 0;
+    width: auto;
+    min-height: 240px;
+    padding: 28px 24px 40px;
+  }
+
+  .pvr-benefits .pvr-benefits-icon {
+    height: 70px;
+    margin-bottom: 22px;
+  }
+
+  .pvr-benefits .pvr-benefits-title {
+    font-size: 16px;
+    line-height: 28px;
+  }
+}
+
+/* ===== Desktop (>= 1024px): vertical spacing below the hero =====
+ * The live page separates the benefits section from the hero with an 80px
+ * top margin (its `lg:mt-20`) only at the desktop breakpoint; tablet/mobile
+ * sit flush. Scoped to this block so the hero is never modified.
+ */
+@media (width >= 1024px) {
+  .pvr-benefits {
+    margin-top: 80px;
+  }
+}
