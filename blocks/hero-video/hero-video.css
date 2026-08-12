@@ -127,8 +127,16 @@
 
 @media (width >= 900px) {
   .hero-video {
-    min-height: 520px;
-    padding: 140px 32px 120px;
+    /* match the background video's aspect ratio (1440x580) so it fills the
+       block edge-to-edge with no letterbox gaps or clipped slanted edge */
+    min-height: 0;
+    padding: 40px 32px;
+    aspect-ratio: 1440 / 580;
+  }
+
+  .hero-video-media {
+    /* fill the block completely now that the block matches the video ratio */
+    object-fit: cover;
   }
 
   .hero-video-content {
