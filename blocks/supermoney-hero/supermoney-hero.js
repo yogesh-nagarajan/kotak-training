@@ -97,6 +97,7 @@ export default function decorate(block) {
     img.closest('picture').replaceWith(optimized);
   });
 
+  //--- Finalize ---
   block.replaceChildren(banner);
   if (cardRows.length) block.append(ul);
 }
