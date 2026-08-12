@@ -1,0 +1,193 @@
+/*
+ * Hero 811 block — full-black metal-card hero.
+ * Desktop: text left, card-art banner right (single desktop image holds both).
+ * Mobile:  text stacked above a taller card-art banner.
+ * The "Apply Now" CTA has a continuously animated white border whose thick
+ * segment sweeps left -> right -> left.
+ */
+
+.hero-811-container .hero-811-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.hero-811 {
+  position: relative;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+/*
+ * Mobile/tablet: stack the row so the TEXT sits on top and the card image
+ * below (matches the source). The row is the block's single inner div.
+ */
+.hero-811 > div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+/* --- Media (banner image) --- */
+.hero-811 .hero-811-media {
+  line-height: 0;
+}
+
+/* EDS may wrap the images in a <p>; neutralise its spacing */
+.hero-811 .hero-811-media p {
+  margin: 0;
+  line-height: 0;
+}
+
+.hero-811 .hero-811-media picture,
+.hero-811 .hero-811-media img {
+  width: 100%;
+  height: auto;
+}
+
+/* show the right image per breakpoint (default = mobile) */
+.hero-811 .hero-811-media-desktop { display: none; }
+.hero-811 .hero-811-media-mobile { display: block; }
+
+/* --- Content overlay --- */
+.hero-811 .hero-811-content {
+  box-sizing: border-box;
+  padding: 32px 24px 8px;
+  text-align: center;
+}
+
+.hero-811 .hero-811-eyebrow {
+  margin: 0 0 12px;
+  color: #bdbdbd;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-811 .hero-811-content h1 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: 40px;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.hero-811 .hero-811-content p {
+  margin: 0 0 20px;
+  color: #eaeaea;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+/* --- Animated-border CTA --- */
+.hero-811 .hero-811-cta {
+  position: relative;
+  display: inline-block;
+  padding: 14px 40px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+  background: #000;
+  isolation: isolate;
+}
+
+/* The visible pill border */
+.hero-811 .hero-811-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  padding: 2px; /* base border thickness */
+  background: rgb(255 255 255 / 55%);
+
+  /* show only the ring (mask out the fill) */
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  /* stylelint-disable property-no-vendor-prefix -- required for Safari mask support */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+
+  /* stylelint-enable property-no-vendor-prefix */
+  pointer-events: none;
+}
+
+/*
+ * The animated highlight: a brighter, thicker arc of border that sweeps
+ * around. We fake the "thick part moving left->right->back" by animating a
+ * bright conic highlight behind the ring mask.
+ */
+.hero-811 .hero-811-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  padding: 3px; /* thicker highlight */
+  background: linear-gradient(90deg,
+    rgb(255 255 255 / 0%) 0%,
+    rgb(255 255 255 / 0%) 30%,
+    rgb(255 255 255 / 100%) 50%,
+    rgb(255 255 255 / 0%) 70%,
+    rgb(255 255 255 / 0%) 100%);
+  background-size: 250% 100%;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  /* stylelint-disable property-no-vendor-prefix -- required for Safari mask support */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+
+  /* stylelint-enable property-no-vendor-prefix */
+  pointer-events: none;
+
+  /* Slow, constant-speed sweep (linear = no acceleration), one direction, looping */
+  animation: hero-811-border-sweep 4.5s linear infinite;
+}
+
+@keyframes hero-811-border-sweep {
+  from { background-position: 130% 0; }
+  to   { background-position: -130% 0; }
+}
+
+.hero-811 .hero-811-cta:hover,
+.hero-811 .hero-811-cta:focus-visible {
+  background: rgb(255 255 255 / 8%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-811 .hero-811-cta::after { animation: none; }
+}
+
+/* --- Desktop: text overlaid on the left of the full-bleed banner --- */
+@media (width >= 900px) {
+  /* content is absolutely positioned over the media, so the stack order resets */
+  .hero-811 > div {
+    display: block;
+  }
+
+  .hero-811 .hero-811-media-desktop { display: block; }
+  .hero-811 .hero-811-media-mobile { display: none; }
+
+  .hero-811 .hero-811-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 46%;
+    padding: 0 0 0 8%;
+    text-align: left;
+  }
+
+  .hero-811 .hero-811-content h1 {
+    font-size: 56px;
+    line-height: 1.02;
+  }
+
+  .hero-811 .hero-811-content p {
+    font-size: 28px;
+  }
+}

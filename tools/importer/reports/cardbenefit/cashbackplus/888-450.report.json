@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "url": "https://www1.citibank.com.sg/cardbenefit/cashbackplus/888_450",
+  "path": "cardbenefit/cashbackplus/888-450",
+  "timestamp": "2026-08-10T13:39:30.337Z",
+  "title": "Citi Cash Back+ Card (mastercard)",
+  "template": "card-benefit-page",
+  "blocks": [
+    "hero-product",
+    "cards-benefit"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "card-benefit-page",
+      "urls": [
+        "https://www1.citibank.com.sg/cardbenefit/cashbackplus/888_450"
+      ],
+      "coverageGaps": [],
+      "description": "Citibank credit card benefit landing page with hero, benefit highlights, content showcase, and terms sections",
+      "blocks": [
+        {
+          "name": "hero-product",
+          "instances": [
+            "ui-dynamic-widget:nth-of-type(4)"
+          ]
+        },
+        {
+          "name": "cards-benefit",
+          "instances": [
+            ".content-showcase1v4 ui-flex-grid.text-center"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero",
+          "selector": [
+            "ui-dynamic-widget:nth-of-type(4)"
+          ],
+          "style": null,
+          "blocks": [
+            "hero-product"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Benefit highlights",
+          "selector": [
+            "ui-dynamic-widget:nth-of-type(6)"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-benefit"
+          ],
+          "defaultContent": [
+            ".content-showcase1v4 ui-h2"
+          ]
+        },
+        {
+          "id": "section-3",
+          "name": "Terms footnote",
+          "selector": [
+            "ui-dynamic-widget:nth-of-type(7)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "ui-dynamic-widget:nth-of-type(7)"
+          ]
+        }
+      ]
+    }
+  ]
+}

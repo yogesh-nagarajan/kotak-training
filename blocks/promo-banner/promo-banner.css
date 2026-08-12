@@ -1,0 +1,131 @@
+/*
+ * Promo Banner block — full-width background image with left-aligned overlay
+ * content (heading, description, CTA). Single component.
+ * Mobile-first; the section starts flush (no top gap).
+ */
+
+.promo-banner-container .promo-banner-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.promo-banner {
+  position: relative;
+  box-sizing: border-box;
+
+  /* background image set inline by JS; these govern how it sits */
+  background-color: #6b6f7a;
+  background-repeat: no-repeat;
+
+  /* mobile: focus the crop on the woman (she sits right-of-centre in source) */
+  background-position: 58% top;
+  background-size: cover;
+
+  /* mobile: image tall enough to show the person's face below the text */
+  min-height: 600px;
+  padding: 40px 24px 300px;
+  overflow: hidden;
+}
+
+/* Gradient overlay so the light-grey background never washes out the text */
+.promo-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(60 62 72 / 55%) 0%, rgb(60 62 72 / 25%) 55%, rgb(60 62 72 / 10%) 100%);
+  pointer-events: none;
+}
+
+.promo-banner .promo-banner-content {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+}
+
+.promo-banner .promo-banner-content h2 {
+  margin: 0 0 16px;
+  color: #fff;
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.promo-banner .promo-banner-content p {
+  margin: 0 0 28px;
+  color: #f0f0f2;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+/* --- CTA button --- */
+.promo-banner .promo-banner-cta {
+  display: inline-block;
+  padding: 15px 28px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+  background-color: #4453e8;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.promo-banner .promo-banner-cta:hover,
+.promo-banner .promo-banner-cta:focus-visible {
+  background-color: #3341c9;
+}
+
+/* Tablet */
+@media (width >= 600px) {
+  .promo-banner {
+    /* keep the woman centred and prominent in the lower portion */
+    background-position: 60% top;
+    min-height: 620px;
+    padding: 56px 40px 300px;
+  }
+
+  .promo-banner .promo-banner-content {
+    max-width: 680px;
+  }
+
+  .promo-banner .promo-banner-content h2 {
+    font-size: 44px;
+  }
+
+  .promo-banner .promo-banner-content p {
+    font-size: 18px;
+    margin-bottom: 32px;
+  }
+}
+
+/* Desktop */
+@media (width >= 900px) {
+  .promo-banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* full landscape shows the person on the right naturally */
+    background-position: center top;
+    min-height: 620px;
+    padding: 0 8%;
+  }
+
+  /* on wide screens the person sits on the right, so darken only the left */
+  .promo-banner::before {
+    background: linear-gradient(90deg, rgb(60 62 72 / 55%) 0%, rgb(60 62 72 / 25%) 40%, rgb(60 62 72 / 0%) 70%);
+  }
+
+  .promo-banner .promo-banner-content {
+    max-width: 560px;
+  }
+
+  .promo-banner .promo-banner-content h2 {
+    font-size: 52px;
+  }
+
+  .promo-banner .promo-banner-content p {
+    font-size: 20px;
+    margin-bottom: 36px;
+  }
+}

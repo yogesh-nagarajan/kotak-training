@@ -1,0 +1,141 @@
+/*
+ * Benefit Cards block — 4 white cards (icon + title + description).
+ * Desktop: a 4-up row that overlaps the bottom of the hero banner above it.
+ * Tablet/mobile: a horizontal slider (scroll-snap + drag), peeking the next card.
+ */
+
+/* Full-bleed so the row can span and overlap the banner. */
+.benefit-cards-container .benefit-cards-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.benefit-cards {
+  position: relative;
+  z-index: 2;
+
+  /* white breathing space below the cards before the next section */
+  padding-bottom: 48px;
+}
+
+/* --- Track --- */
+.benefit-cards .benefit-cards-track {
+  list-style: none;
+
+  /* mobile/tablet: pull the cards up so their top overlaps the black banner */
+  margin: -72px 0 0;
+  padding: 0 20px 8px;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: none;
+}
+
+.benefit-cards .benefit-cards-track::-webkit-scrollbar { display: none; }
+.benefit-cards .benefit-cards-track.benefit-cards-dragging { cursor: grabbing; }
+
+.benefit-cards .benefit-cards-track:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+/* --- Card --- */
+.benefit-cards .benefit-cards-card {
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  flex: 0 0 78%; /* mobile: ~1.2 cards visible so the next peeks */
+  background-color: #f6f6f6;
+  border-radius: 16px;
+  padding: 28px 24px 32px;
+
+}
+
+/*
+ * Fade-in on scroll (replaces data-aos="fade-in"). The hidden start state is
+ * scoped to .benefit-cards-reveal, which JS adds — so without JS the cards
+ * render fully visible (no dependency on scripts to see content).
+ */
+.benefit-cards .benefit-cards-track.benefit-cards-reveal .benefit-cards-card {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.benefit-cards .benefit-cards-track.benefit-cards-in .benefit-cards-card {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger each card slightly, mirroring the data-aos-delay cascade */
+.benefit-cards .benefit-cards-track.benefit-cards-in .benefit-cards-card:nth-child(2) { transition-delay: 0.1s; }
+.benefit-cards .benefit-cards-track.benefit-cards-in .benefit-cards-card:nth-child(3) { transition-delay: 0.2s; }
+.benefit-cards .benefit-cards-track.benefit-cards-in .benefit-cards-card:nth-child(4) { transition-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .benefit-cards .benefit-cards-track.benefit-cards-reveal .benefit-cards-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.benefit-cards .benefit-cards-icon {
+  margin: 0 0 24px;
+  line-height: 0;
+}
+
+.benefit-cards .benefit-cards-icon img {
+  width: auto;
+  height: 84px;
+  object-fit: contain;
+}
+
+.benefit-cards .benefit-cards-body h3 {
+  margin: 0 0 16px;
+  color: #1a1a1a;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.benefit-cards .benefit-cards-body p {
+  margin: 0;
+  color: #444;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Tablet: ~2.3 cards visible */
+@media (width >= 600px) {
+  .benefit-cards .benefit-cards-card {
+    flex-basis: 42%;
+  }
+}
+
+/* Desktop: 4 equal cards in a row, overlapping the banner bottom (no slider) */
+@media (width >= 900px) {
+  .benefit-cards {
+    /* larger white gap below the cards before the next section */
+    padding-bottom: 90px;
+  }
+
+  .benefit-cards .benefit-cards-track {
+    padding: 0 6%;
+    gap: 24px;
+    overflow: visible;
+    cursor: default;
+
+    /* pull the row up so the cards overlap the bottom edge of the hero above */
+    margin-top: -140px;
+  }
+
+  .benefit-cards .benefit-cards-card {
+    flex: 1;
+    background-color: #fff;
+    box-shadow: 0 8px 30px rgb(0 0 0 / 12%);
+    padding: 32px 28px 40px;
+  }
+}
