@@ -49,6 +49,7 @@
         "title",
         "hero",
         "hero-video",
+        "hero-carousel",
         "cards",
         "columns",
         "fragment"

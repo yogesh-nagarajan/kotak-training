@@ -14,6 +14,7 @@
       "title",
       "hero",
       "hero-video",
+      "hero-carousel",
       "cards",
       "columns",
       "fragment"
@@ -38,6 +39,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "hero-carousel",
+    "components": [
+      "hero-slide"
     ]
   }
 ]
