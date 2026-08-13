@@ -68,6 +68,31 @@
           "defaultContent": []
         }
       ]
+    },
+    {
+      "name": "forex-card",
+      "description": "Kotak prepaid/forex card landing page: owl hero banner (mapped to hero-p) followed by intro content.",
+      "urls": [
+        "https://www.kotak.bank.in/en/personal-banking/cards/prepaid-card/forex-card.html"
+      ],
+      "blocks": [
+        {
+          "name": "hero-p",
+          "instances": [
+            ".owl-hero-banner"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero Banner",
+          "selector": ".owl-hero-banner",
+          "style": "",
+          "blocks": ["hero-p"],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }
