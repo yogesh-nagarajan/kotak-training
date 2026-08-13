@@ -6,8 +6,8 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  */
 export default function decorate(block) {
   const rows = [...block.children];
-  // model order: image, imageAlt, eyebrow, text (richtext), link, linkText
-  const [imageCell, imageAltCell, eyebrowCell, textCell, linkCell, linkTextCell] = rows
+  // model order: image, video, imageAlt, eyebrow, text (richtext), link, linkText
+  const [imageCell, videoCell, imageAltCell, eyebrowCell, textCell, linkCell, linkTextCell] = rows
     .map((row) => row.firstElementChild);
 
   // ----- media column: video (mp4) or image -----
@@ -17,8 +17,8 @@ export default function decorate(block) {
   const img = imageCell?.querySelector('img');
   // a background video may be authored as a link or plain-text URL ending in .mp4
   const videoUrl = (
-    imageCell?.querySelector('a[href$=".mp4"]')?.getAttribute('href')
-    || (/\.mp4(\?|$)/i.test(imageCell?.textContent.trim() || '') ? imageCell.textContent.trim() : '')
+    videoCell?.querySelector('a[href$=".mp4"]')?.getAttribute('href')
+    || (/\.mp4(\?|$)/i.test(videoCell?.textContent.trim() || '') ? videoCell.textContent.trim() : '')
   );
   if (videoUrl) {
     const video = document.createElement('video');
@@ -53,7 +53,7 @@ export default function decorate(block) {
     const eyebrow = document.createElement('p');
     eyebrow.className = 'visacard-eyebrow';
     eyebrow.textContent = eyebrowText;
-    moveInstrumentation(rows[2], eyebrow);
+    moveInstrumentation(rows[3], eyebrow);
     content.append(eyebrow);
   }
 
@@ -62,7 +62,7 @@ export default function decorate(block) {
   // that contain a link are held back and rendered after the call-to-action.
   const secondaryParagraphs = [];
   if (textCell) {
-    moveInstrumentation(rows[3], content);
+    moveInstrumentation(rows[4], content);
     textCell.querySelector('h1, h2, h3, h4, h5, h6')?.classList.add('visacard-title');
     [...textCell.children].forEach((el) => {
       if (el.tagName === 'P' && el.querySelector('a')) {
@@ -86,7 +86,7 @@ export default function decorate(block) {
     cta.textContent = ctaLabel;
     const target = ctaAnchor.getAttribute('target');
     if (target && target !== 'undefined') cta.target = target;
-    moveInstrumentation(rows[4], cta);
+    moveInstrumentation(rows[5], cta);
     content.append(cta);
   }
 

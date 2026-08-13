@@ -28,6 +28,12 @@
           "multi": false
         },
         {
+          "component": "aem-content",
+          "name": "video",
+          "label": "Card Video (mp4)",
+          "description": "Optional background video shown on the card; the Card Image is used as its poster"
+        },
+        {
           "component": "text",
           "valueType": "string",
           "name": "imageAlt",
