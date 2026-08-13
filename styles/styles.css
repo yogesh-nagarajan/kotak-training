@@ -20,8 +20,8 @@
   --link-hover-color: #1d3ecf;
 
   /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --body-font-family: manrope, manrope-fallback, sans-serif;
+  --heading-font-family: manrope, manrope-fallback, sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -40,16 +40,13 @@
   --nav-height: 64px;
 }
 
-/* fallback fonts */
+/* fallback font — Arial adjusted to match Manrope's metrics */
 @font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
+  font-family: manrope-fallback;
+  size-adjust: 103.19%;
+  ascent-override: 103.31%;
+  descent-override: 29.07%;
+  line-gap-override: 0%;
   src: local('Arial');
 }
 
