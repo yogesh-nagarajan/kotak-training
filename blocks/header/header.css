@@ -146,8 +146,9 @@ header .nav-brand {
 }
 
 header nav .nav-brand img {
-  width: 128px;
-  height: auto;
+  display: block;
+  width: auto;
+  height: 28px;
 }
 
 /* sections */
@@ -266,4 +267,38 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+}
+
+
+/* nav section links */
+header nav .nav-sections a:any-link {
+  color: #222;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+header nav .nav-sections a:hover {
+  color: #3857ff;
+}
+
+/* tools: "Open Account" pill button */
+header nav .nav-tools a:any-link {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background-color: #3857ff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+header nav .nav-tools a:hover,
+header nav .nav-tools a:focus {
+  background-color: #1d3ecf;
+  color: #fff;
+  text-decoration: none;
 }
