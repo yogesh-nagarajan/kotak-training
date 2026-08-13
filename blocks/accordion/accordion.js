@@ -129,22 +129,7 @@ export default function decorate(block) {
   // first item active by default so the shared image has content
   if (items.length) activate(0);
 
-  // auto-play: advance through the items on a timer, but only while the
-  // section is in view (pauses when scrolled away or the tab is hidden)
-  if (items.length > 1) {
-    let inView = true;
-    const sync = () => {
-      if (inView && !document.hidden) scheduleNext();
-      else stopAutoplay();
-    };
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        inView = entries[0].isIntersecting;
-        sync();
-      }, { threshold: 0.2 });
-      observer.observe(block);
-    }
-    document.addEventListener('visibilitychange', sync);
-    sync();
-  }
+  // auto-play: continuously advance through the items, looping forever.
+  // runs regardless of scroll position so it is always cycling.
+  scheduleNext();
 }
