@@ -51,19 +51,23 @@ export default function decorate(block) {
     trigger.append(label);
     if (heading) heading.remove();
 
-    // panel (body text, shown when active)
+    // panel (body text, shown when active) — inner wrapper enables the
+    // collapse animation (a single grid row that grows/shrinks)
     const panel = document.createElement('div');
     panel.className = 'accordion-panel';
     panel.id = panelId;
     panel.setAttribute('role', 'region');
+    const panelInner = document.createElement('div');
+    panelInner.className = 'accordion-panel-inner';
     if (textCell) {
-      [...textCell.children].forEach((el) => panel.append(el));
-      if (!panel.children.length && textCell.textContent.trim()) {
+      [...textCell.children].forEach((el) => panelInner.append(el));
+      if (!panelInner.children.length && textCell.textContent.trim()) {
         const p = document.createElement('p');
         p.textContent = textCell.textContent.trim();
-        panel.append(p);
+        panelInner.append(p);
       }
     }
+    panel.append(panelInner);
 
     item.append(trigger, panel);
     list.append(item);
@@ -81,7 +85,8 @@ export default function decorate(block) {
       const active = i === index;
       item.classList.toggle('accordion-active', active);
       trigger.setAttribute('aria-expanded', active ? 'true' : 'false');
-      panel.hidden = !active;
+      // keep the panel in the accessibility tree; visibility is animated via CSS
+      panel.setAttribute('aria-hidden', active ? 'false' : 'true');
     });
     const { src, alt } = items[index];
     if (src && mediaImg.getAttribute('src') !== src) {

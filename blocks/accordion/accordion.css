@@ -72,36 +72,46 @@
 .accordion .accordion-active .accordion-trigger::after {
   background:
     linear-gradient(currentcolor, currentcolor) center / 100% 2px no-repeat;
-  color: #3857ff;
+  color: #222;
 }
 
 .accordion .accordion-active .accordion-trigger {
-  color: #3857ff;
+  color: #222;
 }
 
-/* body panel */
+/* body panel — animates open/closed via a collapsing grid row */
 .accordion .accordion-panel {
-  padding: 0 0 20px;
+  display: grid;
+  grid-template-rows: 0fr;
   font-size: var(--body-font-size-s);
   line-height: 1.6;
   color: #444;
+  opacity: 0;
+  transition: grid-template-rows 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
 }
 
-.accordion .accordion-panel[hidden] {
-  display: none;
+.accordion .accordion-panel-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
-.accordion .accordion-panel > *:first-child {
+.accordion .accordion-active .accordion-panel {
+  grid-template-rows: 1fr;
+  padding: 0 0 20px;
+  opacity: 1;
+}
+
+.accordion .accordion-panel-inner > *:first-child {
   margin-top: 0;
 }
 
-.accordion .accordion-panel > *:last-child {
+.accordion .accordion-panel-inner > *:last-child {
   margin-bottom: 0;
 }
 
-/* blue underline under the active item */
+/* darker underline under the active item */
 .accordion .accordion-active {
-  border-bottom-color: #3857ff;
+  border-bottom-color: #222;
 }
 
 /* tablet / desktop: image left, items right */
