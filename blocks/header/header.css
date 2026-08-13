@@ -24,11 +24,7 @@ header nav {
 }
 
 header nav[aria-expanded='true'] {
-  grid-template:
-    'brand tools hamburger' var(--nav-height)
-    'sections sections sections' 1fr / 1fr auto auto;
-  overflow-y: auto;
-  min-height: 100dvh;
+  grid-template: 'brand tools hamburger' var(--nav-height) / 1fr auto auto;
 }
 
 @media (width >= 900px) {
@@ -151,19 +147,29 @@ header nav .nav-brand img {
   height: 28px;
 }
 
-/* sections */
+/* sections — mobile: off-canvas drawer that slides in from the left */
 header nav .nav-sections {
   grid-area: sections;
+  box-sizing: border-box;
   flex: 1 1 auto;
-  display: none;
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  width: 100%;
+  height: calc(100dvh - var(--nav-height));
+  padding: 8px 24px 24px;
+  background-color: var(--background-color);
+  overflow-y: auto;
+  transform: translateX(-100%);
   visibility: hidden;
+  transition: transform 0.3s ease, visibility 0s linear 0.3s;
+  z-index: 1;
 }
 
 header nav[aria-expanded='true'] .nav-sections {
-  display: block;
+  transform: translateX(0);
   visibility: visible;
-  align-self: start;
-  margin-top: 8px;
+  transition: transform 0.3s ease, visibility 0s linear 0s;
 }
 
 header nav .nav-sections ul {
@@ -198,8 +204,16 @@ header nav[aria-expanded='true'] .nav-sections ul > li:first-child {
 
 @media (width >= 900px) {
   header nav .nav-sections {
-    display: block;
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+    overflow: visible;
+    transform: none;
     visibility: visible;
+    transition: none;
+    display: block;
     white-space: nowrap;
   }
 
