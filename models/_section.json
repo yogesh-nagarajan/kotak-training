@@ -53,7 +53,8 @@
         "cards",
         "columns",
         "fragment",
-        "img-container"
+        "img-container",
+        "rte"
       ]
     }
   ]
