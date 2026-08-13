@@ -21,6 +21,13 @@ export default function decorate(block) {
     || (/\.mp4(\?|$)/i.test(videoCell?.textContent.trim() || '') ? videoCell.textContent.trim() : '')
   );
   if (videoUrl) {
+    // static image (shown on mobile) + animated video (shown on desktop),
+    // toggled via CSS so mobile matches the source page's static card
+    const still = picture || img;
+    if (still) {
+      still.classList.add('visacard-still');
+      media.append(still);
+    }
     const video = document.createElement('video');
     video.className = 'visacard-video';
     video.muted = true;

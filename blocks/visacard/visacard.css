@@ -99,6 +99,11 @@
   object-fit: contain;
 }
 
+/* mobile shows the static card image; the animated video is desktop-only */
+.visacard .visacard-media .visacard-video {
+  display: none;
+}
+
 /* ----- tablet / desktop: two columns, text left, card right ----- */
 @media (width >= 900px) {
   .visacard {
@@ -123,5 +128,14 @@
 
   .visacard .visacard-media {
     flex: 1 1 50%;
+  }
+
+  /* desktop swaps to the animated video and hides the static image */
+  .visacard .visacard-media .visacard-video {
+    display: block;
+  }
+
+  .visacard .visacard-media .visacard-still {
+    display: none;
   }
 }
