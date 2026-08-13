@@ -96,7 +96,7 @@ export default function decorate(block) {
   };
 
   // how long each item stays active before auto-advancing (ms)
-  const AUTOPLAY_DELAY = 5000;
+  const AUTOPLAY_DELAY = 6000;
   let current = 0;
   let timer = null;
 
