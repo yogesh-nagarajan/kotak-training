@@ -1,34 +1,52 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+// Resolve decorative coin assets relative to this block so paths hold up in any
+// deployment. Two versions — a wide desktop layout and a lighter mobile one —
+// are swapped via CSS `display`; the hidden one is never fetched by the browser.
+const COINS_DESKTOP = new URL('./coins-desktop.png', import.meta.url).href;
+const COINS_MOBILE = new URL('./coins-mobile.png', import.meta.url).href;
+
+/** Desktop coins show at >=900px; below that the mobile set is used. */
+const DESKTOP_QUERY = '(min-width: 900px)';
+
+/** Create one decorative, non-blocking coin <img> (no src yet — set on demand). */
+function createCoinImg(className) {
+  const img = document.createElement('img');
+  img.className = className;
+  img.alt = '';
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.setAttribute('aria-hidden', 'true');
+  return img;
+}
+
 /**
- * Decorative rupee coin. Injected once and re-used via <use> so the scattered
- * coins add no extra network requests and negligible weight.
+ * Build the decorative coin layer: two absolutely-positioned <img> tags (desktop
+ * + mobile). Only the image matching the current viewport gets a `src`, so the
+ * browser downloads exactly one; a matchMedia listener fills in the other lazily
+ * if the viewport later crosses the breakpoint. Both are aria-hidden and never
+ * block rendering.
  */
-const COIN_SPRITE = `
-  <svg width="0" height="0" aria-hidden="true" focusable="false" class="hero-section-coin-sprite">
-    <defs>
-      <g id="hero-section-coin">
-        <ellipse cx="34" cy="34" rx="30" ry="30" fill="#d9dbe0"/>
-        <ellipse cx="32" cy="32" rx="30" ry="30" fill="#eef0f3"/>
-        <ellipse cx="32" cy="32" rx="24" ry="24" fill="#c9ccd3"/>
-        <ellipse cx="32" cy="32" rx="21" ry="21" fill="#e7e9ed"/>
-        <path d="M25 20h14m-14 5h14m-11 0c6 0 6 8 0 8h-3l9 11m-6-19c5 0 6-4 0-4"
-          fill="none" stroke="#7b8090" stroke-width="2.4"
-          stroke-linecap="round" stroke-linejoin="round"/>
-      </g>
-    </defs>
-  </svg>`;
+function buildCoins() {
+  const coins = document.createElement('div');
+  coins.className = 'hero-section-coins';
+  coins.setAttribute('aria-hidden', 'true');
 
-/** Number of scattered coins and where each sits (see CSS for offsets). */
-const COIN_COUNT = 6;
+  const desktop = createCoinImg('hero-section-coins-desktop');
+  const mobile = createCoinImg('hero-section-coins-mobile');
+  coins.append(desktop, mobile);
 
-function buildCoin(index) {
-  const coin = document.createElement('span');
-  coin.className = `hero-section-coin hero-section-coin-${index + 1}`;
-  coin.setAttribute('aria-hidden', 'true');
-  coin.innerHTML = '<svg viewBox="0 0 64 64"><use href="#hero-section-coin"/></svg>';
-  return coin;
+  const mq = window.matchMedia(DESKTOP_QUERY);
+  const applySources = () => {
+    if (mq.matches && !desktop.src) desktop.src = COINS_DESKTOP;
+    if (!mq.matches && !mobile.src) mobile.src = COINS_MOBILE;
+  };
+  applySources();
+  // populate the other image only if/when the viewport crosses the breakpoint
+  mq.addEventListener('change', applySources);
+
+  return coins;
 }
 
 /**
@@ -104,13 +122,7 @@ export default function decorate(block) {
     });
   }
 
-  // Decorative floating coins (aria-hidden, no extra requests).
-  const coins = document.createElement('div');
-  coins.className = 'hero-section-coins';
-  coins.setAttribute('aria-hidden', 'true');
-  coins.innerHTML = COIN_SPRITE;
-  for (let i = 0; i < COIN_COUNT; i += 1) coins.append(buildCoin(i));
-
-  block.replaceChildren(coins, content);
+  // Decorative floating coins: two responsive <img> tags (desktop + mobile).
+  block.replaceChildren(buildCoins(), content);
   if (cards) block.append(cards);
 }

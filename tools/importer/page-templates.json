@@ -68,6 +68,33 @@
           "defaultContent": []
         }
       ]
+    },
+    {
+      "name": "hero-section-test",
+      "description": "Test page demonstrating the hero-section block: an intro (eyebrow, heading, subtitle, CTA) followed by a 4-up feature card grid.",
+      "urls": [
+        "http://localhost:3000/drafts/hero-section-test.plain.html"
+      ],
+      "blocks": [
+        {
+          "name": "hero-section",
+          "instances": [
+            "div.hero-section"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero section",
+          "selector": "div:nth-of-type(1)",
+          "style": "",
+          "blocks": [
+            "hero-section"
+          ],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }
