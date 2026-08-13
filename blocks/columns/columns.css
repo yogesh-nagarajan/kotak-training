@@ -5,6 +5,26 @@
 
 .columns img {
   width: 100%;
+  border-radius: 20px;
+}
+
+/* heading + copy styling to match the source (e.g. "Perks that feel platinum forever") */
+.columns h2,
+.columns h3 {
+  margin: 0 0 16px;
+  color: #222;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.columns p {
+  margin: 0;
+  color: #222;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
 }
 
 .columns > div > div {
@@ -23,12 +43,19 @@
   .columns > div {
     align-items: center;
     flex-direction: unset;
-    gap: 24px;
+    gap: 96px;
+    padding: 0 40px;
   }
 
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+
+  .columns h2,
+  .columns h3 {
+    font-size: 44px;
+    letter-spacing: -1.1px;
   }
 }
 
