@@ -45,5 +45,11 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "linkbar",
+    "components": [
+      "linkbar-item"
+    ]
   }
 ]
