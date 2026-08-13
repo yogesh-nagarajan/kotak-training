@@ -23,7 +23,7 @@
 
 .visacard .visacard-eyebrow {
   color: #ff0049;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 2px;
   line-height: 1.5;
@@ -32,7 +32,7 @@
 
 .visacard .visacard-title {
   color: #222;
-  font-size: 40px;
+  font-size: 34px;
   font-weight: 700;
   line-height: 1.15;
 }
@@ -113,7 +113,7 @@
   }
 
   .visacard .visacard-title {
-    font-size: 56px;
+    font-size: 44px;
   }
 
   .visacard .visacard-media {
