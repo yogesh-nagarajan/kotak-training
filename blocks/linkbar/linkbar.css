@@ -4,6 +4,13 @@
   align-items: center;
   justify-content: center;
   gap: 16px 24px;
+  padding: 64px 0;
+}
+
+@media (width >= 900px) {
+  .linkbar .linkbar-items {
+    padding: 100px 0;
+  }
 }
 
 .linkbar .linkbar-item {
