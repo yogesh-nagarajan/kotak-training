@@ -104,6 +104,26 @@
   display: none;
 }
 
+/* card slides in from the right when scrolled into view (source page effect) */
+.visacard .visacard-media-slide {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.visacard .visacard-media-slide.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visacard .visacard-media-slide {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* ----- tablet / desktop: two columns, text left, card right ----- */
 @media (width >= 900px) {
   .visacard {

@@ -163,6 +163,7 @@ header nav[aria-expanded='true'] .nav-sections {
   display: block;
   visibility: visible;
   align-self: start;
+  margin-top: 8px;
 }
 
 header nav .nav-sections ul {
@@ -181,6 +182,18 @@ header nav .nav-sections ul > li > ul {
 
 header nav .nav-sections ul > li > ul > li {
   font-weight: 400;
+}
+
+/* mobile menu: larger tap targets with dividers, like the source page */
+header nav[aria-expanded='true'] .nav-sections ul > li {
+  padding: 20px 4px;
+  border-bottom: 1px solid #ededed;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+header nav[aria-expanded='true'] .nav-sections ul > li:first-child {
+  border-top: 1px solid #ededed;
 }
 
 @media (width >= 900px) {

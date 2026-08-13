@@ -103,5 +103,18 @@ export default function decorate(block) {
   block.textContent = '';
   // content first (text column on the left), then the card image on the right
   block.append(content);
-  if (media.childElementCount) block.append(media);
+  if (media.childElementCount) {
+    block.append(media);
+    // slide the card in from the right when it scrolls into view (source page effect)
+    media.classList.add('visacard-media-slide');
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    observer.observe(media);
+  }
 }
