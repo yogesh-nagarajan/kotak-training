@@ -1,0 +1,230 @@
+.hero-section {
+  --hero-section-pink: #e6006e;
+  --hero-section-cta: #4f46e5;
+  --hero-section-cta-hover: #4338ca;
+  --hero-section-heading: #2b2f3a;
+  --hero-section-text: #5a5f6b;
+  --hero-section-bg: #f5f5f6;
+  --hero-section-card-bg: #fff;
+
+  position: relative;
+  padding: 56px 16px 40px;
+  background: var(--hero-section-bg);
+  overflow: hidden;
+}
+
+/* intro copy -------------------------------------------------------------- */
+.hero-section .hero-section-content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-section .hero-section-eyebrow {
+  margin: 0 0 14px;
+  color: var(--hero-section-pink);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.hero-section .hero-section-title {
+  margin: 0 0 18px;
+  color: var(--hero-section-heading);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.hero-section .hero-section-subtitle {
+  margin: 0 auto;
+  max-width: 620px;
+  color: var(--hero-section-text);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.hero-section .hero-section-cta {
+  margin: 28px 0 0;
+}
+
+.hero-section .hero-section-cta a.button.accent {
+  border-radius: 8px;
+  padding: 0.85em 1.9em;
+  background: var(--hero-section-cta);
+  border-color: var(--hero-section-cta);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgb(79 70 229 / 25%);
+}
+
+.hero-section .hero-section-cta a.button.accent:hover,
+.hero-section .hero-section-cta a.button.accent:focus-visible {
+  background: var(--hero-section-cta-hover);
+  border-color: var(--hero-section-cta-hover);
+  text-decoration: none;
+}
+
+/* feature cards ----------------------------------------------------------- */
+.hero-section .hero-section-cards {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 1160px;
+  margin: 44px auto 0;
+  padding: 0;
+}
+
+.hero-section .hero-section-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 32px 26px 40px;
+  background: var(--hero-section-card-bg);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgb(20 23 40 / 8%);
+}
+
+.hero-section .hero-section-card-icon {
+  line-height: 0;
+}
+
+.hero-section .hero-section-card-icon img {
+  width: auto;
+  height: 56px;
+  object-fit: contain;
+}
+
+.hero-section .hero-section-card-body {
+  margin: 0;
+  color: var(--hero-section-text);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.hero-section .hero-section-card-body :is(p, h2, h3, h4) {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+/* decorative floating coins ---------------------------------------------- */
+.hero-section .hero-section-coins {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-section .hero-section-coin {
+  position: absolute;
+  display: block;
+  width: 60px;
+  height: 60px;
+  opacity: 0.9;
+  filter: drop-shadow(0 6px 10px rgb(20 23 40 / 12%));
+}
+
+.hero-section .hero-section-coin svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-section .hero-section-coin-1 {
+  top: 8%;
+  left: 13%;
+  transform: rotate(-18deg);
+}
+
+.hero-section .hero-section-coin-2 {
+  top: 5%;
+  right: 20%;
+  transform: rotate(12deg);
+}
+
+.hero-section .hero-section-coin-3 {
+  top: 34%;
+  left: 4%;
+  transform: rotate(20deg);
+}
+
+.hero-section .hero-section-coin-4 {
+  top: 26%;
+  right: 9%;
+  transform: rotate(-14deg);
+}
+
+.hero-section .hero-section-coin-5 {
+  top: 48%;
+  left: 20%;
+  transform: rotate(-24deg);
+}
+
+.hero-section .hero-section-coin-6 {
+  top: 52%;
+  right: 4%;
+  transform: rotate(16deg);
+}
+
+/* hide the smaller/edge coins on narrow screens to avoid clutter */
+@media (width < 600px) {
+  .hero-section .hero-section-coin-3,
+  .hero-section .hero-section-coin-5,
+  .hero-section .hero-section-coin-6 {
+    display: none;
+  }
+
+  .hero-section .hero-section-coin {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* tablet ------------------------------------------------------------------ */
+@media (width >= 600px) {
+  .hero-section {
+    padding: 72px 24px 56px;
+  }
+
+  .hero-section .hero-section-title {
+    font-size: 52px;
+  }
+
+  .hero-section .hero-section-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* desktop ----------------------------------------------------------------- */
+@media (width >= 900px) {
+  .hero-section {
+    padding: 88px 32px 64px;
+  }
+
+  .hero-section .hero-section-title {
+    font-size: 64px;
+  }
+
+  .hero-section .hero-section-subtitle {
+    font-size: 17px;
+  }
+
+  .hero-section .hero-section-cards {
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 56px;
+  }
+
+  .hero-section .hero-section-coin {
+    width: 72px;
+    height: 72px;
+  }
+}

@@ -49,5 +49,11 @@
     "components": [
       "hero-slide"
     ]
+  },
+  {
+    "id": "hero-section",
+    "components": [
+      "hero-section-card"
+    ]
   }
 ]

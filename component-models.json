@@ -330,6 +330,47 @@
     ]
   },
   {
+    "id": "hero-section",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Hero text",
+        "description": "Eyebrow (small paragraph), heading (Heading 1), sub text (paragraph) and the call-to-action link. The link renders as the primary button.",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "hero-section-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon",
+        "description": "Card icon / illustration.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "iconAlt",
+        "label": "Icon alt text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Card text",
+        "description": "Short benefit description shown under the icon.",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "hero-video",
     "fields": [
       {
