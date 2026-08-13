@@ -31,3 +31,54 @@
     order: unset;
   }
 }
+
+/* link-card variant: columns rows whose cells contain only a heading link
+   (e.g. "811 Super T&C" / "811 Super Fees & Charges") */
+.columns > div:has(> div > h3 > a:only-child) {
+  gap: 24px;
+}
+
+.columns > div > div:has(> h3 > a:only-child) {
+  padding: 24px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.columns > div > div:has(> h3 > a:only-child):hover {
+  border-color: #3857ff;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
+}
+
+.columns > div > div > h3 > a:any-link {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.columns > div > div > h3 {
+  margin: 0;
+}
+
+/* red bullet markers for list content inside columns
+   (e.g. "Safety that stays a cut above" insurance benefits) */
+.columns ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.columns ul li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.columns ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ff0049;
+}

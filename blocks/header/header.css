@@ -5,6 +5,7 @@ header .nav-wrapper {
   z-index: 2;
   position: fixed;
   top: 0;
+  border-bottom: 1px solid #e6e6e6;
 }
 
 header nav {
@@ -286,6 +287,7 @@ header nav .nav-sections a:hover {
 header nav .nav-tools a:any-link {
   display: inline-block;
   padding: 12px 24px;
+  border: 0;
   border-radius: 12px;
   background-color: #3857ff;
   color: #fff;
