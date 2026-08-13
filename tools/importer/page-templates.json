@@ -70,6 +70,75 @@
       ]
     },
     {
+      "name": "feature-811-home",
+      "description": "Kotak811 home landing page (no carousel): hero banner, benefit card grid, ActivMoney image container, and secondary hero.",
+      "urls": [
+        "http://localhost:3000/drafts/feature-811-home.plain.html"
+      ],
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            "div.hero"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "div.cards"
+          ]
+        },
+        {
+          "name": "img-container",
+          "instances": [
+            "div.img-container"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Intro hero",
+          "selector": "div:nth-of-type(1)",
+          "style": "",
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Core benefits cards",
+          "selector": "div:nth-of-type(2)",
+          "style": "",
+          "blocks": [
+            "cards"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "ActivMoney image container",
+          "selector": "div:nth-of-type(3)",
+          "style": "",
+          "blocks": [
+            "img-container"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-4",
+          "name": "Secondary hero",
+          "selector": "div:nth-of-type(4)",
+          "style": "",
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        }
+      ]
+    },
+    {
       "name": "forex-card",
       "description": "Kotak prepaid/forex card landing page: owl hero banner (mapped to hero-p) followed by intro content.",
       "urls": [
