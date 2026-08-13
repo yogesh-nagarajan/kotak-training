@@ -1,6 +1,13 @@
 .faq {
   max-width: 1000px;
   margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (width >= 900px) {
+  .faq {
+    padding: 0 48px;
+  }
 }
 
 /* section header: "Ask Kotak811" + "Frequently Asked Questions" */
