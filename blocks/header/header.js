@@ -4,6 +4,9 @@ import { loadFragment } from '../fragment/fragment.js';
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
+// the top-level nav section that represents the current page context
+const CURRENT_SECTION = 'NRI';
+
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
@@ -109,6 +112,140 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Decorate a top-level nav item as a Kotak mega-menu or a simple dropdown.
+ * MEGA  = the item's nested <ul> contains categories that themselves have a
+ *         nested <ul> of links (two levels: category -> links).
+ * SIMPLE = the item's nested <ul> contains only links (one level).
+ * @param {Element} navSection The top-level <li>
+ */
+/**
+ * Get a nav item's own label — the text before its nested <ul>. Handles both a
+ * bare text node (`<li>Personal<ul>…`) and a leading paragraph
+ * (`<li><p>Personal</p><ul>…`), the shape produced by the content importer.
+ * @param {Element} el The <li>
+ * @returns {string} The trimmed label
+ */
+// matches a leading EDS icon token like ":accounts:" in a text label
+const ICON_TOKEN = /^\s*:([a-z0-9-]+):\s*/i;
+
+/**
+ * Get a nav item's own label text — the text before its nested <ul>, with any
+ * leading icon span or `:name:` icon token stripped. Handles a bare text node
+ * (`<li>Personal<ul>…`) or a leading paragraph (`<li><p>Personal</p><ul>…`),
+ * the shape produced by the content importer.
+ * @param {Element} el The <li>
+ * @returns {string} The trimmed label
+ */
+function getItemLabel(el) {
+  const nodes = [...el.childNodes];
+  let label = '';
+  for (let i = 0; i < nodes.length; i += 1) {
+    const node = nodes[i];
+    if (node.nodeType === 1 && node.tagName === 'UL') break;
+    const isIcon = node.nodeType === 1 && node.classList?.contains('icon');
+    const text = isIcon ? '' : node.textContent.trim();
+    if (text) {
+      label = text.replace(ICON_TOKEN, '').trim();
+      break;
+    }
+  }
+  return label;
+}
+
+/**
+ * Build the leading icon element for a nav item, from either a decorated
+ * `<span class="icon icon-name">` or a `:name:` token in the label text.
+ * @param {Element} el The <li>
+ * @returns {Element|null} An icon <span> (with <img>), or null
+ */
+function getItemIcon(el) {
+  const nodes = [...el.childNodes];
+  for (let i = 0; i < nodes.length; i += 1) {
+    const node = nodes[i];
+    if (node.nodeType === 1 && node.tagName === 'UL') break;
+    if (node.nodeType === 1 && node.classList?.contains('icon')) {
+      return node.cloneNode(true);
+    }
+    const text = node.textContent || '';
+    const match = text.match(ICON_TOKEN);
+    if (match) {
+      const span = document.createElement('span');
+      span.className = `icon icon-${match[1]}`;
+      const img = document.createElement('img');
+      img.src = `${window.hlx.codeBasePath}/icons/${match[1]}.svg`;
+      img.alt = '';
+      img.loading = 'lazy';
+      span.append(img);
+      return span;
+    }
+    if (text.trim()) break;
+  }
+  return null;
+}
+
+function decorateNavItem(navSection) {
+  const submenu = navSection.querySelector(':scope > ul');
+  if (!submenu) return;
+
+  navSection.classList.add('nav-drop');
+  const categoryItems = [...submenu.children];
+  const isMega = categoryItems.some((li) => li.querySelector(':scope > ul'));
+
+  // label = the item's own text (before the nested list)
+  const label = getItemLabel(navSection);
+  if (label.toLowerCase() === CURRENT_SECTION.toLowerCase()) {
+    navSection.classList.add('nav-active');
+  }
+
+  if (!isMega) {
+    navSection.classList.add('nav-simple');
+    return;
+  }
+
+  navSection.classList.add('nav-mega');
+  submenu.classList.add('nav-mega-panel');
+
+  // left column: category triggers; right column: the selected category's links
+  const cats = document.createElement('div');
+  cats.className = 'nav-mega-categories';
+  const linksPanel = document.createElement('div');
+  linksPanel.className = 'nav-mega-links';
+
+  categoryItems.forEach((catLi, index) => {
+    const catLabel = getItemLabel(catLi);
+    const catIcon = getItemIcon(catLi);
+    const catLinks = catLi.querySelector(':scope > ul');
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'nav-mega-category';
+    if (catIcon) btn.append(catIcon);
+    btn.append(document.createTextNode(catLabel));
+    btn.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+
+    const group = document.createElement('div');
+    group.className = 'nav-mega-group';
+    group.hidden = index !== 0;
+    if (catLinks) group.append(catLinks.cloneNode(true));
+
+    const activate = () => {
+      cats.querySelectorAll('.nav-mega-category').forEach((b) => b.setAttribute('aria-selected', 'false'));
+      linksPanel.querySelectorAll('.nav-mega-group').forEach((g) => { g.hidden = true; });
+      btn.setAttribute('aria-selected', 'true');
+      group.hidden = false;
+    };
+    btn.addEventListener('mouseenter', activate);
+    btn.addEventListener('focus', activate);
+    btn.addEventListener('click', activate);
+
+    cats.append(btn);
+    linksPanel.append(group);
+  });
+
+  submenu.replaceChildren(cats, linksPanel);
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -131,7 +268,7 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand?.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
@@ -140,7 +277,9 @@ export default async function decorate(block) {
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+      if (navSection.querySelector('ul')) {
+        decorateNavItem(navSection);
+      }
       navSection.addEventListener('click', () => {
         if (isDesktop.matches) {
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
@@ -149,6 +288,35 @@ export default async function decorate(block) {
         }
       });
     });
+  }
+
+  // mark the login button in tools for styling
+  const navTools = nav.querySelector('.nav-tools');
+  navTools?.querySelector('a')?.classList.add('nav-login');
+
+  // search control: a button toggling an inline search field, placed before Login
+  if (navTools) {
+    const search = document.createElement('div');
+    search.className = 'nav-search';
+    const searchBtn = document.createElement('button');
+    searchBtn.type = 'button';
+    searchBtn.className = 'nav-search-toggle';
+    searchBtn.setAttribute('aria-label', 'Search');
+    searchBtn.setAttribute('aria-expanded', 'false');
+    const searchField = document.createElement('input');
+    searchField.type = 'search';
+    searchField.className = 'nav-search-field';
+    searchField.placeholder = 'Search';
+    searchField.setAttribute('aria-label', 'Search');
+    searchField.hidden = true;
+    searchBtn.addEventListener('click', () => {
+      const open = searchBtn.getAttribute('aria-expanded') === 'true';
+      searchBtn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      searchField.hidden = open;
+      if (!open) searchField.focus();
+    });
+    search.append(searchBtn, searchField);
+    navTools.prepend(search);
   }
 
   // hamburger for mobile

@@ -5,13 +5,49 @@ const AUTOPLAY_INTERVAL = 5000;
 
 /**
  * Build a single slide element from an authored row.
- * Expected cell order: image, imageAlt, text (richtext), link, linkText
+ *
+ * Cells are identified by their content rather than a fixed position so the
+ * block works with the delivered content model — where `imageAlt` collapses
+ * into the image's alt attribute and `linkText` into the anchor text, leaving
+ * three cells (image, text, link) — as well as any extra text-only cells.
  * @param {Element} row The authored row element
  * @returns {Element} The decorated slide
  */
+function buildArtDirectedPicture(desktopSrc, mobileSrc, alt) {
+  // Art-directed responsive image: distinct desktop/mobile files switched at
+  // 750px. Built directly (not via createOptimizedPicture) so both authored
+  // sources are preserved.
+  const picture = document.createElement('picture');
+
+  const desktopSource = document.createElement('source');
+  desktopSource.media = '(min-width: 750px)';
+  desktopSource.srcset = desktopSrc;
+  picture.append(desktopSource);
+
+  if (mobileSrc && mobileSrc !== desktopSrc) {
+    const mobileSource = document.createElement('source');
+    mobileSource.media = '(max-width: 749px)';
+    mobileSource.srcset = mobileSrc;
+    picture.append(mobileSource);
+  }
+
+  const img = document.createElement('img');
+  img.src = mobileSrc || desktopSrc;
+  img.alt = alt;
+  img.loading = 'eager';
+  picture.append(img);
+
+  return picture;
+}
+
 function buildSlide(row) {
   const cells = [...row.children];
-  const [imageCell, altCell, textCell, linkCell, linkTextCell] = cells;
+  const imageCells = cells.filter((c) => c.querySelector('picture, img'));
+  const [imageCell, mobileImageCell] = imageCells;
+  const textCell = cells.find((c) => !imageCells.includes(c)
+    && c.querySelector('h1, h2, h3, h4, h5, h6'));
+  const linkCell = cells.find((c) => !imageCells.includes(c) && c !== textCell
+    && c.querySelector('a'));
 
   const slide = document.createElement('div');
   slide.className = 'hero-carousel-slide';
@@ -22,8 +58,16 @@ function buildSlide(row) {
   // background image (full-bleed behind the content)
   const img = imageCell?.querySelector('img');
   if (img) {
-    const alt = (altCell?.textContent || img.getAttribute('alt') || '').trim();
-    const picture = createOptimizedPicture(img.src, alt, false, [{ width: '1600' }]);
+    const alt = (img.getAttribute('alt') || '').trim();
+    const mobileImg = mobileImageCell?.querySelector('img');
+    let picture;
+    if (mobileImg && mobileImg.src !== img.src) {
+      // two distinct authored images -> art-directed picture (desktop/mobile)
+      picture = buildArtDirectedPicture(img.src, mobileImg.src, alt);
+    } else {
+      // single image -> resolution-optimized picture
+      picture = createOptimizedPicture(img.src, alt, true, [{ width: '1600' }]);
+    }
     const image = document.createElement('div');
     image.className = 'hero-carousel-image';
     image.append(picture);
@@ -38,10 +82,10 @@ function buildSlide(row) {
     while (textCell.firstElementChild) content.append(textCell.firstElementChild);
   }
 
-  // call-to-action button (link + optional label override)
+  // call-to-action button (anchor text is the label)
   const linkAnchor = linkCell?.querySelector('a');
   const href = linkAnchor?.getAttribute('href');
-  const label = (linkTextCell?.textContent || linkAnchor?.textContent || '').trim();
+  const label = (linkAnchor?.textContent || '').trim();
   if (href && label) {
     const cta = document.createElement('a');
     cta.className = 'button primary hero-carousel-cta';
