@@ -181,15 +181,17 @@ header nav .nav-sections ul > li > ul > li {
 }
 
 /* mobile menu: larger tap targets with dividers, like the source page */
-header nav[aria-expanded='true'] .nav-sections ul > li {
-  padding: 20px 4px;
-  border-bottom: 1px solid #ededed;
-  font-size: 22px;
-  font-weight: 500;
-}
+@media (width < 900px) {
+  header nav[aria-expanded='true'] .nav-sections ul > li {
+    padding: 20px 4px;
+    border-bottom: 1px solid #ededed;
+    font-size: 22px;
+    font-weight: 500;
+  }
 
-header nav[aria-expanded='true'] .nav-sections ul > li:first-child {
-  border-top: 1px solid #ededed;
+  header nav[aria-expanded='true'] .nav-sections ul > li:first-child {
+    border-top: 1px solid #ededed;
+  }
 }
 
 @media (width >= 900px) {
@@ -319,4 +321,13 @@ header nav .nav-tools a:focus {
   background-color: #1d3ecf;
   color: #fff;
   text-decoration: none;
+}
+
+/* mobile: slightly smaller "Open Account" button, matching the source */
+@media (width < 900px) {
+  header nav .nav-tools a:any-link {
+    padding: 9px 18px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
 }
