@@ -320,3 +320,20 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+
+/* centered section title (e.g. "It's super smooth") */
+main .section.centered-title {
+  text-align: center;
+}
+
+main .section.centered-title h1,
+main .section.centered-title h2,
+main .section.centered-title h3 {
+  font-weight: 700;
+}
+
+@media (width >= 900px) {
+  main .section.centered-title h2 {
+    font-size: 44px;
+  }
+}
