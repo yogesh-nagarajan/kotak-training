@@ -1,0 +1,112 @@
+.faq {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* section header: "Ask Kotak811" + "Frequently Asked Questions" */
+.faq .faq-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.faq .faq-header h1,
+.faq .faq-header h2,
+.faq .faq-header h3 {
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+}
+
+.faq .faq-header p {
+  color: #ff0049;
+  font-weight: 700;
+  margin: 8px 0 0;
+}
+
+/* individual question item */
+.faq .faq-item {
+  border-top: 1px solid #e5e7eb;
+}
+
+.faq .faq-item:last-child {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* trigger (question row) */
+.faq .faq-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  margin: 0;
+  padding: 24px 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #222;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xs);
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq .faq-question {
+  flex: 1 1 auto;
+}
+
+/* red +/- indicator */
+.faq .faq-trigger::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  background:
+    linear-gradient(currentcolor, currentcolor) center / 100% 2px no-repeat,
+    linear-gradient(currentcolor, currentcolor) center / 2px 100% no-repeat;
+  color: #ff0049;
+  transition: transform 0.25s ease;
+}
+
+/* open item collapses the vertical bar into a minus */
+.faq .faq-open .faq-trigger::after {
+  background:
+    linear-gradient(currentcolor, currentcolor) center / 100% 2px no-repeat;
+}
+
+/* answer panel — animates open/closed via a collapsing grid row */
+.faq .faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
+  color: #444;
+  transition: grid-template-rows 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.faq .faq-answer-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.faq .faq-open .faq-answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  padding: 0 8px 24px;
+}
+
+.faq .faq-answer-inner > *:first-child {
+  margin-top: 0;
+}
+
+.faq .faq-answer-inner > *:last-child {
+  margin-bottom: 0;
+}
+
+.faq .faq-answer a:any-link {
+  color: var(--link-color);
+}
