@@ -55,7 +55,7 @@
   flex: 1 1 auto;
 }
 
-/* +/- indicator */
+/* +/- indicator — collapsed items show a red "+" */
 .accordion .accordion-trigger::after {
   content: '';
   flex: 0 0 auto;
@@ -64,15 +64,15 @@
   background:
     linear-gradient(currentcolor, currentcolor) center / 100% 2px no-repeat,
     linear-gradient(currentcolor, currentcolor) center / 2px 100% no-repeat;
-  color: #222;
+  color: #e4002b;
   transition: transform 0.25s ease;
 }
 
-/* active item collapses the vertical bar into a minus */
+/* active item collapses the vertical bar into a grey minus */
 .accordion .accordion-active .accordion-trigger::after {
   background:
     linear-gradient(currentcolor, currentcolor) center / 100% 2px no-repeat;
-  color: #222;
+  color: #888;
 }
 
 .accordion .accordion-active .accordion-trigger {
