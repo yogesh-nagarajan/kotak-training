@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "hero-carousel-demo",
+      "urls": [
+        "http://localhost:3000/preview"
+      ],
+      "coverageGaps": [],
+      "description": "Demo landing page featuring a Hero Carousel block (rotating banner slides with title, description and CTA) followed by a Cards section titled 'Why choose Kotak'.",
+      "blocks": [
+        {
+          "name": "hero-carousel",
+          "instances": [
+            ".hero-carousel-container .hero-carousel",
+            "section.hero-carousel-container .hero-carousel.block"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            ".cards-container .cards",
+            ".cards-container .cards.block"
+          ]
+        }
+      ],
+      "sections": []
+    },
+    {
+      "name": "nri-home-loan-features",
+      "urls": [
+        "http://localhost:3000/nri-home-loan-features"
+      ],
+      "coverageGaps": [],
+      "description": "NRI Home Loan Features product page: hero-carousel, product tabs, intro, feature-carousel, disclaimer default content, CTA banner, FAQ accordion, and related-products cards.",
+      "blocks": [
+        {
+          "name": "breadcrumb",
+          "instances": [
+            ".breadcrumb-container .breadcrumb",
+            ".breadcrumb-container .breadcrumb.block"
+          ]
+        },
+        {
+          "name": "hero-carousel",
+          "instances": [
+            ".hero-carousel-container .hero-carousel",
+            "section.hero-carousel-container .hero-carousel.block"
+          ]
+        },
+        {
+          "name": "tabs",
+          "instances": [
+            ".tabs-container .tabs",
+            ".tabs-container .tabs.block"
+          ]
+        },
+        {
+          "name": "intro",
+          "instances": [
+            ".intro-container .intro",
+            ".intro-container .intro.block"
+          ]
+        },
+        {
+          "name": "feature-carousel",
+          "instances": [
+            ".feature-carousel-container .feature-carousel",
+            ".feature-carousel-container .feature-carousel.block"
+          ]
+        },
+        {
+          "name": "cta",
+          "instances": [
+            ".cta-container .cta",
+            ".cta-container .cta.block"
+          ]
+        },
+        {
+          "name": "faq",
+          "instances": [
+            ".faq-container .faq",
+            ".faq-container .faq.block"
+          ]
+        },
+        {
+          "name": "related-products",
+          "instances": [
+            ".related-products-container .related-products",
+            ".related-products-container .related-products.block"
+          ]
+        }
+      ],
+      "sections": []
+    }
+  ]
+}

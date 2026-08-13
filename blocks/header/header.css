@@ -4,6 +4,8 @@ header .nav-wrapper {
   width: 100%;
   z-index: 2;
   position: fixed;
+  border-bottom: 1px solid #e6e6e6;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 6%);
 }
 
 header nav {
@@ -269,4 +271,288 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   Kotak Mahindra Bank mega-menu theme
+   ========================================================================== */
+
+header {
+  --kotak-navy: #12294d;
+  --kotak-red: #ed1c24;
+  --kotak-mega-bg: #eef2f7;
+  --kotak-panel-bg: #fff;
+}
+
+header .nav-brand a:any-link {
+  color: var(--kotak-navy);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* search control */
+header nav .nav-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+header nav .nav-search-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--kotak-navy);
+  cursor: pointer;
+}
+
+header nav .nav-search-toggle::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border: 2px solid currentcolor;
+  border-radius: 50%;
+}
+
+header nav .nav-search-toggle::after {
+  content: "";
+  width: 6px;
+  height: 2px;
+  margin-left: -3px;
+  background: currentcolor;
+  border-radius: 2px;
+  transform: rotate(45deg) translate(6px, 3px);
+}
+
+header nav .nav-search-toggle:hover,
+header nav .nav-search-toggle:focus-visible {
+  color: var(--kotak-red);
+}
+
+header nav .nav-search-field {
+  width: 180px;
+  max-width: 50vw;
+  padding: 7px 12px;
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  font: inherit;
+  font-size: 14px;
+}
+
+header nav .nav-search-field[hidden] {
+  display: none;
+}
+
+/* login button (far right) */
+header nav .nav-tools a.nav-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 20px;
+  padding: 8px 20px;
+  background-color: var(--kotak-red);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+header nav .nav-tools a.nav-login::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-color: currentcolor;
+  mask: radial-gradient(circle at 50% 35%, #000 22%, transparent 23%) top / 100% 100% no-repeat,
+    radial-gradient(ellipse 60% 45% at 50% 105%, #000 50%, transparent 51%) bottom / 100% 100% no-repeat;
+  mask-composite: add;
+}
+
+header nav .nav-tools a.nav-login:hover,
+header nav .nav-tools a.nav-login:focus-visible {
+  background-color: #c8161d;
+  color: #fff;
+  text-decoration: none;
+}
+
+@media (width >= 900px) {
+  /* navy top-level labels */
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    color: var(--kotak-navy);
+    font-weight: 600;
+  }
+
+  /* active top-level item: red text + red underline */
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-active {
+    color: var(--kotak-red);
+    box-shadow: inset 0 -3px 0 0 var(--kotak-red);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:hover {
+    color: var(--kotak-red);
+  }
+
+  /* --- MEGA menu panel (Personal / Business / NRI) --- */
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-mega[aria-expanded='true'] > ul.nav-mega-panel {
+    display: grid;
+    grid-template-columns: minmax(200px, 30%) 1fr;
+    gap: 0;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 12px);
+    width: 640px;
+    max-width: 90vw;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: var(--kotak-mega-bg);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 15%);
+  }
+
+  /* remove the small arrow used by the generic dropdown for mega panels */
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-mega > ul.nav-mega-panel::before {
+    content: none;
+  }
+
+  header nav .nav-mega-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: 12px;
+  }
+
+  header nav .nav-mega-category {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    border: 0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    background: transparent;
+    color: var(--kotak-navy);
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  header nav .nav-mega-category .icon,
+  header nav .nav-mega-category .icon img {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 auto;
+  }
+
+  header nav .nav-mega-category[aria-selected='true'] {
+    background-color: var(--kotak-panel-bg);
+    color: var(--kotak-red);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 8%);
+  }
+
+  header nav .nav-mega-links {
+    border-radius: 8px;
+    padding: 16px 20px;
+    background-color: var(--kotak-panel-bg);
+  }
+
+  header nav .nav-mega-group ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  header nav .nav-mega-group a:any-link {
+    display: block;
+    padding: 4px 0;
+    color: var(--kotak-navy);
+    font-weight: 500;
+    white-space: normal;
+    text-decoration: none;
+  }
+
+  header nav .nav-mega-group a:hover,
+  header nav .nav-mega-group a:focus-visible {
+    color: var(--kotak-red);
+    text-decoration: underline;
+  }
+
+  /* --- SIMPLE dropdown (About Us / Learn / Help) --- */
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-simple[aria-expanded='true'] > ul {
+    width: 240px;
+    border-radius: 12px;
+    padding: 12px;
+    background-color: var(--kotak-mega-bg);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 15%);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-simple > ul::before {
+    content: none;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-simple > ul > li {
+    padding: 6px 10px;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-simple a:any-link {
+    color: var(--kotak-navy);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-simple a:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-simple a:focus-visible {
+    color: var(--kotak-red);
+  }
+}
+
+/* --- Mobile: mega categories render as stacked lists inside the drawer --- */
+header nav .nav-mega-links .nav-mega-group[hidden] {
+  display: none;
+}
+
+@media (width < 900px) {
+  header nav .nav-mega-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  header nav .nav-mega-category {
+    margin: 0;
+    border: 0;
+    padding: 8px 0;
+    background: transparent;
+    color: var(--kotak-navy);
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  header nav .nav-mega-category[aria-selected='true'] {
+    color: var(--kotak-red);
+  }
+
+  header nav .nav-mega-group[hidden] {
+    display: block; /* show all groups stacked on mobile */
+  }
+
+  header nav .nav-mega-group ul,
+  header nav .nav-simple > ul {
+    margin: 0;
+    padding-left: 12px;
+    list-style: none;
+  }
 }

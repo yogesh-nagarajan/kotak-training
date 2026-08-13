@@ -1,0 +1,65 @@
+.cta {
+  box-sizing: border-box;
+
+  /* full-bleed: break out of the centered section column to span the viewport */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 40px 24px;
+  background: linear-gradient(90deg, #f7791e, #e4002b);
+  text-align: center;
+}
+
+.cta-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.cta .cta-button,
+.cta .cta-button.button,
+.cta .cta-button.button.primary {
+  display: inline-block;
+  margin: 0;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 32px;
+  background-color: #fff;
+  color: #e4002b;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.cta .cta-button:hover,
+.cta .cta-button:focus-visible,
+.cta .cta-button.button:hover,
+.cta .cta-button.button:focus-visible,
+.cta .cta-button.button.primary:hover,
+.cta .cta-button.button.primary:focus-visible {
+  border: none;
+  background-color: #f2f2f2;
+  color: #e4002b;
+}
+
+@media (width >= 900px) {
+  .cta {
+    padding: 64px 32px;
+  }
+
+  .cta-title {
+    font-size: 36px;
+  }
+}
