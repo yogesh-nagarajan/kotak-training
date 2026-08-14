@@ -101,3 +101,5 @@ export default function decorate(block) {
   block.replaceChildren(banner);
   if (cardRows.length) block.append(ul);
 }
+
+
