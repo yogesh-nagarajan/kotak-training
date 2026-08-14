@@ -49,10 +49,24 @@
         "title",
         "hero",
         "hero-video",
+        "hero-carousel",
+        "breadcrumb",
+        "tabs",
+        "intro",
+        "feature-carousel",
+        "cta",
+        "faq",
+        "related-products",
         "cards",
         "columns",
         "fragment",
-        "supermoney-hero"
+        "img-container",
+        "rte",
+        "emi-calculator",
+        "accordion-faq",
+        "supermoney-hero",
+        "supermoney-header",
+        "supermoney-footer"
       ]
     }
   ]
