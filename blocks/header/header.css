@@ -259,6 +259,13 @@ header .nav-wrapper {
     text-decoration: none;
   }
 
+  .header nav .nav-megamenu-panel img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    flex: none;
+  }
+
   .header nav .nav-megamenu-category a img {
     display: none;
   }
@@ -304,12 +311,7 @@ header .nav-wrapper {
     color: #e4181c;
   }
 
-  .header nav .nav-megamenu-panel img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-    flex: none;
-  }
+  
 }
 
 /* ---- Tools (search + login) ---- */
@@ -318,6 +320,7 @@ header .nav-wrapper {
   justify-self: end;
   display: flex;
   align-items: center;
+  
 }
 
 .header nav .nav-tools ul {
@@ -440,6 +443,22 @@ header .nav-wrapper {
     display: none;
   }
 
+ .header nav .nav-megamenu-heading a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+   .header nav .nav-megamenu-category > a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 4px;
+    color: #05132b;
+    font-size: 19px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
   .header nav .nav-sections > ul > li > a {
     display: inline-block;
     padding: 10px 22px;
@@ -486,10 +505,7 @@ header .nav-wrapper {
     color: #05132b;
   }
 
-  .header nav .nav-megamenu-heading a {
-    color: inherit;
-    text-decoration: none;
-  }
+ 
 
   .header nav .nav-megamenu-heading::after {
     content: '';
@@ -510,17 +526,6 @@ header .nav-wrapper {
 
   .header nav .nav-megamenu-category {
     border-bottom: 1px solid #eee;
-  }
-
-  .header nav .nav-megamenu-category > a {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 4px;
-    color: #05132b;
-    font-size: 19px;
-    font-weight: 700;
-    text-decoration: none;
   }
 
   .header nav .nav-megamenu-category > a img {
@@ -546,9 +551,4 @@ header .nav-wrapper {
   header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
     padding: 8px 0;
   }
-}
-
-/* tools */
-header nav .nav-tools {
-  grid-area: tools;
 }
