@@ -1,0 +1,8 @@
+{
+  "status": "success",
+  "url": "http://localhost:3000/nav",
+  "path": "nav",
+  "timestamp": "2026-08-13T10:35:17.461Z",
+  "title": "nav",
+  "template": "nav-fragment"
+}

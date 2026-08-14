@@ -1,14 +1,9 @@
-/* Header / navigation — Kotak style */
-
-/* Megamenu selectors are grouped by component for readability; their source
-   order differs from strict specificity order, which is intentional here. */
-/* stylelint-disable no-descending-specificity */
-
-.header-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background-color: #fff;
+/* header and nav layout */
+header .nav-wrapper {
+  background-color: var(--background-color);
+  width: 100%;
+  z-index: 2;
+  position: fixed;
 }
 
 .header .nav-wrapper {
@@ -548,13 +543,12 @@
     flex: none;
   }
 
-  .header nav .nav-megamenu-category.is-open > a::after {
-    transform: rotate(45deg);
+  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
+    padding: 8px 0;
   }
+}
 
-  /* on mobile the top level shows the category list only (matching the mockup);
-     the detailed link panels stay collapsed */
-  .header nav .nav-megamenu-content {
-    display: none;
-  }
+/* tools */
+header nav .nav-tools {
+  grid-area: tools;
 }
