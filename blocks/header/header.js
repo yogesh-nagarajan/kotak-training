@@ -341,7 +341,7 @@ export default async function decorate(block) {
   }
 
   // Tools: search icon + Login pill
-  const navTools = nav.querySelector('.nav-tools');
+  
   if (navTools) {
     navTools.querySelectorAll('a').forEach((a) => {
       const label = a.textContent.trim().toLowerCase();
