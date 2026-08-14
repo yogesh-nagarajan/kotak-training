@@ -24,6 +24,12 @@
           "instances": [
             "div.img-container"
           ]
+        },
+        {
+          "name": "usp-cards",
+          "instances": [
+            "div.usp-cards"
+          ]
         }
       ],
       "sections": [

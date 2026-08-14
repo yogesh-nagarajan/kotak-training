@@ -5,6 +5,7 @@
 import heroParser from './parsers/hero.js';
 import cardsParser from './parsers/cards.js';
 import imgContainerParser from './parsers/img-container.js';
+import uspCardsParser from './parsers/usp-cards.js';
 
 // TRANSFORMER IMPORTS
 import sectionsTransformer from './transformers/sections.js';
@@ -14,6 +15,7 @@ const parsers = {
   hero: heroParser,
   cards: cardsParser,
   'img-container': imgContainerParser,
+  'usp-cards': uspCardsParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION
@@ -27,13 +29,15 @@ const PAGE_TEMPLATE = {
     { name: 'hero', instances: ['div.hero'] },
     { name: 'cards', instances: ['div.cards'] },
     { name: 'img-container', instances: ['div.img-container'] },
+    { name: 'usp-cards', instances: ['div.usp-cards'] },
   ],
   sections: [
     { id: 'section-1', name: 'Intro hero' },
     { id: 'section-2', name: 'Core benefits cards' },
     { id: 'section-3', name: 'ActivMoney image container' },
-    { id: 'section-4', name: 'Secondary hero' },
-    { id: 'section-5', name: 'Business tools cards' },
+    { id: 'section-4', name: 'USP cards' },
+    { id: 'section-5', name: 'Secondary hero' },
+    { id: 'section-6', name: 'Business tools cards' },
   ],
 };
 

@@ -17,7 +17,8 @@
       "cards",
       "columns",
       "fragment",
-      "img-container"
+      "img-container",
+      "usp-cards"
     ]
   },
   {
@@ -39,6 +40,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "usp-cards",
+    "components": [
+      "usp-card"
     ]
   }
 ]
