@@ -723,7 +723,7 @@
         "valueType": "boolean"
       }
     ]
-  }
+  },
    {
     "id": "supermoney-hero",
     "fields": [
@@ -789,7 +789,7 @@
         "valueType": "string"
       }
     ]
-  }
+  },
   {
     "id": "accordion-faq-item",
     "fields": [
@@ -808,5 +808,5 @@
         "valueType": "string"
       }
     ]
-  },
+  }
 ]
