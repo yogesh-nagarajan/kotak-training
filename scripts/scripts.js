@@ -147,6 +147,39 @@ async function loadEager(doc) {
 }
 
 /**
+ * Adds a scroll-reveal fade-in to sections on the feature-811-home page.
+ * Sections after the first fade in as they scroll into view. The first
+ * section is left visible to protect the LCP, and the effect is disabled
+ * when the user prefers reduced motion. Scoped by path so other pages are
+ * unaffected.
+ * @param {Element} main The main element
+ */
+function decorateScrollReveal(main) {
+  const path = window.location.pathname;
+  const isTarget = path.endsWith('/feature-811-home')
+    || path.endsWith('/feature-811-home.html');
+  if (!isTarget) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  document.body.classList.add('feature-811-home', 'reveal-on-scroll');
+
+  const sections = [...main.querySelectorAll(':scope > .section')].slice(1);
+  if (!sections.length) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
@@ -155,6 +188,8 @@ async function loadLazy(doc) {
 
   const main = doc.querySelector('main');
   await loadSections(main);
+
+  decorateScrollReveal(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

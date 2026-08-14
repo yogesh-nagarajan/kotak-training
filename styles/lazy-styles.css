@@ -1,1 +1,24 @@
 /* add global styles that can be loaded post LCP here */
+
+/* scroll-reveal fade-in (feature-811-home) */
+body.reveal-on-scroll main > .section {
+  opacity: 0;
+  transition: opacity 0.7s ease-out;
+  will-change: opacity;
+}
+
+body.reveal-on-scroll main > .section:first-of-type {
+  opacity: 1;
+  transition: none;
+}
+
+body.reveal-on-scroll main > .section.is-revealed {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.reveal-on-scroll main > .section {
+    opacity: 1;
+    transition: none;
+  }
+}
