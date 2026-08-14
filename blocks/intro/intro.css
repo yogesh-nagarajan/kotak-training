@@ -1,0 +1,40 @@
+.intro .intro-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.intro .intro-title {
+  margin: 0 0 16px;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.2;
+  color: #2d2d2d;
+}
+
+.intro .intro-content p {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.intro .intro-content p:last-child {
+  margin-bottom: 0;
+}
+
+@media (width >= 900px) {
+  .intro .intro-content {
+    padding: 56px 16px;
+  }
+
+  .intro .intro-title {
+    font-size: 34px;
+  }
+
+  .intro .intro-content p {
+    font-size: 18px;
+  }
+}

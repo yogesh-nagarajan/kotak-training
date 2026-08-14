@@ -39,7 +39,16 @@
           "component": "reference",
           "valueType": "string",
           "name": "image",
-          "label": "Background Image",
+          "label": "Background Image (Desktop)",
+          "description": "Shown at 750px and wider",
+          "multi": false
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "mobileImage",
+          "label": "Background Image (Mobile)",
+          "description": "Optional. Shown below 750px. Falls back to the desktop image if empty.",
           "multi": false
         },
         {
