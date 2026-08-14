@@ -324,7 +324,7 @@ main .section.highlight {
 /* centered section title (e.g. "It's super smooth") */
 main .section.centered-title {
   text-align: center;
-  padding-top: 48px;
+  padding-top: 24px;
   padding-bottom: 16px;
 }
 
@@ -336,7 +336,7 @@ main .section.centered-title h3 {
 
 @media (width >= 900px) {
   main .section.centered-title {
-    padding-top: 88px;
+    padding-top: 40px;
     padding-bottom: 24px;
   }
 
