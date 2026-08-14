@@ -128,6 +128,21 @@
           }
         },
         {
+          "title": "Card 811 Business New",
+          "id": "card-811business-new",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Card 811 Business New",
+                  "model": "card-811business-new"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Cards",
           "id": "cards",
           "plugins": {
@@ -452,37 +467,6 @@
                 "template": {
                   "name": "Tab",
                   "model": "tab"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Supermoney Hero",
-          "id": "supermoney-hero",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Supermoney Hero",
-                  "model": "supermoney-hero",
-                  "filter": "supermoney-hero"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Supermoney Hero Card",
-          "id": "supermoney-hero-card",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Supermoney Hero Card",
-                  "model": "supermoney-hero-card"
                 }
               }
             }
