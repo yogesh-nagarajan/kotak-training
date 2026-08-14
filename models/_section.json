@@ -51,7 +51,11 @@
         "hero-video",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "accordion-faq",
+        "supermoney-hero",
+        "supermoney-header",
+        "supermoney-footer"
       ]
     }
   ]
