@@ -83,6 +83,36 @@
       "id": "blocks",
       "components": [
         {
+          "title": "Breadcrumb",
+          "id": "breadcrumb",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Breadcrumb",
+                  "filter": "breadcrumb"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Breadcrumb Item",
+          "id": "breadcrumb-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Breadcrumb Item",
+                  "model": "breadcrumb-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Cards",
           "id": "cards",
           "plugins": {
@@ -122,21 +152,6 @@
                 "template": {
                   "columns": "2",
                   "rows": "1"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "EMI Calculator",
-          "id": "emi-calculator",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "EMI Calculator",
-                  "model": "emi-calculator"
                 }
               }
             }
@@ -227,36 +242,6 @@
                 "template": {
                   "name": "Hero",
                   "model": "hero"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Img Container",
-          "id": "img-container",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Img Container",
-                  "model": "img-container"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "RTE",
-          "id": "rte",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "RTE",
-                  "model": "rte"
                 }
               }
             }
