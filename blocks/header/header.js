@@ -34,18 +34,166 @@ function closeAllSections(navSections) {
     .forEach((li) => li.setAttribute('aria-expanded', 'false'));
 }
 
-/** Close all top-level menus (alias used in other handlers). */
-function toggleAllNavSections(navSections) {
-  closeAllSections(navSections);
+// matches a leading EDS icon token like ":accounts:" in a text label
+const ICON_TOKEN = /^\s*:([a-z0-9-]+):\s*/i;
+
+/**
+ * Build a leading icon <span> from a `:name:` token found in a text label, so
+ * the imported nav (which stores tokens as plain text) shows category icons.
+ * @param {string} text
+ * @returns {Element|null}
+ */
+function iconFromToken(text) {
+  const match = (text || '').match(ICON_TOKEN);
+  if (!match) return null;
+  const span = document.createElement('span');
+  span.className = `icon icon-${match[1]}`;
+  const img = document.createElement('img');
+  img.src = `${window.hlx.codeBasePath}/icons/${match[1]}.svg`;
+  img.alt = '';
+  img.loading = 'lazy';
+  span.append(img);
+  return span;
 }
 
 /**
- * Decorate a top-level nav item that carries a megamenu panel (a nested <div>).
- * Builds the sidebar (categories) + content panels (links with icons) and wires
- * category switching. Used for the desktop dropdown; the same structure is
- * reused on mobile as the pill → discover-heading → category-list view.
+ * Decorate a top-level nav item that carries a megamenu (a nested <ul> of
+ * categories, each with its own nested <ul> of links — the shape produced by
+ * the content importer). Builds the `.nav-megamenu` panel (sidebar categories +
+ * content link panels) that header.css hides by default and reveals only when
+ * the parent <li> has aria-expanded="true". This is what keeps the menu CLOSED
+ * on initial load — without it the raw <ul> renders inline over the hero.
  * @param {HTMLLIElement} li the top-level list item
  */
+function decorateMegamenu(li) {
+  const categoryList = li.querySelector(':scope > ul');
+  if (!categoryList) return;
+
+  li.classList.add('nav-drop');
+  li.setAttribute('aria-expanded', 'false');
+
+  // top-level label (e.g. "Personal") for the "Discover Personal →" heading
+  const topLabel = (li.querySelector(':scope > p') || li).childNodes[0]?.textContent.trim() || '';
+
+  const panel = document.createElement('div');
+  panel.className = 'nav-megamenu';
+
+  const categoriesHaveSubLists = [...categoryList.children]
+    .some((cat) => cat.querySelector(':scope > ul'));
+
+  // "Discover {label} →" header (mega menus only; simple dropdowns skip it)
+  if (topLabel && categoriesHaveSubLists) {
+    const heading = document.createElement('div');
+    heading.className = 'nav-megamenu-heading';
+    const headingLink = document.createElement('a');
+    headingLink.href = '#';
+    headingLink.textContent = `Discover ${topLabel}`;
+    heading.append(headingLink);
+    panel.append(heading);
+  }
+
+  const body = document.createElement('div');
+  body.className = 'nav-megamenu-body';
+
+  const sidebar = document.createElement('ul');
+  sidebar.className = 'nav-megamenu-sidebar';
+
+  const content = document.createElement('div');
+  content.className = 'nav-megamenu-content';
+
+  const categories = [...categoryList.children];
+  const hasSubLists = categories.some((cat) => cat.querySelector(':scope > ul'));
+
+  // SIMPLE menus (About Us / Learn / Help): no category sub-lists — render the
+  // links as ONE panel (first item highlighted as a white card), no sidebar.
+  if (!hasSubLists) {
+    const simplePanel = document.createElement('ul');
+    simplePanel.className = 'nav-megamenu-panel nav-megamenu-simple is-active';
+    categories.forEach((cat, index) => {
+      const anchor = cat.querySelector('a');
+      const item = document.createElement('li');
+      if (index === 0) item.classList.add('is-active');
+      if (anchor) {
+        item.append(anchor);
+      } else {
+        const a = document.createElement('a');
+        a.href = '#';
+        a.textContent = (cat.textContent || '').trim();
+        item.append(a);
+      }
+      simplePanel.append(item);
+    });
+    content.append(simplePanel);
+    body.append(content);
+    panel.append(body);
+    categoryList.remove();
+    li.append(panel);
+    return;
+  }
+
+  categories.forEach((cat, index) => {
+    // category label = its own text (before any nested <ul>), icon token stripped
+    const rawLabel = (cat.querySelector(':scope > p') || cat).textContent || '';
+    const label = rawLabel.replace(ICON_TOKEN, '').trim();
+    const icon = iconFromToken(rawLabel);
+    const subLinks = cat.querySelector(':scope > ul');
+
+    // sidebar entry
+    const sideItem = document.createElement('li');
+    sideItem.className = 'nav-megamenu-category';
+    const sideBtn = document.createElement('a');
+    sideBtn.href = subLinks ? '#' : (cat.querySelector('a')?.getAttribute('href') || '#');
+    if (icon) sideBtn.append(icon);
+    sideBtn.append(document.createTextNode(label));
+    sideItem.append(sideBtn);
+    if (index === 0) sideItem.classList.add('is-active');
+    sidebar.append(sideItem);
+
+    // content panel for this category (its links)
+    const catPanel = document.createElement('ul');
+    catPanel.className = 'nav-megamenu-panel';
+    if (index === 0) catPanel.classList.add('is-active');
+    if (subLinks) {
+      [...subLinks.children].forEach((linkLi) => {
+        const anchor = linkLi.querySelector('a');
+        if (!anchor) return;
+        // a leading `:name:` token on the <li> becomes the product icon,
+        // prepended inside the anchor so it sits beside the label
+        const linkIcon = iconFromToken(linkLi.textContent);
+        if (linkIcon && !anchor.querySelector('.icon')) {
+          // strip the literal ":name:" text nodes so only the icon+label show
+          [...linkLi.childNodes].forEach((n) => {
+            if (n.nodeType === 3 && ICON_TOKEN.test(n.textContent)) n.remove();
+          });
+          anchor.prepend(linkIcon);
+        }
+        catPanel.append(linkLi);
+      });
+    }
+    content.append(catPanel);
+
+    const activate = () => {
+      sidebar.querySelectorAll('.nav-megamenu-category').forEach((s) => s.classList.remove('is-active'));
+      content.querySelectorAll('.nav-megamenu-panel').forEach((p) => p.classList.remove('is-active'));
+      sideItem.classList.add('is-active');
+      catPanel.classList.add('is-active');
+    };
+    sideBtn.addEventListener('mouseenter', activate);
+    sideBtn.addEventListener('focus', activate);
+    sideBtn.addEventListener('click', (e) => {
+      if (subLinks) e.preventDefault();
+      activate();
+    });
+  });
+
+  // MEGA menus: sidebar (categories) + content (active category's links)
+  body.append(sidebar, content);
+  panel.append(body);
+
+  // remove the raw source list and attach the decorated (hidden) panel
+  categoryList.remove();
+  li.append(panel);
+}
 
 /**
  * Wire the mobile "pill bar": clicking a top-level pill activates that menu and
@@ -125,12 +273,32 @@ export default async function decorate(block) {
   const navSections = nav.querySelector('.nav-sections');
   let activateMobile = () => {};
   if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
+    // top-level items live directly under nav-sections > ul (the nav fragment is
+    // fetched raw, so there is no .default-content-wrapper to traverse)
+    const topSelector = navSections.querySelector(':scope > .default-content-wrapper')
+      ? ':scope .default-content-wrapper > ul > li'
+      : ':scope > ul > li';
+    navSections.querySelectorAll(topSelector).forEach((navSection) => {
+      // build the collapsed megamenu panel (starts closed via aria-expanded=false)
+      if (navSection.querySelector(':scope > ul')) decorateMegamenu(navSection);
+
+      // desktop: open on hover, close when the pointer leaves the whole item
+      navSection.addEventListener('mouseenter', () => {
+        if (!isDesktop.matches) return;
+        closeAllSections(navSections);
+        navSection.setAttribute('aria-expanded', 'true');
+      });
+      navSection.addEventListener('mouseleave', () => {
+        if (!isDesktop.matches) return;
+        navSection.setAttribute('aria-expanded', 'false');
+      });
+
+      // click/keyboard: toggle (desktop) or expand pill (mobile)
+      navSection.addEventListener('click', (e) => {
         if (isDesktop.matches) {
+          if (e.target.closest('.nav-megamenu')) return; // let links inside work
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
+          closeAllSections(navSections);
           navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
         }
       });

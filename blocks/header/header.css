@@ -140,20 +140,24 @@ header .nav-wrapper {
     position: relative;
   }
 
-  .header nav .nav-sections > ul > li > a {
+  .header nav .nav-sections > ul > li > a,
+  .header nav .nav-sections > ul > li > p {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    margin: 0;
     padding: 12px 0;
     color: #05132b;
     font-size: 17px;
     font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
+    cursor: pointer;
   }
 
-  /* caret on every top-level item */
-  .header nav .nav-sections > ul > li > a::after {
+  /* caret on every top-level item (label may be an <a> or a <p>) */
+  .header nav .nav-sections > ul > li > a::after,
+  .header nav .nav-sections > ul > li > p::after {
     content: '';
     width: 8px;
     height: 8px;
@@ -163,7 +167,8 @@ header .nav-wrapper {
     transition: transform 0.2s ease;
   }
 
-  .header nav .nav-sections > ul > li[aria-expanded='true'] > a::after {
+  .header nav .nav-sections > ul > li[aria-expanded='true'] > a::after,
+  .header nav .nav-sections > ul > li[aria-expanded='true'] > p::after {
     transform: translateY(2px) rotate(-135deg);
   }
 
@@ -175,16 +180,21 @@ header .nav-wrapper {
 
   /* active / hover top-level item — red with red underline */
   .header nav .nav-sections > ul > li:hover > a,
-  .header nav .nav-sections > ul > li[aria-expanded='true'] > a {
+  .header nav .nav-sections > ul > li:hover > p,
+  .header nav .nav-sections > ul > li[aria-expanded='true'] > a,
+  .header nav .nav-sections > ul > li[aria-expanded='true'] > p {
     color: #e4181c;
   }
 
   .header nav .nav-sections > ul > li:hover > a::after,
-  .header nav .nav-sections > ul > li[aria-expanded='true'] > a::after {
+  .header nav .nav-sections > ul > li:hover > p::after,
+  .header nav .nav-sections > ul > li[aria-expanded='true'] > a::after,
+  .header nav .nav-sections > ul > li[aria-expanded='true'] > p::after {
     border-color: #e4181c;
   }
 
-  .header nav .nav-sections > ul > li[aria-expanded='true'] > a::before {
+  .header nav .nav-sections > ul > li[aria-expanded='true'] > a::before,
+  .header nav .nav-sections > ul > li[aria-expanded='true'] > p::before {
     content: '';
     position: absolute;
     left: 0;
@@ -203,8 +213,12 @@ header .nav-wrapper {
 @media (width >= 900px) {
   .header nav .nav-sections > ul > li[aria-expanded='true'] .nav-megamenu {
     display: block;
-    position: absolute;
-    top: calc(100% + 8px);
+
+    /* center on the viewport (not on the Personal <li>, which sits left of
+       center) so the two-panel layout doesn't spill off the left edge. The
+       desktop header is 84px tall, so anchor just below it. */
+    position: fixed;
+    top: 88px;
     left: 50%;
     transform: translateX(-50%);
     width: min(1180px, 94vw);
@@ -284,12 +298,13 @@ header .nav-wrapper {
     list-style: none;
     margin: 0;
     padding: 0;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px 48px;
+    gap: 4px;
   }
 
+  /* active category links stack vertically (not a 2-column grid) */
   .header nav .nav-megamenu-panel.is-active {
-    display: grid;
+    display: flex;
+    flex-direction: column;
   }
 
   .header nav .nav-megamenu-panel li {
@@ -300,7 +315,7 @@ header .nav-wrapper {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 6px 0;
+    padding: 10px 0;
     color: #05132b;
     font-size: 17px;
     font-weight: 500;
@@ -311,7 +326,36 @@ header .nav-wrapper {
     color: #e4181c;
   }
 
-  
+  /* ---- SIMPLE dropdown (About Us / Learn / Help): single link list, first
+     item shown as a white rounded card, on a light grey-blue panel ---- */
+  .header nav .nav-megamenu-simple {
+    gap: 6px;
+    padding: 16px;
+    background: #eef1f6;
+  }
+
+  .header nav .nav-megamenu-simple li {
+    border-radius: 12px;
+  }
+
+  .header nav .nav-megamenu-simple li.is-active,
+  .header nav .nav-megamenu-simple li:hover {
+    background: #fff;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 8%);
+  }
+
+  .header nav .nav-megamenu-panel.nav-megamenu-simple a {
+    padding: 16px 20px;
+    font-weight: 600;
+  }
+}
+
+/* constrain the simple dropdown width (outside the desktop @media so :has
+   support degrades gracefully; scoped to the simple variant only) */
+@media (width >= 900px) {
+  .header nav .nav-sections > ul > li[aria-expanded='true'] .nav-megamenu:has(.nav-megamenu-simple) {
+    width: min(360px, 92vw);
+  }
 }
 
 /* ---- Tools (search + login) ---- */
