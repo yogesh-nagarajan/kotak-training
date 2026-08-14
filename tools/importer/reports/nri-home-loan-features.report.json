@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "url": "http://localhost:3000/nri-home-loan-features",
+  "path": "nri-home-loan-features",
+  "timestamp": "2026-08-13T09:42:35.001Z",
+  "title": "NRI Home Loan",
+  "template": "nri-home-loan-features",
+  "blocks": [
+    "breadcrumb",
+    "hero-carousel",
+    "tabs",
+    "intro",
+    "feature-carousel",
+    "cta",
+    "faq",
+    "related-products"
+  ]
+}

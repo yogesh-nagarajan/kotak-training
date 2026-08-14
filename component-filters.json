@@ -14,9 +14,20 @@
       "title",
       "hero",
       "hero-video",
+      "hero-carousel",
+      "breadcrumb",
+      "tabs",
+      "intro",
+      "feature-carousel",
+      "cta",
+      "faq",
+      "related-products",
       "cards",
       "columns",
       "fragment",
+      "img-container",
+      "rte",
+      "emi-calculator",
       "accordion-faq",
       "supermoney-hero",
       "supermoney-header",
@@ -27,6 +38,12 @@
     "id": "accordion-faq",
     "components": [
       "accordion-faq-item"
+    ]
+  },
+  {
+    "id": "breadcrumb",
+    "components": [
+      "breadcrumb-item"
     ]
   },
   {
@@ -51,9 +68,39 @@
     ]
   },
   {
+    "id": "faq",
+    "components": [
+      "faq-item"
+    ]
+  },
+  {
+    "id": "feature-carousel",
+    "components": [
+      "feature"
+    ]
+  },
+  {
+    "id": "hero-carousel",
+    "components": [
+      "hero-slide"
+    ]
+  },
+  {
+    "id": "related-products",
+    "components": [
+      "related-product"
+    ]
+  },
+  {
     "id": "supermoney-hero",
     "components": [
       "supermoney-hero-card"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tab"
     ]
   }
 ]

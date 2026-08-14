@@ -161,6 +161,29 @@
     ]
   },
   {
+    "id": "breadcrumb-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Label",
+        "value": ""
+      },
+      {
+        "component": "boolean",
+        "name": "current",
+        "label": "Current Page",
+        "valueType": "boolean"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -199,6 +222,176 @@
     ]
   },
   {
+    "id": "cta",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Button Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Button Text",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "emi-calculator",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "principal_min",
+        "label": "Principal – Min",
+        "description": "Minimum principal amount (e.g. 50000)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "principal_max",
+        "label": "Principal – Max",
+        "description": "Maximum principal amount (e.g. 3500000)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "principal_step",
+        "label": "Principal – Step",
+        "description": "Slider increment (e.g. 5000)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "principal_value",
+        "label": "Principal – Default",
+        "description": "Starting principal amount (e.g. 2210000)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "interest_min",
+        "label": "Interest – Min",
+        "description": "Minimum interest rate % p.a. (e.g. 10.99)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "interest_max",
+        "label": "Interest – Max",
+        "description": "Maximum interest rate % p.a. (e.g. 24.99)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "interest_step",
+        "label": "Interest – Step",
+        "description": "Slider increment (e.g. 0.5)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "interest_value",
+        "label": "Interest – Default",
+        "description": "Starting interest rate (e.g. 10.99)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "tenure_min",
+        "label": "Tenure – Min",
+        "description": "Minimum tenure in years (e.g. 1)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "tenure_max",
+        "label": "Tenure – Max",
+        "description": "Maximum tenure in years (e.g. 6)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "tenure_step",
+        "label": "Tenure – Step",
+        "description": "Slider increment (e.g. 1)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "tenure_value",
+        "label": "Tenure – Default",
+        "description": "Starting tenure in years (e.g. 5)",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "faq-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "label": "Question",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "answer",
+        "value": "",
+        "label": "Answer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "feature",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "iconAlt",
+        "label": "Icon Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Label",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -209,23 +402,38 @@
     ]
   },
   {
-    "id": "hero-video",
+    "id": "hero-slide",
     "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image (Desktop)",
+        "description": "Shown at 750px and wider",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobileImage",
+        "label": "Background Image (Mobile)",
+        "description": "Optional. Shown below 750px. Falls back to the desktop image if empty.",
+        "multi": false
+      },
       {
         "component": "text",
         "valueType": "string",
-        "name": "subtitle",
-        "label": "Subtitle",
-        "description": "Small label shown above the title",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
         "value": ""
       },
       {
         "component": "richtext",
-        "valueType": "string",
         "name": "text",
+        "value": "",
         "label": "Text",
-        "description": "Add the title as Heading 1, key highlights as a bulleted list, and an optional note paragraph",
-        "value": ""
+        "description": "Add the slide title as Heading 1 and an optional description paragraph",
+        "valueType": "string"
       },
       {
         "component": "aem-content",
@@ -238,13 +446,97 @@
         "name": "linkText",
         "label": "CTA Text",
         "value": ""
+      }
+    ]
+  },
+  {
+    "id": "hero-p",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hero-video",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_pretitle",
+        "label": "Pretitle",
+        "description": "Small label shown above the title (e.g. Unlock Your Financial Freedom)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_title",
+        "label": "Title",
+        "description": "Main heading (e.g. Kotak811 Personal Loan)",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content_points",
+        "label": "Points",
+        "description": "Key highlights as a bulleted list",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content_note",
+        "label": "Note",
+        "description": "Text below the button, may include a link (e.g. New customer? Apply with Kotak811 A/c)",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaLink",
+        "label": "Button Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLinkText",
+        "label": "Button Text",
+        "description": "Label shown on the button (e.g. Apply Now)",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
         "name": "video",
+        "label": "Background Video (DAM)",
+        "description": "MP4 video asset from DAM. Shows in the editor; may not play on the published site unless DAM video delivery is enabled. Prefer the URL field below for published pages.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "videoUrl",
         "label": "Background Video URL",
-        "description": "URL to an MP4 video file",
+        "description": "Absolute URL to an MP4 (e.g. https://...mp4). Used on the published site; takes priority over the DAM asset.",
         "value": ""
       }
     ]
@@ -272,6 +564,119 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "img-container",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "intro",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string",
+        "description": "Heading (H2) and introductory paragraph"
+      }
+    ]
+  },
+  {
+    "id": "related-product",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "description": "Product title as a Heading and a short description paragraph",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "knowMoreLink",
+        "label": "Know More Link"
+      },
+      {
+        "component": "aem-content",
+        "name": "applyLink",
+        "label": "Apply Link"
+      }
+    ]
+  },
+  {
+    "id": "rte",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "description": "Heading shown above the text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Text",
+        "description": "Body copy. When it exceeds 5 lines it is clamped with a Read More / Read Less toggle.",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "readMoreLabel",
+        "label": "Read More Label",
+        "description": "Label for the expand link (e.g. Read More)",
+        "value": "Read More"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "readLessLabel",
+        "label": "Read Less Label",
+        "description": "Label for the collapse link (e.g. Read Less)",
+        "value": "Read Less"
       }
     ]
   },
@@ -408,6 +813,29 @@
         "value": "",
         "label": "Card Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "tab",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Label",
+        "value": ""
+      },
+      {
+        "component": "boolean",
+        "name": "active",
+        "label": "Active (current page)",
+        "valueType": "boolean"
       }
     ]
   }

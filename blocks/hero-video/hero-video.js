@@ -1,69 +1,113 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
+ * Extract a video URL from an authored cell. Handles a DAM reference (link,
+ * image, or plain text with the asset path) as well as a plain URL field.
+ * @param {Element} cell
+ * @returns {string}
+ */
+function readVideoCell(cell) {
+  if (!cell) return '';
+  return (
+    cell.querySelector('a')?.getAttribute('href')
+    || cell.querySelector('img')?.getAttribute('src')
+    || cell.querySelector('source')?.getAttribute('src')
+    || cell.textContent
+    || ''
+  ).trim();
+}
+
+/**
+ * Resolve the background video URL, preferring an absolute URL (reliable on the
+ * published site) over the DAM reference (which renders in the editor but may
+ * not be served by Edge Delivery).
+ * @param {Element} damCell
+ * @param {Element} urlCell
+ * @returns {string}
+ */
+function resolveVideoUrl(damCell, urlCell) {
+  const url = readVideoCell(urlCell);
+  if (url) return url;
+  return readVideoCell(damCell);
+}
+
+/**
  * loads and decorates the hero-video block
+ *
+ * The authoring model groups the foreground copy (pretitle, title, points, note)
+ * into one cell via element grouping, followed by the CTA link cell and the
+ * background video cell:
+ *   Row 1: content group -> pretitle (p), title (p), points (ul/ol), note (p)
+ *   Row 2: ctaLink (anchor, collapsed with ctaLinkText)
+ *   Row 3: video (DAM reference)
+ *   Row 4: videoUrl (absolute MP4 URL, preferred on the published site)
+ *
  * @param {Element} block The block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
-  // model order: subtitle, text (richtext), link, linkText, video
-  const [subtitleCell, textCell, linkCell, linkTextCell, videoCell] = rows
+  const [contentCell, ctaCell, videoCell, videoUrlCell] = rows
     .map((row) => row.firstElementChild);
 
   const content = document.createElement('div');
   content.className = 'hero-video-content';
 
-  // subtitle
-  const subtitleText = subtitleCell?.textContent.trim();
-  if (subtitleText) {
-    const subtitle = document.createElement('p');
-    subtitle.className = 'hero-video-subtitle';
-    subtitle.textContent = subtitleText;
-    moveInstrumentation(rows[0], subtitle);
-    content.append(subtitle);
+  // Foreground copy is a grouped cell: children arrive in authored order as
+  // pretitle, title, points list, and note. Detect each by element type/position
+  // so the block is resilient to authors omitting optional fields.
+  if (contentCell) {
+    moveInstrumentation(rows[0], content);
+    const children = [...contentCell.children];
+    const list = children.find((el) => el.tagName === 'UL' || el.tagName === 'OL');
+    const paragraphs = children.filter((el) => el.tagName === 'P');
+
+    // first paragraph -> pretitle, second -> title (rendered as a heading)
+    const [pretitleEl, titleEl] = paragraphs;
+    if (pretitleEl && pretitleEl.textContent.trim()) {
+      pretitleEl.classList.add('hero-video-subtitle');
+      content.append(pretitleEl);
+    }
+    if (titleEl && titleEl.textContent.trim()) {
+      const title = document.createElement('h1');
+      title.className = 'hero-video-title';
+      title.textContent = titleEl.textContent.trim();
+      content.append(title);
+    }
+    if (list) {
+      list.classList.add('hero-video-features');
+      content.append(list);
+    }
+
+    // any remaining paragraphs after pretitle/title are the note (rendered last,
+    // after the CTA); tag them now and append below.
+    const noteParagraphs = paragraphs.slice(2);
+
+    // call-to-action button (link collapsed with its text)
+    const linkAnchor = ctaCell?.querySelector('a');
+    const href = linkAnchor?.getAttribute('href');
+    const label = (linkAnchor?.textContent || '').trim();
+    if (href && label) {
+      const cta = document.createElement('a');
+      cta.className = 'button primary hero-video-cta';
+      cta.href = href;
+      cta.textContent = label;
+      const target = linkAnchor.getAttribute('target');
+      if (target && target !== 'undefined') cta.target = target;
+      moveInstrumentation(rows[1], cta);
+      content.append(cta);
+    }
+
+    // note paragraphs render after the call-to-action
+    if (noteParagraphs.length) {
+      const note = document.createElement('div');
+      note.className = 'hero-video-note';
+      noteParagraphs.forEach((p) => note.append(p));
+      content.append(note);
+    }
   }
 
-  // rich text: title (heading) + feature list (ul/ol). Trailing paragraphs are
-  // treated as a note and moved below the call-to-action.
-  const noteParagraphs = [];
-  if (textCell) {
-    moveInstrumentation(rows[1], content);
-    textCell.querySelector('h1, h2, h3, h4, h5, h6')?.classList.add('hero-video-title');
-    textCell.querySelector('ul, ol')?.classList.add('hero-video-features');
-    [...textCell.children].forEach((el) => {
-      if (el.tagName === 'P') {
-        el.classList.add('hero-video-note');
-        noteParagraphs.push(el);
-      } else {
-        content.append(el);
-      }
-    });
-  }
-
-  // call-to-action button (link + label)
-  const linkAnchor = linkCell?.querySelector('a');
-  const href = linkAnchor?.getAttribute('href');
-  const label = (linkTextCell?.textContent || linkAnchor?.textContent || '').trim();
-  if (href && label) {
-    const cta = document.createElement('a');
-    cta.className = 'button primary hero-video-cta';
-    cta.href = href;
-    cta.textContent = label;
-    const target = linkAnchor.getAttribute('target');
-    if (target && target !== 'undefined') cta.target = target;
-    moveInstrumentation(rows[2], cta);
-    content.append(cta);
-  }
-
-  // note paragraphs render after the call-to-action
-  noteParagraphs.forEach((p) => content.append(p));
-
-  // background video url (authored as plain text or a link)
-  const videoUrl = (
-    videoCell?.querySelector('a')?.getAttribute('href')
-    || videoCell?.textContent
-    || ''
-  ).trim();
+  // background video: prefer the absolute URL, fall back to the DAM reference
+  const videoUrl = resolveVideoUrl(videoCell, videoUrlCell);
 
   block.textContent = '';
   block.append(content);
