@@ -12,6 +12,7 @@ export default function decorate(block) {
   media.className = 'accordion-media';
   const mediaImg = document.createElement('img');
   mediaImg.loading = 'lazy';
+  mediaImg.decoding = 'async';
   mediaImg.alt = '';
   media.append(mediaImg);
 

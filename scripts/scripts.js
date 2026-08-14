@@ -110,6 +110,26 @@ export function decorateButtons(main) {
 }
 
 /**
+ * Improves image loading performance: images in the first section stay eager
+ * (LCP candidate), everything below the fold is lazy-loaded and decoded async.
+ * Also hints async decoding so raw images don't block the main thread.
+ * @param {Element} main The main container element
+ */
+export function decorateImages(main) {
+  const firstSection = main.querySelector(':scope > div');
+  main.querySelectorAll('img').forEach((img) => {
+    img.setAttribute('decoding', 'async');
+    const isEager = firstSection && firstSection.contains(img);
+    if (isEager) {
+      img.setAttribute('loading', 'eager');
+      img.setAttribute('fetchpriority', 'high');
+    } else if (!img.getAttribute('loading')) {
+      img.setAttribute('loading', 'lazy');
+    }
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -120,6 +140,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  decorateImages(main);
 }
 
 /**

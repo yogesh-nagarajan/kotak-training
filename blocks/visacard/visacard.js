@@ -31,15 +31,26 @@ export default function decorate(block) {
     const video = document.createElement('video');
     video.className = 'visacard-video';
     video.muted = true;
-    video.setAttribute('autoplay', '');
     video.setAttribute('muted', '');
     video.setAttribute('loop', '');
     video.setAttribute('playsinline', '');
+    video.setAttribute('preload', 'none');
     if (img?.getAttribute('src')) video.setAttribute('poster', img.getAttribute('src'));
-    const source = document.createElement('source');
-    source.src = videoUrl;
-    source.type = 'video/mp4';
-    video.append(source);
+    // only load/play the video on desktop; on mobile it is hidden, so avoid the
+    // (multi-MB) download entirely by not attaching a source until desktop matches
+    const desktop = window.matchMedia('(min-width: 900px)');
+    const enableVideo = () => {
+      if (video.querySelector('source')) return;
+      const source = document.createElement('source');
+      source.src = videoUrl;
+      source.type = 'video/mp4';
+      video.append(source);
+      video.setAttribute('autoplay', '');
+      video.load();
+      video.play?.().catch(() => {});
+    };
+    if (desktop.matches) enableVideo();
+    desktop.addEventListener('change', (e) => { if (e.matches) enableVideo(); });
     media.append(video);
   } else if (picture) {
     media.append(picture);
