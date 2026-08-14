@@ -3,6 +3,11 @@
   flex-direction: column;
 }
 
+/* extra breathing room between consecutive feature sections */
+.columns {
+  margin-block: 32px;
+}
+
 .columns img {
   width: 100%;
   border-radius: 20px;
@@ -48,6 +53,10 @@
 }
 
 @media (width >= 900px) {
+  .columns {
+    margin-block: 64px;
+  }
+
   .columns > div {
     align-items: center;
     flex-direction: unset;
