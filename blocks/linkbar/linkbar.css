@@ -1,14 +1,17 @@
+/* mobile: stacked, left-aligned (matches the source); desktop centers below */
 .linkbar .linkbar-items {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  flex-flow: column wrap;
+  align-items: flex-start;
   gap: 16px 24px;
   padding: 48px 0 24px;
 }
 
 @media (width >= 900px) {
   .linkbar .linkbar-items {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     padding: 100px 0 40px;
   }
 }
@@ -18,13 +21,15 @@
   align-items: center;
 }
 
-/* vertical divider between items */
-.linkbar .linkbar-item + .linkbar-item::before {
-  content: '';
-  width: 1px;
-  height: 20px;
-  margin-right: 24px;
-  background-color: #ccc;
+/* vertical divider between items (desktop row only) */
+@media (width >= 900px) {
+  .linkbar .linkbar-item + .linkbar-item::before {
+    content: '';
+    width: 1px;
+    height: 20px;
+    margin-right: 24px;
+    background-color: #ccc;
+  }
 }
 
 .linkbar .linkbar-item a:any-link {
