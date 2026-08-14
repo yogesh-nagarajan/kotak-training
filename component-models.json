@@ -164,12 +164,6 @@
         "name": "imageMobile",
         "label": "Mobile Image",
         "multi": false
-    "id": "breadcrumb-item",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link"
       },
       {
         "component": "text",
@@ -184,6 +178,20 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
         "name": "linkText",
         "label": "Label",
         "value": ""
