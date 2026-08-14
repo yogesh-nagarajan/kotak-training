@@ -17,7 +17,9 @@
       "hero-carousel",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "img-container",
+      "usp-cards"
     ]
   },
   {
@@ -45,6 +47,12 @@
     "id": "hero-carousel",
     "components": [
       "hero-slide"
+    ]
+  },
+  {
+    "id": "usp-cards",
+    "components": [
+      "usp-card"
     ]
   }
 ]
