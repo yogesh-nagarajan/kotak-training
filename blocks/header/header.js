@@ -338,7 +338,7 @@ export default async function decorate(block) {
     });
     search.append(searchBtn, searchField);
     navTools.prepend(search);
-  }
+  } 
 
   // Tools: search icon + Login pill
   
