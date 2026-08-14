@@ -27,16 +27,24 @@
   line-height: 1.8;
 }
 
-.columns > div > div {
-  order: 1;
-}
-
-.columns > div > .columns-img-col {
-  order: 0;
-}
-
 .columns > div > .columns-img-col img {
   display: block;
+}
+
+/* mobile: text (heading + copy) first, then image, for every section
+   (matches the source page); desktop ordering is handled below */
+@media (width < 900px) {
+  .columns > div {
+    gap: 24px;
+  }
+
+  .columns > div > div {
+    order: 0;
+  }
+
+  .columns > div > div:has(img) {
+    order: 1;
+  }
 }
 
 @media (width >= 900px) {
