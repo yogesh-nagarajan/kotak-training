@@ -14,11 +14,18 @@
       "title",
       "hero",
       "hero-video",
+      "hero-carousel",
+      "breadcrumb",
+      "tabs",
+      "intro",
+      "feature-carousel",
+      "cta",
+      "faq",
+      "related-products",
       "cards",
       "columns",
       "fragment",
-      "supermoney-hero",
-      "accordion-faq"
+      "supermoney-hero"
     ]
   },
   {
