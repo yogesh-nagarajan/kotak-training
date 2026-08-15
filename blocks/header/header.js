@@ -11,6 +11,22 @@ const isDesktop = window.matchMedia('(min-width: 900px)');
  * @returns {HTMLElement|null} a container holding the fragment's top-level sections
  */
 async function loadNavFragment() {
+  // Page-specific header ONLY for /nri-home-loan-features (path may carry a
+  // .plain.html/.html suffix or a /content mount prefix). Every other page
+  // falls through to the existing global-nav logic below, unchanged.
+  if (window.location.pathname.split('.')[0].endsWith('/nri-home-loan-features')) {
+    const pageResp = await fetch('/content/nav-nri-home-loan.plain.html');
+    if (pageResp.ok) {
+      const pageContainer = document.createElement('div');
+      pageContainer.innerHTML = await pageResp.text();
+      pageContainer.querySelectorAll('img[src^="images/"]').forEach((img) => {
+        img.src = new URL(`/content/${img.getAttribute('src')}`, window.location).href;
+      });
+      return pageContainer;
+    }
+    // if the page-specific fragment is missing, fall through to the default
+  }
+
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
 
