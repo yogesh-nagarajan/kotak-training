@@ -142,6 +142,116 @@
     ]
   },
   {
+    "id": "811-zero-hero-section",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Desktop Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "imageMobile",
+        "label": "Mobile Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageMobileAlt",
+        "label": "Mobile Image Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Label",
+        "value": ""
+      },
+      {
+        "component": "boolean",
+        "name": "current",
+        "label": "Current Page",
+        "valueType": "boolean"
+      }
+    ]
+  },
+  {
+    "id": "card-811business-new",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "description",
+        "label": "Description",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Desktop Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "imageMobile",
+        "label": "Mobile Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageMobileAlt",
+        "label": "Mobile Image Alt",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -176,6 +286,30 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "cta",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Button Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Button Text",
+        "value": ""
       }
     ]
   },
@@ -281,6 +415,51 @@
     ]
   },
   {
+    "id": "faq-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "label": "Question",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "answer",
+        "value": "",
+        "label": "Answer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "feature",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "iconAlt",
+        "label": "Icon Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Label",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -297,7 +476,16 @@
         "component": "reference",
         "valueType": "string",
         "name": "image",
-        "label": "Background Image",
+        "label": "Background Image (Desktop)",
+        "description": "Shown at 750px and wider",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobileImage",
+        "label": "Background Image (Mobile)",
+        "description": "Optional. Shown below 750px. Falls back to the desktop image if empty.",
         "multi": false
       },
       {
@@ -330,43 +518,28 @@
     ]
   },
   {
-    "id": "hero-section",
-    "fields": [
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "text",
-        "label": "Hero text",
-        "description": "Eyebrow (small paragraph), heading (Heading 1), sub text (paragraph) and the call-to-action link. The link renders as the primary button.",
-        "value": ""
-      }
-    ]
-  },
-  {
-    "id": "hero-section-card",
+    "id": "hero-p",
     "fields": [
       {
         "component": "reference",
         "valueType": "string",
-        "name": "icon",
-        "label": "Icon",
-        "description": "Card icon / illustration.",
+        "name": "image",
+        "label": "Image",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "iconAlt",
-        "label": "Icon alt text",
+        "name": "imageAlt",
+        "label": "Alt",
         "value": ""
       },
       {
         "component": "richtext",
-        "valueType": "string",
         "name": "text",
-        "label": "Card text",
-        "description": "Short benefit description shown under the icon.",
-        "value": ""
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
       }
     ]
   },
@@ -489,6 +662,56 @@
     ]
   },
   {
+    "id": "intro",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string",
+        "description": "Heading (H2) and introductory paragraph"
+      }
+    ]
+  },
+  {
+    "id": "related-product",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "description": "Product title as a Heading and a short description paragraph",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "knowMoreLink",
+        "label": "Know More Link"
+      },
+      {
+        "component": "aem-content",
+        "name": "applyLink",
+        "label": "Apply Link"
+      }
+    ]
+  },
+  {
     "id": "rte",
     "fields": [
       {
@@ -522,6 +745,29 @@
         "label": "Read Less Label",
         "description": "Label for the collapse link (e.g. Read Less)",
         "value": "Read Less"
+      }
+    ]
+  },
+  {
+    "id": "tab",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Label",
+        "value": ""
+      },
+      {
+        "component": "boolean",
+        "name": "active",
+        "label": "Active (current page)",
+        "valueType": "boolean"
       }
     ]
   }
