@@ -5,6 +5,7 @@
 import heroParser from './parsers/hero.js';
 import cardsParser from './parsers/cards.js';
 import cardShowcaseParser from './parsers/card-showcase.js';
+import securityTrustParser from './parsers/security-trust.js';
 import imgContainerParser from './parsers/img-container.js';
 
 // TRANSFORMER IMPORTS
@@ -15,6 +16,7 @@ const parsers = {
   hero: heroParser,
   cards: cardsParser,
   'card-showcase': cardShowcaseParser,
+  'security-trust': securityTrustParser,
   'img-container': imgContainerParser,
 };
 
@@ -28,6 +30,7 @@ const PAGE_TEMPLATE = {
   blocks: [
     { name: 'card-showcase', instances: ['div.card-showcase'] },
     { name: 'hero', instances: ['div.hero'] },
+    { name: 'security-trust', instances: ['div.security-trust'] },
   ],
   sections: [
     { id: 'section-1', name: 'Card showcase hero' },
@@ -35,6 +38,7 @@ const PAGE_TEMPLATE = {
     { id: 'section-3', name: '811 Current Account hero' },
     { id: 'section-4', name: 'Virtual debit card hero' },
     { id: 'section-5', name: 'Credit card hero' },
+    { id: 'section-6', name: 'Security & trust' },
   ],
 };
 

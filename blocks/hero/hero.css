@@ -123,17 +123,16 @@
 .hero.overlay .hero-content {
   width: 100%;
   padding: 0;
+
+  /* mobile: centered content (desktop overrides below) */
+  align-items: center;
+  text-align: center;
 }
 
 .hero.overlay .hero-content h1,
 .hero.overlay .hero-content h1 + p,
 .hero.overlay .hero-content h1 + div {
   color: #fff;
-}
-
-/* content aligned right */
-.hero.overlay.right .hero-content {
-  align-items: flex-start;
 }
 
 /* dark text for light-background images */
@@ -150,10 +149,12 @@
   padding: 32px 20px;
 }
 
-/* on mobile the content comes first, image below */
+/* on mobile the content comes first, image below, and is centered */
 .hero.split .hero-content {
   order: 1;
   padding: 0;
+  align-items: center;
+  text-align: center;
 }
 
 .hero.split .hero-image {
@@ -186,6 +187,10 @@
   .hero.overlay .hero-content {
     max-width: 1200px;
     margin: 0 auto;
+
+    /* desktop: back to left-aligned */
+    align-items: flex-start;
+    text-align: left;
   }
 
   .hero.overlay .hero-content > * {
@@ -221,6 +226,10 @@
   .hero.split .hero-content {
     grid-column: 1;
     grid-row: 1;
+
+    /* desktop: back to left-aligned */
+    align-items: flex-start;
+    text-align: left;
   }
 
   /* reverse: image on the left, content on the right */
