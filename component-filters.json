@@ -24,6 +24,12 @@
     ]
   },
   {
+    "id": "card-showcase",
+    "components": [
+      "showcase-card"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

@@ -103,3 +103,134 @@
     line-height: 1.2;
   }
 }
+
+/* ==========================================================================
+   Variants — mutually-exclusive layouts; specificity order is intentional
+   ========================================================================== */
+/* stylelint-disable no-descending-specificity */
+
+/* ---- overlay: full-bleed background image with text overlaid --------------
+   Default overlay places the content on the left with white text (for darker
+   images). The `right` modifier moves content to the right, and `light`
+   switches the text to dark (for light images). */
+.hero.overlay {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.hero.overlay .hero-content {
+  width: 100%;
+  padding: 0;
+}
+
+.hero.overlay .hero-content h1,
+.hero.overlay .hero-content h1 + p,
+.hero.overlay .hero-content h1 + div {
+  color: #fff;
+}
+
+/* content aligned right */
+.hero.overlay.right .hero-content {
+  align-items: flex-start;
+}
+
+/* dark text for light-background images */
+.hero.overlay.light .hero-content h1,
+.hero.overlay.light .hero-content h1 + p,
+.hero.overlay.light .hero-content h1 + div {
+  color: #1a1a1a;
+}
+
+/* ---- split: image on one side, content on the other ---------------------- */
+.hero.split {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 20px;
+}
+
+/* on mobile the content comes first, image below */
+.hero.split .hero-content {
+  order: 1;
+  padding: 0;
+}
+
+.hero.split .hero-image {
+  order: 2;
+  position: static;
+  inset: auto;
+  z-index: auto;
+  margin-top: 24px;
+}
+
+.hero.split .hero-image picture,
+.hero.split .hero-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hero.split .hero-content h1,
+.hero.split .hero-content h1 + p,
+.hero.split .hero-content h1 + div {
+  color: #1a1a1a;
+}
+
+@media (width >= 900px) {
+  .hero.overlay {
+    min-height: 520px;
+    padding: 0 32px;
+  }
+
+  .hero.overlay .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero.overlay .hero-content > * {
+    max-width: 42%;
+  }
+
+  /* right-aligned content sits in the right half */
+  .hero.overlay.right .hero-content {
+    align-items: flex-start;
+  }
+
+  .hero.overlay.right .hero-content > * {
+    margin-left: 55%;
+  }
+
+  /* split: two columns */
+  .hero.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 32px;
+  }
+
+  .hero.split .hero-image {
+    margin-top: 0;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .hero.split .hero-content {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* reverse: image on the left, content on the right */
+  .hero.split.reverse .hero-image {
+    grid-column: 1;
+  }
+
+  .hero.split.reverse .hero-content {
+    grid-column: 2;
+  }
+}
+
+/* stylelint-enable no-descending-specificity */

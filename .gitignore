@@ -8,6 +8,14 @@ helix-importer-ui
 *.bak
 .idea
 
+# Local demo images for drafts – provided by the user in AEM Cloud, never committed
+drafts/**/*.demo.*
+drafts/infinity-metal-debit-card/*.png
+drafts/infinity-metal-debit-card/*.jpg
+drafts/infinity-metal-debit-card/*.jpeg
+drafts/infinity-metal-debit-card/*.svg
+drafts/infinity-metal-debit-card/*.webp
+
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md

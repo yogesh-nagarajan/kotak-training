@@ -1,0 +1,281 @@
+/* stretch the section full-bleed so the dark banner runs edge to edge */
+.card-showcase-container .card-showcase-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.card-showcase {
+  --card-showcase-fg: #fff;
+
+  position: relative;
+  color: var(--card-showcase-fg);
+}
+
+/* ---- Banner --------------------------------------------------------------- */
+
+/* The banner image already contains the dark background and the cards, so it is
+   used as a full-bleed background and the text is overlaid on top of it. */
+.card-showcase .card-showcase-banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 28px 20px 96px;
+  overflow: hidden;
+}
+
+/* full-bleed background image (black bg + cards baked in) */
+.card-showcase .card-showcase-visual {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  line-height: 0;
+}
+
+.card-showcase .card-showcase-visual picture,
+.card-showcase .card-showcase-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* text content — always aligned to the left over the banner */
+.card-showcase .card-showcase-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card-showcase .card-showcase-content > * {
+  margin: 0;
+}
+
+/* metallic heading */
+.card-showcase .card-showcase-content h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.1;
+  background: linear-gradient(180deg, #fff 0%, #eaeaea 40%, #a9a9a9 70%, #d6d6d6 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #dcdcdc;
+}
+
+/* sub-heading directly after the heading — metallic */
+.card-showcase .card-showcase-content h1 + p {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  background: linear-gradient(180deg, #f2f2f2 0%, #bdbdbd 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #cfcfcf;
+}
+
+/* eyebrow (first paragraph) */
+.card-showcase .card-showcase-content > p:first-child {
+  color: rgb(255 255 255 / 55%);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* ---- Animated call-to-action --------------------------------------------- */
+.card-showcase .button-container {
+  margin-top: 8px;
+}
+
+.card-showcase a.card-showcase-cta {
+  position: relative;
+  display: inline-block;
+  padding: 14px 40px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--card-showcase-fg);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+/* base (resting) border */
+.card-showcase a.card-showcase-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid rgb(255 255 255 / 25%);
+  z-index: -1;
+}
+
+/* animated highlight that sweeps left -> right -> left in a continuous loop */
+.card-showcase a.card-showcase-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 30%,
+    #fff 50%,
+    transparent 70%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+
+  /* show only the border by masking out the interior */
+  /* stylelint-disable property-no-vendor-prefix */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  /* stylelint-enable property-no-vendor-prefix */
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: card-showcase-cta-sweep 3s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+.card-showcase a.card-showcase-cta:hover {
+  text-decoration: none;
+}
+
+@keyframes card-showcase-cta-sweep {
+  from { background-position: 100% 0; }
+  to { background-position: 0% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-showcase a.card-showcase-cta::after {
+    animation: none;
+    background-position: 50% 0;
+  }
+}
+
+/* ---- Benefit cards -------------------------------------------------------- */
+.card-showcase .card-showcase-cards {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0 20px 40px;
+
+  /* the cards overlap the bottom of the banner, leaving a gap below the CTA */
+  margin-top: -40px;
+  position: relative;
+  z-index: 2;
+
+  /* horizontal scroll on small screens */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.card-showcase .card-showcase-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.card-showcase .card-showcase-card {
+  flex: 0 0 78%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 24px;
+  border-radius: 20px;
+  background: #f5f5f7;
+  color: #1a1a1a;
+}
+
+.card-showcase .card-showcase-card-icon {
+  line-height: 0;
+}
+
+.card-showcase .card-showcase-card-icon picture,
+.card-showcase .card-showcase-card-icon img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.card-showcase .card-showcase-card-body h2,
+.card-showcase .card-showcase-card-body h3,
+.card-showcase .card-showcase-card-body h4 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #1a1a1a;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.card-showcase .card-showcase-card-body p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* ---- Tablet --------------------------------------------------------------- */
+@media (width >= 600px) {
+  .card-showcase .card-showcase-card {
+    flex-basis: 44%;
+  }
+}
+
+/* ---- Desktop -------------------------------------------------------------- */
+@media (width >= 900px) {
+  .card-showcase .card-showcase-banner {
+    align-items: flex-start;
+    justify-content: center;
+    padding: 56px 32px 140px;
+    min-height: 420px;
+  }
+
+  /* text sits on the left over the empty area of the background image */
+  .card-showcase .card-showcase-content {
+    align-items: flex-start;
+    text-align: left;
+    max-width: 1200px;
+    padding: 0 32px;
+  }
+
+  .card-showcase .card-showcase-content > * {
+    max-width: 46%;
+  }
+
+  .card-showcase .card-showcase-content h1 {
+    font-size: 52px;
+  }
+
+  .card-showcase .card-showcase-content h1 + p {
+    font-size: 28px;
+  }
+
+  /* four benefit cards in a row, still overlapping the banner */
+  .card-showcase .card-showcase-cards {
+    max-width: 1200px;
+    margin: -56px auto 0;
+    padding: 0 32px 64px;
+    overflow-x: visible;
+  }
+
+  .card-showcase .card-showcase-card {
+    flex: 1 1 0;
+    padding: 32px 28px;
+  }
+}
