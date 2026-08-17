@@ -3,6 +3,23 @@
   padding: 0;
 }
 
+/* remove the gap between stacked variant-hero sections (and neighbours);
+   a gap is intentionally restored for tablet only, below */
+main > .section:has(.hero.overlay),
+main > .section:has(.hero.split) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* tablet only: reinstate a gap between these sections */
+@media (width >= 600px) and (width <= 899px) {
+  main > .section:has(.hero.overlay),
+  main > .section:has(.hero.split) {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+}
+
 .hero {
   position: relative;
   overflow: hidden;
