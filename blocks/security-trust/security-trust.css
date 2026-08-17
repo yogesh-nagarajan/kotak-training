@@ -54,7 +54,7 @@
 @media (width >= 900px) {
   .security-trust {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.35fr 1fr;
     align-items: center;
     gap: 48px;
     max-width: 1200px;
@@ -64,7 +64,7 @@
 
   .security-trust .security-trust-content h1,
   .security-trust .security-trust-content h2 {
-    font-size: 48px;
+    font-size: 40px;
   }
 
   .security-trust .security-trust-visual {
