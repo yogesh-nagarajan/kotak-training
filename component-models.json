@@ -610,6 +610,85 @@
     ]
   },
   {
+    "id": "hero-visa-video",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_pretitle",
+        "label": "Pretitle",
+        "description": "Small label shown above the title (e.g. It's time to feel super special)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_title",
+        "label": "Title",
+        "description": "Main heading (e.g. 811 Super)",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content_description",
+        "label": "Description",
+        "description": "Supporting copy shown below the title",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "primaryLink",
+        "label": "Super A/c Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "primaryLinkText",
+        "label": "Super A/c Label",
+        "description": "Label shown on the primary button (e.g. Open Kotak811 Super A/c)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondary_description",
+        "label": "Secondary Button Description",
+        "description": "Text shown before the secondary link (e.g. Existing Customer?)",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "secondary_link",
+        "label": "Secondary Button Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondary_linkText",
+        "label": "Secondary Button Label",
+        "description": "Label shown on the secondary link (e.g. Upgrade now)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "media_video",
+        "label": "Video URL",
+        "description": "Absolute URL to an MP4. Plays automatically on desktop; hidden on mobile.",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "media_image",
+        "label": "Image",
+        "description": "Shown on mobile below the content (also the desktop fallback when no video is set).",
+        "multi": false
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
