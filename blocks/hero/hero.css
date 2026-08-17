@@ -142,6 +142,19 @@
   color: #1a1a1a;
 }
 
+/* variant heroes: heading stays bold, subtext and CTA are normal weight */
+.hero.overlay .hero-content h1 + p,
+.hero.overlay .hero-content h1 + div,
+.hero.split .hero-content h1 + p,
+.hero.split .hero-content h1 + div {
+  font-weight: 400;
+}
+
+.hero.overlay .hero-content a.button,
+.hero.split .hero-content a.button {
+  font-weight: 400;
+}
+
 /* ---- split: image on one side, content on the other ---------------------- */
 .hero.split {
   display: flex;
