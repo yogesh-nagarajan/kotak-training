@@ -1,3 +1,6 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 /**
  * loads and decorates the 811 zero-balance hero section
  * Replicates the Kotak811 "Zero balance digital savings account" hero: a
@@ -36,10 +39,26 @@ export default function decorate(block) {
   if (images.length) {
     const imageContainer = document.createElement('div');
     imageContainer.className = 'zero-hero-image';
-    // first image = desktop banner, second = mobile banner
-    if (images[0]) images[0].classList.add('zero-hero-image-desktop');
-    if (images[1]) images[1].classList.add('zero-hero-image-mobile');
-    images.forEach((img) => imageContainer.append(img));
+    images.forEach((el, index) => {
+      // resolve the source <img> whether the authored cell holds a bare <img>
+      // or a <picture>
+      const srcImg = el.tagName === 'IMG' ? el : el.querySelector('img');
+      if (!srcImg) return;
+      // re-render as an optimized <picture>, then carry the Universal Editor
+      // instrumentation (data-aue-* / data-richtext-*) from the authored node
+      // onto the rendered <img> so the image stays a live drag-and-drop asset
+      // target in the authoring environment
+      const optimized = createOptimizedPicture(
+        srcImg.src,
+        srcImg.getAttribute('alt') || '',
+        index === 0, // eager-load the first (primary) banner
+        [{ width: '1600' }],
+      );
+      moveInstrumentation(srcImg, optimized.querySelector('img'));
+      // first image = desktop banner, second = mobile banner
+      optimized.classList.add(index === 0 ? 'zero-hero-image-desktop' : 'zero-hero-image-mobile');
+      imageContainer.append(optimized);
+    });
     block.prepend(imageContainer);
   }
 

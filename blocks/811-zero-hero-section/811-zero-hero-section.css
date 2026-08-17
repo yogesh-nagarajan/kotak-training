@@ -114,6 +114,7 @@
   font-weight: 600;
   line-height: 1.35;
   text-decoration: none;
+  cursor: pointer;
 }
 
 [class~="811-zero-hero-section"] .zero-hero-content a.button:hover,
