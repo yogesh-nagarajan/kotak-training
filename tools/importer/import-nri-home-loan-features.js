@@ -6,6 +6,7 @@ import breadcrumbParser from './parsers/breadcrumb.js';
 import heroCarouselParser from './parsers/hero-carousel.js';
 import tabsParser from './parsers/tabs.js';
 import introParser from './parsers/intro.js';
+import imgContainerParser from './parsers/img-container.js';
 import featureCarouselParser from './parsers/feature-carousel.js';
 import ctaParser from './parsers/cta.js';
 import faqParser from './parsers/faq.js';
@@ -17,7 +18,7 @@ import cleanupTransformer from './transformers/kotak-cleanup.js';
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
   name: 'nri-home-loan-features',
-  description: 'NRI Home Loan Features product page: hero-carousel, product tabs, intro, feature-carousel, disclaimer default content, CTA banner, FAQ accordion, and related-products cards.',
+  description: 'NRI Home Loan Features product page: hero-carousel, product tabs, intro, img-container highlight, feature-carousel, disclaimer default content, CTA banner, FAQ accordion, and related-products cards.',
   urls: [
     'http://localhost:3000/nri-home-loan-features',
   ],
@@ -48,6 +49,13 @@ const PAGE_TEMPLATE = {
       instances: [
         '.intro-container .intro',
         '.intro-container .intro.block',
+      ],
+    },
+    {
+      name: 'img-container',
+      instances: [
+        '.img-container-container .img-container',
+        '.img-container-container .img-container.block',
       ],
     },
     {
@@ -88,6 +96,7 @@ const parsers = {
   'hero-carousel': heroCarouselParser,
   tabs: tabsParser,
   intro: introParser,
+  'img-container': imgContainerParser,
   'feature-carousel': featureCarouselParser,
   cta: ctaParser,
   faq: faqParser,

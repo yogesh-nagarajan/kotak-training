@@ -1,0 +1,192 @@
+{
+  "templates": [
+    {
+      "name": "811-business",
+      "description": "Kotak811 Business Account landing page: alternating hero banners and benefit card grids.",
+      "urls": [
+        "http://localhost:3000/drafts/811-business.plain.html"
+      ],
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            "div.hero"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "div.cards"
+          ]
+        },
+        {
+          "name": "img-container",
+          "instances": [
+            "div.img-container"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Intro hero",
+          "selector": "div:nth-of-type(1)",
+          "style": "",
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Core benefits cards",
+          "selector": "div:nth-of-type(2)",
+          "style": "",
+          "blocks": [
+            "cards"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "Secondary hero",
+          "selector": "div:nth-of-type(3)",
+          "style": "",
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-4",
+          "name": "Business tools cards",
+          "selector": "div:nth-of-type(4)",
+          "style": "",
+          "blocks": [
+            "cards"
+          ],
+          "defaultContent": []
+        }
+      ]
+    },
+    {
+      "name": "feature-811-home",
+      "description": "Kotak811 home landing page (no carousel): hero banner, benefit card grid, ActivMoney image container, and secondary hero.",
+      "urls": [
+        "http://localhost:3000/drafts/feature-811-home.plain.html"
+      ],
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            "div.hero"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            "div.cards"
+          ]
+        },
+        {
+          "name": "img-container",
+          "instances": [
+            "div.img-container"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Intro hero",
+          "selector": "div:nth-of-type(1)",
+          "style": "",
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Core benefits cards",
+          "selector": "div:nth-of-type(2)",
+          "style": "",
+          "blocks": [
+            "cards"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "ActivMoney image container",
+          "selector": "div:nth-of-type(3)",
+          "style": "",
+          "blocks": [
+            "img-container"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-4",
+          "name": "Secondary hero",
+          "selector": "div:nth-of-type(4)",
+          "style": "",
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        }
+      ]
+    },
+    {
+      "name": "forex-card",
+      "description": "Kotak prepaid/forex card landing page: owl hero banner (mapped to hero-p) followed by intro content.",
+      "urls": [
+        "https://www.kotak.bank.in/en/personal-banking/cards/prepaid-card/forex-card.html"
+      ],
+      "blocks": [
+        {
+          "name": "hero-p",
+          "instances": [
+            ".owl-hero-banner"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero Banner",
+          "selector": ".owl-hero-banner",
+          "style": "",
+          "blocks": ["hero-p"],
+          "defaultContent": []
+        }
+      ]
+    },
+    {
+      "name": "811-zero-hero-section",
+      "description": "Kotak811 zero-balance digital savings account hero: full-bleed banner with centered eyebrow, heading, subtext and CTA.",
+      "urls": [
+        "http://localhost:3000/drafts/811-zero-hero-section.plain.html"
+      ],
+      "blocks": [
+        {
+          "name": "811-zero-hero-section",
+          "instances": [
+            "div[class~=\"811-zero-hero-section\"]"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Zero balance hero",
+          "selector": "div[class~=\"811-zero-hero-section\"]",
+          "style": "",
+          "blocks": ["811-zero-hero-section"],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}

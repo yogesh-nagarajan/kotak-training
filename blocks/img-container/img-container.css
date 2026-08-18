@@ -46,9 +46,45 @@
 .img-container .img-container-media img {
   display: block;
   width: 100%;
-  height: auto;
+  height: auto; /* preserve aspect ratio, no distortion */
   border-radius: 16px;
-  object-fit: cover;
+  object-fit: contain;
+}
+
+/* optional link wrapper around the image */
+.img-container .img-container-media .img-container-link {
+  display: block;
+  line-height: 0;
+}
+
+/* author-mode placeholder when no image is selected yet */
+.img-container .img-container-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  width: 100%;
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  color: #6b7280;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: 1.4;
+  background: #f9fafb;
+}
+
+/* alignment / position of the media within the block */
+.img-container.img-container-align-center .img-container-media {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img-container.img-container-align-left .img-container-media {
+  margin-right: auto;
+}
+
+.img-container.img-container-align-right .img-container-media {
+  margin-left: auto;
 }
 
 /* tablet */
@@ -97,5 +133,18 @@
   .img-container .img-container-media picture,
   .img-container .img-container-media img {
     border-radius: 24px;
+  }
+
+  /* alignment controls which side the media sits on at desktop */
+  .img-container.img-container-align-left .img-container-media {
+    order: -1;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .img-container.img-container-align-right .img-container-media {
+    order: 1;
+    margin-left: auto;
+    margin-right: 0;
   }
 }

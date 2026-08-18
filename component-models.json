@@ -142,6 +142,46 @@
     ]
   },
   {
+    "id": "811-zero-hero-section",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Desktop Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "imageMobile",
+        "label": "Mobile Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageMobileAlt",
+        "label": "Mobile Image Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "breadcrumb-item",
     "fields": [
       {
@@ -161,6 +201,53 @@
         "name": "current",
         "label": "Current Page",
         "valueType": "boolean"
+      }
+    ]
+  },
+  {
+    "id": "card-811-business-new",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "description",
+        "label": "Description",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Desktop Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "imageMobile",
+        "label": "Mobile Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageMobileAlt",
+        "label": "Mobile Image Alt",
+        "value": ""
       }
     ]
   },
@@ -373,6 +460,33 @@
     ]
   },
   {
+    "id": "feature-nri-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "description": "Product title as a Heading, feature bullet points, and links",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -523,6 +637,85 @@
     ]
   },
   {
+    "id": "hero-visa-video",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_pretitle",
+        "label": "Pretitle",
+        "description": "Small label shown above the title (e.g. It's time to feel super special)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_title",
+        "label": "Title",
+        "description": "Main heading (e.g. 811 Super)",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content_description",
+        "label": "Description",
+        "description": "Supporting copy shown below the title",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "primaryLink",
+        "label": "Super A/c Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "primaryLinkText",
+        "label": "Super A/c Label",
+        "description": "Label shown on the primary button (e.g. Open Kotak811 Super A/c)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondary_description",
+        "label": "Secondary Button Description",
+        "description": "Text shown before the secondary link (e.g. Existing Customer?)",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "secondary_link",
+        "label": "Secondary Button Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "secondary_linkText",
+        "label": "Secondary Button Label",
+        "description": "Label shown on the secondary link (e.g. Upgrade now)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "media_video",
+        "label": "Video URL",
+        "description": "Absolute URL to an MP4. Plays automatically on desktop; hidden on mobile.",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "media_image",
+        "label": "Image",
+        "description": "Shown on mobile below the content (also the desktop fallback when no video is set).",
+        "multi": false
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -569,7 +762,52 @@
         "component": "text",
         "valueType": "string",
         "name": "imageAlt",
-        "label": "Alt",
+        "label": "Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageTitle",
+        "label": "Image Title",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link URL"
+      },
+      {
+        "component": "boolean",
+        "name": "link_newTab",
+        "label": "Open Link in New Tab",
+        "valueType": "boolean"
+      },
+      {
+        "component": "select",
+        "name": "layout_alignment",
+        "label": "Image Alignment/Position",
+        "value": "center",
+        "options": [
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "layout_class",
+        "label": "CSS Class",
         "value": ""
       }
     ]

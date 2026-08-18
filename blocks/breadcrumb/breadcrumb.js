@@ -23,8 +23,10 @@ export default function decorate(block) {
     const labelCell = cells[0];
     const flagCell = cells[1];
 
-    const isCurrent = flagCell
-      && flagCell.textContent.trim().toLowerCase() === 'current';
+    // the "current" flag may be authored as the boolean true/false or the word
+    // "current" — treat any of those truthy forms as the current page
+    const flag = flagCell ? flagCell.textContent.trim().toLowerCase() : '';
+    const isCurrent = flag === 'true' || flag === 'current' || flag === 'yes';
 
     const li = document.createElement('li');
     li.className = 'breadcrumb-item';
