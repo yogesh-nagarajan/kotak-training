@@ -38,7 +38,52 @@
           "component": "text",
           "valueType": "string",
           "name": "imageAlt",
-          "label": "Alt",
+          "label": "Alt Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageTitle",
+          "label": "Image Title",
+          "value": ""
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link URL"
+        },
+        {
+          "component": "boolean",
+          "name": "link_newTab",
+          "label": "Open Link in New Tab",
+          "valueType": "boolean"
+        },
+        {
+          "component": "select",
+          "name": "layout_alignment",
+          "label": "Image Alignment/Position",
+          "value": "center",
+          "options": [
+            {
+              "name": "Center",
+              "value": "center"
+            },
+            {
+              "name": "Left",
+              "value": "left"
+            },
+            {
+              "name": "Right",
+              "value": "right"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "layout_class",
+          "label": "CSS Class",
           "value": ""
         }
       ]

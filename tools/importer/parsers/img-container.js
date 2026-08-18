@@ -1,34 +1,170 @@
 /* eslint-disable */
 /* global WebImporter */
-/** Parser for img-container. Base: img-container. Source: 811-business draft. */
+/**
+ * Parser for variant: img-container
+ * Base block: img-container (SIMPLE block — 1 column, one row per field group)
+ * Source: local drafts (811-business, feature-811-home) + nri-home-loan-features
+ * Generated: 2026-08-18
+ *
+ * xwalk SIMPLE (non-container) block. Per the xwalk hinting rules, a simple
+ * block is laid out as a SINGLE COLUMN with ONE ROW PER unique field group (a
+ * grouped set of `prefix_*` fields counts as one row; suffix-collapsed fields
+ * add no row). Model fields (blocks/img-container/_img-container.json -> model
+ * "img-container"), in order — 4 field groups => 4 rows:
+ *   row 1: text            (richtext)    -> field:text (heading + paragraph[s])
+ *   row 2: image           (reference)   -> field:image (<picture>/<img>)
+ *          imageAlt         (text)       -> COLLAPSED (Alt)   -> <img alt="">
+ *          imageTitle       (text)       -> COLLAPSED (Title) -> <img title="">
+ *   row 3: link            (aem-content) -> field:link (<a href>)
+ *          link_newTab      (boolean)    -> field:link_newTab (grouped w/ link)
+ *   row 4: layout_alignment (select)     -> field:layout_alignment (grouped)
+ *          layout_class     (text)       -> field:layout_class (grouped)
+ * => ALWAYS 4 single-cell rows: [text], [image], [link-group], [layout-group].
+ *
+ * A simple block maps ROWS (not columns) to model field groups positionally, so
+ * an empty group still emits its OWN ROW as an empty cell (empty string => empty
+ * <div>, no field hint). Laying the groups out as columns in one row makes xwalk
+ * read the extra cells as additional columns the model does not have — that is
+ * the "content isn't mapping to the model correctly / every field must align
+ * with a column" error. Fields that collapse by suffix (imageAlt/Alt,
+ * imageTitle/Title) are NOT separate rows: they ride as attributes on the image.
+ */
+
+/**
+ * Wrap cell content with a Universal Editor field hint comment placed BEFORE
+ * the content. Grouped fields call this multiple times into the same fragment.
+ */
+function fieldHint(document, fieldName, content) {
+  const frag = document.createDocumentFragment();
+  frag.appendChild(document.createComment(` field:${fieldName} `));
+  if (Array.isArray(content)) {
+    content.forEach((node) => {
+      if (node) frag.appendChild(node);
+    });
+  } else if (content) {
+    frag.appendChild(content);
+  }
+  return frag;
+}
+
+/** Append field-hint fragment(s) into a single grouped cell fragment. */
+function groupCell(document, entries) {
+  // entries: [{ name, content }] — only include entries that have content, but
+  // always return a fragment (empty '' handled by caller when the whole group
+  // is empty).
+  const present = entries.filter((e) => {
+    if (Array.isArray(e.content)) return e.content.length > 0;
+    return !!e.content;
+  });
+  if (!present.length) return '';
+  const frag = document.createDocumentFragment();
+  present.forEach((e) => frag.appendChild(fieldHint(document, e.name, e.content)));
+  return frag;
+}
+
 export default function parse(element, { document }) {
-  // Source markup: a text row (heading + paragraph) and an image row.
-  // Model: 1 column, 2 content rows -> [ text ], [ image ].
+  // Scope to the inner content wrapper when present, otherwise the block itself.
+  // In the rendered/decorated DOM this is the source; in the raw draft the block
+  // holds a text row and an image row.
   const rows = Array.from(element.children);
 
-  const imageRow = rows.find((row) => row.querySelector('picture, img'));
-  const image = imageRow ? imageRow.querySelector('picture, img') : null;
+  // --- image (field:image) + collapsed imageAlt/imageTitle ------------------
+  // Prefer the decorated media wrapper, then any picture/img in the block.
+  const imageEl = element.querySelector('.img-container-media picture')
+    || element.querySelector('.img-container-media img')
+    || element.querySelector('picture, img')
+    || null;
 
-  // gather authored text (heading + paragraph) from the non-image rows.
-  // Collect element references from a static snapshot — createBlock moves them
-  // into the table, so never loop on firstElementChild.
-  const textRows = rows.filter((row) => row !== imageRow);
-  const textCell = [];
-  textRows.forEach((row) => {
-    Array.from(row.children).forEach((cell) => {
-      Array.from(cell.children).forEach((node) => textCell.push(node));
+  // Rebuild a clean <img> so alt/title collapse onto it and helper markup is
+  // dropped. Keep <picture> sources when present.
+  let imageCell = '';
+  if (imageEl) {
+    const img = imageEl.tagName === 'IMG' ? imageEl : imageEl.querySelector('img');
+    // read alt/title that may already be on the source image
+    const altText = (img && img.getAttribute('alt')) || '';
+    const titleText = (img && img.getAttribute('title')) || '';
+    if (img) {
+      if (altText) img.setAttribute('alt', altText);
+      else img.removeAttribute('alt');
+      if (titleText) img.setAttribute('title', titleText);
+    }
+    imageCell = fieldHint(document, 'image', imageEl);
+  }
+
+  // --- text (field:text) ----------------------------------------------------
+  // Everything that isn't the image: headings + paragraphs, in document order.
+  const textWrapper = element.querySelector('.img-container-text');
+  let textNodes = [];
+  if (textWrapper) {
+    textNodes = Array.from(textWrapper.children);
+  } else {
+    const imageRow = rows.find((row) => row.querySelector('picture, img'));
+    rows.filter((row) => row !== imageRow).forEach((row) => {
+      Array.from(row.children).forEach((cell) => {
+        // a cell may be the text itself or wrap it in another div
+        const kids = Array.from(cell.children);
+        if (kids.length) kids.forEach((n) => textNodes.push(n));
+      });
     });
-  });
+  }
+  // drop any node that is (or contains) the image so it isn't duplicated
+  textNodes = textNodes.filter((n) => n && !n.querySelector?.('picture, img') && n.tagName !== 'PICTURE' && n.tagName !== 'IMG');
+  const textCell = textNodes.length ? fieldHint(document, 'text', textNodes) : '';
 
-  // empty-block guard
-  if (!image && textCell.length === 0) {
+  // --- link group (field:link + field:link_newTab) -------------------------
+  const anchor = element.querySelector('.img-container-link, a[href]');
+  let linkGroup = '';
+  if (anchor && anchor.getAttribute('href')) {
+    const link = document.createElement('a');
+    link.setAttribute('href', anchor.getAttribute('href'));
+    const linkText = (anchor.textContent || '').trim();
+    if (linkText) link.textContent = linkText;
+    const newTab = anchor.getAttribute('target') === '_blank';
+    const newTabP = document.createElement('p');
+    newTabP.textContent = newTab ? 'true' : 'false';
+    linkGroup = groupCell(document, [
+      { name: 'link', content: link },
+      { name: 'link_newTab', content: newTabP },
+    ]);
+  }
+
+  // --- layout group (field:layout_alignment + field:layout_class) ----------
+  // Alignment is encoded on the block class (img-container-align-*); custom css
+  // classes are any other extra classes on the block.
+  const classes = Array.from(element.classList);
+  const alignClass = classes.find((c) => c.startsWith('img-container-align-'));
+  const alignment = alignClass ? alignClass.replace('img-container-align-', '') : '';
+  const known = new Set(['img-container', 'block', alignClass]);
+  const customClasses = classes.filter((c) => !known.has(c));
+
+  const layoutEntries = [];
+  if (alignment) {
+    const alignP = document.createElement('p');
+    alignP.textContent = alignment;
+    layoutEntries.push({ name: 'layout_alignment', content: alignP });
+  }
+  if (customClasses.length) {
+    const classP = document.createElement('p');
+    classP.textContent = customClasses.join(' ');
+    layoutEntries.push({ name: 'layout_class', content: classP });
+  }
+  const layoutGroup = groupCell(document, layoutEntries);
+
+  // Empty-block guard: nothing at all -> unwrap so content isn't lost.
+  if (!imageCell && !textCell && !linkGroup && !layoutGroup) {
     element.replaceWith(...element.childNodes);
     return;
   }
 
-  const cells = [];
-  cells.push([textCell]); // row: authored heading + paragraph
-  cells.push([image || '']); // row: authored image
+  // Simple block: ONE COLUMN, one row per field group, in model order. An empty
+  // group still emits its own row (empty cell, no hint) so rows stay aligned to
+  // the model's field groups — never collapse to a single multi-column row.
+  const cells = [
+    [textCell],
+    [imageCell],
+    [linkGroup],
+    [layoutGroup],
+  ];
 
   const block = WebImporter.Blocks.createBlock(document, { name: 'img-container', cells });
   element.replaceWith(block);
