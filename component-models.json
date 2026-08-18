@@ -214,37 +214,62 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "subtitle",
-        "label": "Subtitle",
-        "description": "Small label shown above the title",
+        "name": "content_pretitle",
+        "label": "Pretitle",
+        "description": "Small label shown above the title (e.g. Unlock Your Financial Freedom)",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_title",
+        "label": "Title",
+        "description": "Main heading (e.g. Kotak811 Personal Loan)",
         "value": ""
       },
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "text",
-        "label": "Text",
-        "description": "Add the title as Heading 1, key highlights as a bulleted list, and an optional note paragraph",
+        "name": "content_points",
+        "label": "Points",
+        "description": "Key highlights as a bulleted list",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content_note",
+        "label": "Note",
+        "description": "Text below the button, may include a link (e.g. New customer? Apply with Kotak811 A/c)",
         "value": ""
       },
       {
         "component": "aem-content",
-        "name": "link",
-        "label": "CTA Link"
+        "name": "ctaLink",
+        "label": "Button Link"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "linkText",
-        "label": "CTA Text",
+        "name": "ctaLinkText",
+        "label": "Button Text",
+        "description": "Label shown on the button (e.g. Apply Now)",
         "value": ""
       },
       {
-        "component": "text",
+        "component": "reference",
         "valueType": "string",
         "name": "video",
+        "label": "Background Video (DAM)",
+        "description": "MP4 video asset from DAM. Shows in the editor; may not play on the published site unless DAM video delivery is enabled. Prefer the URL field below for published pages.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "videoUrl",
         "label": "Background Video URL",
-        "description": "URL to an MP4 video file",
+        "description": "Absolute URL to an MP4 (e.g. https://...mp4). Used on the published site; takes priority over the DAM asset.",
         "value": ""
       }
     ]
@@ -272,6 +297,76 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "supermoney-footer",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logo",
+        "label": "Logo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logoAlt",
+        "label": "Logo Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "columns",
+        "value": "",
+        "label": "Footer Columns",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "legal",
+        "value": "",
+        "label": "Legal Bar",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "supermoney-header",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Logo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Logo Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "navigation",
+        "value": "",
+        "label": "Navigation Links",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "CTA Text",
+        "value": "Apply Now"
       }
     ]
   },
