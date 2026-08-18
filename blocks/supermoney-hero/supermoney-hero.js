@@ -90,13 +90,14 @@ export default function decorate(block) {
     ul.append(li);
   });
 
-  // Optimize card images.
+  // ptimize card images.
   ul.querySelectorAll('picture > img').forEach((img) => {
     const optimized = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
     moveInstrumentation(img, optimized.querySelector('img'));
     img.closest('picture').replaceWith(optimized);
   });
 
+  //  Finalize.
   block.replaceChildren(banner);
   if (cardRows.length) block.append(ul);
 }
