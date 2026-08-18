@@ -29,7 +29,7 @@
         },
         {
           "component": "richtext",
-          "name": "supportingText",
+          "name": "body",
           "value": "",
           "label": "Supporting Text",
           "valueType": "string"
