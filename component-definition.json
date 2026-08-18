@@ -278,6 +278,36 @@
           }
         },
         {
+          "title": "Feature NRI",
+          "id": "feature-nri",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Feature NRI",
+                  "filter": "feature-nri"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Feature NRI Card",
+          "id": "feature-nri-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Feature NRI Card",
+                  "model": "feature-nri-card"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Fragment",
           "id": "fragment",
           "plugins": {

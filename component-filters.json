@@ -74,6 +74,12 @@
     ]
   },
   {
+    "id": "feature-nri",
+    "components": [
+      "feature-nri-card"
+    ]
+  },
+  {
     "id": "hero-carousel",
     "components": [
       "hero-slide"
