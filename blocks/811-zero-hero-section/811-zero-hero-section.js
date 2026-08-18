@@ -59,7 +59,8 @@ export default function decorate(block) {
       optimized.classList.add(index === 0 ? 'zero-hero-image-desktop' : 'zero-hero-image-mobile');
       imageContainer.append(optimized);
     });
-    block.prepend(imageContainer);
+    // image container placed after the content (content-first order)
+    block.append(imageContainer);
   }
 
   // gather the text content into a single centered wrapper, flattening the
@@ -91,7 +92,8 @@ export default function decorate(block) {
       const wrapper = cta.closest('p');
       if (wrapper) wrapper.classList.add('button-container');
     }
-    block.append(content);
+    // content placed first inside the block
+    block.prepend(content);
   }
 
   // opt into the project's AOS fade-in if it is available, without adding or
