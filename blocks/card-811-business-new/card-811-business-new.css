@@ -1,8 +1,8 @@
-/* card-811business-new: authored title + description beside a rounded image.
+/* card-811-business-new: authored title + description beside a rounded image.
    Mobile-first: title -> description -> image stacked; desktop: text left,
    image right, both vertically centered. */
 
-.card-811business-new {
+.card-811-business-new {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -10,23 +10,23 @@
 }
 
 /* on mobile the text sits above the media (image) */
-.card-811business-new .card-811business-new-text {
+.card-811-business-new .card-811-business-new-text {
   order: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.card-811business-new .card-811business-new-media {
+.card-811-business-new .card-811-business-new-media {
   order: 2;
   line-height: 0;
 }
 
-.card-811business-new .card-811business-new-text > * {
+.card-811-business-new .card-811-business-new-text > * {
   margin: 0;
 }
 
-.card-811business-new .card-811business-new-title {
+.card-811-business-new .card-811-business-new-title {
   font-family: var(--body-font-family);
   font-weight: 700;
   font-size: 26px;
@@ -35,7 +35,7 @@
   color: #16171a;
 }
 
-.card-811business-new .card-811business-new-description {
+.card-811-business-new .card-811-business-new-description {
   font-family: var(--body-font-family);
   font-weight: 400;
   font-size: 15px;
@@ -44,8 +44,8 @@
 }
 
 /* media / image */
-.card-811business-new .card-811business-new-media picture,
-.card-811business-new .card-811business-new-media img {
+.card-811-business-new .card-811-business-new-media picture,
+.card-811-business-new .card-811-business-new-media img {
   display: block;
   width: 100%;
   height: auto;
@@ -54,68 +54,68 @@
 }
 
 /* image swap: show mobile image, hide desktop image on small screens */
-.card-811business-new .card-811business-new-media .is-desktop {
+.card-811-business-new .card-811-business-new-media .is-desktop {
   display: none;
 }
 
-.card-811business-new .card-811business-new-media .is-mobile {
+.card-811-business-new .card-811-business-new-media .is-mobile {
   display: block;
 }
 
 /* tablet */
 @media (width >= 600px) {
-  .card-811business-new .card-811business-new-title {
+  .card-811-business-new .card-811-business-new-title {
     font-size: 34px;
   }
 
-  .card-811business-new .card-811business-new-description {
+  .card-811-business-new .card-811-business-new-description {
     font-size: 16px;
   }
 }
 
 /* desktop: two columns, text left / image right, vertically centered */
 @media (width >= 900px) {
-  .card-811business-new {
+  .card-811-business-new {
     flex-direction: row;
     align-items: center;
     gap: 80px;
   }
 
-  .card-811business-new .card-811business-new-text {
+  .card-811-business-new .card-811-business-new-text {
     order: 1;
     flex: 0 1 45%;
     gap: 20px;
   }
 
-  .card-811business-new .card-811business-new-media {
+  .card-811-business-new .card-811-business-new-media {
     order: 2;
     flex: 0 1 46%;
     margin-left: auto;
   }
 
-  .card-811business-new .card-811business-new-title {
+  .card-811-business-new .card-811-business-new-title {
     font-size: 56px;
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
 
-  .card-811business-new .card-811business-new-description {
+  .card-811-business-new .card-811-business-new-description {
     font-size: 18px;
     line-height: 1.6;
     max-width: 32ch;
   }
 
-  .card-811business-new .card-811business-new-media picture,
-  .card-811business-new .card-811business-new-media img {
+  .card-811-business-new .card-811-business-new-media picture,
+  .card-811-business-new .card-811-business-new-media img {
     border-radius: 24px;
   }
 
   /* image swap: show desktop image, hide mobile image on large screens */
-  .card-811business-new .card-811business-new-media .is-desktop {
+  .card-811-business-new .card-811-business-new-media .is-desktop {
     display: block;
   }
 
-  .card-811business-new .card-811business-new-media .is-mobile {
+  .card-811-business-new .card-811-business-new-media .is-mobile {
     display: none;
   }
 }

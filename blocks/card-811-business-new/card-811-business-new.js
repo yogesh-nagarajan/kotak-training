@@ -1,5 +1,5 @@
 /**
- * loads and decorates the card-811business-new block
+ * loads and decorates the card-811-business-new block
  *
  * Renders a two-column promo card: authored title + description on one side and
  * a rounded image on the other. Separate desktop and mobile images are swapped
@@ -19,7 +19,7 @@
  * elements are moved (not recreated) so the block stays editable in the
  * Universal Editor.
  *
- * @param {Element} block The card-811business-new block element
+ * @param {Element} block The card-811-business-new block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
@@ -31,13 +31,13 @@ export default function decorate(block) {
   // build the text column by MOVING the existing authored elements (preserves
   // any Universal Editor instrumentation), flattening the row/cell wrappers
   const text = document.createElement('div');
-  text.className = 'card-811business-new-text';
+  text.className = 'card-811-business-new-text';
 
   textRows.forEach((row, rowIndex) => {
     // first text row = title, everything after = description
     const cls = rowIndex === 0
-      ? 'card-811business-new-title'
-      : 'card-811business-new-description';
+      ? 'card-811-business-new-title'
+      : 'card-811-business-new-description';
     [...row.children].forEach((cell) => {
       if (cell.firstElementChild) {
         // move existing authored elements (preserves UE instrumentation)
@@ -58,7 +58,7 @@ export default function decorate(block) {
 
   // build the media column: first image = desktop, second = mobile
   const media = document.createElement('div');
-  media.className = 'card-811business-new-media';
+  media.className = 'card-811-business-new-media';
 
   const images = imageRows
     .map((row) => row.querySelector('picture, img'))
