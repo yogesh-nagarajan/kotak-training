@@ -1,0 +1,128 @@
+.hero-visa-video {
+  --hero-visa-video-pretitle-color: #e6007e;
+  --hero-visa-video-title-color: #1a1a2e;
+  --hero-visa-video-text-color: #4a4a5a;
+  --hero-visa-video-primary-bg: #3d43e6;
+  --hero-visa-video-secondary-link-color: #3d43e6;
+
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-sizing: border-box;
+  padding: 40px 24px;
+}
+
+.hero-visa-video-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero-visa-video-pretitle {
+  margin: 0;
+  color: var(--hero-visa-video-pretitle-color);
+  font-weight: 700;
+  font-size: var(--body-font-size-xs);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.hero-visa-video-title {
+  margin: 12px 0 0;
+  color: var(--hero-visa-video-title-color);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.1;
+}
+
+.hero-visa-video-description {
+  margin: 20px 0 0;
+  color: var(--hero-visa-video-text-color);
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+}
+
+.hero-visa-video-description p {
+  margin: 0;
+}
+
+.hero-visa-video-primary.button.primary {
+  margin-top: 32px;
+  border-color: var(--hero-visa-video-primary-bg);
+  background-color: var(--hero-visa-video-primary-bg);
+  padding: 0.9em 2.4em;
+  color: #fff;
+  font-weight: 600;
+}
+
+.hero-visa-video-primary.button.primary:hover,
+.hero-visa-video-primary.button.primary:focus-visible {
+  border-color: var(--hero-visa-video-primary-bg);
+  background-color: #2f34c9;
+  color: #fff;
+}
+
+.hero-visa-video-secondary {
+  margin: 20px 0 0;
+  color: var(--hero-visa-video-title-color);
+  font-weight: 600;
+  font-size: var(--body-font-size-s);
+}
+
+.hero-visa-video-secondary-link {
+  color: var(--hero-visa-video-secondary-link-color);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.hero-visa-video-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-visa-video-player {
+  display: none;
+}
+
+.hero-visa-video-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 640px;
+}
+
+@media (width >= 900px) {
+  .hero-visa-video {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    padding: 64px 32px;
+  }
+
+  .hero-visa-video-content {
+    flex: 1 1 45%;
+    max-width: 560px;
+  }
+
+  .hero-visa-video-title {
+    font-size: 64px;
+  }
+
+  .hero-visa-video-media {
+    flex: 1 1 50%;
+  }
+
+  /* desktop: play the video, hide the mobile fallback image */
+  .hero-visa-video-player {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-visa-video-media:has(.hero-visa-video-player) .hero-visa-video-image {
+    display: none;
+  }
+}

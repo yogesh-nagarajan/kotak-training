@@ -49,6 +49,7 @@
         "title",
         "hero",
         "hero-video",
+        "hero-visa-video",
         "hero-carousel",
         "breadcrumb",
         "tabs",
@@ -65,6 +66,7 @@
         "emi-calculator",
         "supermoney-hero",
         "accordian-faq",
+        "feature-nri",
         "card-811-business-new"
       ]
     }

@@ -210,6 +210,108 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
+  // tools/importer/parsers/img-container.js
+  function fieldHint(document, fieldName, content) {
+    const frag = document.createDocumentFragment();
+    frag.appendChild(document.createComment(` field:${fieldName} `));
+    if (Array.isArray(content)) {
+      content.forEach((node) => {
+        if (node) frag.appendChild(node);
+      });
+    } else if (content) {
+      frag.appendChild(content);
+    }
+    return frag;
+  }
+  function groupCell(document, entries) {
+    const present = entries.filter((e) => {
+      if (Array.isArray(e.content)) return e.content.length > 0;
+      return !!e.content;
+    });
+    if (!present.length) return "";
+    const frag = document.createDocumentFragment();
+    present.forEach((e) => frag.appendChild(fieldHint(document, e.name, e.content)));
+    return frag;
+  }
+  function parse5(element, { document }) {
+    const rows = Array.from(element.children);
+    const imageEl = element.querySelector(".img-container-media picture") || element.querySelector(".img-container-media img") || element.querySelector("picture, img") || null;
+    let imageCell = "";
+    if (imageEl) {
+      const img = imageEl.tagName === "IMG" ? imageEl : imageEl.querySelector("img");
+      const altText = img && img.getAttribute("alt") || "";
+      const titleText = img && img.getAttribute("title") || "";
+      if (img) {
+        if (altText) img.setAttribute("alt", altText);
+        else img.removeAttribute("alt");
+        if (titleText) img.setAttribute("title", titleText);
+      }
+      imageCell = fieldHint(document, "image", imageEl);
+    }
+    const textWrapper = element.querySelector(".img-container-text");
+    let textNodes = [];
+    if (textWrapper) {
+      textNodes = Array.from(textWrapper.children);
+    } else {
+      const imageRow = rows.find((row) => row.querySelector("picture, img"));
+      rows.filter((row) => row !== imageRow).forEach((row) => {
+        Array.from(row.children).forEach((cell) => {
+          const kids = Array.from(cell.children);
+          if (kids.length) kids.forEach((n) => textNodes.push(n));
+        });
+      });
+    }
+    textNodes = textNodes.filter((n) => {
+      var _a;
+      return n && !((_a = n.querySelector) == null ? void 0 : _a.call(n, "picture, img")) && n.tagName !== "PICTURE" && n.tagName !== "IMG";
+    });
+    const textCell = textNodes.length ? fieldHint(document, "text", textNodes) : "";
+    const anchor = element.querySelector(".img-container-link, a[href]");
+    let linkGroup = "";
+    if (anchor && anchor.getAttribute("href")) {
+      const link = document.createElement("a");
+      link.setAttribute("href", anchor.getAttribute("href"));
+      const linkText = (anchor.textContent || "").trim();
+      if (linkText) link.textContent = linkText;
+      const newTab = anchor.getAttribute("target") === "_blank";
+      const newTabP = document.createElement("p");
+      newTabP.textContent = newTab ? "true" : "false";
+      linkGroup = groupCell(document, [
+        { name: "link", content: link },
+        { name: "link_newTab", content: newTabP }
+      ]);
+    }
+    const classes = Array.from(element.classList);
+    const alignClass = classes.find((c) => c.startsWith("img-container-align-"));
+    const alignment = alignClass ? alignClass.replace("img-container-align-", "") : "";
+    const known = /* @__PURE__ */ new Set(["img-container", "block", alignClass]);
+    const customClasses = classes.filter((c) => !known.has(c));
+    const layoutEntries = [];
+    if (alignment) {
+      const alignP = document.createElement("p");
+      alignP.textContent = alignment;
+      layoutEntries.push({ name: "layout_alignment", content: alignP });
+    }
+    if (customClasses.length) {
+      const classP = document.createElement("p");
+      classP.textContent = customClasses.join(" ");
+      layoutEntries.push({ name: "layout_class", content: classP });
+    }
+    const layoutGroup = groupCell(document, layoutEntries);
+    if (!imageCell && !textCell && !linkGroup && !layoutGroup) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const cells = [
+      [textCell],
+      [imageCell],
+      [linkGroup],
+      [layoutGroup]
+    ];
+    const block = WebImporter.Blocks.createBlock(document, { name: "img-container", cells });
+    element.replaceWith(block);
+  }
+
   // tools/importer/parsers/feature-carousel.js
   function withFieldHint5(document, fieldName, content) {
     const frag = document.createDocumentFragment();
@@ -223,7 +325,7 @@ var CustomImportScript = (() => {
     }
     return frag;
   }
-  function parse5(element, { document }) {
+  function parse6(element, { document }) {
     const items = Array.from(element.querySelectorAll(".feature-carousel-item"));
     if (!items.length) {
       element.replaceWith(...element.childNodes);
@@ -271,7 +373,7 @@ var CustomImportScript = (() => {
     }
     return frag;
   }
-  function parse6(element, { document }) {
+  function parse7(element, { document }) {
     var _a;
     const content = element.querySelector(".cta-content") || element;
     const headingText = (_a = content.querySelector(".cta-title, h1, h2, h3, h4, h5, h6")) == null ? void 0 : _a.textContent.trim();
@@ -313,7 +415,7 @@ var CustomImportScript = (() => {
     }
     return frag;
   }
-  function parse7(element, { document }) {
+  function parse8(element, { document }) {
     const items = Array.from(element.querySelectorAll(".faq-item"));
     if (!items.length) {
       element.replaceWith(...element.childNodes);
@@ -348,7 +450,7 @@ var CustomImportScript = (() => {
     }
     return frag;
   }
-  function parse8(element, { document }) {
+  function parse9(element, { document }) {
     let cards = Array.from(element.querySelectorAll(":scope > ul > li"));
     if (!cards.length) cards = Array.from(element.querySelectorAll("ul > li, li"));
     if (!cards.length) {
@@ -409,7 +511,7 @@ var CustomImportScript = (() => {
   // tools/importer/import-nri-home-loan-features.js
   var PAGE_TEMPLATE = {
     name: "nri-home-loan-features",
-    description: "NRI Home Loan Features product page: hero-carousel, product tabs, intro, feature-carousel, disclaimer default content, CTA banner, FAQ accordion, and related-products cards.",
+    description: "NRI Home Loan Features product page: hero-carousel, product tabs, intro, img-container highlight, feature-carousel, disclaimer default content, CTA banner, FAQ accordion, and related-products cards.",
     urls: [
       "http://localhost:3000/nri-home-loan-features"
     ],
@@ -440,6 +542,13 @@ var CustomImportScript = (() => {
         instances: [
           ".intro-container .intro",
           ".intro-container .intro.block"
+        ]
+      },
+      {
+        name: "img-container",
+        instances: [
+          ".img-container-container .img-container",
+          ".img-container-container .img-container.block"
         ]
       },
       {
@@ -478,10 +587,11 @@ var CustomImportScript = (() => {
     "hero-carousel": parse2,
     tabs: parse3,
     intro: parse4,
-    "feature-carousel": parse5,
-    cta: parse6,
-    faq: parse7,
-    "related-products": parse8
+    "img-container": parse5,
+    "feature-carousel": parse6,
+    cta: parse7,
+    faq: parse8,
+    "related-products": parse9
   };
   var transformers = [
     transform
