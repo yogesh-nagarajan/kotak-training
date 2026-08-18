@@ -45,12 +45,7 @@ export default function decorate(block) {
     textWrapper.className = 'feature-nri-content';
 
     // Collect all elements from content cells
-    const rawElements = [];
-    contentCells.forEach((cell) => {
-      while (cell.firstElementChild) {
-        rawElements.push(cell.firstElementChild);
-      }
-    });
+    const rawElements = contentCells.flatMap((cell) => [...cell.children]);
 
     const links = [];
     rawElements.forEach((el) => {
