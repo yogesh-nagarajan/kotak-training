@@ -2,30 +2,32 @@
 /* global WebImporter */
 /**
  * Parser for variant: img-container
- * Base block: img-container (single block, one row)
+ * Base block: img-container (SIMPLE block — 1 column, one row per field group)
  * Source: local drafts (811-business, feature-811-home) + nri-home-loan-features
  * Generated: 2026-08-18
  *
- * xwalk single block. Exactly ONE row whose cells map positionally to the
- * model's field GROUPS. Model fields (blocks/img-container/_img-container.json
- * -> model "img-container"), in order:
- *   - text            (richtext)    -> col 1, field:text (heading + paragraph[s])
- *   - image           (reference)   -> col 2, field:image (<picture>/<img>)
- *   - imageAlt         (text)       -> COLLAPSED (Alt suffix)   -> <img alt="">
- *   - imageTitle       (text)       -> COLLAPSED (Title suffix) -> <img title="">
- *   - link            (aem-content) -> col 3, field:link (<a href>)
- *   - link_newTab     (boolean)     -> col 3, field:link_newTab (grouped w/ link)
- *   - layout_alignment (select)     -> col 4, field:layout_alignment (grouped)
- *   - layout_class    (text)        -> col 4, field:layout_class (grouped)
- * => ALWAYS 4 columns, one row: [text, image, link-group, layout-group].
+ * xwalk SIMPLE (non-container) block. Per the xwalk hinting rules, a simple
+ * block is laid out as a SINGLE COLUMN with ONE ROW PER unique field group (a
+ * grouped set of `prefix_*` fields counts as one row; suffix-collapsed fields
+ * add no row). Model fields (blocks/img-container/_img-container.json -> model
+ * "img-container"), in order — 4 field groups => 4 rows:
+ *   row 1: text            (richtext)    -> field:text (heading + paragraph[s])
+ *   row 2: image           (reference)   -> field:image (<picture>/<img>)
+ *          imageAlt         (text)       -> COLLAPSED (Alt)   -> <img alt="">
+ *          imageTitle       (text)       -> COLLAPSED (Title) -> <img title="">
+ *   row 3: link            (aem-content) -> field:link (<a href>)
+ *          link_newTab      (boolean)    -> field:link_newTab (grouped w/ link)
+ *   row 4: layout_alignment (select)     -> field:layout_alignment (grouped)
+ *          layout_class     (text)       -> field:layout_class (grouped)
+ * => ALWAYS 4 single-cell rows: [text], [image], [link-group], [layout-group].
  *
- * Column count MUST be identical (4) every time. xwalk maps cells to model
- * field groups positionally, so a field with no content still emits its column
- * as an EMPTY cell (empty string => empty <div>, no field hint). Dropping a
- * cell shifts every later field into the wrong column — that is the
- * "content isn't mapping to the model correctly" error. Fields that collapse by
- * suffix (imageAlt/Alt, imageTitle/Title) are NOT separate cells: they ride as
- * attributes on the image element.
+ * A simple block maps ROWS (not columns) to model field groups positionally, so
+ * an empty group still emits its OWN ROW as an empty cell (empty string => empty
+ * <div>, no field hint). Laying the groups out as columns in one row makes xwalk
+ * read the extra cells as additional columns the model does not have — that is
+ * the "content isn't mapping to the model correctly / every field must align
+ * with a column" error. Fields that collapse by suffix (imageAlt/Alt,
+ * imageTitle/Title) are NOT separate rows: they ride as attributes on the image.
  */
 
 /**
@@ -154,8 +156,15 @@ export default function parse(element, { document }) {
     return;
   }
 
-  // Fixed 4-column single row — never conditionally omit a cell.
-  const cells = [[textCell, imageCell, linkGroup, layoutGroup]];
+  // Simple block: ONE COLUMN, one row per field group, in model order. An empty
+  // group still emits its own row (empty cell, no hint) so rows stay aligned to
+  // the model's field groups — never collapse to a single multi-column row.
+  const cells = [
+    [textCell],
+    [imageCell],
+    [linkGroup],
+    [layoutGroup],
+  ];
 
   const block = WebImporter.Blocks.createBlock(document, { name: 'img-container', cells });
   element.replaceWith(block);
