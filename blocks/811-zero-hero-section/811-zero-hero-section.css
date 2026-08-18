@@ -65,17 +65,6 @@
   margin: 0;
 }
 
-/* eyebrow / sub-title */
-[class~="811-zero-hero-section"] .zero-hero-content .zero-hero-eyebrow {
-  color: #e5336a;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-
 /* heading */
 [class~="811-zero-hero-section"] .zero-hero-content h1 {
   color: #14142b;
@@ -96,6 +85,18 @@
   font-weight: 400;
   line-height: 1.5;
   margin-top: 10px;
+}
+
+/* eyebrow / sub-title (first paragraph above the heading) */
+[class~="811-zero-hero-section"] .zero-hero-content > p:first-of-type,
+[class~="811-zero-hero-section"] .zero-hero-content .zero-hero-eyebrow {
+  color: #e5336a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  margin-bottom: 12px;
 }
 
 [class~="811-zero-hero-section"] .zero-hero-content h1 + div {
