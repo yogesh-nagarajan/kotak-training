@@ -47,6 +47,7 @@
 /* mobile banner shown by default, anchored 20px from the bottom */
 [class~="811-zero-hero-section"] .zero-hero-image .zero-hero-image-mobile {
   display: block;
+  position: fixed;
   top: auto;
   bottom: 20px;
 }
@@ -94,8 +95,11 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-  max-width: 520px;
   margin-top: 10px;
+}
+
+[class~="811-zero-hero-section"] .zero-hero-content h1 + div {
+  max-width: 520px;
 }
 
 /* call-to-action button */
