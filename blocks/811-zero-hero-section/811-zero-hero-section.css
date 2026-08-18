@@ -99,10 +99,6 @@
   margin-bottom: 12px;
 }
 
-[class~="811-zero-hero-section"] .zero-hero-content h1 + div {
-  max-width: 520px;
-}
-
 /* call-to-action button */
 [class~="811-zero-hero-section"] .zero-hero-content .button-container {
   margin-top: 30px;
