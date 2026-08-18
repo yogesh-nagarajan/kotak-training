@@ -60,7 +60,10 @@
         "cards",
         "columns",
         "fragment",
-        "supermoney-hero"
+        "accordion-faq",
+        "supermoney-hero",
+        "supermoney-header",
+        "supermoney-footer"
       ]
     }
   ]
