@@ -5,100 +5,117 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * loads and decorates the 811 zero-balance hero section
  * Replicates the Kotak811 "Zero balance digital savings account" hero: a
  * full-bleed background banner (desktop + mobile variants swapped by viewport)
- * with centered text content (eyebrow, heading, subtext and a call-to-action).
+ * with centered text content (pretitle, title, description and a CTA button).
  *
- * Block structure (matches the model's 3 field-groups):
- *   Row 1: Desktop Image (image + imageAlt) — may be empty
+ * The block model exposes 4 cell-groups, one per row, in this fixed order (a
+ * reference image field collapses with its paired alt field; element-grouped
+ * fields share a single cell, one authored element per field, in order):
+ *   Row 1: Desktop Image (image + imageAlt)        — may be empty
  *   Row 2: Mobile Image  (imageMobile + imageMobileAlt) — may be empty
- *   Row 3: Text (eyebrow, heading, subtext, CTA)
- * A single authored image (one image row) or two images in one row are also
- * handled gracefully.
+ *   Row 3: Content group — Pretitle, Title, Description (in order)
+ *   Row 4: CTA group — CTA URL + Label (anchor), Open-in-new-tab (boolean)
+ * Any field may be empty; each case is handled gracefully.
  *
  * @param {Element} block The 811-zero-hero-section block element
  */
 export default function decorate(block) {
-  const rows = [...block.children];
+  const [desktopRow, mobileRow, contentRow, ctaRow] = [...block.children];
 
-  // The text row is the one carrying headings/paragraphs/links. Everything
-  // else is an image slot (desktop first, mobile second).
-  const contentRow = rows.find(
-    (row) => row.querySelector('h1, h2, h3, h4, h5, h6, p, a'),
-  );
-  const imageRows = rows.filter((row) => row !== contentRow);
+  const cellOf = (row) => row?.firstElementChild || row;
 
-  // Collect every banner image across the image rows in document order,
-  // skipping the redundant <img> inside a <picture>. Empty image cells simply
-  // contribute nothing.
-  const images = imageRows
-    .flatMap((row) => [...row.querySelectorAll('picture, img')])
-    .filter((el) => !(el.tagName === 'IMG' && el.closest('picture')));
+  // --- banner images (desktop + mobile) -------------------------------------
+  const imageContainer = document.createElement('div');
+  imageContainer.className = 'zero-hero-image';
+  [desktopRow, mobileRow].forEach((row, index) => {
+    const el = row?.querySelector('picture, img');
+    const srcImg = el && (el.tagName === 'IMG' ? el : el.querySelector('img'));
+    if (!srcImg) return;
+    // re-render as an optimized <picture>, carrying the Universal Editor
+    // instrumentation onto the rendered <img> so the image stays a live
+    // drag-and-drop asset target in the authoring environment
+    const optimized = createOptimizedPicture(
+      srcImg.src,
+      srcImg.getAttribute('alt') || '',
+      index === 0, // eager-load the first (primary) banner
+      [{ width: '1600' }],
+    );
+    moveInstrumentation(srcImg, optimized.querySelector('img'));
+    optimized.classList.add(index === 0 ? 'zero-hero-image-desktop' : 'zero-hero-image-mobile');
+    imageContainer.append(optimized);
+  });
 
-  // remove the raw image rows; the images are re-hosted in a single container
-  imageRows.forEach((row) => row.remove());
-
-  if (images.length) {
-    const imageContainer = document.createElement('div');
-    imageContainer.className = 'zero-hero-image';
-    images.forEach((el, index) => {
-      // resolve the source <img> whether the authored cell holds a bare <img>
-      // or a <picture>
-      const srcImg = el.tagName === 'IMG' ? el : el.querySelector('img');
-      if (!srcImg) return;
-      // re-render as an optimized <picture>, then carry the Universal Editor
-      // instrumentation (data-aue-* / data-richtext-*) from the authored node
-      // onto the rendered <img> so the image stays a live drag-and-drop asset
-      // target in the authoring environment
-      const optimized = createOptimizedPicture(
-        srcImg.src,
-        srcImg.getAttribute('alt') || '',
-        index === 0, // eager-load the first (primary) banner
-        [{ width: '1600' }],
-      );
-      moveInstrumentation(srcImg, optimized.querySelector('img'));
-      // first image = desktop banner, second = mobile banner
-      optimized.classList.add(index === 0 ? 'zero-hero-image-desktop' : 'zero-hero-image-mobile');
-      imageContainer.append(optimized);
-    });
-    // image container placed after the content (content-first order)
-    block.append(imageContainer);
-  }
-
-  // gather the text content into a single centered wrapper, flattening the
-  // row/cell wrapper divs so the eyebrow, heading, subtext and CTA sit
-  // directly inside .zero-hero-content
+  // --- text content (pretitle, title, description) --------------------------
+  // The content group delivers each field as its own child element inside the
+  // cell, in model order: [pretitle, title, description...].
   const content = document.createElement('div');
   content.className = 'zero-hero-content';
-  if (contentRow) {
-    [...contentRow.children].forEach((cell) => {
-      while (cell.firstElementChild) content.append(cell.firstElementChild);
-    });
-    contentRow.remove();
+
+  const contentCell = cellOf(contentRow);
+  const contentParts = contentCell ? [...contentCell.children] : [];
+  const [pretitleEl, titleEl, ...descEls] = contentParts;
+
+  // pretitle (eyebrow) — first paragraph above the heading
+  if (pretitleEl && pretitleEl.textContent.trim()) {
+    const pretitle = document.createElement('p');
+    pretitle.className = 'zero-hero-eyebrow';
+    pretitle.textContent = pretitleEl.textContent.trim();
+    moveInstrumentation(pretitleEl, pretitle);
+    content.append(pretitle);
   }
 
-  // the first paragraph acts as the eyebrow/sub-title above the heading
-  const eyebrow = content.querySelector('p');
-  if (eyebrow && eyebrow.parentElement === content) {
-    eyebrow.classList.add('zero-hero-eyebrow');
+  // title
+  if (titleEl && titleEl.textContent.trim()) {
+    const title = document.createElement('h1');
+    title.textContent = titleEl.textContent.trim();
+    moveInstrumentation(titleEl, title);
+    content.append(title);
   }
 
-  if (content.children.length) {
-    // style the call-to-action link as the primary button and ensure it opens
-    // in a new tab safely
-    const cta = content.querySelector('a');
-    if (cta) {
-      cta.classList.add('button');
+  // description (richtext) — keep the authored element(s) as-is so the richtext
+  // instrumentation is preserved
+  descEls.forEach((el) => {
+    if (el.textContent.trim() || el.querySelector('img, picture, a')) {
+      content.append(el);
+    }
+  });
+
+  // --- CTA (link + label, optional new tab) ---------------------------------
+  // The CTA group delivers the link/label as an anchor, then the new-tab flag.
+  const ctaCell = cellOf(ctaRow);
+  const ctaAnchor = ctaCell?.querySelector('a');
+  const href = ctaAnchor?.getAttribute('href');
+  if (href) {
+    // the new-tab flag arrives as a sibling element in the cell (the "true"/
+    // "false" boolean value), separate from the anchor
+    const flagEl = ctaCell
+      ? [...ctaCell.children].find((c) => !c.querySelector('a') && !c.matches('a'))
+      : null;
+    const newTab = (flagEl?.textContent || '').trim().toLowerCase() === 'true';
+    const wrapper = document.createElement('p');
+    wrapper.className = 'button-container';
+    const cta = document.createElement('a');
+    cta.className = 'button';
+    cta.href = href;
+    cta.textContent = ctaAnchor.textContent.trim() || href;
+    const ctaTitle = ctaAnchor.getAttribute('title');
+    if (ctaTitle) cta.title = ctaTitle;
+    if (newTab) {
       cta.setAttribute('target', '_blank');
       cta.setAttribute('rel', 'noopener noreferrer');
-      const wrapper = cta.closest('p');
-      if (wrapper) wrapper.classList.add('button-container');
     }
-    // content placed first inside the block
-    block.prepend(content);
+    moveInstrumentation(ctaAnchor, cta);
+    wrapper.append(cta);
+    content.append(wrapper);
   }
 
-  // opt into the project's AOS fade-in if it is available, without adding or
-  // modifying any global AOS implementation. The scoped CSS below provides a
-  // graceful fade-in fallback when AOS is not present.
+  // rebuild the block: content first, banner image second (content-first order)
+  block.replaceChildren();
+  if (content.children.length) block.append(content);
+  if (imageContainer.children.length) block.append(imageContainer);
+
+  // opt into the project's AOS fade-in if available, without adding or
+  // modifying any global AOS implementation. The scoped CSS provides a graceful
+  // fade-in fallback when AOS is not present.
   if (!block.hasAttribute('data-aos')) {
     block.setAttribute('data-aos', 'fade-in');
     block.setAttribute('data-aos-delay', '100');

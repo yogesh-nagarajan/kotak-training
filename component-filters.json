@@ -90,11 +90,5 @@
     "components": [
       "tab"
     ]
-  },
-  {
-    "id": "811-zero-hero-section",
-    "components": [
-      "811-zero-hero-section"
-    ]
   }
 ]
