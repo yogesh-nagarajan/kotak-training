@@ -81,9 +81,11 @@
   color: #14142b;
   font-size: 30px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 42px;
   letter-spacing: -0.3px;
   max-width: 640px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* subtext (paragraph directly after the heading) */
@@ -152,10 +154,11 @@
     position: absolute;
   }
 
-  /* desktop banner shown from md up, anchored 60px from the top */
+  /* desktop banner shown from md up, anchored 20px from the top */
   [class~="811-zero-hero-section"] .zero-hero-image .zero-hero-image-desktop {
     display: block;
-    top: 60px;
+    position: absolute;
+    top: 20px;
     bottom: auto;
   }
 
@@ -164,7 +167,7 @@
   }
 
   [class~="811-zero-hero-section"] .zero-hero-content {
-    padding: 100px 24px 64px;
+    padding: 60px 24px 64px;
   }
 
   [class~="811-zero-hero-section"] .zero-hero-content h1 {
@@ -177,10 +180,10 @@
   }
 }
 
-/* ---- Desktop: ~140px top padding as in the source ---- */
+/* ---- Desktop ---- */
 @media (width >= 900px) {
   [class~="811-zero-hero-section"] .zero-hero-content {
-    padding: 140px 32px 90px;
+    padding: 80px 32px 90px;
   }
 
   [class~="811-zero-hero-section"] .zero-hero-content h1 {
