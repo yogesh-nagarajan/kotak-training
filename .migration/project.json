@@ -2,13 +2,13 @@
   "type": "xwalk",
   "sites": {
     "kotak-training": {
+      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json",
       "previewOrg": "yogesh-nagarajan",
       "previewSite": "kotak-training",
       "aemSitePath": "/content/kotak-training",
       "aemAssetsFolderPath": "/content/dam/kotak-training",
       "aemSiteName": "kotak-training",
       "aemSiteTitle": "Kotak Training",
-      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json",
       "baseUrl": "https://author-p165370-e1760075.adobeaemcloud.com",
       "contentHostUrl": "author-p165370-e1760075.adobeaemcloud.com"
     }
