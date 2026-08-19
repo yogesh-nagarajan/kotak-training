@@ -18,12 +18,12 @@ var CustomImportScript = (() => {
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // tools/importer/import-811-business.js
-  var import_811_business_exports = {};
-  __export(import_811_business_exports, {
-    default: () => import_811_business_default
+  // tools/importer/import-feature-911-branch-kushagra.js
+  var import_feature_911_branch_kushagra_exports = {};
+  __export(import_feature_911_branch_kushagra_exports, {
+    default: () => import_feature_911_branch_kushagra_default
   });
-  var import_811_business_default = {
+  var import_feature_911_branch_kushagra_default = {
     transform: (payload) => {
       const {
         document,
@@ -59,12 +59,12 @@ var CustomImportScript = (() => {
       }
       return [{
         element: container,
-        path: "/811-business",
+        path: "/feature-911-branch-kushagra",
         report: {
           title: document.title || "811 Business"
         }
       }];
     }
   };
-  return __toCommonJS(import_811_business_exports);
+  return __toCommonJS(import_feature_911_branch_kushagra_exports);
 })();
