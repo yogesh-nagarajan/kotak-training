@@ -205,7 +205,7 @@
     ]
   },
   {
-    "id": "card-811business-new",
+    "id": "card-811-business-new",
     "fields": [
       {
         "component": "text",
@@ -911,6 +911,39 @@
         "name": "linkText",
         "label": "Button Text",
         "value": "Apply Now"
+      }
+    ]
+  },
+  {
+    "id": "pvr-inox-feature",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "body",
+        "value": "",
+        "label": "Supporting Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": ""
       }
     ]
   },
