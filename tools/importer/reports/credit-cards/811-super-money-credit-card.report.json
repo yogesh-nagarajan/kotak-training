@@ -2,12 +2,18 @@
   "status": "success",
   "url": "https://www.kotak811.bank.in/credit-cards/811-super-money-credit-card",
   "path": "credit-cards/811-super-money-credit-card",
-  "timestamp": "2026-08-19T07:27:51.571Z",
+  "timestamp": "2026-08-19T09:09:46.765Z",
   "title": "super.money RuPay Credit Card - UPI Cashback & More | Kotak811",
   "template": "supermoney-full",
   "blocks": [
     "supermoney-header",
     "supermoney-hero",
+    "supermoney-features",
+    "supermoney-features",
+    "supermoney-features",
+    "supermoney-features",
+    "supermoney-steps",
+    "supermoney-content",
     "supermoney-footer"
   ]
 }

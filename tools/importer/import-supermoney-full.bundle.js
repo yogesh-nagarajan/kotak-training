@@ -165,8 +165,150 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/supermoney-footer.js
+  // tools/importer/parsers/supermoney-features.js
+  var FEATURE_CLASS = /(cardsection|threerow|creditcard)/i;
+  function isFeatureSection(el) {
+    return el && el.tagName === "SECTION" && FEATURE_CLASS.test(el.className || "");
+  }
   function parse3(element, { document }) {
+    const sections = [element];
+    let sib = element.nextElementSibling;
+    while (sib) {
+      if (isFeatureSection(sib)) {
+        sections.push(sib);
+      } else if (sib.tagName === "SECTION" && !isFeatureSection(sib)) {
+        break;
+      }
+      sib = sib.nextElementSibling;
+    }
+    const cells = [];
+    const first = sections[0];
+    const firstHeading = first.querySelector("h1, h2, h3");
+    const firstDesc = first.querySelector("p");
+    const titleCell = [document.createComment(" field:title ")];
+    const titleP = document.createElement("p");
+    titleP.textContent = firstHeading ? firstHeading.textContent.replace(/\s+/g, " ").trim() : "";
+    titleCell.push(titleP);
+    cells.push([titleCell]);
+    const subtitleCell = [document.createComment(" field:subtitle ")];
+    const subtitleP = document.createElement("p");
+    subtitleP.textContent = firstDesc ? firstDesc.textContent.replace(/\s+/g, " ").trim() : "";
+    subtitleCell.push(subtitleP);
+    cells.push([subtitleCell]);
+    sections.slice(1).forEach((section) => {
+      const img = section.querySelector("img");
+      const heading = section.querySelector("h1, h2, h3, h4");
+      const desc = section.querySelector("p");
+      const imageCell = [document.createComment(" field:image ")];
+      if (img) imageCell.push(img);
+      const bodyCell = [document.createComment(" field:text ")];
+      if (heading) {
+        const h = document.createElement("h3");
+        h.textContent = heading.textContent.replace(/\s+/g, " ").trim();
+        bodyCell.push(h);
+      }
+      if (desc) {
+        const p = document.createElement("p");
+        p.textContent = desc.textContent.replace(/\s+/g, " ").trim();
+        bodyCell.push(p);
+      }
+      cells.push([imageCell, bodyCell]);
+    });
+    const block = WebImporter.Blocks.createBlock(document, { name: "supermoney-features", cells });
+    sections.slice(1).forEach((s) => s.remove());
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/supermoney-steps.js
+  function parse4(element, { document }) {
+    const cells = [];
+    const heading = element.querySelector("h1, h2, h3");
+    const titleCell = [document.createComment(" field:title ")];
+    const titleP = document.createElement("p");
+    titleP.textContent = heading ? heading.textContent.replace(/\s+/g, " ").trim() : "How to get started?";
+    titleCell.push(titleP);
+    cells.push([titleCell]);
+    const steps = [...element.querySelectorAll("p")].map((p) => {
+      const row = p.closest("div");
+      const img = row ? row.querySelector("img") : null;
+      return { p, img };
+    }).filter((s) => s.p.textContent.trim());
+    steps.forEach(({ p, img }) => {
+      const imageCell = [document.createComment(" field:image ")];
+      if (img) imageCell.push(img);
+      const bodyCell = [document.createComment(" field:text ")];
+      const para = document.createElement("p");
+      para.textContent = p.textContent.replace(/\s+/g, " ").trim();
+      bodyCell.push(para);
+      cells.push([imageCell, bodyCell]);
+    });
+    const block = WebImporter.Blocks.createBlock(document, { name: "supermoney-steps", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/supermoney-content.js
+  function parse5(element, { document }) {
+    const cell = [document.createComment(" field:content ")];
+    const source = element.querySelector('.container, [class*="content"]') || element;
+    const allowed = /* @__PURE__ */ new Set(["H1", "H2", "H3", "H4", "H5", "H6", "P", "UL", "OL", "TABLE"]);
+    const seen = /* @__PURE__ */ new Set();
+    source.querySelectorAll("h1, h2, h3, h4, h5, h6, p, ul, ol, table").forEach((node) => {
+      if (!allowed.has(node.tagName)) return;
+      if (node.closest("table") && node.tagName !== "TABLE") return;
+      if (node.parentElement && node.parentElement.closest("ul, ol") && node.tagName !== "UL" && node.tagName !== "OL") return;
+      if (seen.has(node)) return;
+      const text = node.textContent.replace(/\s+/g, " ").trim();
+      if (!text && node.tagName !== "TABLE") return;
+      if (node.tagName === "TABLE") {
+        const table = document.createElement("table");
+        node.querySelectorAll("tr").forEach((tr) => {
+          const newTr = document.createElement("tr");
+          tr.querySelectorAll("th, td").forEach((td) => {
+            const cellEl = document.createElement(td.tagName === "TH" ? "th" : "td");
+            const innerList = td.querySelector("ul, ol");
+            if (innerList) {
+              cellEl.appendChild(innerList.cloneNode(true));
+            } else {
+              cellEl.textContent = td.textContent.replace(/\s+/g, " ").trim();
+            }
+            newTr.appendChild(cellEl);
+          });
+          if (newTr.children.length) table.appendChild(newTr);
+        });
+        if (table.querySelector("tr")) cell.push(table);
+        seen.add(node);
+        return;
+      }
+      if (node.tagName === "UL" || node.tagName === "OL") {
+        const list = document.createElement(node.tagName === "OL" ? "ol" : "ul");
+        node.querySelectorAll(":scope > li").forEach((li) => {
+          const newLi = document.createElement("li");
+          const a = li.querySelector("a");
+          if (a) {
+            const na = document.createElement("a");
+            na.href = a.getAttribute("href") || "#";
+            na.textContent = li.textContent.replace(/\s+/g, " ").trim();
+            newLi.appendChild(na);
+          } else {
+            newLi.textContent = li.textContent.replace(/\s+/g, " ").trim();
+          }
+          list.appendChild(newLi);
+        });
+        if (list.children.length) cell.push(list);
+        seen.add(node);
+        return;
+      }
+      const el = document.createElement(node.tagName.toLowerCase());
+      el.textContent = text;
+      cell.push(el);
+      seen.add(node);
+    });
+    const block = WebImporter.Blocks.createBlock(document, { name: "supermoney-content", cells: [[cell]] });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/supermoney-footer.js
+  function parse6(element, { document }) {
     const cells = [];
     const brandCell = [];
     const logo = element.querySelector("img");
@@ -328,18 +470,27 @@ var CustomImportScript = (() => {
   var parsers = {
     "supermoney-header": parse,
     "supermoney-hero": parse2,
-    "supermoney-footer": parse3
+    "supermoney-features": parse3,
+    "supermoney-steps": parse4,
+    "supermoney-content": parse5,
+    "supermoney-footer": parse6
   };
   var transformers = [transform];
   var PAGE_TEMPLATE = {
     name: "supermoney-full",
-    description: "Full super.money page: header + hero + footer.",
+    description: "Full super.money page: header + hero + features + steps + content + footer.",
     urls: [
       "https://www.kotak811.bank.in/credit-cards/811-super-money-credit-card"
     ],
     blocks: [
       { name: "supermoney-header", instances: ["#header-nav"] },
       { name: "supermoney-hero", instances: ["main.Credit_card.SuperMoney_main__c7k8L > section.SuperMoney_heroBan__rCeAx"] },
+      // First alternating image+text feature section; the parser gathers the rest.
+      { name: "supermoney-features", instances: ['main > section[class*="cardsection"]'] },
+      // "How to get started?" steps — section wrapping the newBlackSection block.
+      { name: "supermoney-steps", instances: ['main > section:has([class*="newBlackSection"])'] },
+      // Long-form SEO content that contains the fee/cashback tables.
+      { name: "supermoney-content", instances: ['main > section[class*="SEOcontent"]:has(table)'] },
       { name: "supermoney-footer", instances: ["footer.footer"] }
     ]
   };

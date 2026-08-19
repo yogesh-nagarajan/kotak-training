@@ -4,6 +4,9 @@
 // PARSER IMPORTS
 import supermoneyHeaderParser from './parsers/supermoney-header.js';
 import supermoneyHeroParser from './parsers/supermoney-hero.js';
+import supermoneyFeaturesParser from './parsers/supermoney-features.js';
+import supermoneyStepsParser from './parsers/supermoney-steps.js';
+import supermoneyContentParser from './parsers/supermoney-content.js';
 import supermoneyFooterParser from './parsers/supermoney-footer.js';
 
 // TRANSFORMER IMPORTS
@@ -12,21 +15,30 @@ import cleanupTransformer from './transformers/supermoney-full-cleanup.js';
 const parsers = {
   'supermoney-header': supermoneyHeaderParser,
   'supermoney-hero': supermoneyHeroParser,
+  'supermoney-features': supermoneyFeaturesParser,
+  'supermoney-steps': supermoneyStepsParser,
+  'supermoney-content': supermoneyContentParser,
   'supermoney-footer': supermoneyFooterParser,
 };
 
 const transformers = [cleanupTransformer];
 
-// Full page: header + hero (merged hero+cards) + footer.
+// Full page: header + hero + features + steps + content + footer.
 const PAGE_TEMPLATE = {
   name: 'supermoney-full',
-  description: 'Full super.money page: header + hero + footer.',
+  description: 'Full super.money page: header + hero + features + steps + content + footer.',
   urls: [
     'https://www.kotak811.bank.in/credit-cards/811-super-money-credit-card',
   ],
   blocks: [
     { name: 'supermoney-header', instances: ['#header-nav'] },
     { name: 'supermoney-hero', instances: ['main.Credit_card.SuperMoney_main__c7k8L > section.SuperMoney_heroBan__rCeAx'] },
+    // First alternating image+text feature section; the parser gathers the rest.
+    { name: 'supermoney-features', instances: ['main > section[class*="cardsection"]'] },
+    // "How to get started?" steps — section wrapping the newBlackSection block.
+    { name: 'supermoney-steps', instances: ['main > section:has([class*="newBlackSection"])'] },
+    // Long-form SEO content that contains the fee/cashback tables.
+    { name: 'supermoney-content', instances: ['main > section[class*="SEOcontent"]:has(table)'] },
     { name: 'supermoney-footer', instances: ['footer.footer'] },
   ],
 };
