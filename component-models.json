@@ -460,6 +460,18 @@
     ]
   },
   {
+    "id": "feature-nri",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Main Title",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "feature-nri-card",
     "fields": [
       {
@@ -477,12 +489,43 @@
         "value": ""
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title",
+        "value": ""
+      },
+      {
         "component": "richtext",
         "name": "text",
         "value": "",
-        "label": "Text",
-        "description": "Product title as a Heading, feature bullet points, and links",
+        "label": "Description / Features",
+        "description": "Feature bullet points or description paragraph",
         "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "knowMoreLink",
+        "label": "Know More Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "knowMoreText",
+        "label": "Know More Text",
+        "value": "Know More"
+      },
+      {
+        "component": "aem-content",
+        "name": "applyLink",
+        "label": "Apply Now Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "applyText",
+        "label": "Apply Now Text",
+        "value": "Apply Now"
       }
     ]
   },
