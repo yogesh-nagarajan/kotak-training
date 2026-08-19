@@ -1,40 +1,45 @@
-/* supermoney-content — long-form rich text with tables */
+/* supermoney-content — long-form rich text with tables (matches live) */
 
 .supermoney-content {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 16px;
+  max-width: 1120px;
+  margin: 40px auto 0;
+  padding: 0 16px;
+  color: var(--text-color);
 }
 
 .supermoney-content .supermoney-content-title {
-  margin: 0 0 16px;
+  margin: 0 0 20px;
   color: var(--text-color);
   font-family: var(--heading-font-family);
   font-size: 26px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .supermoney-content .supermoney-content-inner {
-  color: var(--dark-color);
+  color: var(--text-color);
   font-size: 16px;
-  line-height: 1.7;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
+/* Section sub-headings inside the body ("Why Choose the …") */
 .supermoney-content .supermoney-content-inner h2 {
-  margin: 32px 0 12px;
+  margin: 40px 0 20px;
   color: var(--text-color);
   font-family: var(--heading-font-family);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .supermoney-content .supermoney-content-inner h3 {
-  margin: 24px 0 8px;
+  margin: 24px 0 12px;
   color: var(--text-color);
+  font-family: var(--heading-font-family);
   font-size: 20px;
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .supermoney-content .supermoney-content-inner > *:first-child {
@@ -42,17 +47,17 @@
 }
 
 .supermoney-content .supermoney-content-inner p {
-  margin: 0 0 16px;
+  margin: 0 0 20px;
 }
 
 .supermoney-content .supermoney-content-inner ul,
 .supermoney-content .supermoney-content-inner ol {
-  margin: 0 0 16px;
+  margin: 0 0 20px;
   padding-left: 22px;
 }
 
 .supermoney-content .supermoney-content-inner li {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .supermoney-content .supermoney-content-inner a {
@@ -98,10 +103,7 @@
 
 @media (width >= 900px) {
   .supermoney-content {
-    padding: 60px 32px;
-  }
-
-  .supermoney-content .supermoney-content-inner h2 {
-    font-size: 28px;
+    margin-top: 100px;
+    padding: 0 80px;
   }
 }

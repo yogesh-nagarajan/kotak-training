@@ -16,7 +16,7 @@
   margin: 0;
   color: var(--text-color);
   font-family: var(--heading-font-family);
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -24,8 +24,8 @@
 .accordion-faq .accordion-faq-subtitle {
   margin: 8px 0 0;
   color: var(--brand-pink);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   line-height: 1.5;
 }
 
@@ -53,8 +53,8 @@
   list-style: none;
   color: var(--text-color);
   font-family: var(--heading-font-family);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   line-height: 1.4;
   transition: color 0.2s;
 }
@@ -121,10 +121,14 @@
 
 @media (width >= 900px) {
   .accordion-faq {
-    padding: 60px 32px;
+    padding: 60px 80px;
+  }
+
+  .accordion-faq .accordion-faq-title {
+    font-size: 44px;
   }
 
   .accordion-faq details summary {
-    font-size: 17px;
+    font-size: 18px;
   }
 }

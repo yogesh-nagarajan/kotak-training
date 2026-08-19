@@ -9,11 +9,11 @@
 
 .supermoney-steps .supermoney-steps-title {
   margin: 0 0 32px;
-  color: var(--text-color);
+  color: #000;
   font-family: var(--heading-font-family);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.26;
 }
 
 .supermoney-steps .supermoney-steps-list {
@@ -39,8 +39,9 @@
 }
 
 .supermoney-steps .supermoney-step-body {
-  color: var(--text-color);
+  color: #000;
   font-size: 16px;
+  font-weight: 500;
   line-height: 1.5;
 }
 
@@ -54,7 +55,8 @@
   }
 
   .supermoney-steps .supermoney-steps-title {
-    font-size: 32px;
+    font-size: 49px;
+    line-height: 1.26;
     margin-bottom: 48px;
   }
 

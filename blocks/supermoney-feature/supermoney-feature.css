@@ -18,18 +18,19 @@
 }
 
 .supermoney-feature .supermoney-feature-title {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   color: var(--text-color);
   font-family: var(--heading-font-family);
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.18;
 }
 
 .supermoney-feature .supermoney-feature-description {
-  color: var(--dark-color);
+  color: var(--text-color);
   font-size: 16px;
-  line-height: 1.6;
+  font-weight: 500;
+  line-height: 1.8;
 }
 
 .supermoney-feature .supermoney-feature-description p {
@@ -43,8 +44,8 @@
 @media (width >= 900px) {
   .supermoney-feature {
     flex-direction: row;
-    gap: 56px;
-    padding: 56px 32px;
+    gap: 64px;
+    padding: 56px 80px;
   }
 
   .supermoney-feature.image-right {
@@ -58,6 +59,11 @@
   }
 
   .supermoney-feature .supermoney-feature-title {
-    font-size: 32px;
+    font-size: 44px;
+    line-height: 1.18;
+  }
+
+  .supermoney-feature .supermoney-feature-description {
+    line-height: 1.8;
   }
 }
