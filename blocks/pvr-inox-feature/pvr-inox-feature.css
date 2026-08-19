@@ -6,6 +6,18 @@
   padding: 32px 0;
 }
 
+/* variant visibility: mobile pair below 900px, desktop pair at/above 900px.
+   When only one variant is authored it still renders on its own breakpoint. */
+.pvr-inox-feature .pvr-inox-feature-text-desktop,
+.pvr-inox-feature .pvr-inox-feature-media-desktop {
+  display: none;
+}
+
+.pvr-inox-feature .pvr-inox-feature-text-mobile,
+.pvr-inox-feature .pvr-inox-feature-media-mobile {
+  display: block;
+}
+
 /* text column */
 .pvr-inox-feature .pvr-inox-feature-text {
   width: 100%;
@@ -55,6 +67,20 @@
     flex-direction: row;
     gap: 48px;
     padding: 64px 0;
+  }
+
+  /* swap visible variant pair on desktop */
+  .pvr-inox-feature .pvr-inox-feature-text-mobile,
+  .pvr-inox-feature .pvr-inox-feature-media-mobile {
+    display: none;
+  }
+
+  .pvr-inox-feature .pvr-inox-feature-text-desktop {
+    display: block;
+  }
+
+  .pvr-inox-feature .pvr-inox-feature-media-desktop {
+    display: block;
   }
 
   .pvr-inox-feature .pvr-inox-feature-text {
