@@ -65,10 +65,36 @@
           "value": ""
         },
         {
-          "component": "richtext",
-          "name": "text",
+          "component": "text",
+          "name": "subtitle",
           "value": "",
-          "label": "Hero Text",
+          "label": "Subtitle",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "value": "",
+          "label": "Title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "description",
+          "value": "",
+          "label": "Description",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "CTA Link"
+        },
+        {
+          "component": "text",
+          "name": "linkText",
+          "value": "Apply now",
+          "label": "CTA Text",
           "valueType": "string"
         }
       ]

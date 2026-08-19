@@ -8,8 +8,12 @@
  *
  * Emitted table (matches blocks/supermoney-hero/supermoney-hero.js):
  *   Row 1: background image        -> <!-- field:image -->
- *   Row 2: hero text (eyebrow, H1, subtext, CTA) -> <!-- field:text -->
- *   Row 3..N: one card per row = icon cell + text cell (H2)
+ *   Row 2: mobile banner image     -> <!-- field:imageMobile -->
+ *   Row 3: subtitle (eyebrow)      -> <!-- field:subtitle -->
+ *   Row 4: title (H1)              -> <!-- field:title -->
+ *   Row 5: description             -> <!-- field:description -->
+ *   Row 6: CTA link + text         -> <!-- field:link --> / <!-- field:linkText -->
+ *   Row 7..N: one card per row = icon cell + text cell (H2)
  *
  * The cards section is removed from the DOM after extraction so it is not also
  * emitted as a standalone block.
@@ -32,23 +36,42 @@ export default function parse(element, { document }) {
     cells.push([[document.createComment(' field:imageMobile '), mobileImage]]);
   }
 
-  // Hero text: eyebrow paragraph, heading, subtext, CTA.
+  // Hero text: eyebrow paragraph, heading, subtext, CTA — each its own field.
   const eyebrow = element.querySelector('p[class*="banner_text"]');
   const heading = element.querySelector('h1');
   const subtext = element.querySelector('div[class*="description"], p[class*="description"]');
   const cta = element.querySelector('a[class*="button"], a');
 
-  const textCell = [document.createComment(' field:text ')];
-  if (eyebrow) textCell.push(eyebrow);
-  if (heading) textCell.push(heading);
-  if (subtext) {
-    // Normalize the subtext div into a paragraph so it renders as body copy.
-    const p = document.createElement('p');
-    p.textContent = subtext.textContent.trim();
-    textCell.push(p);
+  // Subtitle (eyebrow).
+  const subtitleCell = [document.createComment(' field:subtitle ')];
+  const subtitleP = document.createElement('p');
+  subtitleP.textContent = eyebrow ? eyebrow.textContent.trim() : '';
+  subtitleCell.push(subtitleP);
+  cells.push([subtitleCell]);
+
+  // Title.
+  const titleCell = [document.createComment(' field:title ')];
+  const titleP = document.createElement('p');
+  titleP.textContent = heading ? heading.textContent.trim() : '';
+  titleCell.push(titleP);
+  cells.push([titleCell]);
+
+  // Description.
+  const descCell = [document.createComment(' field:description ')];
+  const descP = document.createElement('p');
+  descP.textContent = subtext ? subtext.textContent.trim() : '';
+  descCell.push(descP);
+  cells.push([descCell]);
+
+  // CTA (link + link text).
+  if (cta) {
+    const linkCell = [document.createComment(' field:link ')];
+    const a = document.createElement('a');
+    a.href = cta.getAttribute('href') || '#';
+    a.textContent = (cta.textContent || '').trim() || 'Apply now';
+    linkCell.push(a);
+    cells.push([linkCell]);
   }
-  if (cta) textCell.push(cta);
-  cells.push([textCell]);
 
   // --- Cards (pulled from the sibling cards section) ---
   let cardsSection = null;

@@ -4,36 +4,50 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 /**
  * Merged hero + cards block.
  *
- * Expected authored structure (one column table):
- *   Row 1: desktop banner image (picture/img only)  -> banner background (desktop)
- *   Row 2: mobile banner image (picture/img only)    -> banner image (mobile) [optional]
- *   Row 3: hero text (eyebrow, H1, subtext, CTA)      -> banner content overlay
- *   Row 4..N: one card per row = image cell + text cell (icon + label)
+ * Authored structure (Universal Editor container + item model). The container
+ * contributes one single-cell row per field, in this order:
+ *   Row: Background Image  (picture only)          -> banner background (desktop)
+ *   Row: Mobile Banner Image (picture only)          -> banner background (mobile)
+ *   Row: Subtitle (text)                             -> eyebrow above the title
+ *   Row: Title (text)                                -> banner H1
+ *   Row: Description (richtext)                      -> banner subtext
+ *   Row: CTA (link + link text)                      -> primary button
+ * Each card item contributes a two-cell row: image cell + text cell.
  *
- * Renders the banner with the image full-bleed behind the text (desktop) or
- * stacked below it (mobile), and a row of cards that overlaps the banner. On
- * mobile the cards become a horizontal scroll slider (handled in CSS).
+ * Banner rows are single-cell; card rows are two-cell. That distinction is how
+ * the two are told apart — so banner text can never be mistaken for a card.
  *
  * @param {Element} block The supermoney-hero block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
 
-  // Image-only rows (no heading, single cell with a picture/img). The first is
-  // the desktop banner, the optional second is the mobile banner.
-  const imageRows = rows.filter((row) => {
-    const cells = [...row.children];
-    return cells.length === 1
-      && cells[0].querySelector('picture, img')
-      && !cells[0].textContent.trim();
+  // Cards are the two-cell rows (image cell + text cell). Everything else is a
+  // single-cell banner field row.
+  const cardRows = rows.filter((row) => row.children.length >= 2);
+  const bannerRows = rows.filter((row) => row.children.length === 1);
+
+  // Classify the single-cell banner rows by their content.
+  const imageRows = [];
+  let ctaRow = null;
+  const textRows = [];
+  bannerRows.forEach((row) => {
+    const cell = row.firstElementChild;
+    const hasPicture = cell.querySelector('picture, img');
+    const text = cell.textContent.trim();
+    const link = cell.querySelector('a');
+    if (hasPicture && !text) {
+      imageRows.push(row);
+    } else if (link && link.textContent.trim() === text) {
+      // Cell whose entire text is a single link => the CTA.
+      ctaRow = row;
+    } else if (text) {
+      textRows.push(row);
+    }
   });
   const [desktopImageRow, mobileImageRow] = imageRows;
-
-  // Hero text row: the one carrying the main heading.
-  const textRow = rows.find((row) => row.querySelector('h1'));
-
-  // Everything else (not an image-only row, not the text row) is a card.
-  const cardRows = rows.filter((row) => !imageRows.includes(row) && row !== textRow);
+  // Text rows follow model order: subtitle, title, description.
+  const [subtitleRow, titleRow, descriptionRow] = textRows;
 
   // --- Banner ---
   const banner = document.createElement('div');
@@ -57,21 +71,50 @@ export default function decorate(block) {
     banner.classList.add('has-mobile-image');
   }
 
-  if (textRow) {
-    const content = document.createElement('div');
-    content.className = 'supermoney-hero-content';
-    [...textRow.children].forEach((cell) => {
-      while (cell.firstElementChild) content.append(cell.firstElementChild);
-    });
-    // Style the last link as the primary CTA button.
-    const cta = content.querySelector('a');
+  const content = document.createElement('div');
+  content.className = 'supermoney-hero-content';
+
+  if (subtitleRow) {
+    const subtitle = document.createElement('p');
+    subtitle.className = 'supermoney-hero-subtitle';
+    moveInstrumentation(subtitleRow.firstElementChild, subtitle);
+    subtitle.textContent = subtitleRow.firstElementChild.textContent.trim();
+    content.append(subtitle);
+  }
+
+  if (titleRow) {
+    const title = document.createElement('h1');
+    title.className = 'supermoney-hero-title';
+    moveInstrumentation(titleRow.firstElementChild, title);
+    title.textContent = titleRow.firstElementChild.textContent.trim();
+    content.append(title);
+  }
+
+  if (descriptionRow) {
+    const description = document.createElement('div');
+    description.className = 'supermoney-hero-description';
+    moveInstrumentation(descriptionRow.firstElementChild, description);
+    const cell = descriptionRow.firstElementChild;
+    while (cell.firstElementChild) description.append(cell.firstElementChild);
+    if (!description.firstElementChild && cell.textContent.trim()) {
+      description.textContent = cell.textContent.trim();
+    }
+    content.append(description);
+  }
+
+  if (ctaRow) {
+    const cta = ctaRow.querySelector('a');
     if (cta) {
       cta.classList.add('button');
-      const wrapper = cta.closest('p');
-      if (wrapper) wrapper.classList.add('button-container');
+      const p = document.createElement('p');
+      p.className = 'button-container';
+      moveInstrumentation(ctaRow.firstElementChild, p);
+      p.append(cta);
+      content.append(p);
     }
-    banner.append(content);
   }
+
+  if (content.childElementCount) banner.append(content);
 
   // --- Cards ---
   const ul = document.createElement('ul');

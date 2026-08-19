@@ -59,7 +59,7 @@
   margin: 0;
 }
 
-.supermoney-hero .supermoney-hero-content h1 {
+.supermoney-hero .supermoney-hero-content .supermoney-hero-title {
   margin-top: 8px;
   color: var(--text-color);
   font-family: var(--heading-font-family);
@@ -68,9 +68,8 @@
   line-height: 1.2;
 }
 
-/* subtext (paragraph/div right after the heading) */
-.supermoney-hero .supermoney-hero-content h1 + p,
-.supermoney-hero .supermoney-hero-content h1 + div {
+/* subtext (description after the heading) */
+.supermoney-hero .supermoney-hero-content .supermoney-hero-description {
   margin: 8px 0 16px;
   color: var(--text-color);
   font-size: 16px;
@@ -78,8 +77,12 @@
   line-height: 1.6;
 }
 
-/* eyebrow (first paragraph) */
-.supermoney-hero .supermoney-hero-content > p:first-child {
+.supermoney-hero .supermoney-hero-content .supermoney-hero-description p {
+  margin: 0;
+}
+
+/* eyebrow (subtitle above the heading) */
+.supermoney-hero .supermoney-hero-content .supermoney-hero-subtitle {
   color: var(--brand-pink);
   font-size: 12px;
   font-weight: 600;
@@ -225,7 +228,7 @@
     padding: 60px 32px;
   }
 
-  .supermoney-hero .supermoney-hero-content h1 {
+  .supermoney-hero .supermoney-hero-content .supermoney-hero-title {
     margin-top: 10px;
     font-size: 48px;
     line-height: 57.6px;
@@ -235,13 +238,12 @@
     max-width: 540px;
   }
 
-  .supermoney-hero .supermoney-hero-content h1 + p,
-  .supermoney-hero .supermoney-hero-content h1 + div {
+  .supermoney-hero .supermoney-hero-content .supermoney-hero-description {
     margin: 8px 0 20px;
     line-height: 29px;
   }
 
-  .supermoney-hero .supermoney-hero-content > p:first-child {
+  .supermoney-hero .supermoney-hero-content .supermoney-hero-subtitle {
     font-size: 16px;
     letter-spacing: 5px;
     line-height: 24px;
