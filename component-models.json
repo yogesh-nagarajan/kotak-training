@@ -460,6 +460,18 @@
     ]
   },
   {
+    "id": "feature-nri",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Main Title",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "feature-nri-card",
     "fields": [
       {
@@ -480,9 +492,19 @@
         "component": "richtext",
         "name": "text",
         "value": "",
-        "label": "Text",
-        "description": "Product title as a Heading, feature bullet points, and links",
+        "label": "Card Title & Features",
+        "description": "Product title as a Heading (H3) and feature bullet points",
         "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "knowMoreLink",
+        "label": "Know More Link"
+      },
+      {
+        "component": "aem-content",
+        "name": "applyLink",
+        "label": "Apply Now Button"
       }
     ]
   },
@@ -822,6 +844,52 @@
         "label": "Text",
         "valueType": "string",
         "description": "Heading (H2) and introductory paragraph"
+      }
+    ]
+  },
+  {
+    "id": "nri-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "description": "Description paragraph",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Button Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Button Text",
+        "value": "Apply Now"
       }
     ]
   },
