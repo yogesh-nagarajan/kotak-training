@@ -142,18 +142,6 @@
     ]
   },
   {
-    "id": "811-zero-balance-hero-benefits-card",
-    "fields": [
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "description",
-        "label": "Section Description",
-        "value": ""
-      }
-    ]
-  },
-  {
     "id": "benefit-card",
     "fields": [
       {
