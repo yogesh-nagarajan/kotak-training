@@ -1,0 +1,178 @@
+/* 811 Zero Balance Hero Section.
+   The block class starts with a digit, so it is scoped with the attribute
+   selector [class~="811-zero-balance-hero-section"] (equivalent to
+   .811-zero-balance-hero-section, which is not a valid plain CSS selector).
+   The block element itself is the ".hero-section". */
+
+/* full-bleed: override the global main > .section > div max-width rule */
+[class~="811-zero-balance-hero-section-container"] [class~="811-zero-balance-hero-section-wrapper"] {
+  max-width: unset;
+  padding: 0;
+}
+
+[class~="811-zero-balance-hero-section"].block {
+  position: relative;
+  width: 100%;
+  padding-top: 76px;
+  background-color: #f9f9f9;
+  z-index: 0;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 140px;
+  text-align: center;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-subtitle {
+  margin-top: -30px;
+  margin-bottom: 10px;
+  color: #ff0049;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 3px;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-title {
+  max-width: 800px;
+  margin: 0 auto;
+  color: #222;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 70px;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-description {
+  margin-top: 10px;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-button {
+  display: inline-block;
+  min-width: 180px;
+  margin-top: 30px;
+  padding: 16px 43px;
+  color: #fff;
+  background: #3857ff;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19.12px;
+  text-decoration: none;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-button:hover {
+  background: #2b49ea;
+  color: #fff;
+  text-decoration: none;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-images {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-desktop-image {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+}
+
+[class~="811-zero-balance-hero-section"] .hero-mobile-image {
+  display: none;
+}
+
+@media (width <= 1199px) {
+  [class~="811-zero-balance-hero-section"] .hero-content {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (width <= 768px) {
+  [class~="811-zero-balance-hero-section"].block {
+    margin-top: 0;
+    padding-top: 30px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-content {
+    padding-top: 0;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-title {
+    font-size: 34px;
+    line-height: 42px;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-button {
+    width: fit-content;
+    padding: 12px 32px;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-desktop-image {
+    display: none;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-mobile-image {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+@media (width >= 600px) and (width <= 767px) {
+  [class~="811-zero-balance-hero-section"] .hero-content {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+  }
+}
+
+@media (width <= 600px) {
+  [class~="811-zero-balance-hero-section"].block {
+    display: grid;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-content {
+    grid-row: 1;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-images {
+    position: relative;
+    grid-row: 2;
+    height: auto;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-subtitle {
+    margin-top: 0;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-title {
+    font-size: 34px;
+    line-height: 42px;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-description {
+    margin-top: 10px;
+  }
+
+  [class~="811-zero-balance-hero-section"] .hero-button {
+    margin-top: 30px;
+  }
+}
