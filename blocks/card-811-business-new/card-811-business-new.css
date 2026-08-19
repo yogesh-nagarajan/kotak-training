@@ -7,6 +7,9 @@
   flex-direction: column;
   gap: 24px;
   align-items: stretch;
+
+  /* breathing room around each block, matching the live page rhythm */
+  padding-block: 40px;
 }
 
 /* on mobile the text sits above the media (image) */
@@ -27,7 +30,7 @@
 }
 
 .card-811-business-new .card-811-business-new-title {
-  font-family: var(--body-font-family);
+  font-family: manrope, var(--body-font-family), sans-serif;
   font-weight: 700;
   font-size: 26px;
   line-height: 1.2;
@@ -36,7 +39,7 @@
 }
 
 .card-811-business-new .card-811-business-new-description {
-  font-family: var(--body-font-family);
+  font-family: manrope, var(--body-font-family), sans-serif;
   font-weight: 400;
   font-size: 15px;
   line-height: 1.6;
