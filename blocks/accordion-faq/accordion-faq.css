@@ -1,3 +1,25 @@
+/* Optional heading (Title + Subtitle) above the FAQ list */
+.accordion-faq .accordion-faq-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.accordion-faq .accordion-faq-title {
+  margin: 0;
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.accordion-faq .accordion-faq-subtitle {
+  margin: 8px 0 0;
+  color: var(--dark-color);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 .accordion-faq details {
   border: 1px solid #dadada;
 }

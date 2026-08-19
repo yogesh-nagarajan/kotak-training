@@ -63,7 +63,10 @@
         "accordion-faq",
         "supermoney-hero",
         "supermoney-header",
-        "supermoney-footer"
+        "supermoney-footer",
+        "supermoney-features",
+        "supermoney-steps",
+        "supermoney-content"
       ]
     }
   ]

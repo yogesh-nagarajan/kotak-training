@@ -1,33 +1,31 @@
 {
   "definitions": [
     {
-      "title": "Accordion Faq",
-      "id": "accordion-faq",
+      "title": "Supermoney Features",
+      "id": "supermoney-features",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Accordion Faq",
-              "model": "accordion-faq",
-              "filter": "accordion-faq"
+              "name": "Supermoney Features",
+              "model": "supermoney-features",
+              "filter": "supermoney-features"
             }
           }
         }
       }
     },
     {
-      "title": "Accordion Faq Item",
-      "id": "accordion-faq-item",
+      "title": "Supermoney Feature",
+      "id": "supermoney-feature",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Accordion Faq Item",
-              "model": "accordion-faq-item",
-              "summary": "Lorem Ipsum",
-              "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur volutpat consequat dui, sit amet ...</p>"
+              "name": "Supermoney Feature",
+              "model": "supermoney-feature"
             }
           }
         }
@@ -36,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "accordion-faq",
+      "id": "supermoney-features",
       "fields": [
         {
           "component": "text",
@@ -55,14 +53,21 @@
       ]
     },
     {
-      "id": "accordion-faq-item",
+      "id": "supermoney-feature",
       "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
         {
           "component": "text",
           "valueType": "string",
-          "name": "summary",
-          "value": "",
-          "label": "Summary"
+          "name": "imageAlt",
+          "label": "Image Alt",
+          "value": ""
         },
         {
           "component": "richtext",
@@ -76,9 +81,9 @@
   ],
   "filters": [
     {
-      "id": "accordion-faq",
+      "id": "supermoney-features",
       "components": [
-        "accordion-faq-item"
+        "supermoney-feature"
       ]
     }
   ]
