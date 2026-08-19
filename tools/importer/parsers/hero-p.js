@@ -8,12 +8,14 @@
  *   Row 1: block name ("Hero P")
  *   Row 2: <!-- field:image -->        desktop background banner
  *   Row 3: <!-- field:imageMobile -->  mobile background banner (optional)
- *   Row 4: <!-- field:title -->        heading (richtext)
- *   Row 5: <!-- field:description -->  subheading paragraph (richtext)
- *   Row 6: <!-- field:ctaLink -->      call-to-action link (aem-content)
+ *   Row 4: content cell grouping the three richtext fields (shared `content_`
+ *          prefix keeps them in ONE cell, satisfying the 4-cell block limit):
+ *            <!-- field:content_heading -->      heading
+ *            <!-- field:content_description -->   subheading paragraph
+ *            <!-- field:content_cta -->           call-to-action link
  *
- * The `imageAlt` / `imageMobileAlt` / `ctaText` fields are collapsed (Alt / Text
- * suffix) into their parent's attributes, so they get no row of their own.
+ * The `imageAlt` / `imageMobileAlt` fields are collapsed (Alt suffix) into the
+ * image's alt attribute, so they get no row of their own.
  *
  * Source structure (simplified):
  *   .owl-hero-banner
@@ -55,41 +57,46 @@ export default function parse(el, { document }) {
     || (img && img.getAttribute('src'));
   const mobileSrc = srcsets.find((s) => /-m\.(jpg|jpeg|png|webp)/i.test(s));
 
-  // Title (heading).
+  // Content cell — heading, description and CTA grouped together. The shared
+  // `content_` field prefix keeps them in ONE cell (4-cell block limit), while
+  // each hint still maps to its own editable field.
+  const contentNodes = [];
+
   const sourceTitle = el.querySelector('h1');
-  let title = null;
+  contentNodes.push(document.createComment(' field:content_heading '));
   if (sourceTitle) {
-    title = document.createElement('h1');
+    const title = document.createElement('h1');
     title.textContent = sourceTitle.textContent.trim();
+    contentNodes.push(title);
   }
 
   // Description — the descriptive paragraph (not the CTA button wrapper).
   const sourceSubtitle = [...el.querySelectorAll('p')]
     .find((p) => p.textContent.trim() && !p.querySelector('a.btn, a.btn-primary'));
-  let description = null;
+  contentNodes.push(document.createComment(' field:content_description '));
   if (sourceSubtitle && sourceSubtitle.textContent.trim()) {
-    description = document.createElement('p');
+    const description = document.createElement('p');
     description.textContent = sourceSubtitle.textContent.trim().replace(/\s+/g, ' ');
+    contentNodes.push(description);
   }
 
-  // CTA — link text + href (ctaText collapses into the anchor).
+  // CTA — link text + href.
   const sourceCta = el.querySelector('a.btn, a.btn-primary, a');
-  let ctaWrap = null;
+  contentNodes.push(document.createComment(' field:content_cta '));
   if (sourceCta && sourceCta.getAttribute('href')) {
-    ctaWrap = document.createElement('p');
+    const ctaWrap = document.createElement('p');
     const cta = document.createElement('a');
     cta.setAttribute('href', sourceCta.getAttribute('href'));
     cta.textContent = sourceCta.textContent.trim() || 'Apply Now';
     ctaWrap.append(cta);
+    contentNodes.push(ctaWrap);
   }
 
-  // One row per model field, each with its field hint.
+  // Rows: block name, desktop image, optional mobile image, grouped content.
   const cells = [['Hero P']];
   if (desktopSrc) cells.push([hinted('image', makeImg(desktopSrc))]);
   if (mobileSrc) cells.push([hinted('imageMobile', makeImg(mobileSrc))]);
-  if (title) cells.push([hinted('title', title)]);
-  if (description) cells.push([hinted('description', description)]);
-  if (ctaWrap) cells.push([hinted('ctaLink', ctaWrap)]);
+  cells.push([contentNodes]);
 
   const table = WebImporter.DOMUtils.createTable(cells, document);
   el.replaceWith(table);
