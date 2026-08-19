@@ -142,6 +142,44 @@
     ]
   },
   {
+    "id": "811-zero-balance-hero-benefits-card",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "description",
+        "label": "Section Description",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "benefit-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Icon Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Icon Image Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "811-zero-balance-hero-section",
     "fields": [
       {
