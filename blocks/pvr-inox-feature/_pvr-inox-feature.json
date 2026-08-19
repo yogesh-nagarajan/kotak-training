@@ -23,29 +23,57 @@
         {
           "component": "text",
           "valueType": "string",
-          "name": "heading",
-          "label": "Heading",
+          "name": "desktop_heading",
+          "label": "Desktop Heading",
           "value": ""
         },
         {
           "component": "richtext",
-          "name": "body",
+          "name": "desktop_description",
           "value": "",
-          "label": "Supporting Text",
+          "label": "Desktop Description",
           "valueType": "string"
         },
         {
           "component": "reference",
           "valueType": "string",
-          "name": "image",
-          "label": "Image",
+          "name": "desktop_image",
+          "label": "Desktop Image",
           "multi": false
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "imageAlt",
-          "label": "Image Alt Text",
+          "name": "desktop_imageAlt",
+          "label": "Desktop Image Alt Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "mobile_heading",
+          "label": "Mobile Heading",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "name": "mobile_description",
+          "value": "",
+          "label": "Mobile Description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "mobile_image",
+          "label": "Mobile Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "mobile_imageAlt",
+          "label": "Mobile Image Alt Text",
           "value": ""
         }
       ]
