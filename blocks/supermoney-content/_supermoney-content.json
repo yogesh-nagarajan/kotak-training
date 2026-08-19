@@ -33,22 +33,6 @@
           "value": "",
           "label": "Content",
           "valueType": "string"
-        },
-        {
-          "component": "select",
-          "name": "collapsible",
-          "label": "Read more / read less",
-          "value": "on",
-          "options": [
-            {
-              "name": "Enabled (collapse long content)",
-              "value": "on"
-            },
-            {
-              "name": "Disabled (always show all)",
-              "value": "off"
-            }
-          ]
         }
       ]
     }

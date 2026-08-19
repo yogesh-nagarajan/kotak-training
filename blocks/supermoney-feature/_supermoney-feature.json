@@ -50,17 +50,17 @@
         },
         {
           "component": "select",
-          "name": "imagePosition",
+          "name": "classes",
           "label": "Image Position",
-          "value": "left",
+          "value": "image-left",
           "options": [
             {
               "name": "Image left, text right",
-              "value": "left"
+              "value": "image-left"
             },
             {
               "name": "Image right, text left",
-              "value": "right"
+              "value": "image-right"
             }
           ]
         }

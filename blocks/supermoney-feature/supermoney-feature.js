@@ -3,9 +3,10 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 /**
  * supermoney-feature block — a single image + text feature row.
  *
- * Authored fields (each a row): Image, Title, Description, Image Position.
- * "Image Position" (left|right) controls which side the image sits on, so one
- * block covers left-image, right-image ("reverse"), Scan & pay, How it works…
+ * Authored fields (each a row): Image, Title, Description. The "Image Position"
+ * select maps to the `classes` field, so Universal Editor adds an
+ * `image-left` or `image-right` class to the block directly — this decoration
+ * just arranges the media and text.
  *
  * @param {Element} block The supermoney-feature block element
  */
@@ -13,22 +14,17 @@ export default function decorate(block) {
   const rows = [...block.children];
 
   let imageRow = null;
-  let positionRow = null;
   const textRows = [];
 
   rows.forEach((row) => {
     const cell = row.firstElementChild || row;
-    const text = cell.textContent.trim();
     if (cell.querySelector('picture, img')) {
       imageRow = row;
-    } else if (/^(left|right)$/i.test(text)) {
-      positionRow = row;
-    } else if (text) {
+    } else if (cell.textContent.trim() || cell.children.length) {
       textRows.push(row);
     }
   });
 
-  const position = positionRow ? positionRow.textContent.trim().toLowerCase() : 'left';
   const [titleRow, ...descRows] = textRows;
 
   // Media side.
@@ -54,13 +50,14 @@ export default function decorate(block) {
     desc.className = 'supermoney-feature-description';
     const cell = row.firstElementChild || row;
     moveInstrumentation(cell, desc);
-    while (cell.firstElementChild) desc.append(cell.firstElementChild);
-    if (!desc.firstElementChild && cell.textContent.trim()) {
-      desc.textContent = cell.textContent.trim();
-    }
+    while (cell.firstChild) desc.append(cell.firstChild);
     body.append(desc);
   });
 
-  block.classList.add(position === 'right' ? 'image-right' : 'image-left');
+  // Default to image-left when no layout class was authored.
+  if (!block.classList.contains('image-left') && !block.classList.contains('image-right')) {
+    block.classList.add('image-left');
+  }
+
   block.replaceChildren(media, body);
 }

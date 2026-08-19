@@ -23,8 +23,9 @@
 
 .accordion-faq .accordion-faq-subtitle {
   margin: 8px 0 0;
-  color: var(--dark-color);
+  color: var(--brand-pink);
   font-size: 16px;
+  font-weight: 600;
   line-height: 1.5;
 }
 

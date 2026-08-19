@@ -21,33 +21,6 @@
   line-height: 1.7;
 }
 
-/* Read more / read less: clamp collapsed content with a fade. */
-.supermoney-content.is-collapsible.is-collapsed .supermoney-content-inner {
-  max-height: 220px;
-  overflow: hidden;
-  mask-image: linear-gradient(to bottom, #000 60%, transparent);
-}
-
-.supermoney-content .supermoney-content-toggle {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 16px;
-  padding: 10px 22px;
-  background: none;
-  border: 1px solid var(--brand-blue);
-  border-radius: 24px;
-  color: var(--brand-blue);
-  font-family: var(--body-font-family);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.supermoney-content .supermoney-content-toggle:hover {
-  background-color: var(--brand-blue);
-  color: #fff;
-}
-
 .supermoney-content .supermoney-content-inner h2 {
   margin: 32px 0 12px;
   color: var(--text-color);
