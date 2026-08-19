@@ -2,28 +2,42 @@
  * loads and decorates the hero-p (prepaid/forex) banner
  * Replicates the Kotak owl-hero-banner: a full-width background image with
  * overlaid text content (heading, subtitle and a call-to-action button).
+ *
+ * Expected authored rows (xwalk model hero-p): desktop image, optional mobile
+ * image, then the content rows — Title, Description and CTA. Image-only rows
+ * become the responsive background; the remaining rows are flattened, in order,
+ * into the overlaid .hero-p-content (Title → Description → CTA).
  * @param {Element} block The hero-p block element
  */
 export default function decorate(block) {
-  // The block delivers rows: one with the background image (a picture),
-  // and one (or more) with the text content (heading, subtext, CTA).
   const rows = [...block.children];
 
-  const imageRow = rows.find((row) => row.querySelector('picture, img'));
-  const contentRows = rows.filter((row) => row !== imageRow);
+  // Rows whose only meaningful content is an image are background-image rows.
+  const isImageRow = (row) => {
+    const media = row.querySelector('picture, img');
+    if (!media) return false;
+    return !row.querySelector('h1, h2, h3, h4, h5, h6, p, a, ul, ol');
+  };
 
-  if (imageRow) {
-    imageRow.classList.add('hero-p-image');
-    // The image row may carry one or two images. When two are authored, the
-    // first is the desktop banner and the second is the mobile banner; CSS
-    // swaps them by viewport. With a single image it is used at all widths.
-    const images = [...imageRow.querySelectorAll('picture, img')]
-      .filter((el) => !(el.tagName === 'IMG' && el.closest('picture')));
-    imageRow.replaceChildren(...images);
-    if (images.length > 1) {
-      images[0].classList.add('hero-p-image-desktop');
-      images[1].classList.add('hero-p-image-mobile');
+  const imageRows = rows.filter(isImageRow);
+  const contentRows = rows.filter((row) => !imageRows.includes(row));
+
+  if (imageRows.length) {
+    const imageWrapper = document.createElement('div');
+    imageWrapper.className = 'hero-p-image';
+    imageRows.forEach((row, index) => {
+      const image = row.querySelector('picture, img');
+      if (image) {
+        image.classList.add(index === 0 ? 'hero-p-image-desktop' : 'hero-p-image-mobile');
+        imageWrapper.append(image);
+      }
+      row.remove();
+    });
+    // if a single image was authored, it should always show
+    if (imageWrapper.children.length === 1) {
+      imageWrapper.firstElementChild.classList.remove('hero-p-image-desktop');
     }
+    block.prepend(imageWrapper);
   }
 
   // gather all text content into a single positioned wrapper, flattening the

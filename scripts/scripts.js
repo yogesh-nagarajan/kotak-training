@@ -9,6 +9,7 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  getMetadata,
 } from './aem.js';
 
 /**
@@ -151,7 +152,14 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  loadHeader(doc.querySelector('header'));
+  // Pages can opt out of the global header/footer via page metadata
+  // (`no-header` / `no-footer`), e.g. standalone banner/landing pages.
+  const header = doc.querySelector('header');
+  if (getMetadata('no-header') === 'true') {
+    if (header) header.remove();
+  } else {
+    loadHeader(header);
+  }
 
   const main = doc.querySelector('main');
   await loadSections(main);
@@ -160,7 +168,12 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadFooter(doc.querySelector('footer'));
+  const footer = doc.querySelector('footer');
+  if (getMetadata('no-footer') === 'true') {
+    if (footer) footer.remove();
+  } else {
+    loadFooter(footer);
+  }
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
