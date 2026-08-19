@@ -829,46 +829,58 @@
     "id": "pvr-inox-feature",
     "fields": [
       {
-        "component": "richtext",
-        "name": "desktopContent",
-        "value": "",
-        "label": "Desktop Content",
+        "component": "text",
         "valueType": "string",
-        "description": "Heading and supporting text shown on desktop"
+        "name": "desktop_heading",
+        "label": "Desktop Heading",
+        "value": ""
       },
       {
         "component": "richtext",
-        "name": "mobileContent",
+        "name": "desktop_description",
         "value": "",
-        "label": "Mobile Content",
-        "valueType": "string",
-        "description": "Heading and supporting text shown on mobile"
+        "label": "Desktop Description",
+        "valueType": "string"
       },
       {
         "component": "reference",
         "valueType": "string",
-        "name": "desktopImage",
+        "name": "desktop_image",
         "label": "Desktop Image",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "desktopImageAlt",
+        "name": "desktop_imageAlt",
         "label": "Desktop Image Alt Text",
         "value": ""
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobile_heading",
+        "label": "Mobile Heading",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "mobile_description",
+        "value": "",
+        "label": "Mobile Description",
+        "valueType": "string"
+      },
+      {
         "component": "reference",
         "valueType": "string",
-        "name": "mobileImage",
+        "name": "mobile_image",
         "label": "Mobile Image",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "mobileImageAlt",
+        "name": "mobile_imageAlt",
         "label": "Mobile Image Alt Text",
         "value": ""
       }
