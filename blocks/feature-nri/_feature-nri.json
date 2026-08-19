@@ -63,18 +63,11 @@
           "value": ""
         },
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "title",
-          "label": "Card Title",
-          "value": ""
-        },
-        {
           "component": "richtext",
           "name": "text",
           "value": "",
-          "label": "Description / Features",
-          "description": "Feature bullet points or description paragraph",
+          "label": "Card Title & Features",
+          "description": "Product title as a Heading (H3) and feature bullet points",
           "valueType": "string"
         },
         {
@@ -83,23 +76,9 @@
           "label": "Know More Link"
         },
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "knowMoreText",
-          "label": "Know More Text",
-          "value": "Know More"
-        },
-        {
           "component": "aem-content",
           "name": "applyLink",
-          "label": "Apply Now Link"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "applyText",
-          "label": "Apply Now Text",
-          "value": "Apply Now"
+          "label": "Apply Now Button"
         }
       ]
     }
