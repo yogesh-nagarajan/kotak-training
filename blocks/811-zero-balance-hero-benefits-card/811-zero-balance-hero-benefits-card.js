@@ -3,23 +3,19 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
  * loads and decorates the 811 zero-balance benefits card block
- * Renders a horizontal list of benefit cards (icon + title) followed by an
- * optional section description paragraph below the list.
+ * Renders a horizontal list of benefit cards (icon + title).
  *
  * Block structure:
  *   - One row per authored Benefit Card item — each item cell-group is
  *     [Icon Image (+ alt), Card Title (richtext)].
- *   - One row for the parent block's own model field — the Section Description
- *     (richtext, no image). Identified by the absence of an image.
  *
  * @param {Element} block The 811-zero-balance-hero-benefits-card block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
 
-  // card rows carry an image; the description row (parent model field) does not
+  // each card row carries an image icon and a title
   const cardRows = rows.filter((row) => row.querySelector('picture, img'));
-  const descRows = rows.filter((row) => !row.querySelector('picture, img'));
 
   // --- benefit cards --------------------------------------------------------
   const list = document.createElement('ul');
@@ -71,15 +67,6 @@ export default function decorate(block) {
     list.append(li);
   });
 
-  // --- section description (below the list) ---------------------------------
-  const description = document.createElement('div');
-  description.className = 'benefits-description';
-  descRows.forEach((row) => {
-    const cell = row.firstElementChild || row;
-    moveInstrumentation(row, description);
-    while (cell.firstElementChild) description.append(cell.firstElementChild);
-  });
-
   // --- assemble -------------------------------------------------------------
   const container = document.createElement('div');
   container.className = 'container';
@@ -87,5 +74,4 @@ export default function decorate(block) {
 
   block.replaceChildren();
   block.append(container);
-  if (description.children.length) block.append(description);
 }
