@@ -21,11 +21,34 @@
       "id": "supermoney-content",
       "fields": [
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "value": ""
+        },
+        {
           "component": "richtext",
           "name": "content",
           "value": "",
           "label": "Content",
           "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "collapsible",
+          "label": "Read more / read less",
+          "value": "on",
+          "options": [
+            {
+              "name": "Enabled (collapse long content)",
+              "value": "on"
+            },
+            {
+              "name": "Disabled (always show all)",
+              "value": "off"
+            }
+          ]
         }
       ]
     }

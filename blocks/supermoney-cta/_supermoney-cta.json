@@ -1,0 +1,60 @@
+{
+  "definitions": [
+    {
+      "title": "Supermoney CTA",
+      "id": "supermoney-cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Supermoney CTA",
+              "model": "supermoney-cta"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "supermoney-cta",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Background Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Background Image Alt Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "value": ""
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Button Link"
+        },
+        {
+          "component": "text",
+          "name": "linkText",
+          "label": "Button Text",
+          "value": "Apply now",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

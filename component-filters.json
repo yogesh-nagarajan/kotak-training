@@ -31,7 +31,10 @@
       "supermoney-footer",
       "supermoney-features",
       "supermoney-steps",
-      "supermoney-content"
+      "supermoney-content",
+      "supermoney-feature",
+      "supermoney-eligibility",
+      "supermoney-cta"
     ]
   },
   {

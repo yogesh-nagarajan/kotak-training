@@ -323,11 +323,140 @@
     "id": "supermoney-content",
     "fields": [
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "value": ""
+      },
+      {
         "component": "richtext",
         "name": "content",
         "value": "",
         "label": "Content",
         "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "collapsible",
+        "label": "Read more / read less",
+        "value": "on",
+        "options": [
+          {
+            "name": "Enabled (collapse long content)",
+            "value": "on"
+          },
+          {
+            "name": "Disabled (always show all)",
+            "value": "off"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "supermoney-cta",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Background Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Button Link"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Button Text",
+        "value": "Apply now",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "supermoney-eligibility",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Content (headings, lists, tables)",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "supermoney-feature",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "value": "",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "imagePosition",
+        "label": "Image Position",
+        "value": "left",
+        "options": [
+          {
+            "name": "Image left, text right",
+            "value": "left"
+          },
+          {
+            "name": "Image right, text left",
+            "value": "right"
+          }
+        ]
       }
     ]
   },
