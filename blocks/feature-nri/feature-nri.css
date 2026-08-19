@@ -1,3 +1,12 @@
+.feature-nri .feature-nri-main-title {
+  margin: 0 0 28px;
+  color: #036;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
 .feature-nri ul {
   list-style: none;
   margin: 0;
@@ -164,6 +173,11 @@
 }
 
 @media (width >= 900px) {
+  .feature-nri .feature-nri-main-title {
+    font-size: 30px;
+    margin-bottom: 36px;
+  }
+
   .feature-nri ul {
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
