@@ -31,6 +31,10 @@ export default function parse(element, { document }) {
   cells.push([image || '']); // row 2: background image (optional)
   cells.push([contentCell]); // row 3: title + subheading + CTA (single cell)
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'hero', cells });
+  // preserve layout variants (overlay, light, right, split, reverse) so the
+  // block name row renders as e.g. "Hero (overlay, light)".
+  const variants = Array.from(element.classList).filter((c) => c !== 'hero');
+
+  const block = WebImporter.Blocks.createBlock(document, { name: 'hero', variants, cells });
   element.replaceWith(block);
 }

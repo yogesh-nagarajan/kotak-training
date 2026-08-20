@@ -4,6 +4,8 @@
 // PARSER IMPORTS
 import heroParser from './parsers/hero.js';
 import cardsParser from './parsers/cards.js';
+import cardShowcaseParser from './parsers/card-showcase.js';
+import securityTrustParser from './parsers/security-trust.js';
 import imgContainerParser from './parsers/img-container.js';
 
 // TRANSFORMER IMPORTS
@@ -13,26 +15,30 @@ import sectionsTransformer from './transformers/sections.js';
 const parsers = {
   hero: heroParser,
   cards: cardsParser,
+  'card-showcase': cardShowcaseParser,
+  'security-trust': securityTrustParser,
   'img-container': imgContainerParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION
 const PAGE_TEMPLATE = {
   name: 'feature-811-home',
-  description: 'Kotak811 home landing page (no carousel): hero banner, benefit card grid, ActivMoney image container, and secondary hero.',
+  description: 'Kotak811 home landing page: card-showcase hero with layered metal cards and benefit cards, followed by four alternating hero blocks (nearest bank, current account, virtual debit card, credit card).',
   urls: [
     'http://localhost:3000/drafts/feature-811-home.plain.html',
   ],
   blocks: [
+    { name: 'card-showcase', instances: ['div.card-showcase'] },
     { name: 'hero', instances: ['div.hero'] },
-    { name: 'cards', instances: ['div.cards'] },
-    { name: 'img-container', instances: ['div.img-container'] },
+    { name: 'security-trust', instances: ['div.security-trust'] },
   ],
   sections: [
-    { id: 'section-1', name: 'Intro hero' },
-    { id: 'section-2', name: 'Core benefits cards' },
-    { id: 'section-3', name: 'ActivMoney image container' },
-    { id: 'section-4', name: 'Secondary hero' },
+    { id: 'section-1', name: 'Card showcase hero' },
+    { id: 'section-2', name: 'Nearest bank hero' },
+    { id: 'section-3', name: '811 Current Account hero' },
+    { id: 'section-4', name: 'Virtual debit card hero' },
+    { id: 'section-5', name: 'Credit card hero' },
+    { id: 'section-6', name: 'Security & trust' },
   ],
 };
 
