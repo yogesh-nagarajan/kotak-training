@@ -40,7 +40,7 @@
   flex-direction: column;
   gap: 24px;
   width: 240px;
-  padding: 40px;
+  padding: 42px 40px 44px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 2px 4px 12px rgb(0 0 0 / 10%);
@@ -56,8 +56,9 @@
 [class~="811-zero-hero-card"] .four-cards-title {
   margin: 0;
   color: #222;
+  font-family: var(--body-font-family);
   font-size: 16px;
-  font-weight: 500;
+  font-weight: normal !important;
   line-height: 28px;
 }
 
