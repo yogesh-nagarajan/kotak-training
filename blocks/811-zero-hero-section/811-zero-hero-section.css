@@ -1,0 +1,193 @@
+/* 811 Zero-balance hero section.
+   The block class starts with a digit, so it is scoped with the attribute
+   selector [class~="811-zero-hero-section"] (equivalent to .811-zero-hero-section,
+   which is not a valid plain CSS class selector). */
+
+[class~="811-zero-hero-section"].block {
+  position: relative;
+  overflow: hidden;
+}
+
+/* full-bleed: two attribute selectors (specificity 0,2,0) override the global
+   main > .section > div max-width rule, mirroring the hero/hero-p blocks */
+[class~="811-zero-hero-section-container"] [class~="811-zero-hero-section-wrapper"] {
+  max-width: unset;
+  padding: 0;
+}
+
+/* full-bleed background banner */
+[class~="811-zero-hero-section"] .zero-hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  line-height: 0;
+}
+
+/* banner image tags are absolutely positioned within the hero (matches the
+   source: position: absolute, full width, anchored per viewport). */
+[class~="811-zero-hero-section"] .zero-hero-image picture,
+[class~="811-zero-hero-section"] .zero-hero-image img {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+[class~="811-zero-hero-section"] .zero-hero-image picture img {
+  position: static;
+  display: block;
+}
+
+/* responsive banner swap: mobile image below md, desktop image from md up.
+   When a single image is authored (no -desktop/-mobile classes) it always shows. */
+[class~="811-zero-hero-section"] .zero-hero-image .zero-hero-image-desktop {
+  display: none;
+}
+
+/* mobile banner shown by default, anchored 20px from the bottom */
+[class~="811-zero-hero-section"] .zero-hero-image .zero-hero-image-mobile {
+  display: block;
+  top: auto;
+  bottom: 20px;
+}
+
+/* centered text content */
+[class~="811-zero-hero-section"] .zero-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 60px 20px 48px;
+}
+
+[class~="811-zero-hero-section"] .zero-hero-content > * {
+  margin: 0;
+}
+
+/* eyebrow / sub-title */
+[class~="811-zero-hero-section"] .zero-hero-content .zero-hero-eyebrow {
+  color: #e5336a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+/* heading */
+[class~="811-zero-hero-section"] .zero-hero-content h1 {
+  color: #14142b;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  max-width: 640px;
+}
+
+/* subtext (paragraph directly after the heading) */
+[class~="811-zero-hero-section"] .zero-hero-content h1 + p,
+[class~="811-zero-hero-section"] .zero-hero-content h1 + div {
+  color: #4a4a68;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 520px;
+  margin-top: 10px;
+}
+
+/* call-to-action button */
+[class~="811-zero-hero-section"] .zero-hero-content .button-container {
+  margin-top: 30px;
+}
+
+[class~="811-zero-hero-section"] .zero-hero-content a.button {
+  display: inline-block;
+  background-color: #3131a5;
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  padding: 12px 26px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+[class~="811-zero-hero-section"] .zero-hero-content a.button:hover,
+[class~="811-zero-hero-section"] .zero-hero-content a.button:focus-visible {
+  background-color: #262681;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* graceful fade-in fallback when the global AOS library is not present.
+   If AOS is present it manages the [data-aos] element and this rule is
+   superseded by AOS's own styles. */
+[class~="811-zero-hero-section"][data-aos="fade-in"]:not(.aos-init) {
+  opacity: 1;
+  animation: zero-hero-fade-in 0.6s ease-out both;
+  animation-delay: 0.1s;
+}
+
+@keyframes zero-hero-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---- Tablet / md breakpoint and up: use the desktop banner ---- */
+@media (width >= 600px) {
+  /* desktop banner shown from md up, anchored 60px from the top */
+  [class~="811-zero-hero-section"] .zero-hero-image .zero-hero-image-desktop {
+    display: block;
+    top: 60px;
+    bottom: auto;
+  }
+
+  [class~="811-zero-hero-section"] .zero-hero-image .zero-hero-image-mobile {
+    display: none;
+  }
+
+  [class~="811-zero-hero-section"] .zero-hero-content {
+    padding: 100px 24px 64px;
+  }
+
+  [class~="811-zero-hero-section"] .zero-hero-content h1 {
+    font-size: 40px;
+  }
+
+  [class~="811-zero-hero-section"] .zero-hero-content h1 + p,
+  [class~="811-zero-hero-section"] .zero-hero-content h1 + div {
+    font-size: 15px;
+  }
+}
+
+/* ---- Desktop: ~140px top padding as in the source ---- */
+@media (width >= 900px) {
+  [class~="811-zero-hero-section"] .zero-hero-content {
+    padding: 140px 32px 90px;
+  }
+
+  [class~="811-zero-hero-section"] .zero-hero-content h1 {
+    font-size: 48px;
+    line-height: 1.15;
+  }
+
+  [class~="811-zero-hero-section"] .zero-hero-content h1 + p,
+  [class~="811-zero-hero-section"] .zero-hero-content h1 + div {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  [class~="811-zero-hero-section"] .zero-hero-content a.button {
+    padding: 13px 30px;
+    font-size: 15px;
+  }
+}

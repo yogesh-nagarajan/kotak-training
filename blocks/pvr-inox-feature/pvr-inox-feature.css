@@ -1,0 +1,123 @@
+/* Manrope — scoped to this block to match the live Kotak PVR INOX page.
+   Variable font covering the weights used here (500 body, 700 heading). */
+@font-face {
+  font-family: manrope;
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/manrope-latin.woff2") format("woff2");
+}
+
+.pvr-inox-feature {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 32px 0;
+  font-family: manrope, var(--body-font-family);
+}
+
+/* variant visibility: mobile pair below 900px, desktop pair at/above 900px.
+   When only one variant is authored it still renders on its own breakpoint. */
+.pvr-inox-feature .pvr-inox-feature-text-desktop,
+.pvr-inox-feature .pvr-inox-feature-media-desktop {
+  display: none;
+}
+
+.pvr-inox-feature .pvr-inox-feature-text-mobile,
+.pvr-inox-feature .pvr-inox-feature-media-mobile {
+  display: block;
+}
+
+/* text column */
+.pvr-inox-feature .pvr-inox-feature-text {
+  width: 100%;
+  text-align: left;
+}
+
+.pvr-inox-feature .pvr-inox-feature-text > * {
+  margin: 0;
+}
+
+.pvr-inox-feature .pvr-inox-feature-heading {
+  color: #222;
+  font-family: manrope, var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 39px;
+  letter-spacing: -0.7px;
+}
+
+/* body: 16px/29px, 500 weight; matches live mobile spacing (0 0 50px) */
+.pvr-inox-feature .pvr-inox-feature-text p {
+  margin: 0 0 50px;
+  color: #222;
+  font-family: manrope, var(--body-font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 29px;
+}
+
+.pvr-inox-feature .pvr-inox-feature-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* image column — floating product shot, no frame, no shadow */
+.pvr-inox-feature .pvr-inox-feature-media {
+  width: 100%;
+  line-height: 0;
+}
+
+.pvr-inox-feature .pvr-inox-feature-media picture,
+.pvr-inox-feature .pvr-inox-feature-media img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (width >= 900px) {
+  .pvr-inox-feature {
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    padding: 64px 0;
+  }
+
+  /* swap visible variant pair on desktop */
+  .pvr-inox-feature .pvr-inox-feature-text-mobile,
+  .pvr-inox-feature .pvr-inox-feature-media-mobile {
+    display: none;
+  }
+
+  .pvr-inox-feature .pvr-inox-feature-text-desktop {
+    display: block;
+  }
+
+  .pvr-inox-feature .pvr-inox-feature-media-desktop {
+    display: block;
+  }
+
+  .pvr-inox-feature .pvr-inox-feature-text {
+    flex: 1 1 50%;
+  }
+
+  .pvr-inox-feature .pvr-inox-feature-media {
+    flex: 0 0 560px;
+    max-width: 50%;
+  }
+
+  .pvr-inox-feature .pvr-inox-feature-heading {
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -1.1px;
+  }
+
+  /* body: desktop spacing 20px 0 40px */
+  .pvr-inox-feature .pvr-inox-feature-text p {
+    margin: 20px 0 40px;
+  }
+
+  .pvr-inox-feature .pvr-inox-feature-text p:last-child {
+    margin-bottom: 0;
+  }
+}

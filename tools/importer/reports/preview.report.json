@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "url": "http://localhost:3000/content/preview",
+  "path": "preview",
+  "timestamp": "2026-08-13T04:41:33.806Z",
+  "title": "NRI Home Loan",
+  "template": "hero-carousel-demo",
+  "blocks": [
+    "hero-carousel",
+    "cards"
+  ]
+}

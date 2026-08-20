@@ -162,6 +162,31 @@
           "defaultContent": []
         }
       ]
+    },
+    {
+      "name": "811-zero-hero-section",
+      "description": "Kotak811 zero-balance digital savings account hero: full-bleed banner with centered eyebrow, heading, subtext and CTA.",
+      "urls": [
+        "http://localhost:3000/drafts/811-zero-hero-section.plain.html"
+      ],
+      "blocks": [
+        {
+          "name": "811-zero-hero-section",
+          "instances": [
+            "div[class~=\"811-zero-hero-section\"]"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Zero balance hero",
+          "selector": "div[class~=\"811-zero-hero-section\"]",
+          "style": "",
+          "blocks": ["811-zero-hero-section"],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }

@@ -7,7 +7,8 @@
       "aemAssetsFolderPath": "/content/dam/kotak-training",
       "aemSiteName": "kotak-training",
       "aemSiteTitle": "Kotak Training",
-      "baseUrl": "https://author-p165370-e1760075.adobeaemcloud.com"
+      "baseUrl": "https://author-p165370-e1760075.adobeaemcloud.com",
+      "contentHostUrl": "author-p165370-e1760075.adobeaemcloud.com"
     }
   }
 }

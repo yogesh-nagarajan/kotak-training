@@ -14,13 +14,33 @@
       "title",
       "hero",
       "hero-video",
+      "hero-visa-video",
       "hero-carousel",
+      "breadcrumb",
+      "tabs",
+      "intro",
+      "feature-carousel",
+      "cta",
+      "faq",
+      "related-products",
       "cards",
       "columns",
       "fragment",
       "img-container",
       "rte",
-      "emi-calculator"
+      "emi-calculator",
+      "supermoney-hero",
+      "accordian-faq",
+      "feature-nri",
+      "card-811-business-new",
+      "pvr-inox-feature",
+      "nri-banner"
+    ]
+  },
+  {
+    "id": "breadcrumb",
+    "components": [
+      "breadcrumb-item"
     ]
   },
   {
@@ -51,9 +71,39 @@
     ]
   },
   {
+    "id": "faq",
+    "components": [
+      "faq-item"
+    ]
+  },
+  {
+    "id": "feature-carousel",
+    "components": [
+      "feature"
+    ]
+  },
+  {
+    "id": "feature-nri",
+    "components": [
+      "feature-nri-card"
+    ]
+  },
+  {
     "id": "hero-carousel",
     "components": [
       "hero-slide"
+    ]
+  },
+  {
+    "id": "related-products",
+    "components": [
+      "related-product"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tab"
     ]
   }
 ]
