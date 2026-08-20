@@ -81,6 +81,7 @@
     flex: 1;
     font-size: 49px;
     line-height: 1.26;
+    white-space: nowrap;
   }
 
   .supermoney-steps .supermoney-steps-list {

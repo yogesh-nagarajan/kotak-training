@@ -42,11 +42,15 @@
   align-items: center;
 }
 
+.supermoney-features .supermoney-feature-media {
+  text-align: center;
+}
+
 .supermoney-features .supermoney-feature-media img {
   width: 100%;
+  max-width: 460px;
   height: auto;
-  border-radius: 16px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .supermoney-features .supermoney-feature-body h2,

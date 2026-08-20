@@ -9,7 +9,7 @@
 
 /* Rounded container; image bleeds to its edges so overflow is clipped */
 .supermoney-how-it-works .supermoney-how-it-works-inner {
-  background-color: #f5eef0;
+  background-color: #f0efef;
   border-radius: 20px;
   overflow: hidden;
   display: flex;
