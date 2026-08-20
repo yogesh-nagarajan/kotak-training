@@ -34,7 +34,9 @@
       "feature-nri",
       "card-811-business-new",
       "pvr-inox-feature",
-      "nri-banner"
+      "nri-banner",
+      "hero-811-business",
+      "usp-cards-811-business"
     ]
   },
   {
@@ -98,6 +100,12 @@
     "id": "tabs",
     "components": [
       "tab"
+    ]
+  },
+  {
+    "id": "usp-cards-811-business",
+    "components": [
+      "usp-card-811-business"
     ]
   }
 ]
