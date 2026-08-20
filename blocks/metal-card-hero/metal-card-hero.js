@@ -147,7 +147,9 @@ export default function decorate(block) {
   }
   hero.append(content);
 
-  // fanned-cards image (first hero image row)
+  // fanned-cards banner image (first hero image row). This is the LCP element,
+  // so it is loaded eagerly, marked high priority, and served at responsive
+  // widths (mobile downloads a small image, desktop a large one).
   const heroImg = imageRows[0]?.querySelector('img');
   if (heroImg) {
     const media = document.createElement('div');
@@ -157,9 +159,15 @@ export default function decorate(block) {
       heroImg.getAttribute('src') || heroImg.src,
       alt,
       true,
-      [{ width: '1200' }],
+      [
+        { media: '(min-width: 900px)', width: '1600' },
+        { width: '750' },
+      ],
     );
-    moveInstrumentation(heroImg, picture.querySelector('img'));
+    const img = picture.querySelector('img');
+    img.setAttribute('fetchpriority', 'high');
+    img.setAttribute('loading', 'eager');
+    moveInstrumentation(heroImg, img);
     media.append(picture);
     hero.append(media);
   }

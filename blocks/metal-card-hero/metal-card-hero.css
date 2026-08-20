@@ -53,6 +53,11 @@
   display: block;
   width: 100%;
   height: auto;
+
+  /* reserve space at the banner's aspect ratio so the image loading does not
+     cause a layout shift (CLS) before its intrinsic size is known */
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
 }
 
 /* text overlays the banner. Mobile: centered near the top. */
