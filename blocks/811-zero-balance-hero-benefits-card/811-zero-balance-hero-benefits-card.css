@@ -35,19 +35,6 @@
   line-height: 28px;
 }
 
-/* full-width section description below the cards */
-[class~="811-zero-balance-hero-benefits-card"] .benefits-description {
-  margin-top: 40px;
-}
-
-[class~="811-zero-balance-hero-benefits-card"] .benefits-description > * {
-  margin: 0 0 16px;
-}
-
-[class~="811-zero-balance-hero-benefits-card"] .benefits-description > *:last-child {
-  margin-bottom: 0;
-}
-
 /* tablet: 2 columns */
 @media (width >= 600px) {
   [class~="811-zero-balance-hero-benefits-card"] .benefits-cards {

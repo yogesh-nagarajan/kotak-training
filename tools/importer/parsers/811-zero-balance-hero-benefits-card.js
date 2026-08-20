@@ -11,9 +11,8 @@
  *   - title    (text)      -> second cell, field:title
  * => 2 columns per card row: [image, title]
  *
- * The section description (authored via a Text component inside the block) is
- * emitted as a final image-less block row; the block JS renders it full-width
- * below the cards.
+ * The section description (authored via a Text component in the same section)
+ * is emitted as a sibling paragraph after the block.
  */
 
 function withFieldHint(document, fieldName, content) {

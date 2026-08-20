@@ -63,8 +63,7 @@
     {
       "id": "811-zero-balance-hero-benefits-card",
       "components": [
-        "benefit-card",
-        "text"
+        "benefit-card"
       ]
     }
   ]
