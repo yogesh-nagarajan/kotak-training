@@ -1,0 +1,63 @@
+/* supermoney-instant-approval — dedicated "Instant approval" section
+   (text left, image right, matching live) */
+
+.supermoney-instant-approval {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: var(--text-color);
+}
+
+.supermoney-instant-approval .supermoney-instant-approval-title {
+  margin: 0 0 16px;
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.supermoney-instant-approval .supermoney-instant-approval-description {
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.supermoney-instant-approval .supermoney-instant-approval-description p {
+  margin: 0 0 12px;
+}
+
+.supermoney-instant-approval .supermoney-instant-approval-description p:last-child {
+  margin-bottom: 0;
+}
+
+.supermoney-instant-approval .supermoney-instant-approval-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+@media (width >= 900px) {
+  .supermoney-instant-approval {
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    padding: 56px 80px;
+  }
+
+  .supermoney-instant-approval .supermoney-instant-approval-body,
+  .supermoney-instant-approval .supermoney-instant-approval-media {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .supermoney-instant-approval .supermoney-instant-approval-title {
+    font-size: 44px;
+    line-height: 1.18;
+  }
+}

@@ -1,0 +1,54 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+/**
+ * supermoney-scan-pay block — dedicated "Scan & pay with credit card" section.
+ *
+ * Live layout: title on top, image, then description (text-first stacked).
+ * Fields: Title, Description (richtext), Image, Image Alt.
+ *
+ * @param {Element} block The supermoney-scan-pay block element
+ */
+export default function decorate(block) {
+  const rows = [...block.children];
+
+  let imageRow = null;
+  const textRows = [];
+  rows.forEach((row) => {
+    const cell = row.firstElementChild || row;
+    if (cell.querySelector('picture, img')) {
+      imageRow = row;
+    } else if (cell.textContent.trim() || cell.children.length) {
+      textRows.push(row);
+    }
+  });
+
+  const [titleRow, ...descRows] = textRows;
+
+  if (titleRow) {
+    const h2 = document.createElement('h2');
+    h2.className = 'supermoney-scan-pay-title';
+    moveInstrumentation(titleRow.firstElementChild, h2);
+    h2.textContent = titleRow.textContent.trim();
+    block.append(h2);
+    titleRow.remove();
+  }
+
+  if (imageRow) {
+    const media = document.createElement('div');
+    media.className = 'supermoney-scan-pay-media';
+    const pic = imageRow.querySelector('picture, img');
+    if (pic) media.append(pic.closest('picture') || pic);
+    block.append(media);
+    imageRow.remove();
+  }
+
+  descRows.forEach((row) => {
+    const desc = document.createElement('div');
+    desc.className = 'supermoney-scan-pay-description';
+    const cell = row.firstElementChild || row;
+    moveInstrumentation(cell, desc);
+    while (cell.firstChild) desc.append(cell.firstChild);
+    block.append(desc);
+    row.remove();
+  });
+}

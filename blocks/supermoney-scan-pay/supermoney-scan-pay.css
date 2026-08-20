@@ -1,0 +1,57 @@
+/* supermoney-scan-pay — dedicated "Scan & pay with credit card" section */
+
+.supermoney-scan-pay {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 16px;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.supermoney-scan-pay .supermoney-scan-pay-title {
+  margin: 0 0 24px;
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.supermoney-scan-pay .supermoney-scan-pay-media {
+  margin: 0 auto 24px;
+}
+
+.supermoney-scan-pay .supermoney-scan-pay-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.supermoney-scan-pay .supermoney-scan-pay-description {
+  max-width: 720px;
+  margin: 0 auto;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.supermoney-scan-pay .supermoney-scan-pay-description p {
+  margin: 0 0 12px;
+}
+
+.supermoney-scan-pay .supermoney-scan-pay-description p:last-child {
+  margin-bottom: 0;
+}
+
+@media (width >= 900px) {
+  .supermoney-scan-pay {
+    padding: 56px 80px;
+  }
+
+  .supermoney-scan-pay .supermoney-scan-pay-title {
+    font-size: 44px;
+    line-height: 1.18;
+  }
+}

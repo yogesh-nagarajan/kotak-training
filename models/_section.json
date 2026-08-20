@@ -70,7 +70,10 @@
         "supermoney-feature",
         "supermoney-eligibility",
         "supermoney-cta",
-        "supermoney-how-it-works"
+        "supermoney-how-it-works",
+        "supermoney-scan-pay",
+        "supermoney-instant-approval",
+        "supermoney-swipe-banner"
       ]
     }
   ]
