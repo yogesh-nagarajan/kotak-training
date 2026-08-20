@@ -1,0 +1,84 @@
+/* 811 Zero Hero Card.
+   Scoped with [class~="811-zero-hero-card"] because the block name starts with
+   a digit (a plain .811-… selector is invalid CSS). The block element is the
+   ".four-cards" root; child classes are kebab-case (project stylelint convention). */
+
+/* cards list — mobile-first: horizontal scroll, fixed-width cards */
+[class~="811-zero-hero-card"] .four-cards-list {
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+[class~="811-zero-hero-card"] .four-cards-list::-webkit-scrollbar {
+  display: none;
+}
+
+[class~="811-zero-hero-card"] .four-cards-item {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 24px;
+  width: 240px;
+  padding: 40px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 2px 4px 12px rgb(0 0 0 / 10%);
+  scroll-snap-align: start;
+}
+
+[class~="811-zero-hero-card"] .four-cards-icon img {
+  display: block;
+  height: 70px;
+  width: auto;
+}
+
+[class~="811-zero-hero-card"] .four-cards-title {
+  margin: 0;
+  color: #222;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+/* description — full-width paragraph below the cards */
+[class~="811-zero-hero-card"] .four-cards-description {
+  margin-top: 40px;
+  color: #4a4a68;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+[class~="811-zero-hero-card"] .four-cards-description > * {
+  margin: 0 0 16px;
+}
+
+[class~="811-zero-hero-card"] .four-cards-description > *:last-child {
+  margin-bottom: 0;
+}
+
+/* tablet: cards wrap into rows, no page overflow */
+@media (width >= 600px) {
+  [class~="811-zero-hero-card"] .four-cards-list {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  [class~="811-zero-hero-card"] .four-cards-item {
+    flex: 1 1 calc(50% - 10px);
+    width: auto;
+  }
+}
+
+/* desktop: 4 equal-width cards in a single row */
+@media (width >= 900px) {
+  [class~="811-zero-hero-card"] .four-cards-item {
+    flex: 1 1 0;
+    width: auto;
+  }
+}

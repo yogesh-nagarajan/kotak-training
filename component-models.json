@@ -214,6 +214,44 @@
     ]
   },
   {
+    "id": "hero-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Icon Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "hero-card-description",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "description",
+        "label": "Rich Text",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "811-zero-hero-section",
     "fields": [
       {
