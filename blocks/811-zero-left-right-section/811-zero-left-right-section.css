@@ -1,0 +1,106 @@
+/* 811 Zero Left Right Section.
+   Scoped with [class~="811-zero-left-right-section"] because the block name
+   starts with a digit (a plain .811-… selector is invalid CSS). Unique
+   .zero-left-right-section* namespace — no shared/other-block classes. */
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-image {
+  line-height: 0;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-image picture,
+[class~="811-zero-left-right-section"] .zero-left-right-section-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-title {
+  margin: 0;
+  color: #222;
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-description {
+  margin: 0;
+  color: #4a4a68;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-description > * {
+  margin: 0 0 12px;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-description > *:last-child {
+  margin-bottom: 0;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-cta.button {
+  align-self: flex-start;
+  display: inline-block;
+  margin-top: 8px;
+  padding: 14px 32px;
+  color: #fff;
+  background: #3857ff;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+[class~="811-zero-left-right-section"] .zero-left-right-section-cta.button:hover {
+  background: #2b49ea;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ---- Tablet / desktop: two columns side by side ---- */
+@media (width >= 900px) {
+  [class~="811-zero-left-right-section"] .zero-left-right-section-container {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+  }
+
+  [class~="811-zero-left-right-section"] .zero-left-right-section-image,
+  [class~="811-zero-left-right-section"] .zero-left-right-section-content {
+    flex: 1 1 50%;
+    min-width: 0;
+  }
+
+  /* reverse: content on the left, image on the right */
+  [class~="zero-left-right-section-reverse"] .zero-left-right-section-image {
+    order: 2;
+  }
+
+  [class~="zero-left-right-section-reverse"] .zero-left-right-section-content {
+    order: 1;
+  }
+}
+
+/* ---- Mobile reverse: image below the content ---- */
+@media (width < 900px) {
+  [class~="zero-left-right-section-reverse"] .zero-left-right-section-image {
+    order: 2;
+  }
+
+  [class~="zero-left-right-section-reverse"] .zero-left-right-section-content {
+    order: 1;
+  }
+}
