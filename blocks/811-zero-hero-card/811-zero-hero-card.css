@@ -3,6 +3,14 @@
    a digit (a plain .811-… selector is invalid CSS). The block element is the
    ".four-cards" root; child classes are kebab-case (project stylelint convention). */
 
+/* block wrapper — establish a stacking context above the hero banner.
+   Uses the attribute selector because a digit-leading class ('.\38 11-…')
+   fails the project's kebab-case stylelint rule; this is the equivalent. */
+[class~="811-zero-hero-card-wrapper"] {
+  position: relative;
+  z-index: 1;
+}
+
 /* cards list — mobile-first: horizontal scroll, fixed-width cards */
 [class~="811-zero-hero-card"] .four-cards-list {
   display: flex;
