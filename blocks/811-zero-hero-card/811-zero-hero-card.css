@@ -98,3 +98,21 @@
     width: auto;
   }
 }
+
+/* small tablet / large phone: two cards per row with tighter list padding */
+@media (width <= 820px) {
+  [class~="811-zero-hero-card"] .four-cards-list {
+    padding: 20px 20px 24px;
+  }
+
+  [class~="811-zero-hero-card"] .four-cards-item {
+    width: 50%;
+  }
+}
+
+/* iPad only: extra top spacing on the block wrapper */
+@media (width >= 768px) and (width <= 1024px) {
+  [class~="811-zero-hero-card-wrapper"] {
+    padding-top: 80px;
+  }
+}
