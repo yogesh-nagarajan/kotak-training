@@ -136,30 +136,26 @@
   background: rgb(255 255 255 / 6%);
 }
 
-/* the moving highlight: a bright band that travels continuously along the
-   border. A seamless REPEATING gradient means a band is always on screen (never
-   disappears), and a constant linear speed with no alternate/ease keeps the
-   motion smooth and uninterrupted. Drawn as a gradient border via a mask so
-   only the 1px border edge is painted. */
+/* the moving highlight: a single soft bright band that sweeps back and forth
+   along the border — left to right, then right to left, looping. The gradient
+   is sized to twice the button width with one centred band, so as the position
+   animates between the two ends the band always stays visible (never disappears
+   at an edge). `alternate` produces the continuous ping-pong motion. Drawn as a
+   gradient border via a mask so only the 1px border edge is painted. */
 .metal-card-hero .metal-card-hero-content a.metal-card-hero-cta::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-
-  /* fixed 120px tile: a bright band with soft edges, transparent gap. Using px
-     stops means the tile width is known, so shifting the background by exactly
-     one tile (120px) loops perfectly with no seam and nothing ever disappears. */
-  background: repeating-linear-gradient(
+  background: linear-gradient(
     90deg,
-    transparent 0,
-    transparent 78px,
-    rgb(255 255 255 / 90%) 96px,
-    transparent 114px,
-    transparent 120px
+    transparent 0%,
+    rgb(255 255 255 / 90%) 50%,
+    transparent 100%
   );
-  background-repeat: repeat;
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
 
   /* mask to only paint the 1px border ring (border-image style trick) */
   /* stylelint-disable property-no-vendor-prefix -- WebKit/Safari need the -webkit-mask variants */
@@ -172,17 +168,17 @@
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
-  animation: mch-border-sweep 1.6s linear infinite;
+  animation: mch-border-sweep 2s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
 @keyframes mch-border-sweep {
   from {
-    background-position: 0 0;
+    background-position: 0% 0;
   }
 
   to {
-    background-position: 120px 0;
+    background-position: 100% 0;
   }
 }
 
