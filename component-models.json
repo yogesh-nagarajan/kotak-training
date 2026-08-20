@@ -375,11 +375,22 @@
         "value": ""
       },
       {
-        "component": "richtext",
+        "component": "aem-content",
+        "name": "cta_link",
+        "label": "CTA URL"
+      },
+      {
+        "component": "text",
         "valueType": "string",
-        "name": "content_cta",
-        "label": "CTA",
+        "name": "cta_linkText",
+        "label": "CTA Label",
         "value": ""
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "cta_newTab",
+        "label": "Open CTA in new tab"
       }
     ]
   },

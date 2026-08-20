@@ -40,6 +40,19 @@ export default function decorate(block) {
     block.prepend(imageWrapper);
   }
 
+  // The cta_newTab boolean renders as a standalone "true"/"false" text node in
+  // the CTA cell (sibling to the link paragraph). Capture it from the raw rows
+  // BEFORE flattening, which moves only element nodes and would drop the marker.
+  const collectTextNodes = (root) => {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) nodes.push(n);
+    return nodes;
+  };
+  const wantsNewTab = contentRows.some((row) => collectTextNodes(row)
+    .some((n) => n.textContent.trim().toLowerCase() === 'true'
+      && !n.parentElement.closest('a, h1, h2, h3, h4, h5, h6')));
+
   // gather all text content into a single positioned wrapper, flattening the
   // row/cell wrapper divs so the heading, paragraphs and the CTA sit directly
   // inside .hero-p-content
@@ -59,6 +72,10 @@ export default function decorate(block) {
       cta.classList.add('button');
       const wrapper = cta.closest('p');
       if (wrapper) wrapper.classList.add('button-container');
+      if (wantsNewTab) {
+        cta.setAttribute('target', '_blank');
+        cta.setAttribute('rel', 'noopener noreferrer');
+      }
     }
     block.append(content);
   }

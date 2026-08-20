@@ -8,14 +8,18 @@
  *   Row 1: block name ("Hero P")
  *   Row 2: <!-- field:image -->        desktop background banner
  *   Row 3: <!-- field:imageMobile -->  mobile background banner (optional)
- *   Row 4: content cell grouping the three richtext fields (shared `content_`
- *          prefix keeps them in ONE cell, satisfying the 4-cell block limit):
+ *   Row 4: content cell grouping the heading + description richtext fields
+ *          (shared `content_` prefix keeps them in ONE cell):
  *            <!-- field:content_heading -->      heading
  *            <!-- field:content_description -->   subheading paragraph
- *            <!-- field:content_cta -->           call-to-action link
+ *   Row 5: CTA cell (shared `cta_` prefix → its own cell):
+ *            <!-- field:cta_link -->             call-to-action link (URL + label)
  *
- * The `imageAlt` / `imageMobileAlt` fields are collapsed (Alt suffix) into the
- * image's alt attribute, so they get no row of their own.
+ * Keeping the block at 4 grouped cells (image, imageMobile, content, cta)
+ * satisfies the xwalk max-cells limit. The `imageAlt` / `imageMobileAlt` /
+ * `cta_linkText` fields are collapsed (Alt / Text suffix) into their parent's
+ * attributes; `cta_newTab` is a boolean and is left to authoring, so they get
+ * no row of their own.
  *
  * Source structure (simplified):
  *   .owl-hero-banner
@@ -80,23 +84,24 @@ export default function parse(el, { document }) {
     contentNodes.push(description);
   }
 
-  // CTA — link text + href.
+  // CTA — link URL + label, in its own `cta_` cell.
   const sourceCta = el.querySelector('a.btn, a.btn-primary, a');
-  contentNodes.push(document.createComment(' field:content_cta '));
+  let ctaCell = null;
   if (sourceCta && sourceCta.getAttribute('href')) {
     const ctaWrap = document.createElement('p');
     const cta = document.createElement('a');
     cta.setAttribute('href', sourceCta.getAttribute('href'));
     cta.textContent = sourceCta.textContent.trim() || 'Apply Now';
     ctaWrap.append(cta);
-    contentNodes.push(ctaWrap);
+    ctaCell = hinted('cta_link', ctaWrap);
   }
 
-  // Rows: block name, desktop image, optional mobile image, grouped content.
+  // Rows: block name, desktop image, optional mobile image, content, CTA.
   const cells = [['Hero P']];
   if (desktopSrc) cells.push([hinted('image', makeImg(desktopSrc))]);
   if (mobileSrc) cells.push([hinted('imageMobile', makeImg(mobileSrc))]);
   cells.push([contentNodes]);
+  if (ctaCell) cells.push([ctaCell]);
 
   const table = WebImporter.DOMUtils.createTable(cells, document);
   el.replaceWith(table);
