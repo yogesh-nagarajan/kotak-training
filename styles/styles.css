@@ -272,9 +272,10 @@ main img {
   width: 100%;
 }
 
-/* sections */
+/* sections — flush like the live page; each block controls its own vertical
+   spacing via padding/margin (matches www.kotak811.bank.in) */
 main > .section {
-  margin: 40px 0;
+  margin: 0;
 }
 
 main > .section > div {
