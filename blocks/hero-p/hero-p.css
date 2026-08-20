@@ -96,9 +96,9 @@
 /* call-to-action button */
 .hero-p .hero-p-content a.button {
   display: inline-block;
-  background-color: #ed4223;
+  background: #ed4223;
+  border: 1px solid #ed4223;
   color: #fff;
-  border: 0;
   border-radius: 4px;
   padding: 8px 20px;
   font-size: 14px;
@@ -108,7 +108,8 @@
 }
 
 .hero-p .hero-p-content a.button:hover {
-  background-color: #d1381b;
+  background: #d1381b;
+  border-color: #d1381b;
   text-decoration: none;
 }
 
