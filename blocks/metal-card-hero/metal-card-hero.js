@@ -41,7 +41,13 @@ function rowText(row) {
 
 /**
  * Build a single benefit card from an authored row.
- * @param {Element} row The authored row (icon image + title + description)
+ *
+ * The row has an icon image cell and a richtext cell carrying the title (as a
+ * heading) and the description (as paragraphs). Cells are found by content, and
+ * within the text cell the heading becomes the title and paragraphs the
+ * description — so it stays correct whether authored as one richtext cell or as
+ * separate cells.
+ * @param {Element} row The authored row (icon image + title/description)
  * @returns {Element} The decorated card element
  */
 function buildCard(row) {
@@ -73,20 +79,21 @@ function buildCard(row) {
     card.append(icon);
   }
 
-  // first text cell = title, the rest = description
-  textCells.forEach((cell, index) => {
-    const cls = index === 0 ? 'metal-card-hero-card-title' : 'metal-card-hero-card-desc';
+  // move the authored title/description out of the text cell(s): headings are
+  // the title, everything else (paragraphs) is the description.
+  textCells.forEach((cell) => {
     if (cell.firstElementChild) {
       while (cell.firstElementChild) {
         const el = cell.firstElementChild;
-        el.classList.add(cls);
+        const isHeading = /^H[1-6]$/.test(el.tagName);
+        el.classList.add(isHeading ? 'metal-card-hero-card-title' : 'metal-card-hero-card-desc');
         card.append(el);
       }
-    } else {
-      const el = document.createElement(index === 0 ? 'h3' : 'p');
-      el.className = cls;
-      el.textContent = cell.textContent.trim();
-      card.append(el);
+    } else if (cell.textContent.trim()) {
+      const p = document.createElement('p');
+      p.className = 'metal-card-hero-card-desc';
+      p.textContent = cell.textContent.trim();
+      card.append(p);
     }
   });
 
