@@ -1,35 +1,47 @@
 /* supermoney-swipe-banner — full-width "Get cashback on every swipe" banner */
 
-/* Break out of the section's max-width to span the full viewport width. */
+/* Full-bleed: neutralise the section container's max-width and padding so the
+   banner spans the section's full width. This avoids 100vw (which includes the
+   scrollbar and causes horizontal scroll). */
+.section.supermoney-swipe-banner-container {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.section.supermoney-swipe-banner-container > div {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
 .supermoney-swipe-banner {
   position: relative;
-  width: 100vw;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  min-height: 260px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
+/* Background image drives the banner height (natural aspect, like live). */
 .supermoney-swipe-banner .supermoney-swipe-banner-bg {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  width: 100%;
   z-index: 0;
 }
 
 .supermoney-swipe-banner .supermoney-swipe-banner-bg picture,
 .supermoney-swipe-banner .supermoney-swipe-banner-bg img {
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
-  object-position: center;
 }
 
 /* Centered content overlay */
 .supermoney-swipe-banner .supermoney-swipe-banner-content {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -69,13 +81,18 @@
   text-decoration: none;
 }
 
-@media (width >= 900px) {
-  .supermoney-swipe-banner {
-    min-height: 340px;
-  }
+/* Fallback height if the background image is missing. */
+.supermoney-swipe-banner:not(:has(.supermoney-swipe-banner-bg img)) {
+  min-height: 260px;
+}
 
+@media (width >= 900px) {
   .supermoney-swipe-banner .supermoney-swipe-banner-title {
     font-size: 44px;
     line-height: 1.18;
+  }
+
+  .supermoney-swipe-banner:not(:has(.supermoney-swipe-banner-bg img)) {
+    min-height: 340px;
   }
 }
