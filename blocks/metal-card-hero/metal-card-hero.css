@@ -1,7 +1,8 @@
 /* Metal Card Hero
-   A black "Infinity Metal Debit Card" hero with a fanned-cards image and a row
-   of benefit cards that overlap the bottom edge of the hero. On tablet/mobile
-   the benefit cards become a horizontal snap-scrolling track. */
+   A full-bleed "Infinity Metal Debit Card" banner (the authored image already
+   carries the black backdrop and the fanned cards) with the text overlaid, and
+   a row of benefit cards that overlap the bottom edge of the banner. On
+   tablet/mobile the benefit cards become a horizontal snap-scrolling track. */
 
 .metal-card-hero.block {
   --mch-black: #000;
@@ -26,25 +27,46 @@
   padding: 0;
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero / banner ---------- */
 .metal-card-hero .metal-card-hero-hero {
   position: relative;
+
+  /* black only shows through if no image is authored (fallback) — the banner
+     image itself already contains the black backdrop */
   background: var(--mch-black);
   overflow: hidden;
-  padding: 48px 20px 140px;
-  min-height: 420px;
+  min-height: 320px;
 }
 
-.metal-card-hero .metal-card-hero-content {
+/* the banner image sits in normal flow and defines the hero height */
+.metal-card-hero .metal-card-hero-media {
   position: relative;
+  z-index: 0;
+  line-height: 0;
+}
+
+.metal-card-hero .metal-card-hero-media picture,
+.metal-card-hero .metal-card-hero-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* text overlays the banner. Mobile: centered near the top. */
+.metal-card-hero .metal-card-hero-content {
+  position: absolute;
+  inset: 0;
   z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 44px 20px 0;
   text-align: center;
 }
 
 .metal-card-hero .metal-card-hero-content > * {
-  margin: 0 auto;
+  margin: 0;
 }
 
 .metal-card-hero .metal-card-hero-eyebrow {
@@ -156,25 +178,6 @@
   }
 }
 
-/* fanned-cards hero image, anchored to the right of the hero */
-.metal-card-hero .metal-card-hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  line-height: 0;
-  pointer-events: none;
-}
-
-.metal-card-hero .metal-card-hero-media picture,
-.metal-card-hero .metal-card-hero-media img {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 62%;
-  max-width: 900px;
-  height: auto;
-}
-
 /* T&C apply */
 .metal-card-hero .metal-card-hero-disclaimer {
   position: absolute;
@@ -191,7 +194,7 @@
   position: relative;
   z-index: 3;
 
-  /* pull the cards up so they overlap the bottom of the black hero */
+  /* pull the cards up so they overlap the bottom of the banner */
   margin-top: -90px;
   padding: 0 20px 40px;
 }
@@ -250,28 +253,8 @@
   }
 }
 
-/* ---------- Mobile & tablet: horizontal snap-scrolling cards ---------- */
+/* ---------- Small phones: show a peek of the next card ---------- */
 @media (width < 900px) {
-  .metal-card-hero .metal-card-hero-hero {
-    padding: 40px 20px 120px;
-    text-align: center;
-  }
-
-  .metal-card-hero .metal-card-hero-media {
-    position: relative;
-    inset: auto;
-    margin-top: 32px;
-    height: auto;
-  }
-
-  .metal-card-hero .metal-card-hero-media picture,
-  .metal-card-hero .metal-card-hero-media img {
-    position: static;
-    width: 92%;
-    margin: 0 auto;
-    display: block;
-  }
-
   .metal-card-hero .metal-card-hero-cards {
     padding-right: 0;
   }
@@ -298,7 +281,6 @@
   }
 }
 
-/* small phones: show a little more of the next card as a peek */
 @media (width < 600px) {
   .metal-card-hero .metal-card-hero-content h1,
   .metal-card-hero .metal-card-hero-content h2 {
@@ -310,28 +292,19 @@
   }
 }
 
-/* ---------- Desktop refinements ---------- */
+/* ---------- Desktop: text inset on the left, vertically centered ---------- */
 @media (width >= 900px) {
-  .metal-card-hero .metal-card-hero-hero {
-    padding: 90px 40px 160px;
-    text-align: left;
-    min-height: 560px;
-  }
-
   .metal-card-hero .metal-card-hero-content {
-    margin: 0;
-    max-width: 520px;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 6.5%;
     text-align: left;
-  }
-
-  .metal-card-hero .metal-card-hero-content > * {
-    margin-left: 0;
-    margin-right: 0;
   }
 
   .metal-card-hero .metal-card-hero-content h1,
   .metal-card-hero .metal-card-hero-content h2 {
     font-size: 54px;
+    max-width: 9ch;
   }
 
   .metal-card-hero .metal-card-hero-content h1 + p:not(.metal-card-hero-eyebrow),
