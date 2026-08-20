@@ -1,9 +1,17 @@
-/* supermoney-how-it-works — dedicated "How it works" section (matches live) */
+/* supermoney-how-it-works — dedicated "How it works" section
+   (grey rounded box, matching supermoney-steps) */
 
 .supermoney-how-it-works {
   max-width: 1120px;
-  margin: 0 auto;
-  padding: 40px 16px 0;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+/* Grey rounded container holding the text + image */
+.supermoney-how-it-works .supermoney-how-it-works-inner {
+  background-color: #f0efef;
+  border-radius: 20px;
+  padding: 40px 24px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -43,10 +51,15 @@
 
 @media (width >= 900px) {
   .supermoney-how-it-works {
+    margin: 50px auto;
+    padding: 0 80px;
+  }
+
+  .supermoney-how-it-works .supermoney-how-it-works-inner {
     flex-direction: row;
     align-items: center;
     gap: 40px;
-    padding: 50px 80px 0;
+    padding: 80px;
   }
 
   .supermoney-how-it-works .supermoney-how-it-works-body,

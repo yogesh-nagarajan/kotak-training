@@ -53,5 +53,10 @@ export default function decorate(block) {
     if (pic) media.append(pic.closest('picture') || pic);
   }
 
-  block.replaceChildren(body, media);
+  // Wrap in a grey rounded box (matching supermoney-steps).
+  const inner = document.createElement('div');
+  inner.className = 'supermoney-how-it-works-inner';
+  inner.append(body, media);
+
+  block.replaceChildren(inner);
 }
