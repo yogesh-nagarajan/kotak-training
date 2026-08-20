@@ -1,14 +1,23 @@
-/* supermoney-steps — "How to get started?" numbered steps */
+/* supermoney-steps — "How to get started?" (matches live grey rounded box) */
 
 .supermoney-steps {
   max-width: 1120px;
-  margin: 0 auto;
-  padding: 40px 16px;
-  text-align: center;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+/* Grey rounded container that holds the heading + steps */
+.supermoney-steps .supermoney-steps-inner {
+  background-color: #f0efef;
+  border-radius: 20px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .supermoney-steps .supermoney-steps-title {
-  margin: 0 0 32px;
+  margin: 0;
   color: #000;
   font-family: var(--heading-font-family);
   font-size: 32px;
@@ -22,19 +31,25 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
 }
 
+/* Each step: icon + text on one row */
 .supermoney-steps .supermoney-step {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
 }
 
+.supermoney-steps .supermoney-step-icon {
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
 .supermoney-steps .supermoney-step-icon img {
-  width: 56px;
-  height: 56px;
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
   object-fit: contain;
 }
 
@@ -51,23 +66,24 @@
 
 @media (width >= 900px) {
   .supermoney-steps {
-    padding: 60px 32px;
+    margin: 50px auto;
+    padding: 0 80px;
+  }
+
+  .supermoney-steps .supermoney-steps-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    padding: 80px;
   }
 
   .supermoney-steps .supermoney-steps-title {
+    flex: 1;
     font-size: 49px;
     line-height: 1.26;
-    margin-bottom: 48px;
   }
 
   .supermoney-steps .supermoney-steps-list {
-    flex-direction: row;
-    justify-content: center;
-    gap: 48px;
-  }
-
-  .supermoney-steps .supermoney-step {
     flex: 1;
-    max-width: 300px;
   }
 }

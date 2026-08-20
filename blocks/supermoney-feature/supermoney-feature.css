@@ -44,7 +44,7 @@
 @media (width >= 900px) {
   .supermoney-feature {
     flex-direction: row;
-    gap: 64px;
+    gap: 40px;
     padding: 56px 80px;
   }
 
