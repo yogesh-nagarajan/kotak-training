@@ -11,6 +11,13 @@
   z-index: 1;
 }
 
+/* desktop: add top spacing above the block */
+@media (width >= 1024px) {
+  [class~="811-zero-hero-card-wrapper"] {
+    margin-top: 5rem;
+  }
+}
+
 /* cards list — mobile-first: horizontal scroll, fixed-width cards */
 [class~="811-zero-hero-card"] .four-cards-list {
   display: flex;
