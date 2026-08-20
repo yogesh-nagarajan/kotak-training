@@ -995,6 +995,22 @@
         "name": "mobile_imageAlt",
         "label": "Mobile Image Alt Text",
         "value": ""
+      },
+      {
+        "component": "select",
+        "name": "imagePosition",
+        "label": "Image Position (desktop)",
+        "value": "right",
+        "options": [
+          {
+            "name": "Image Right (default)",
+            "value": "right"
+          },
+          {
+            "name": "Image Left",
+            "value": "left"
+          }
+        ]
       }
     ]
   },
