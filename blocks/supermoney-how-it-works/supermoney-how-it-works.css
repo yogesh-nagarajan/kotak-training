@@ -1,21 +1,24 @@
-/* supermoney-how-it-works — dedicated "How it works" section
-   (grey rounded box, matching supermoney-steps) */
+/* supermoney-how-it-works — rounded box, text left, image filling the right
+   edge-to-edge (matching the live reference) */
 
 .supermoney-how-it-works {
-  max-width: 960px;
+  max-width: 1120px;
   margin: 40px auto;
   padding: 0 16px;
 }
 
-/* Grey rounded container holding the text + image */
+/* Rounded container; image bleeds to its edges so overflow is clipped */
 .supermoney-how-it-works .supermoney-how-it-works-inner {
-  background-color: #f0efef;
+  background-color: #f5eef0;
   border-radius: 20px;
-  padding: 40px 24px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 24px;
   color: var(--text-color);
+}
+
+.supermoney-how-it-works .supermoney-how-it-works-body {
+  padding: 40px 24px;
 }
 
 .supermoney-how-it-works .supermoney-how-it-works-title {
@@ -35,17 +38,21 @@
 }
 
 .supermoney-how-it-works .supermoney-how-it-works-description p {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
 }
 
 .supermoney-how-it-works .supermoney-how-it-works-description p:last-child {
   margin-bottom: 0;
 }
 
+/* Image fills its side of the box edge-to-edge (no padding). */
+.supermoney-how-it-works .supermoney-how-it-works-media {
+  line-height: 0;
+}
+
 .supermoney-how-it-works .supermoney-how-it-works-media img {
   width: 100%;
-  height: auto;
-  border-radius: 16px;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -57,15 +64,19 @@
 
   .supermoney-how-it-works .supermoney-how-it-works-inner {
     flex-direction: row;
-    align-items: center;
-    gap: 40px;
-    padding: 80px;
+    align-items: stretch;
   }
 
-  .supermoney-how-it-works .supermoney-how-it-works-body,
+  .supermoney-how-it-works .supermoney-how-it-works-body {
+    flex: 1;
+    align-self: center;
+    padding: 56px 48px;
+  }
+
   .supermoney-how-it-works .supermoney-how-it-works-media {
     flex: 1;
     min-width: 0;
+    align-self: stretch;
   }
 
   .supermoney-how-it-works .supermoney-how-it-works-title {

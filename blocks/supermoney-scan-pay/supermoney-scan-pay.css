@@ -1,15 +1,20 @@
-/* supermoney-scan-pay — dedicated "Scan & pay with credit card" section */
+/* supermoney-scan-pay — "Scan & pay with credit card"
+   title | image | description in one row (matching live) */
 
 .supermoney-scan-pay {
   max-width: 1120px;
   margin: 0 auto;
   padding: 40px 16px;
   color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
   text-align: center;
 }
 
 .supermoney-scan-pay .supermoney-scan-pay-title {
-  margin: 0 0 24px;
+  margin: 0;
   color: var(--text-color);
   font-family: var(--heading-font-family);
   font-size: 30px;
@@ -18,19 +23,16 @@
 }
 
 .supermoney-scan-pay .supermoney-scan-pay-media {
-  margin: 0 auto 24px;
+  margin: 0;
 }
 
 .supermoney-scan-pay .supermoney-scan-pay-media img {
   width: 100%;
   height: auto;
-  border-radius: 16px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .supermoney-scan-pay .supermoney-scan-pay-description {
-  max-width: 720px;
-  margin: 0 auto;
   color: var(--text-color);
   font-size: 16px;
   font-weight: 500;
@@ -47,11 +49,27 @@
 
 @media (width >= 900px) {
   .supermoney-scan-pay {
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
     padding: 56px 80px;
+    text-align: left;
   }
 
+  /* title (left) | image (center) | description (right) */
   .supermoney-scan-pay .supermoney-scan-pay-title {
+    flex: 1;
     font-size: 44px;
     line-height: 1.18;
+  }
+
+  .supermoney-scan-pay .supermoney-scan-pay-media {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .supermoney-scan-pay .supermoney-scan-pay-description {
+    flex: 1;
+    color: var(--dark-color);
   }
 }
