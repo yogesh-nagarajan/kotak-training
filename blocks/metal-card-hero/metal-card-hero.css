@@ -12,7 +12,6 @@
   --mch-card-bg: #f6f6f4;
   --mch-card-title: #16161d;
   --mch-card-desc: #3f3f46;
-  --mch-disclaimer: #6d6d6d;
 
   position: relative;
   padding: 0;
@@ -178,17 +177,6 @@
   }
 }
 
-/* T&C apply */
-.metal-card-hero .metal-card-hero-disclaimer {
-  position: absolute;
-  right: 24px;
-  bottom: 90px;
-  z-index: 2;
-  margin: 0;
-  color: var(--mch-disclaimer);
-  font-size: 12px;
-}
-
 /* ---------- Overlapping benefit cards ---------- */
 .metal-card-hero .metal-card-hero-cards {
   position: relative;
@@ -203,10 +191,10 @@
   list-style: none;
   margin: 0 auto;
   padding: 0;
-  max-width: 1200px;
+  max-width: 980px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 
 .metal-card-hero .metal-card-hero-card {
@@ -276,7 +264,7 @@
   }
 
   .metal-card-hero .metal-card-hero-card {
-    flex: 0 0 78%;
+    flex: 0 0 240px;
     scroll-snap-align: start;
   }
 }
@@ -288,7 +276,7 @@
   }
 
   .metal-card-hero .metal-card-hero-card {
-    flex: 0 0 82%;
+    flex: 0 0 72%;
   }
 }
 
@@ -304,7 +292,7 @@
   .metal-card-hero .metal-card-hero-content h1,
   .metal-card-hero .metal-card-hero-content h2 {
     font-size: 54px;
-    max-width: 9ch;
+    white-space: nowrap;
   }
 
   .metal-card-hero .metal-card-hero-content h1 + p:not(.metal-card-hero-eyebrow),

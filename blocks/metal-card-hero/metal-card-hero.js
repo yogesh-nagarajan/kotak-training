@@ -5,9 +5,10 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * loads and decorates the metal-card-hero block.
  *
  * Renders the "Infinity Metal Debit Card" experience as a single block:
- *   1. A full-bleed black hero with an eyebrow, a two-line heading, an
- *      "Apply Now" CTA (with a continuously sweeping white border highlight),
- *      a fanned-cards image and an optional disclaimer (e.g. "T&C apply").
+ *   1. A full-bleed banner hero (the authored image already carries the black
+ *      backdrop, the fanned cards and any "T&C apply" text) with an eyebrow,
+ *      heading and an "Apply Now" CTA (with a continuously sweeping white
+ *      border highlight) overlaid on top.
  *   2. A row of benefit cards that OVERLAP the bottom of the hero. On tablet
  *      and mobile the cards become a horizontal, snap-scrolling track.
  *
@@ -16,7 +17,6 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * it stays resilient when a field is empty or the author reorders content:
  *   - hero content  : a row with a heading/anchor and no image
  *   - hero image    : a row with an image and no meaningful text
- *   - disclaimer    : a text-only row with no heading/anchor/image
  *   - benefit card  : a row with an image AND text (title + description)
  *
  * @param {Element} block The metal-card-hero block element
@@ -100,7 +100,6 @@ export default function decorate(block) {
   const cardRows = [];
   const imageRows = [];
   let contentRow = null;
-  let disclaimerRow = null;
 
   rows.forEach((row) => {
     const image = hasImage(row);
@@ -108,12 +107,12 @@ export default function decorate(block) {
     if (image && text) {
       cardRows.push(row); // benefit card: image + title/description
     } else if (image) {
-      imageRows.push(row); // fanned-cards hero image
+      imageRows.push(row); // fanned-cards hero banner image
     } else if (!contentRow && hasHeadingOrLink(row)) {
       contentRow = row; // hero eyebrow/heading/CTA
-    } else if (text) {
-      disclaimerRow = row; // "T&C apply"
     }
+    // any leftover text-only row (e.g. an authored "T&C apply") is ignored —
+    // the disclaimer is already baked into the banner image
   });
 
   // ---- build the hero ----
@@ -156,14 +155,6 @@ export default function decorate(block) {
     moveInstrumentation(heroImg, picture.querySelector('img'));
     media.append(picture);
     hero.append(media);
-  }
-
-  // disclaimer (T&C apply)
-  if (disclaimerRow && rowText(disclaimerRow)) {
-    const disclaimer = document.createElement('p');
-    disclaimer.className = 'metal-card-hero-disclaimer';
-    disclaimer.textContent = rowText(disclaimerRow);
-    hero.append(disclaimer);
   }
 
   // ---- build the overlapping benefit cards ----
