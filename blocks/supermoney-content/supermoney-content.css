@@ -2,8 +2,8 @@
 
 .supermoney-content {
   max-width: 1120px;
-  margin: 40px auto 0;
-  padding: 0 16px;
+  margin: 40px 0 0;
+  padding: 0;
   color: var(--text-color);
 }
 
@@ -104,6 +104,5 @@
 @media (width >= 900px) {
   .supermoney-content {
     margin-top: 100px;
-    padding: 0 80px;
   }
 }
