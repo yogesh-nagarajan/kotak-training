@@ -3,23 +3,24 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
  * loads and decorates the 811 zero-balance benefits card block
- * Renders a horizontal list of benefit cards (icon + title).
  *
- * Block structure:
- *   - One row per authored Benefit Card item — each item cell-group is
- *     [Icon Image (+ alt), Card Title (richtext)].
+ * Renders a row of benefit cards (icon + title), followed by an optional
+ * full-width section description below the cards.
+ *
+ * Authored structure:
+ *   - One row per Benefit Card item: [Icon Image (+ alt), Title]
+ *   - An optional Text component row (no image) — the section description
  *
  * @param {Element} block The 811-zero-balance-hero-benefits-card block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
-
-  // each card row carries an image icon and a title
   const cardRows = rows.filter((row) => row.querySelector('picture, img'));
+  const descRows = rows.filter((row) => !row.querySelector('picture, img'));
 
-  // --- benefit cards --------------------------------------------------------
+  // benefit cards
   const list = document.createElement('ul');
-  list.className = 'benefits-list';
+  list.className = 'benefits-cards';
 
   cardRows.forEach((row) => {
     const cells = [...row.children];
@@ -30,15 +31,13 @@ export default function decorate(block) {
     li.className = 'benefit-card';
     moveInstrumentation(row, li);
 
-    // icon
-    const icon = document.createElement('div');
-    icon.className = 'benefit-icon';
     const img = imageCell?.querySelector('img');
     if (img) {
+      const icon = document.createElement('div');
+      icon.className = 'benefit-card-icon';
       const src = img.getAttribute('src') || img.src;
       const alt = (img.getAttribute('alt') || '').trim();
-      // SVG icons are already vector/optimized; only raster icons benefit from
-      // the image optimization pipeline
+      // SVGs are already optimized; only raster icons go through the pipeline
       if (/\.svg(\?|$)/i.test(src)) {
         const svg = img.cloneNode(true);
         svg.loading = 'lazy';
@@ -49,29 +48,29 @@ export default function decorate(block) {
         moveInstrumentation(img, picture.querySelector('img'));
         icon.append(picture);
       }
+      li.append(icon);
     }
-    li.append(icon);
 
-    // title (rendered as an h2, matching the reference markup)
     if (titleCell && titleCell.textContent.trim()) {
-      const title = document.createElement('h2');
-      // keep authored richtext markup where present, otherwise plain text
-      if (titleCell.firstElementChild) {
-        title.innerHTML = titleCell.innerHTML;
-      } else {
-        title.textContent = titleCell.textContent.trim();
-      }
+      const title = document.createElement('h3');
+      title.className = 'benefit-card-title';
+      title.textContent = titleCell.textContent.trim();
       li.append(title);
     }
 
     list.append(li);
   });
 
-  // --- assemble -------------------------------------------------------------
-  const container = document.createElement('div');
-  container.className = 'container';
-  if (list.children.length) container.append(list);
+  // full-width section description (below the cards)
+  const description = document.createElement('div');
+  description.className = 'benefits-description';
+  descRows.forEach((row) => {
+    const cell = row.firstElementChild || row;
+    moveInstrumentation(row, description);
+    while (cell.firstElementChild) description.append(cell.firstElementChild);
+  });
 
   block.replaceChildren();
-  block.append(container);
+  if (list.children.length) block.append(list);
+  if (description.children.length) block.append(description);
 }

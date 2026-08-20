@@ -11,11 +11,10 @@ const parsers = {
 
 // PAGE TEMPLATE CONFIGURATION
 // NOTE: the block class starts with a digit, so it must be matched with the
-// attribute selector [class~="811-zero-balance-hero-benefits-card"] (a
-// `.811-…` class selector is invalid and throws in querySelectorAll).
+// attribute selector [class~="811-zero-balance-hero-benefits-card"].
 const PAGE_TEMPLATE = {
   name: '811-zero-balance-hero-benefits-card',
-  description: 'Kotak811 zero-balance benefits cards: repeatable icon + title cards.',
+  description: 'Kotak811 zero-balance benefits cards: repeatable icon + title cards with a section description below.',
   urls: [
     'http://localhost:3000/drafts/811-zero-balance-hero-benefits-card.plain.html',
   ],
@@ -27,9 +26,6 @@ const PAGE_TEMPLATE = {
   ],
 };
 
-/**
- * Find all block instances on the page based on the embedded template.
- */
 function findBlocksOnPage(document, template) {
   const pageBlocks = [];
   template.blocks.forEach((blockDef) => {
@@ -52,10 +48,9 @@ export default {
     const { document, url, params } = payload;
     const main = document.body;
 
-    // 1. Discover and parse blocks
     const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
     pageBlocks.forEach((block) => {
-      if (!block.element.parentNode) return; // already replaced
+      if (!block.element.parentNode) return;
       const parser = parsers[block.name];
       if (parser) {
         try {
@@ -68,14 +63,12 @@ export default {
       }
     });
 
-    // 2. WebImporter built-in rules
     const hr = document.createElement('hr');
     main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
-    // 3. Force the output path
     const path = WebImporter.FileUtils.sanitizePath('/811-zero-balance-hero-benefits-card');
 
     return [{

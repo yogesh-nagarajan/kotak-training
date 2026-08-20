@@ -2,28 +2,25 @@
 /* global WebImporter */
 /**
  * Parser for: 811-zero-balance-hero-benefits-card
- * Base block: container block with repeatable "benefit-card" items.
- * Source: http://localhost:3000/drafts/811-zero-balance-hero-benefits-card.plain.html
+ * Container block with repeatable "benefit-card" items and a trailing section
+ * description authored via the built-in Text component.
  *
- * xwalk container block. Each authored card row maps to one "benefit-card" item.
- * Model fields (blocks/811-zero-balance-hero-benefits-card/_811-zero-balance-hero-benefits-card.json
- * -> model "benefit-card"):
- *   - image    (reference) -> first cell, field:image (an <img> or <picture>)
- *   - imageAlt (text)      -> collapses into the <img> alt attribute (no own cell)
- *   - title    (richtext)  -> second cell, field:title (the card title)
+ * Model fields (model "benefit-card"):
+ *   - image    (reference) -> first cell, field:image
+ *   - imageAlt (text)      -> collapses into the <img> alt (no own cell)
+ *   - title    (text)      -> second cell, field:title
  * => 2 columns per card row: [image, title]
+ *
+ * The section description (authored via a Text component inside the block) is
+ * emitted as a final image-less block row; the block JS renders it full-width
+ * below the cards.
  */
 
-/**
- * Wrap cell content with a Universal Editor field hint comment placed BEFORE the content.
- */
 function withFieldHint(document, fieldName, content) {
   const frag = document.createDocumentFragment();
   frag.appendChild(document.createComment(` field:${fieldName} `));
   if (Array.isArray(content)) {
-    content.forEach((node) => {
-      if (node) frag.appendChild(node);
-    });
+    content.forEach((node) => { if (node) frag.appendChild(node); });
   } else if (content) {
     frag.appendChild(content);
   }
@@ -31,27 +28,22 @@ function withFieldHint(document, fieldName, content) {
 }
 
 export default function parse(element, { document }) {
-  // Each direct child row of the block is one benefit card: [image cell, title cell].
-  const rows = Array.from(element.children).filter(
-    (row) => row.querySelector('picture, img'),
-  );
+  const rows = Array.from(element.children);
+  const cardRows = rows.filter((row) => row.querySelector('picture, img'));
+  const descRow = rows.find((row) => !row.querySelector('picture, img') && row.textContent.trim());
 
-  // Empty-block guard: no card rows -> unwrap so content isn't lost.
-  if (!rows.length) {
+  if (!cardRows.length) {
     element.replaceWith(...element.childNodes);
     return;
   }
 
   const cells = [];
-
-  rows.forEach((row) => {
+  cardRows.forEach((row) => {
     const cellEls = Array.from(row.children);
     const imageCellSrc = cellEls.find((c) => c.querySelector('picture, img'));
     const titleCellSrc = cellEls.find((c) => c !== imageCellSrc && c.textContent.trim());
 
-    // image field: prefer <picture> (keeps responsive sources), fall back to <img>.
-    const iconSource = imageCellSrc?.querySelector('picture')
-      || imageCellSrc?.querySelector('img');
+    const iconSource = imageCellSrc?.querySelector('picture') || imageCellSrc?.querySelector('img');
     let iconEl = '';
     if (iconSource) {
       if (iconSource.tagName === 'IMG') {
@@ -65,7 +57,6 @@ export default function parse(element, { document }) {
     }
     const imageCell = iconEl ? withFieldHint(document, 'image', iconEl) : '';
 
-    // title field: card title text, wrapped in a <p> so it renders as visible text.
     const titleText = titleCellSrc?.textContent.trim();
     let titleCell = '';
     if (titleText) {
@@ -76,6 +67,16 @@ export default function parse(element, { document }) {
 
     cells.push([imageCell, titleCell]);
   });
+
+  // section description: a final image-less row (single cell, full width)
+  if (descRow) {
+    const text = descRow.textContent.trim();
+    if (text) {
+      const p = document.createElement('p');
+      p.textContent = text;
+      cells.push([p]);
+    }
+  }
 
   const block = WebImporter.Blocks.createBlock(document, {
     name: '811-zero-balance-hero-benefits-card',

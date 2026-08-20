@@ -50,10 +50,10 @@
           "value": ""
         },
         {
-          "component": "richtext",
+          "component": "text",
           "valueType": "string",
           "name": "title",
-          "label": "Card Title",
+          "label": "Title",
           "value": ""
         }
       ]
@@ -63,7 +63,8 @@
     {
       "id": "811-zero-balance-hero-benefits-card",
       "components": [
-        "benefit-card"
+        "benefit-card",
+        "text"
       ]
     }
   ]
