@@ -8,7 +8,9 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  *   Row 1 (single cell): Title       [optional]
  *   Row 2 (single cell): Subtitle    [optional]
  *   Row 3..N (two cells): image + text
- * Rows alternate image-left / image-right automatically.
+ * Image position follows the authored cell order: image-cell-first renders the
+ * image on the left; text-cell-first renders it on the right. This lets the
+ * author reproduce the live page's irregular (non-alternating) layout.
  *
  * @param {Element} block The supermoney-features block element
  */
@@ -44,10 +46,14 @@ export default function decorate(block) {
 
   const list = document.createElement('div');
   list.className = 'supermoney-features-list';
-  featureRows.forEach((row, i) => {
+  featureRows.forEach((row) => {
     const item = document.createElement('div');
     item.className = 'supermoney-feature';
-    if (i % 2 === 1) item.classList.add('supermoney-feature-reverse');
+    // If the first authored cell is text (no image), render the image on the
+    // right; otherwise image stays on the left.
+    const firstCell = row.firstElementChild;
+    const imageFirst = firstCell && firstCell.querySelector('picture, img');
+    if (!imageFirst) item.classList.add('supermoney-feature-reverse');
     moveInstrumentation(row, item);
     while (row.firstElementChild) item.append(row.firstElementChild);
     [...item.children].forEach((cell) => {
