@@ -120,4 +120,10 @@
   .pvr-inox-feature .pvr-inox-feature-text p:last-child {
     margin-bottom: 0;
   }
+
+  /* image-left variant: flip the visible desktop columns (image then text).
+     Mobile variants are display:none here, so only the desktop pair reorders. */
+  .pvr-inox-feature.pvr-inox-feature-image-left {
+    flex-direction: row-reverse;
+  }
 }

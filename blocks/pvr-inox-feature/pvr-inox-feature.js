@@ -70,8 +70,20 @@ function buildVariant(row, variant) {
  * @param {Element} block The pvr-inox-feature block element
  */
 export default function decorate(block) {
-  // Two grouped rows are delivered in field order: desktop, then mobile.
-  const [desktopRow, mobileRow] = [...block.children];
+  const rows = [...block.children];
+
+  // The two device variants are delivered as grouped rows containing an image;
+  // the optional "Image Position" select is delivered as a plain-text row.
+  const deviceRows = rows.filter((row) => row.querySelector('picture, img'));
+  const positionRow = rows.find((row) => !row.querySelector('picture, img'));
+  const [desktopRow, mobileRow] = deviceRows;
+
+  // Apply the image-position modifier. Default is image on the right; when the
+  // author selects "left", flip the desktop column order via a modifier class.
+  const imagePosition = positionRow?.textContent.trim().toLowerCase();
+  if (imagePosition === 'left') {
+    block.classList.add('pvr-inox-feature-image-left');
+  }
 
   const desktop = buildVariant(desktopRow, 'desktop');
   const mobile = buildVariant(mobileRow, 'mobile');
