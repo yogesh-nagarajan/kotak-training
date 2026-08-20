@@ -44,6 +44,10 @@
   line-height: 0;
 }
 
+.metal-card-hero .metal-card-hero-media picture {
+  display: block;
+}
+
 .metal-card-hero .metal-card-hero-media picture,
 .metal-card-hero .metal-card-hero-media img {
   display: block;
@@ -132,25 +136,30 @@
   background: rgb(255 255 255 / 6%);
 }
 
-/* the moving highlight: a bright band travelling along the border, left to
-   right and back (animation-direction: alternate). Drawn as a gradient border
-   via a mask so only the 1px border edge is painted. */
+/* the moving highlight: a bright band that travels continuously along the
+   border. A seamless REPEATING gradient means a band is always on screen (never
+   disappears), and a constant linear speed with no alternate/ease keeps the
+   motion smooth and uninterrupted. Drawn as a gradient border via a mask so
+   only the 1px border edge is painted. */
 .metal-card-hero .metal-card-hero-content a.metal-card-hero-cta::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(
+
+  /* fixed 120px tile: a bright band with soft edges, transparent gap. Using px
+     stops means the tile width is known, so shifting the background by exactly
+     one tile (120px) loops perfectly with no seam and nothing ever disappears. */
+  background: repeating-linear-gradient(
     90deg,
-    transparent 0%,
-    transparent 38%,
-    rgb(255 255 255 / 90%) 50%,
-    transparent 62%,
-    transparent 100%
+    transparent 0,
+    transparent 78px,
+    rgb(255 255 255 / 90%) 96px,
+    transparent 114px,
+    transparent 120px
   );
-  background-size: 250% 100%;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
 
   /* mask to only paint the 1px border ring (border-image style trick) */
   /* stylelint-disable property-no-vendor-prefix -- WebKit/Safari need the -webkit-mask variants */
@@ -163,17 +172,17 @@
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
-  animation: mch-border-sweep 3s ease-in-out infinite alternate;
+  animation: mch-border-sweep 1.6s linear infinite;
   pointer-events: none;
 }
 
 @keyframes mch-border-sweep {
   from {
-    background-position: 0% 0;
+    background-position: 0 0;
   }
 
   to {
-    background-position: 100% 0;
+    background-position: 120px 0;
   }
 }
 
@@ -282,6 +291,16 @@
 
 /* ---------- Desktop: text inset on the left, vertically centered ---------- */
 @media (width >= 900px) {
+  /* cap the banner height so it is a touch shorter than the viewport — the
+     cards then sit just below the fold and appear after a little scroll.
+     object-fit: cover keeps the black image filling the box without stretching. */
+  .metal-card-hero .metal-card-hero-media img {
+    height: 82vh;
+    max-height: 760px;
+    min-height: 460px;
+    object-fit: cover;
+  }
+
   .metal-card-hero .metal-card-hero-content {
     align-items: flex-start;
     justify-content: center;
