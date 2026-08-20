@@ -1,0 +1,125 @@
+{
+  "definitions": [
+    {
+      "title": "Metal Card Hero",
+      "id": "metal-card-hero",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Metal Card Hero",
+              "model": "metal-card-hero",
+              "filter": "metal-card-hero"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Metal Benefit Card",
+      "id": "metal-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Metal Benefit Card",
+              "model": "metal-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "metal-card-hero",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "content",
+          "value": "",
+          "label": "Hero Content (eyebrow, heading, CTA link)",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Hero Cards Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Hero Cards Image Alt",
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "imageMobile",
+          "label": "Hero Cards Image (Mobile)",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageMobileAlt",
+          "label": "Hero Cards Image Mobile Alt",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "disclaimer",
+          "label": "Disclaimer (e.g. T&C apply)",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "metal-card",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "icon",
+          "label": "Icon",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "iconAlt",
+          "label": "Icon Alt Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "description",
+          "label": "Description",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "metal-card-hero",
+      "components": [
+        "metal-card"
+      ]
+    }
+  ]
+}

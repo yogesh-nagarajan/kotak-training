@@ -1,0 +1,342 @@
+/* Metal Card Hero
+   A black "Infinity Metal Debit Card" hero with a fanned-cards image and a row
+   of benefit cards that overlap the bottom edge of the hero. On tablet/mobile
+   the benefit cards become a horizontal snap-scrolling track. */
+
+.metal-card-hero.block {
+  --mch-black: #000;
+  --mch-eyebrow: #9a9a9a;
+  --mch-heading-bright: #f2f2f2;
+  --mch-heading-dim: #9d9d9d;
+  --mch-card-bg: #f6f6f4;
+  --mch-card-title: #16161d;
+  --mch-card-desc: #3f3f46;
+  --mch-disclaimer: #6d6d6d;
+
+  position: relative;
+  padding: 0;
+
+  /* the lower part of the block (behind the overlapping cards) is white */
+  background: #fff;
+}
+
+/* full-bleed: override the global max-width applied to section children */
+.metal-card-hero-container .metal-card-hero-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+/* ---------- Hero ---------- */
+.metal-card-hero .metal-card-hero-hero {
+  position: relative;
+  background: var(--mch-black);
+  overflow: hidden;
+  padding: 48px 20px 140px;
+  min-height: 420px;
+}
+
+.metal-card-hero .metal-card-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.metal-card-hero .metal-card-hero-content > * {
+  margin: 0 auto;
+}
+
+.metal-card-hero .metal-card-hero-eyebrow {
+  color: var(--mch-eyebrow);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+/* main heading — silver gradient, matches the screenshot */
+.metal-card-hero .metal-card-hero-content h1,
+.metal-card-hero .metal-card-hero-content h2 {
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  font-size: 40px;
+  background: linear-gradient(180deg, var(--mch-heading-bright) 0%, #cfcfcf 60%, #9c9c9c 100%);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- required for background-clip: text in WebKit/Safari */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* stylelint-disable-next-line property-no-vendor-prefix -- required to make the gradient show through the text in WebKit/Safari */
+  -webkit-text-fill-color: transparent;
+}
+
+/* the "Now Crafted in Colours." line is a dimmer flat grey */
+.metal-card-hero .metal-card-hero-content h1 + p:not(.metal-card-hero-eyebrow),
+.metal-card-hero .metal-card-hero-content h2 + p:not(.metal-card-hero-eyebrow),
+.metal-card-hero .metal-card-hero-content h3 {
+  color: var(--mch-heading-dim);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.3;
+  margin-top: 6px;
+}
+
+/* ---------- CTA button with sweeping white border highlight ---------- */
+.metal-card-hero .metal-card-hero-content .button-container {
+  margin-top: 30px;
+}
+
+.metal-card-hero .metal-card-hero-content a.metal-card-hero-cta {
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 35%);
+  border-radius: 999px;
+  padding: 14px 40px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.metal-card-hero .metal-card-hero-content a.metal-card-hero-cta:hover,
+.metal-card-hero .metal-card-hero-content a.metal-card-hero-cta:focus-visible {
+  color: #fff;
+  text-decoration: none;
+  background: rgb(255 255 255 / 6%);
+}
+
+/* the moving highlight: a bright band travelling along the border, left to
+   right and back (animation-direction: alternate). Drawn as a gradient border
+   via a mask so only the 1px border edge is painted. */
+.metal-card-hero .metal-card-hero-content a.metal-card-hero-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 38%,
+    rgb(255 255 255 / 90%) 50%,
+    transparent 62%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  background-repeat: no-repeat;
+
+  /* mask to only paint the 1px border ring (border-image style trick) */
+  /* stylelint-disable property-no-vendor-prefix -- WebKit/Safari need the -webkit-mask variants */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  /* stylelint-enable property-no-vendor-prefix */
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: mch-border-sweep 3s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes mch-border-sweep {
+  from {
+    background-position: 0% 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  }
+}
+
+/* fanned-cards hero image, anchored to the right of the hero */
+.metal-card-hero .metal-card-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.metal-card-hero .metal-card-hero-media picture,
+.metal-card-hero .metal-card-hero-media img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 62%;
+  max-width: 900px;
+  height: auto;
+}
+
+/* T&C apply */
+.metal-card-hero .metal-card-hero-disclaimer {
+  position: absolute;
+  right: 24px;
+  bottom: 90px;
+  z-index: 2;
+  margin: 0;
+  color: var(--mch-disclaimer);
+  font-size: 12px;
+}
+
+/* ---------- Overlapping benefit cards ---------- */
+.metal-card-hero .metal-card-hero-cards {
+  position: relative;
+  z-index: 3;
+
+  /* pull the cards up so they overlap the bottom of the black hero */
+  margin-top: -90px;
+  padding: 0 20px 40px;
+}
+
+.metal-card-hero .metal-card-hero-track {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.metal-card-hero .metal-card-hero-card {
+  background: var(--mch-card-bg);
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 45px rgb(0 0 0 / 12%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.metal-card-hero .metal-card-hero-card-icon {
+  line-height: 0;
+}
+
+.metal-card-hero .metal-card-hero-card-icon img {
+  width: auto;
+  max-width: 96px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.metal-card-hero .metal-card-hero-card-title {
+  margin: 8px 0 0;
+  color: var(--mch-card-title);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.metal-card-hero .metal-card-hero-card-desc {
+  margin: 0;
+  color: var(--mch-card-desc);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* reduced motion: stop the border sweep */
+@media (prefers-reduced-motion: reduce) {
+  .metal-card-hero .metal-card-hero-content a.metal-card-hero-cta::before {
+    animation: none;
+    background-position: 50% 0;
+  }
+}
+
+/* ---------- Mobile & tablet: horizontal snap-scrolling cards ---------- */
+@media (width < 900px) {
+  .metal-card-hero .metal-card-hero-hero {
+    padding: 40px 20px 120px;
+    text-align: center;
+  }
+
+  .metal-card-hero .metal-card-hero-media {
+    position: relative;
+    inset: auto;
+    margin-top: 32px;
+    height: auto;
+  }
+
+  .metal-card-hero .metal-card-hero-media picture,
+  .metal-card-hero .metal-card-hero-media img {
+    position: static;
+    width: 92%;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .metal-card-hero .metal-card-hero-cards {
+    padding-right: 0;
+  }
+
+  .metal-card-hero .metal-card-hero-track {
+    display: flex;
+    grid-template-columns: none;
+    max-width: none;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 20px 20px 0;
+    scrollbar-width: none;
+  }
+
+  .metal-card-hero .metal-card-hero-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .metal-card-hero .metal-card-hero-card {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+}
+
+/* small phones: show a little more of the next card as a peek */
+@media (width < 600px) {
+  .metal-card-hero .metal-card-hero-content h1,
+  .metal-card-hero .metal-card-hero-content h2 {
+    font-size: 34px;
+  }
+
+  .metal-card-hero .metal-card-hero-card {
+    flex: 0 0 82%;
+  }
+}
+
+/* ---------- Desktop refinements ---------- */
+@media (width >= 900px) {
+  .metal-card-hero .metal-card-hero-hero {
+    padding: 90px 40px 160px;
+    text-align: left;
+    min-height: 560px;
+  }
+
+  .metal-card-hero .metal-card-hero-content {
+    margin: 0;
+    max-width: 520px;
+    text-align: left;
+  }
+
+  .metal-card-hero .metal-card-hero-content > * {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .metal-card-hero .metal-card-hero-content h1,
+  .metal-card-hero .metal-card-hero-content h2 {
+    font-size: 54px;
+  }
+
+  .metal-card-hero .metal-card-hero-content h1 + p:not(.metal-card-hero-eyebrow),
+  .metal-card-hero .metal-card-hero-content h2 + p:not(.metal-card-hero-eyebrow),
+  .metal-card-hero .metal-card-hero-content h3 {
+    font-size: 26px;
+  }
+}

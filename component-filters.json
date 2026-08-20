@@ -89,6 +89,12 @@
     ]
   },
   {
+    "id": "metal-card-hero",
+    "components": [
+      "metal-card"
+    ]
+  },
+  {
     "id": "related-products",
     "components": [
       "related-product"
