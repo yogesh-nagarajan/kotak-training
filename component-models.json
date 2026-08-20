@@ -142,32 +142,6 @@
     ]
   },
   {
-    "id": "benefit-card",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Icon Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Icon Image Alt",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "title",
-        "label": "Title",
-        "value": ""
-      }
-    ]
-  },
-  {
     "id": "811-zero-balance-hero-section",
     "fields": [
       {

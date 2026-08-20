@@ -32,14 +32,7 @@
       "accordian-faq",
       "card-811business-new",
       "811-zero-hero-section",
-      "811-zero-balance-hero-section",
-      "811-zero-balance-hero-benefits-card"
-    ]
-  },
-  {
-    "id": "811-zero-balance-hero-benefits-card",
-    "components": [
-      "benefit-card"
+      "811-zero-balance-hero-section"
     ]
   },
   {

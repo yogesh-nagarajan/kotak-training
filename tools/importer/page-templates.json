@@ -191,33 +191,6 @@
           "defaultContent": []
         }
       ]
-    },
-    {
-      "name": "811-zero-balance-hero-benefits-card",
-      "description": "Kotak811 zero-balance benefits cards: repeatable icon + title cards with a section description below.",
-      "urls": [
-        "http://localhost:3000/drafts/811-zero-balance-hero-benefits-card.plain.html"
-      ],
-      "blocks": [
-        {
-          "name": "811-zero-balance-hero-benefits-card",
-          "instances": [
-            "div[class~=\"811-zero-balance-hero-benefits-card\"]"
-          ]
-        }
-      ],
-      "sections": [
-        {
-          "id": "section-1",
-          "name": "Benefits cards",
-          "selector": "div[class~=\"811-zero-balance-hero-benefits-card\"]",
-          "style": "",
-          "blocks": [
-            "811-zero-balance-hero-benefits-card"
-          ],
-          "defaultContent": []
-        }
-      ]
     }
   ]
 }
