@@ -33,6 +33,10 @@
             {
               "name": "Highlight",
               "value": "highlight"
+            },
+            {
+              "name": "Overlapping cards",
+              "value": "overlap-cards"
             }
           ]
         }
@@ -69,7 +73,9 @@
         "feature-nri",
         "card-811-business-new",
         "pvr-inox-feature",
-        "nri-banner"
+        "nri-banner",
+        "hero-811-business",
+        "usp-cards-811-business"
       ]
     }
   ]

@@ -8,8 +8,14 @@
   gap: 24px;
   align-items: stretch;
 
-  /* breathing room around each block, matching the live page rhythm */
+  /* self-constrain: this project has no global section width wrapper, so the
+     block centres itself and provides its own horizontal gutters + vertical
+     rhythm to match the live page */
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin-inline: auto;
   padding-block: 40px;
+  padding-inline: 24px;
 }
 
 /* on mobile the text sits above the media (image) */
