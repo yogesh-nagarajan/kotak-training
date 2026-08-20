@@ -78,35 +78,27 @@
   margin-bottom: 0;
 }
 
-/* tablet: cards wrap into rows, no page overflow */
-@media (width >= 600px) {
+/* tablet keeps the mobile presentation (horizontal scroll, fixed-width cards);
+   the wrap-into-rows layout is reserved for desktop only. */
+
+/* desktop: 4 equal-width cards in a single row */
+@media (width >= 900px) {
   [class~="811-zero-hero-card"] .four-cards-list {
     flex-wrap: wrap;
     overflow-x: visible;
   }
 
   [class~="811-zero-hero-card"] .four-cards-item {
-    flex: 1 1 calc(50% - 10px);
-    width: auto;
-  }
-}
-
-/* desktop: 4 equal-width cards in a single row */
-@media (width >= 900px) {
-  [class~="811-zero-hero-card"] .four-cards-item {
     flex: 1 1 0;
     width: auto;
   }
 }
 
-/* small tablet / large phone: two cards per row with tighter list padding */
+/* small tablet / large phone: tighter list padding (keeps the mobile
+   horizontal-scroll, fixed-width card presentation) */
 @media (width <= 820px) {
   [class~="811-zero-hero-card"] .four-cards-list {
     padding: 20px 20px 24px;
-  }
-
-  [class~="811-zero-hero-card"] .four-cards-item {
-    width: 50%;
   }
 }
 
