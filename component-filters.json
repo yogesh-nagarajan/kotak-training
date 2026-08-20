@@ -37,13 +37,6 @@
     ]
   },
   {
-    "id": "811-zero-hero-card",
-    "components": [
-      "hero-card",
-      "hero-card-description"
-    ]
-  },
-  {
     "id": "breadcrumb",
     "components": [
       "breadcrumb-item"

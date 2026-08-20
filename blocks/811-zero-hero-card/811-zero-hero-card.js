@@ -4,12 +4,17 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 /**
  * loads and decorates the 811 zero hero card block
  *
- * Renders a row of cards (icon + title) followed by a full-width rich-text
- * description below the cards.
+ * A single self-contained block: four fixed cards (icon + title) followed by a
+ * full-width rich-text description.
  *
- * Authored structure (container block with child items):
- *   - One row per Card item: [Icon Image (+ alt), Card Title]
- *   - One Description item (no image): rich text
+ * The model uses element grouping, so Universal Editor delivers one cell per
+ * group, in order:
+ *   Row 1: Card 1 group — [image (+ alt), title]
+ *   Row 2: Card 2 group — [image (+ alt), title]
+ *   Row 3: Card 3 group — [image (+ alt), title]
+ *   Row 4: Card 4 group — [image (+ alt), title]
+ *   Row 5: Description (richtext)
+ * Any field may be empty; each case is handled gracefully.
  *
  * @param {Element} block The 811-zero-hero-card block element
  */
@@ -23,15 +28,15 @@ export default function decorate(block) {
   list.className = 'four-cards-list';
 
   cardRows.forEach((row) => {
-    const cells = [...row.children];
-    const imageCell = cells.find((cell) => cell.querySelector('picture, img'));
-    const titleCell = cells.find((cell) => cell !== imageCell && cell.textContent.trim());
+    const cell = row.firstElementChild || row;
+    const img = cell.querySelector('img');
+    // the title is the text content of the cell excluding the image
+    const titleEl = [...cell.children].find((el) => !el.querySelector('picture, img') && el.tagName !== 'PICTURE' && el.textContent.trim());
 
     const item = document.createElement('li');
     item.className = 'four-cards-item';
     moveInstrumentation(row, item);
 
-    const img = imageCell?.querySelector('img');
     if (img) {
       const icon = document.createElement('div');
       icon.className = 'four-cards-icon';
@@ -51,10 +56,11 @@ export default function decorate(block) {
       item.append(icon);
     }
 
-    if (titleCell && titleCell.textContent.trim()) {
+    const titleText = (titleEl?.textContent || '').trim();
+    if (titleText) {
       const title = document.createElement('h3');
       title.className = 'four-cards-title';
-      title.textContent = titleCell.textContent.trim();
+      title.textContent = titleText;
       item.append(title);
     }
 

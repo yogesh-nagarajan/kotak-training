@@ -9,37 +9,7 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "811 Zero Hero Card",
-              "filter": "811-zero-hero-card"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Card",
-      "id": "hero-card",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Card",
-              "model": "hero-card"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Description",
-      "id": "hero-card-description",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Description",
-              "model": "hero-card-description"
+              "model": "811-zero-hero-card"
             }
           }
         }
@@ -48,51 +18,101 @@
   ],
   "models": [
     {
-      "id": "hero-card",
+      "id": "811-zero-hero-card",
       "fields": [
         {
           "component": "reference",
           "valueType": "string",
-          "name": "image",
-          "label": "Icon Image",
+          "name": "card1_image",
+          "label": "Card 1 – Icon Image",
           "multi": false
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "imageAlt",
-          "label": "Image Alt Text",
+          "name": "card1_imageAlt",
+          "label": "Card 1 – Image Alt Text",
           "value": ""
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "title",
-          "label": "Card Title",
+          "name": "card1_title",
+          "label": "Card 1 – Card Title",
           "value": ""
-        }
-      ]
-    },
-    {
-      "id": "hero-card-description",
-      "fields": [
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "card2_image",
+          "label": "Card 2 – Icon Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card2_imageAlt",
+          "label": "Card 2 – Image Alt Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card2_title",
+          "label": "Card 2 – Card Title",
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "card3_image",
+          "label": "Card 3 – Icon Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card3_imageAlt",
+          "label": "Card 3 – Image Alt Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card3_title",
+          "label": "Card 3 – Card Title",
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "card4_image",
+          "label": "Card 4 – Icon Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card4_imageAlt",
+          "label": "Card 4 – Image Alt Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "card4_title",
+          "label": "Card 4 – Card Title",
+          "value": ""
+        },
         {
           "component": "richtext",
           "valueType": "string",
           "name": "description",
-          "label": "Rich Text",
+          "label": "Description",
           "value": ""
         }
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "811-zero-hero-card",
-      "components": [
-        "hero-card",
-        "hero-card-description"
-      ]
-    }
-  ]
+  "filters": []
 }
