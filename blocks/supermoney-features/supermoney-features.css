@@ -48,7 +48,7 @@
 
 .supermoney-features .supermoney-feature-media img {
   width: 100%;
-  max-width: 520px;
+  max-width: 560px;
   height: auto;
   object-fit: contain;
 }
@@ -87,7 +87,7 @@
 
   .supermoney-features .supermoney-feature {
     flex-direction: row;
-    gap: 40px;
+    gap: 64px;
     align-items: center;
   }
 
@@ -95,7 +95,11 @@
     flex-direction: row-reverse;
   }
 
-  .supermoney-features .supermoney-feature-media,
+  /* Image side is larger than the text side (matches live ~560 vs ~360). */
+  .supermoney-features .supermoney-feature-media {
+    flex: 1.4;
+  }
+
   .supermoney-features .supermoney-feature-body {
     flex: 1;
   }
