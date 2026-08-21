@@ -1,0 +1,75 @@
+{
+  "definitions": [
+    {
+      "title": "Hero 811 FD",
+      "id": "hero-811-fd",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Hero 811 FD",
+              "model": "hero-811-fd"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "hero-811-fd",
+      "fields": [
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "content",
+          "label": "Content",
+          "description": "Eyebrow (small paragraph), Heading (H1), description paragraph, and an optional secondary line with a link (e.g. Having 811 Account? Apply now)",
+          "value": ""
+        },
+        {
+          "component": "aem-content",
+          "name": "primaryLink",
+          "label": "Primary Button Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "primaryLinkText",
+          "label": "Primary Button Text",
+          "value": "Get 811 Savings A/c"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "leftImage",
+          "label": "Left Card Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "leftImageAlt",
+          "label": "Left Card Image Alt",
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "rightImage",
+          "label": "Right Card Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "rightImageAlt",
+          "label": "Right Card Image Alt",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
