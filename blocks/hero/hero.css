@@ -103,3 +103,41 @@
     line-height: 1.2;
   }
 }
+
+/* ---------- Overlay variant: white text over a full-bleed photo ----------
+   The background image already carries the scene; text is rendered white and
+   anchored to the top-left, matching the "811 Savings Account" design. */
+.hero.overlay .hero-content {
+  padding: 60px 20px 200px;
+}
+
+.hero.overlay .hero-content h1,
+.hero.overlay .hero-content h1 + p,
+.hero.overlay .hero-content h1 + div {
+  color: #fff;
+}
+
+.hero.overlay .hero-content h1 {
+  max-width: 12ch;
+}
+
+.hero.overlay .hero-content h1 + p,
+.hero.overlay .hero-content h1 + div {
+  font-weight: 400;
+  max-width: 24ch;
+}
+
+@media (width >= 900px) {
+  .hero.overlay .hero-content {
+    padding: 120px 32px 200px;
+  }
+
+  .hero.overlay .hero-content h1 {
+    max-width: none;
+  }
+
+  .hero.overlay .hero-content h1 + p,
+  .hero.overlay .hero-content h1 + div {
+    max-width: 44ch;
+  }
+}
