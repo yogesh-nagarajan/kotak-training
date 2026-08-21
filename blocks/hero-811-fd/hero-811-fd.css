@@ -1,0 +1,117 @@
+.hero-811-fd {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 48px 24px;
+  text-align: center;
+  background: linear-gradient(180deg, #f4f5f7 0%, #eceef1 100%);
+  overflow: hidden;
+}
+
+.hero-811-fd .hero-811-fd-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.hero-811-fd .hero-811-fd-eyebrow {
+  margin: 0 0 16px;
+  color: #e6002b;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.hero-811-fd .hero-811-fd-heading {
+  margin: 0 0 20px;
+  color: #14181f;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.hero-811-fd .hero-811-fd-description {
+  margin: 0 0 28px;
+  color: #4a4f57;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.hero-811-fd .hero-811-fd-description p {
+  margin: 0;
+}
+
+.hero-811-fd .hero-811-fd-cta.button {
+  display: inline-block;
+  margin: 0 0 16px;
+  padding: 14px 32px;
+  border-radius: 8px;
+  background: #4a56e2;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hero-811-fd .hero-811-fd-cta.button:hover {
+  background: #3a45c4;
+}
+
+.hero-811-fd .hero-811-fd-secondary {
+  margin: 0;
+  color: #14181f;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.hero-811-fd .hero-811-fd-secondary-link {
+  color: #4a56e2;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* floating card images are hidden on mobile */
+.hero-811-fd .hero-811-fd-media {
+  display: none;
+}
+
+.hero-811-fd .hero-811-fd-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (width >= 900px) {
+  .hero-811-fd {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 64px 40px;
+  }
+
+  .hero-811-fd .hero-811-fd-media {
+    display: block;
+    flex: 0 0 26%;
+    max-width: 420px;
+  }
+
+  .hero-811-fd .hero-811-fd-content {
+    flex: 1 1 auto;
+  }
+
+  .hero-811-fd .hero-811-fd-heading {
+    font-size: 56px;
+  }
+}
+
+@media (width >= 1200px) {
+  .hero-811-fd .hero-811-fd-heading {
+    font-size: 64px;
+  }
+}
