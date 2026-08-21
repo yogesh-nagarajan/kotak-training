@@ -83,6 +83,12 @@
     ]
   },
   {
+    "id": "feature-split",
+    "components": [
+      "feature-split-panel"
+    ]
+  },
+  {
     "id": "hero-carousel",
     "components": [
       "hero-slide"
