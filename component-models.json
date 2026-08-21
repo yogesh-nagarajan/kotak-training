@@ -1081,6 +1081,32 @@
     ]
   },
   {
+    "id": "savings-hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Background Image Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text (heading, subtext, CTA link)",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "tab",
     "fields": [
       {
