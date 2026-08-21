@@ -9,7 +9,7 @@
   --mch-eyebrow: #9a9a9a;
   --mch-heading-bright: #f2f2f2;
   --mch-heading-dim: #9d9d9d;
-  --mch-card-bg: #f6f6f4;
+  --mch-card-bg: #fff;
   --mch-card-title: #16161d;
   --mch-card-desc: #3f3f46;
 
@@ -217,7 +217,11 @@
   background: var(--mch-card-bg);
   border-radius: 20px;
   padding: 28px 24px;
-  box-shadow: 0 20px 45px rgb(0 0 0 / 12%);
+
+  /* layered shadow so white cards read as lifted against the white section */
+  box-shadow:
+    0 2px 6px rgb(0 0 0 / 6%),
+    0 18px 40px rgb(0 0 0 / 14%);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
