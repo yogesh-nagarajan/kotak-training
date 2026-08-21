@@ -11,8 +11,10 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * Rows are classified by content (never by a fixed index): the row carrying an
  * image is the background, the remaining row(s) hold the text.
  *
- * The block ships no images — the background is authored in AEM. This is the
- * first paint / LCP element, so it is loaded eagerly at high priority.
+ * The block ships no images — the background is authored in AEM. The image is
+ * only eager/high-priority when this block is in the first section (i.e. it is
+ * the page's LCP element); when it appears further down the page it is lazily
+ * loaded so it does not compete with the real above-the-fold LCP image.
  *
  * @param {Element} block The savings-hero block element
  */
@@ -22,7 +24,12 @@ export default function decorate(block) {
   const imageRow = rows.find((row) => row.querySelector('picture, img'));
   const contentRows = rows.filter((row) => row !== imageRow);
 
-  // background image, served responsively and prioritized as the LCP element
+  // Is this block in the first section? Only then is its image above the fold
+  // and worth prioritizing. Otherwise it is below the fold -> lazy load.
+  const section = block.closest('.section');
+  const isFirstSection = section && !section.previousElementSibling;
+
+  // background image, served responsively
   if (imageRow) {
     const media = document.createElement('div');
     media.className = 'savings-hero-image';
@@ -32,15 +39,19 @@ export default function decorate(block) {
       const picture = createOptimizedPicture(
         img.getAttribute('src') || img.src,
         alt,
-        true,
+        isFirstSection,
         [
           { media: '(min-width: 900px)', width: '1600' },
           { width: '750' },
         ],
       );
       const optimized = picture.querySelector('img');
-      optimized.setAttribute('fetchpriority', 'high');
-      optimized.setAttribute('loading', 'eager');
+      if (isFirstSection) {
+        optimized.setAttribute('fetchpriority', 'high');
+        optimized.setAttribute('loading', 'eager');
+      } else {
+        optimized.setAttribute('loading', 'lazy');
+      }
       moveInstrumentation(img, optimized);
       media.append(picture);
     }

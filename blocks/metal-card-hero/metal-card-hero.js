@@ -103,6 +103,11 @@ function buildCard(row) {
 export default function decorate(block) {
   const rows = [...block.children];
 
+  // is this block in the first section? Only then is the banner above the fold
+  // (the page's LCP element) and worth prioritizing.
+  const section = block.closest('.section');
+  const isFirstSection = section && !section.previousElementSibling;
+
   // classify rows by content, not position
   const cardRows = [];
   const imageRows = [];
@@ -155,9 +160,10 @@ export default function decorate(block) {
   }
   hero.append(content);
 
-  // fanned-cards banner image (first hero image row). This is the LCP element,
-  // so it is loaded eagerly, marked high priority, and served at responsive
-  // widths (mobile downloads a small image, desktop a large one).
+  // fanned-cards banner image (first hero image row). When this block is the
+  // first section it is the LCP element -> load it eagerly at high priority;
+  // otherwise lazy-load it. Served at responsive widths (mobile downloads a
+  // small image, desktop a large one).
   const heroImg = imageRows[0]?.querySelector('img');
   if (heroImg) {
     const media = document.createElement('div');
@@ -166,15 +172,19 @@ export default function decorate(block) {
     const picture = createOptimizedPicture(
       heroImg.getAttribute('src') || heroImg.src,
       alt,
-      true,
+      isFirstSection,
       [
         { media: '(min-width: 900px)', width: '1600' },
         { width: '750' },
       ],
     );
     const img = picture.querySelector('img');
-    img.setAttribute('fetchpriority', 'high');
-    img.setAttribute('loading', 'eager');
+    if (isFirstSection) {
+      img.setAttribute('fetchpriority', 'high');
+      img.setAttribute('loading', 'eager');
+    } else {
+      img.setAttribute('loading', 'lazy');
+    }
     moveInstrumentation(heroImg, img);
     media.append(picture);
     hero.append(media);
