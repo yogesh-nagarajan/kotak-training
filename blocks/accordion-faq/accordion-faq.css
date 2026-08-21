@@ -1,7 +1,7 @@
 /* accordion-faq — styled to match the live Kotak811 "Ask 811" FAQ section */
 
 .accordion-faq {
-  max-width: 900px;
+  max-width: 560px;
   margin: 0 auto;
   padding: 40px 16px;
 }
@@ -56,56 +56,29 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 1.4;
-  transition: color 0.2s;
-}
-
-.accordion-faq details[open] summary {
-  color: var(--brand-pink);
-}
-
-.accordion-faq details summary:focus-visible,
-.accordion-faq details summary:hover {
-  color: var(--brand-pink);
 }
 
 .accordion-faq details summary::-webkit-details-marker {
   display: none;
 }
 
-/* circular +/- toggle on the right */
-.accordion-faq details summary::before {
-  content: '';
+/* "+" (closed) / "−" (open) glyph on the right — no background, no color
+   change on the text. "+" is red, "−" is grey (matching live). */
+.accordion-faq details summary::after {
+  content: '+';
   position: absolute;
   top: 50%;
   right: 18px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background-color: #f1f1f3;
   transform: translateY(-50%);
-  transition: background-color 0.2s;
-}
-
-.accordion-faq details[open] summary::before {
-  background-color: var(--brand-pink);
-}
-
-.accordion-faq details summary::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 27px;
-  width: 8px;
-  height: 8px;
-  border: 2px solid currentcolor;
-  border-width: 0 2px 2px 0;
-  transform: translateY(-70%) rotate(45deg);
-  transition: transform 0.2s, border-color 0.2s;
+  color: var(--brand-pink);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .accordion-faq details[open] summary::after {
-  border-color: #fff;
-  transform: translateY(-30%) rotate(-135deg);
+  content: '\2212'; /* minus sign */
+  color: #999;
 }
 
 .accordion-faq details .accordion-faq-item-body {
