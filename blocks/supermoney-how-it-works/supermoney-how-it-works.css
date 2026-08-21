@@ -4,7 +4,7 @@
 .supermoney-how-it-works {
   max-width: 1120px;
   margin: 40px auto;
-  padding: 0 16px;
+  padding: 0;
 }
 
 /* Rounded container; image bleeds to its edges so overflow is clipped */
@@ -59,7 +59,7 @@
 @media (width >= 900px) {
   .supermoney-how-it-works {
     margin: 50px auto;
-    padding: 0 80px;
+    padding: 0;
   }
 
   .supermoney-how-it-works .supermoney-how-it-works-inner {

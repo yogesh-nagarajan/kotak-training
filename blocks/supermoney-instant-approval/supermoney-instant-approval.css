@@ -4,7 +4,7 @@
 .supermoney-instant-approval {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 40px 16px;
+  padding: 40px 0;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -47,7 +47,7 @@
     flex-direction: row;
     align-items: center;
     gap: 40px;
-    padding: 56px 80px;
+    padding: 56px 0;
   }
 
   .supermoney-instant-approval .supermoney-instant-approval-body,

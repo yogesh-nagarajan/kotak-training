@@ -4,7 +4,7 @@
 .supermoney-scan-pay {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 40px 16px;
+  padding: 40px 0;
   color: var(--text-color);
   display: flex;
   flex-direction: column;
@@ -52,7 +52,7 @@
     flex-direction: row;
     align-items: center;
     gap: 40px;
-    padding: 56px 80px;
+    padding: 56px 0;
     text-align: left;
   }
 

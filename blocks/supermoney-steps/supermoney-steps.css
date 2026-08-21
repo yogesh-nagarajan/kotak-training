@@ -3,7 +3,7 @@
 .supermoney-steps {
   max-width: 1120px;
   margin: 40px auto;
-  padding: 0 16px;
+  padding: 0;
 }
 
 /* Grey rounded container that holds the heading + steps */
@@ -67,7 +67,7 @@
 @media (width >= 900px) {
   .supermoney-steps {
     margin: 50px auto;
-    padding: 0 80px;
+    padding: 0;
   }
 
   .supermoney-steps .supermoney-steps-inner {
