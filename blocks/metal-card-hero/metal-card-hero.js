@@ -138,12 +138,20 @@ export default function decorate(block) {
   const eyebrow = content.querySelector('p');
   if (eyebrow) eyebrow.classList.add('metal-card-hero-eyebrow');
 
-  // style the CTA link as the sweeping-border button
+  // style the CTA link as the sweeping-border button. The moving highlight is
+  // a separate band element animated with `transform` (GPU-composited, so it
+  // does not repaint every frame — cheaper on mobile than animating
+  // background-position). A masked wrapper clips the band to the 1px border.
   const cta = content.querySelector('a');
   if (cta) {
     cta.classList.add('button', 'metal-card-hero-cta');
     const wrapper = cta.closest('p');
     if (wrapper) wrapper.classList.add('button-container');
+    const sweep = document.createElement('span');
+    sweep.className = 'metal-card-hero-cta-sweep';
+    sweep.setAttribute('aria-hidden', 'true');
+    sweep.append(document.createElement('i'));
+    cta.append(sweep);
   }
   hero.append(content);
 

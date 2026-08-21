@@ -141,28 +141,19 @@
   background: rgb(255 255 255 / 6%);
 }
 
-/* the moving highlight: a single soft bright band that sweeps back and forth
-   along the border — left to right, then right to left, looping. The gradient
-   is sized to twice the button width with one centred band, so as the position
-   animates between the two ends the band always stays visible (never disappears
-   at an edge). `alternate` produces the continuous ping-pong motion. Drawn as a
-   gradient border via a mask so only the 1px border edge is painted. */
-.metal-card-hero .metal-card-hero-content a.metal-card-hero-cta::before {
-  content: "";
+/* the moving highlight is a bright band that sweeps back and forth along the
+   border — left to right, then right to left, looping. It is animated with
+   `transform` (GPU-composited: no per-frame repaint, so it is cheap on mobile).
+   The `.sweep` wrapper is masked to the 1px border ring and clips the band. */
+.metal-card-hero .metal-card-hero-content a.metal-card-hero-cta .metal-card-hero-cta-sweep {
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgb(255 255 255 / 90%) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  background-repeat: no-repeat;
+  overflow: hidden;
+  pointer-events: none;
 
-  /* mask to only paint the 1px border ring (border-image style trick) */
+  /* mask to only reveal the 1px border ring (border-image style trick) */
   /* stylelint-disable property-no-vendor-prefix -- WebKit/Safari need the -webkit-mask variants */
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
@@ -173,17 +164,31 @@
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
+}
+
+/* the band itself: a soft white gradient occupying half the width, translated
+   back and forth so it always stays visible (never disappears at an edge). */
+.metal-card-hero .metal-card-hero-content a.metal-card-hero-cta .metal-card-hero-cta-sweep i {
+  position: absolute;
+  inset: 0;
+  width: 55%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 90%) 50%,
+    transparent 100%
+  );
+  will-change: transform;
   animation: mch-border-sweep 2s ease-in-out infinite alternate;
-  pointer-events: none;
 }
 
 @keyframes mch-border-sweep {
   from {
-    background-position: 0% 0;
+    transform: translateX(0);
   }
 
   to {
-    background-position: 100% 0;
+    transform: translateX(82%);
   }
 }
 
@@ -243,11 +248,11 @@
   line-height: 1.5;
 }
 
-/* reduced motion: stop the border sweep */
+/* reduced motion: stop the border sweep, leaving the band centred */
 @media (prefers-reduced-motion: reduce) {
-  .metal-card-hero .metal-card-hero-content a.metal-card-hero-cta::before {
+  .metal-card-hero .metal-card-hero-content a.metal-card-hero-cta .metal-card-hero-cta-sweep i {
     animation: none;
-    background-position: 50% 0;
+    transform: translateX(41%);
   }
 }
 
