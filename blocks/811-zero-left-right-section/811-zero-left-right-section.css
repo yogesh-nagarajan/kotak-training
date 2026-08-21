@@ -97,13 +97,23 @@
   }
 }
 
-/* ---- Mobile reverse: image below the content ---- */
+/* ---- Mobile stacking order ---- */
 @media (width < 900px) {
-  [class~="zero-left-right-section-reverse"] .zero-left-right-section-image {
+  /* default (Reverse OFF): content on top, image below */
+  [class~="811-zero-left-right-section"] .zero-left-right-section-content {
+    order: 1;
+  }
+
+  [class~="811-zero-left-right-section"] .zero-left-right-section-image {
     order: 2;
   }
 
-  [class~="zero-left-right-section-reverse"] .zero-left-right-section-content {
+  /* Reverse ON: image on top, content below */
+  [class~="zero-left-right-section-reverse"] .zero-left-right-section-image {
     order: 1;
+  }
+
+  [class~="zero-left-right-section-reverse"] .zero-left-right-section-content {
+    order: 2;
   }
 }
