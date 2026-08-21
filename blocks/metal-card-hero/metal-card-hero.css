@@ -197,9 +197,10 @@
   position: relative;
   z-index: 3;
 
-  /* pull the cards up so they overlap the bottom of the banner */
+  /* pull the cards up so they overlap the bottom of the banner; the larger
+     bottom padding leaves more white space below the cards */
   margin-top: -90px;
-  padding: 0 20px 40px;
+  padding: 0 20px 88px;
 }
 
 .metal-card-hero .metal-card-hero-track {
@@ -219,7 +220,12 @@
   box-shadow: 0 20px 45px rgb(0 0 0 / 12%);
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 14px;
+
+  /* title and description share the same left starting edge, regardless of any
+     inherited text-align from the section */
+  text-align: left;
 }
 
 .metal-card-hero .metal-card-hero-card-icon {
