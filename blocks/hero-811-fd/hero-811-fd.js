@@ -8,9 +8,8 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * secondary link stacked in the middle, with a card image floating on each side
  * (desktop). On mobile the side images are hidden and the content stays centred.
  *
- * Block structure (matches the model's fields, in order):
- *   Row 1: Content (richtext) - eyebrow (p), heading (h1), description (p),
- *          optional secondary line (p containing an <a>)
+ * Block structure (element grouping collapses the text fields into one cell):
+ *   Row 1: Text group - eyebrow, heading, description, secondary line (in order)
  *   Row 2: Primary button link (aem-content) + primary button text (text)
  *   Row 3: Left card image (image + alt)
  *   Row 4: Right card image (image + alt)
@@ -24,7 +23,7 @@ export default function decorate(block) {
   const cellImg = (row) => (row ? row.querySelector('img') : null);
   const cellText = (row) => (row ? row.textContent.trim() : '');
 
-  const contentRow = rows[0];
+  const textRow = rows[0];
   const primaryHref = cellLink(rows[1]);
   const primaryText = rows[1] ? cellText(rows[1].lastElementChild) : '';
   const leftImg = cellImg(rows[2]);
@@ -47,30 +46,46 @@ export default function decorate(block) {
     return media;
   };
 
-  // centred content column, built by classifying the richtext nodes
+  // centred content column, built from the grouped text cell. Fields arrive in
+  // model order: eyebrow, heading, description, secondary line.
   const content = document.createElement('div');
   content.className = 'hero-811-fd-content';
 
-  if (contentRow) {
-    const nodes = [...contentRow.querySelectorAll(':scope > div > *, :scope > *')]
-      .filter((el) => !el.matches('div') && el.textContent.trim());
-    let eyebrowDone = false;
+  const textCell = textRow ? textRow.firstElementChild : null;
+  if (textCell) {
+    const nodes = [...textCell.children].filter((el) => el.textContent.trim());
+    let idx = 0;
     nodes.forEach((el) => {
-      if (/^H[1-6]$/.test(el.tagName)) {
-        el.classList.add('hero-811-fd-heading');
-        content.append(el);
-      } else if (el.querySelector('a')) {
+      const hasLink = !!el.querySelector('a');
+      if (hasLink) {
+        // secondary line, e.g. "Having 811 Account? Apply now"
         el.classList.add('hero-811-fd-secondary');
         el.querySelector('a').classList.add('hero-811-fd-secondary-link');
-        content.append(el);
-      } else if (!eyebrowDone) {
-        el.classList.add('hero-811-fd-eyebrow');
-        content.append(el);
-        eyebrowDone = true;
+      } else if (idx === 0) {
+        // eyebrow: promote to a small paragraph
+        const p = document.createElement('p');
+        p.className = 'hero-811-fd-eyebrow';
+        p.textContent = el.textContent.trim();
+        moveInstrumentation(el, p);
+        el.replaceWith(p);
+        idx += 1;
+        content.append(p);
+        return;
+      } else if (idx === 1) {
+        // heading: promote to an H1
+        const h1 = document.createElement('h1');
+        h1.className = 'hero-811-fd-heading';
+        h1.textContent = el.textContent.trim();
+        moveInstrumentation(el, h1);
+        el.replaceWith(h1);
+        idx += 1;
+        content.append(h1);
+        return;
       } else {
         el.classList.add('hero-811-fd-description');
-        content.append(el);
       }
+      idx += 1;
+      content.append(el);
     });
   }
 

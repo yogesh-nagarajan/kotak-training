@@ -21,11 +21,32 @@
       "id": "hero-811-fd",
       "fields": [
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "text_eyebrow",
+          "label": "Eyebrow",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "text_heading",
+          "label": "Heading",
+          "value": ""
+        },
+        {
           "component": "richtext",
           "valueType": "string",
-          "name": "content",
-          "label": "Content",
-          "description": "Eyebrow (small paragraph), Heading (H1), description paragraph, and an optional secondary line with a link (e.g. Having 811 Account? Apply now)",
+          "name": "text_description",
+          "label": "Description",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "text_secondary",
+          "label": "Secondary Line",
+          "description": "Optional line under the button, e.g. Having 811 Account? Apply now (add a link on the last words)",
           "value": ""
         },
         {
