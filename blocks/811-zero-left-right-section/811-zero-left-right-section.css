@@ -97,23 +97,15 @@
   }
 }
 
-/* ---- Mobile stacking order ---- */
+/* ---- Mobile stacking order ----
+   Both variants stack the same on mobile: content on top, image below.
+   (The reverse toggle only swaps left/right on desktop/tablet.) */
 @media (width < 900px) {
-  /* default (Reverse OFF): content on top, image below */
   [class~="811-zero-left-right-section"] .zero-left-right-section-content {
     order: 1;
   }
 
   [class~="811-zero-left-right-section"] .zero-left-right-section-image {
-    order: 2;
-  }
-
-  /* Reverse ON: image on top, content below */
-  [class~="zero-left-right-section-reverse"] .zero-left-right-section-image {
-    order: 1;
-  }
-
-  [class~="zero-left-right-section-reverse"] .zero-left-right-section-content {
     order: 2;
   }
 }
