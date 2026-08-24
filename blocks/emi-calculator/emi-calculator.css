@@ -7,6 +7,11 @@
   --emi-principal-pct: 60;
 
   box-sizing: border-box;
+
+  /* keep the card within a centered content column with side gutters and
+     vertical spacing from adjacent components, independent of section rules */
+  max-width: 1200px;
+  margin: 40px auto;
   padding: 30px;
   background-color: var(--emi-bg);
   color: #fff;
