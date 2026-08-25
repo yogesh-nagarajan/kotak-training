@@ -2,7 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
- * loads and decorates the visa-cardcontent block
+ * loads and decorates the visa-card-content block
  *
  * Authoring model (one field per row, positional):
  *   Row 1: pretitle (p)
@@ -21,13 +21,13 @@ export default function decorate(block) {
     .map((row) => row.firstElementChild);
 
   const content = document.createElement('div');
-  content.className = 'visa-cardcontent-content';
+  content.className = 'visa-card-content-content';
 
   // pretitle
   const pretitle = (pretitleCell?.textContent || '').trim();
   if (pretitle) {
     const el = document.createElement('p');
-    el.className = 'visa-cardcontent-pretitle';
+    el.className = 'visa-card-content-pretitle';
     el.textContent = pretitle;
     if (rows[0]) moveInstrumentation(rows[0], el);
     content.append(el);
@@ -36,7 +36,7 @@ export default function decorate(block) {
   // description (richtext)
   if (descriptionCell && descriptionCell.textContent.trim()) {
     const desc = document.createElement('div');
-    desc.className = 'visa-cardcontent-description';
+    desc.className = 'visa-card-content-description';
     if (rows[1]) moveInstrumentation(rows[1], desc);
     [...descriptionCell.childNodes].forEach((node) => desc.append(node));
     content.append(desc);
@@ -44,13 +44,13 @@ export default function decorate(block) {
 
   // image
   const media = document.createElement('div');
-  media.className = 'visa-cardcontent-media';
+  media.className = 'visa-card-content-media';
   const img = imageCell?.querySelector('img');
   if (img) {
     const alt = (imageAltCell?.textContent || img.getAttribute('alt') || '').trim();
     const picture = createOptimizedPicture(img.src, alt, false, [{ width: '750' }]);
     const pictureImg = picture.querySelector('img');
-    pictureImg.className = 'visa-cardcontent-image';
+    pictureImg.className = 'visa-card-content-image';
     moveInstrumentation(img, pictureImg);
     media.append(picture);
   }

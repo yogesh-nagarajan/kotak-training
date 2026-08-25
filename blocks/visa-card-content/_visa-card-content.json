@@ -2,14 +2,14 @@
   "definitions": [
     {
       "title": "Visa Card Content",
-      "id": "visa-cardcontent",
+      "id": "visa-card-content",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Visa Card Content",
-              "model": "visa-cardcontent"
+              "model": "visa-card-content"
             }
           }
         }
@@ -18,7 +18,7 @@
   ],
   "models": [
     {
-      "id": "visa-cardcontent",
+      "id": "visa-card-content",
       "fields": [
         {
           "component": "text",
