@@ -1,0 +1,76 @@
+.visa-cardcontent {
+  --visa-cardcontent-pretitle-color: #e6007e;
+  --visa-cardcontent-text-color: #4a4a5a;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+  padding: 40px 24px;
+}
+
+.visa-cardcontent-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.visa-cardcontent-pretitle {
+  margin: 0;
+  color: var(--visa-cardcontent-pretitle-color);
+  font-weight: 700;
+  font-size: var(--body-font-size-xs);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.visa-cardcontent-description {
+  margin: 16px 0 0;
+  color: var(--visa-cardcontent-text-color);
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+}
+
+.visa-cardcontent-description p {
+  margin: 0 0 12px;
+}
+
+.visa-cardcontent-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visa-cardcontent-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 640px;
+}
+
+@media (width >= 900px) {
+  .visa-cardcontent {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+    padding: 64px 32px;
+  }
+
+  .visa-cardcontent-content {
+    flex: 1 1 50%;
+  }
+
+  .visa-cardcontent-media {
+    flex: 1 1 50%;
+  }
+
+  /* image-left: media before content; image-right: media after content */
+  .visa-cardcontent.image-left .visa-cardcontent-media {
+    order: -1;
+  }
+
+  .visa-cardcontent.image-right .visa-cardcontent-media {
+    order: 1;
+  }
+}
