@@ -1,6 +1,6 @@
-.visa-cardcontent {
-  --visa-cardcontent-pretitle-color: #e6007e;
-  --visa-cardcontent-text-color: #4a4a5a;
+.visa-card-content {
+  --visa-card-content-pretitle-color: #e6007e;
+  --visa-card-content-text-color: #4a4a5a;
 
   display: flex;
   flex-direction: column;
@@ -9,40 +9,40 @@
   padding: 40px 24px;
 }
 
-.visa-cardcontent-content {
+.visa-card-content-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
 }
 
-.visa-cardcontent-pretitle {
+.visa-card-content-pretitle {
   margin: 0;
-  color: var(--visa-cardcontent-pretitle-color);
+  color: var(--visa-card-content-pretitle-color);
   font-weight: 700;
   font-size: var(--body-font-size-xs);
   letter-spacing: 0.25em;
   text-transform: uppercase;
 }
 
-.visa-cardcontent-description {
+.visa-card-content-description {
   margin: 16px 0 0;
-  color: var(--visa-cardcontent-text-color);
+  color: var(--visa-card-content-text-color);
   font-size: var(--body-font-size-m);
   line-height: 1.5;
 }
 
-.visa-cardcontent-description p {
+.visa-card-content-description p {
   margin: 0 0 12px;
 }
 
-.visa-cardcontent-media {
+.visa-card-content-media {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.visa-cardcontent-image {
+.visa-card-content-image {
   display: block;
   width: 100%;
   height: auto;
@@ -50,27 +50,27 @@
 }
 
 @media (width >= 900px) {
-  .visa-cardcontent {
+  .visa-card-content {
     flex-direction: row;
     align-items: center;
     gap: 48px;
     padding: 64px 32px;
   }
 
-  .visa-cardcontent-content {
+  .visa-card-content-content {
     flex: 1 1 50%;
   }
 
-  .visa-cardcontent-media {
+  .visa-card-content-media {
     flex: 1 1 50%;
   }
 
   /* image-left: media before content; image-right: media after content */
-  .visa-cardcontent.image-left .visa-cardcontent-media {
+  .visa-card-content.image-left .visa-card-content-media {
     order: -1;
   }
 
-  .visa-cardcontent.image-right .visa-cardcontent-media {
+  .visa-card-content.image-right .visa-card-content-media {
     order: 1;
   }
 }
