@@ -1,0 +1,112 @@
+/* hero-811-business: eyebrow + heading + description beside a hero image.
+   Mobile-first: stacked and centred; desktop: text left, image right.
+   Self-constrains its width (this project has no global section wrapper). */
+
+.hero-811-business {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-block: 40px;
+  padding-inline: 24px;
+  text-align: center;
+}
+
+.hero-811-business .hero-811-business-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero-811-business .hero-811-business-text > * {
+  margin: 0;
+}
+
+.hero-811-business .hero-811-business-eyebrow {
+  font-family: manrope, var(--body-font-family), sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e6017e;
+}
+
+.hero-811-business .hero-811-business-heading {
+  font-family: manrope, var(--body-font-family), sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #16171a;
+}
+
+.hero-811-business .hero-811-business-description {
+  font-family: manrope, var(--body-font-family), sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #5f6470;
+}
+
+.hero-811-business .hero-811-business-media {
+  line-height: 0;
+  width: 100%;
+}
+
+.hero-811-business .hero-811-business-media picture,
+.hero-811-business .hero-811-business-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* tablet */
+@media (width >= 600px) {
+  .hero-811-business .hero-811-business-heading {
+    font-size: 40px;
+  }
+
+  .hero-811-business .hero-811-business-description {
+    font-size: 16px;
+  }
+}
+
+/* desktop: two columns, text left / image right, top-aligned */
+@media (width >= 900px) {
+  .hero-811-business {
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    text-align: left;
+
+    /* reserve bottom space so overlapping cards land in intentional whitespace */
+    padding-bottom: 120px;
+  }
+
+  .hero-811-business .hero-811-business-text {
+    flex: 0 1 42%;
+    gap: 20px;
+  }
+
+  .hero-811-business .hero-811-business-media {
+    flex: 0 1 54%;
+    margin-left: auto;
+  }
+
+  .hero-811-business .hero-811-business-heading {
+    font-size: 56px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-811-business .hero-811-business-description {
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 34ch;
+  }
+}

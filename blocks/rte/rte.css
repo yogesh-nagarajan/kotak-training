@@ -5,6 +5,18 @@
   --rte-toggle-color: #e6007e;
 
   box-sizing: border-box;
+
+  /* keep the text in a centered content column with left/right gutters and
+     vertical spacing between components, independent of global section rules */
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+@media (width >= 900px) {
+  .rte {
+    padding: 0 32px;
+  }
 }
 
 .rte .rte-title {

@@ -1,0 +1,85 @@
+/* usp-cards-811-business: responsive grid of feature cards (icon + text).
+   4 per row on desktop, 2 on tablet, 1 on mobile. Self-constrains its width
+   (this project has no global section wrapper). Sits above the hero when the
+   section uses the "overlap-cards" style. */
+
+.usp-cards-811-business {
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-block: 40px;
+  padding-inline: 24px;
+}
+
+.usp-cards-811-business ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.usp-cards-811-business li {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  padding: 32px 28px;
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(22 23 26 / 6%);
+}
+
+.usp-cards-811-business .usp-cards-811-business-icon {
+  line-height: 0;
+}
+
+.usp-cards-811-business .usp-cards-811-business-icon picture,
+.usp-cards-811-business .usp-cards-811-business-icon img {
+  display: block;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.usp-cards-811-business .usp-cards-811-business-body {
+  font-family: manrope, var(--body-font-family), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #16171a;
+}
+
+.usp-cards-811-business .usp-cards-811-business-body > * {
+  margin: 0;
+}
+
+/* tablet: 2 per row */
+@media (width >= 600px) {
+  .usp-cards-811-business ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* desktop: 4 per row, layered above the hero */
+@media (width >= 900px) {
+  .usp-cards-811-business {
+    position: relative;
+    z-index: 1;
+  }
+
+  .usp-cards-811-business ul {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+}
+
+/* overlap: only when the section opts in via the "overlap-cards" style.
+   Pulls the cards up over the hero's reserved bottom space on desktop. */
+@media (width >= 900px) {
+  .section.overlap-cards .usp-cards-811-business {
+    margin-top: -100px;
+  }
+}
