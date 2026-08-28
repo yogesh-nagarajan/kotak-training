@@ -898,31 +898,31 @@
       },
       {
         "component": "aem-content",
-        "name": "primaryCta",
+        "name": "cta_link",
         "label": "CTA Link"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "primaryCtaText",
+        "name": "cta_linkText",
         "label": "CTA Text"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "benefit1",
+        "name": "benefit_1",
         "label": "Benefit 1"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "benefit2",
+        "name": "benefit_2",
         "label": "Benefit 2"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "benefit3",
+        "name": "benefit_3",
         "label": "Benefit 3"
       }
     ]
