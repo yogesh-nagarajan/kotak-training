@@ -945,28 +945,32 @@
     ]
   },
   {
+    "id": "newproducttab",
+    "fields": []
+  },
+  {
     "id": "newproducttab-item",
     "fields": [
       {
         "component": "text",
+        "valueType": "string",
         "name": "tabLabel",
         "label": "Tab Label",
-        "valueType": "string",
         "value": ""
       },
       {
         "component": "richtext",
         "name": "content",
+        "value": "",
         "label": "Content",
-        "valueType": "string",
-        "value": ""
+        "valueType": "string"
       },
       {
         "component": "richtext",
         "name": "actions",
+        "value": "",
         "label": "Actions",
-        "valueType": "string",
-        "value": ""
+        "valueType": "string"
       },
       {
         "component": "reference",
