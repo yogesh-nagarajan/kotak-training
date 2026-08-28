@@ -77,7 +77,9 @@
         "nri-banner",
         "hero-811-business",
         "usp-cards-811-business",
-        "hero-811-fd"
+        "hero-811-fd",
+        "carouselcard",
+        "carouselcard-item"
       ]
     }
   ]
