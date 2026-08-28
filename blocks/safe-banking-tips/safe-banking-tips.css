@@ -1,0 +1,211 @@
+/* =========================================
+   SAFE BANKING TIPS
+   ========================================= */
+
+.safe-banking-tips {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* =========================================
+   INTRO / HEADING
+   ========================================= */
+
+.safe-banking-tips .safe-banking-intro {
+  display: block;
+  margin: 0 0 34px;
+  padding: 0;
+}
+
+.safe-banking-tips .safe-banking-intro > div {
+  display: block;
+}
+
+.safe-banking-tips .safe-banking-intro p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: #111;
+}
+
+.safe-banking-tips .safe-banking-intro h2 {
+  max-width: 430px;
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -1.5px;
+  color: #111;
+}
+
+/* =========================================
+   CARD ROWS
+   ========================================= */
+
+.safe-banking-tips > .safe-banking-card {
+  display: inline-flex;
+  vertical-align: top;
+  width: 272px;
+  min-width: 272px;
+  height: 343px;
+  box-sizing: border-box;
+  margin: 0 6px 0 0;
+  padding: 34px 26px 27px;
+  border-radius: 27px;
+  position: relative;
+  overflow: hidden;
+  flex-direction: column;
+  color: #fff;
+  background:
+    radial-gradient(
+      circle at 88% 5%,
+      rgb(255 130 130 / 85%) 0,
+      rgb(255 70 70 / 40%) 22%,
+      transparent 50%
+    ),
+    linear-gradient(
+      145deg,
+      #650000 0%,
+      #b50000 45%,
+      #4d0000 100%
+    );
+}
+
+/* =========================================
+   CARD ICON
+   ========================================= */
+
+.safe-banking-tips .safe-banking-icon {
+  width: 65px;
+  height: 45px;
+  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.safe-banking-tips .safe-banking-icon p {
+  margin: 0;
+  color: #fff;
+  font-size: 48px;
+  line-height: 1;
+}
+
+/* =========================================
+   CARD TITLE
+   ========================================= */
+
+.safe-banking-tips .safe-banking-title {
+  margin: 0 0 10px;
+  color: #fff;
+}
+
+.safe-banking-tips .safe-banking-title p {
+  margin: 0;
+  color: #fff;
+  font-size: 17px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+/* =========================================
+   CARD DESCRIPTION
+   ========================================= */
+
+.safe-banking-tips .safe-banking-description {
+  margin: 0;
+  color: #fff;
+}
+
+.safe-banking-tips .safe-banking-description p {
+  margin: 0;
+  color: rgb(255 255 255 / 88%);
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+/* =========================================
+   BUTTON
+   ========================================= */
+
+.safe-banking-tips .safe-banking-button {
+  margin-top: auto;
+}
+
+.safe-banking-tips .safe-banking-button p {
+  margin: 0;
+}
+
+.safe-banking-tips .safe-banking-button a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 37px;
+  padding: 0 15px;
+  border-radius: 22px;
+  background: #fff;
+  color: #111;
+  font-size: 12px;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.safe-banking-tips .safe-banking-button a:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (width <= 768px) {
+  .safe-banking-tips {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .safe-banking-tips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .safe-banking-tips .safe-banking-intro {
+    white-space: normal;
+    margin-bottom: 25px;
+  }
+
+  .safe-banking-tips .safe-banking-intro h2 {
+    font-size: 32px;
+  }
+
+  .safe-banking-tips > .safe-banking-card {
+    width: 270px;
+    min-width: 270px;
+    height: 340px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (width <= 480px) {
+  .safe-banking-tips .safe-banking-intro h2 {
+    font-size: 30px;
+  }
+
+  .safe-banking-tips > .safe-banking-card {
+    width: 260px;
+    min-width: 260px;
+  }
+}
