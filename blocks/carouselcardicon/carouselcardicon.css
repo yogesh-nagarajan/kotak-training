@@ -1,0 +1,210 @@
+.carouselcardicon {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.carouselcardicon-header {
+  max-width: 1200px;
+  margin: 0 auto 34px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.carouselcardicon-label {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.carouselcardicon-title {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -1.2px;
+}
+
+.carouselcardicon-cards {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  padding: 0 0 10px 24px;
+}
+
+.carouselcardicon-card {
+  position: relative;
+  width: 272px;
+  height: 343px;
+  flex: 0 0 272px;
+  box-sizing: border-box;
+  padding: 35px 26px 27px;
+  border-radius: 27px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(255, 150, 150, 0.9) 0%,
+      rgba(255, 70, 70, 0.55) 27%,
+      rgba(190, 0, 0, 0.75) 52%,
+      rgba(70, 0, 0, 1) 100%
+    );
+
+  color: #fff;
+}
+
+.carouselcardicon-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.05),
+      transparent 35%,
+      rgba(0, 0, 0, 0.18)
+    );
+
+  pointer-events: none;
+}
+
+.carouselcardicon-icon {
+  position: relative;
+  width: 62px;
+  height: 42px;
+  margin-bottom: 17px;
+}
+
+.carouselcardicon-icon::before,
+.carouselcardicon-icon::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  width: 31px;
+  height: 24px;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.carouselcardicon-icon::before {
+  left: 1px;
+  transform: rotate(-18deg);
+}
+
+.carouselcardicon-icon::after {
+  right: 1px;
+  transform: rotate(18deg);
+}
+
+.carouselcardicon-icon span:first-child {
+  position: absolute;
+  left: 24px;
+  top: 13px;
+  width: 17px;
+  height: 5px;
+  background: #fff;
+  transform: rotate(-2deg);
+  z-index: 2;
+}
+
+.carouselcardicon-icon span:last-child {
+  display: none;
+}
+
+.carouselcardicon-card-title {
+  position: relative;
+  margin: 0 0 10px;
+  max-width: 220px;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.carouselcardicon-card-description {
+  position: relative;
+  margin: 0;
+  max-width: 220px;
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 400;
+}
+
+.carouselcardicon-button {
+  position: absolute;
+  left: 26px;
+  bottom: 27px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 108px;
+  height: 37px;
+  padding: 0 13px;
+
+  box-sizing: border-box;
+  border-radius: 22px;
+
+  background: #fff;
+  color: #111;
+
+  font-size: 12px;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.carouselcardicon-button:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.carouselcardicon-cards {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carouselcardicon-cards::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .carouselcardicon-cards {
+    padding-left: calc((100vw - 1200px) / 2);
+  }
+}
+
+@media (max-width: 768px) {
+  .carouselcardicon {
+    padding-top: 15px;
+    padding-bottom: 30px;
+  }
+
+  .carouselcardicon-header {
+    margin-bottom: 25px;
+    padding: 0 20px;
+  }
+
+  .carouselcardicon-title {
+    font-size: 32px;
+    line-height: 1.08;
+  }
+
+  .carouselcardicon-cards {
+    gap: 10px;
+    padding-left: 20px;
+  }
+
+  .carouselcardicon-card {
+    width: 272px;
+    height: 343px;
+    flex-basis: 272px;
+  }
+}
