@@ -85,15 +85,10 @@
           "label": "Card Description"
         },
         {
-          "component": "aem-content",
-          "name": "ctaLink",
-          "label": "Button Link"
-        },
-        {
           "component": "text",
           "valueType": "string",
-          "name": "ctaText",
-          "label": "Button Text"
+          "name": "cta",
+          "label": "Button Link & Text"
         }
       ]
     }

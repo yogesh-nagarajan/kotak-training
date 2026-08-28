@@ -58,34 +58,34 @@ export default function decorate(block) {
 
   for (let i = 1; i < rows.length; i += 1) {
     const itemRow = rows[i];
-    if (!itemRow) continue;
+    if (itemRow) {
+      const card = document.createElement('div');
+      card.className = 'carouselcard-item';
 
-    const card = document.createElement('div');
-    card.className = 'carouselcard-item';
+      const cols = [...itemRow.children];
 
-    const cols = [...itemRow.children];
-
-    // Extract Image
-    const picture = cols[0]?.querySelector('picture');
-    if (picture) {
-      const bgWrapper = document.createElement('div');
-      bgWrapper.className = 'card-background';
-      bgWrapper.appendChild(picture);
-      card.appendChild(bgWrapper);
-    }
-
-    // Extract Text Content & Link
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'card-content';
-
-    cols.slice(1).forEach((col) => {
-      while (col.firstChild) {
-        contentDiv.appendChild(col.firstChild);
+      // Extract Image
+      const picture = cols[0]?.querySelector('picture');
+      if (picture) {
+        const bgWrapper = document.createElement('div');
+        bgWrapper.className = 'card-background';
+        bgWrapper.appendChild(picture);
+        card.appendChild(bgWrapper);
       }
-    });
 
-    card.appendChild(contentDiv);
-    track.appendChild(card);
+      // Extract Text Content & Link
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'card-content';
+
+      cols.slice(1).forEach((col) => {
+        while (col.firstChild) {
+          contentDiv.appendChild(col.firstChild);
+        }
+      });
+
+      card.appendChild(contentDiv);
+      track.appendChild(card);
+    }
   }
 
   container.appendChild(track);
