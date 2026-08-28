@@ -1,0 +1,203 @@
+.newproducttab {
+  width: 100%;
+}
+
+.newproducttab-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 4px;
+  background: #f4f4f4;
+  border-radius: 999px;
+  overflow-x: auto;
+}
+
+.newproducttab-tab {
+  flex: 1 0 auto;
+  min-height: 36px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #555;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.newproducttab-tab:hover {
+  color: #000;
+}
+
+.newproducttab-tab.active {
+  background: #000;
+  color: #fff;
+}
+
+.newproducttab-panels {
+  width: 100%;
+}
+
+.newproducttab-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  overflow: hidden;
+}
+
+.newproducttab-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.newproducttab-content h2 {
+  margin: 0;
+  color: #111;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.newproducttab-description {
+  max-width: 520px;
+  margin-top: 14px;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.newproducttab-description p {
+  margin: 0;
+}
+
+.newproducttab-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.newproducttab-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.newproducttab-primary-cta:hover {
+  text-decoration: none;
+}
+
+.newproducttab-secondary-cta {
+  color: #111;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.newproducttab-secondary-cta:hover {
+  text-decoration: underline;
+}
+
+.newproducttab-image {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #d3d3d3;
+  line-height: 0;
+}
+
+.newproducttab-image picture,
+.newproducttab-image img {
+  display: block;
+  width: 100%;
+}
+
+.newproducttab-image img {
+  height: 280px;
+  object-fit: cover;
+}
+
+@media (width >= 600px) {
+  .newproducttab-navigation {
+    margin-bottom: 36px;
+  }
+
+  .newproducttab-tab {
+    min-height: 40px;
+    padding: 10px 22px;
+    font-size: 13px;
+  }
+
+  .newproducttab-panel {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: 40px;
+  }
+
+  .newproducttab-content h2 {
+    font-size: 40px;
+  }
+
+  .newproducttab-image img {
+    height: 300px;
+  }
+}
+
+@media (width >= 900px) {
+  .newproducttab-navigation {
+    gap: 12px;
+  }
+
+  .newproducttab-tab {
+    padding: 11px 26px;
+  }
+
+  .newproducttab-panel {
+    grid-template-columns: minmax(300px, 0.9fr) minmax(500px, 1.4fr);
+    gap: 48px;
+  }
+
+  .newproducttab-content h2 {
+    font-size: 44px;
+  }
+
+  .newproducttab-image img {
+    height: 360px;
+  }
+}
+
+@media (width < 600px) {
+  .newproducttab-navigation {
+    justify-content: flex-start;
+    border-radius: 20px;
+  }
+
+  .newproducttab-tab {
+    flex: 0 0 auto;
+  }
+
+  .newproducttab-actions {
+    flex-wrap: wrap;
+  }
+}
