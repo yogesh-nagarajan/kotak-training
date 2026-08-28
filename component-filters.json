@@ -94,6 +94,12 @@
     ]
   },
   {
+    "id": "newproducttab",
+    "components": [
+      "newproducttab-item"
+    ]
+  },
+  {
     "id": "related-products",
     "components": [
       "related-product"
