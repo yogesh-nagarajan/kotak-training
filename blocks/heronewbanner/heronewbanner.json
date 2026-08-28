@@ -3,7 +3,6 @@
     {
       "title": "Hero New Banner",
       "id": "heronewbanner",
-      "model": "heronewbanner",
       "plugins": {
         "xwalk": {
           "page": {
@@ -13,45 +12,6 @@
               "model": "heronewbanner"
             }
           }
-        },
-        "da": {
-          "name": "heronewbanner",
-          "rows": 8,
-          "columns": 1,
-          "fields": [
-            {
-              "name": "image",
-              "selector": "div:nth-child(1)"
-            },
-            {
-              "name": "title",
-              "selector": "div:nth-child(2)"
-            },
-            {
-              "name": "description",
-              "selector": "div:nth-child(3)"
-            },
-            {
-              "name": "ctaText",
-              "selector": "div:nth-child(4)"
-            },
-            {
-              "name": "ctaLink",
-              "selector": "div:nth-child(5)"
-            },
-            {
-              "name": "benefit1",
-              "selector": "div:nth-child(6)"
-            },
-            {
-              "name": "benefit2",
-              "selector": "div:nth-child(7)"
-            },
-            {
-              "name": "benefit3",
-              "selector": "div:nth-child(8)"
-            }
-          ]
         }
       }
     }
@@ -62,59 +22,65 @@
       "fields": [
         {
           "component": "reference",
-          "name": "image",
-          "label": "Hero Image",
           "valueType": "string",
+          "name": "bg_image",
+          "label": "Background Image",
           "multi": false
         },
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "bg_imageAlt",
+          "label": "Background Image Alt Text"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "bg_imageMobile",
+          "label": "Background Image (Mobile) — optional",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "bg_imageMobileAlt",
+          "label": "Mobile Image Alt Text"
+        },
+        {
           "component": "richtext",
-          "name": "title",
-          "label": "Title",
+          "name": "text",
           "value": "",
+          "label": "Heading & Text",
           "valueType": "string"
         },
         {
-          "component": "text-area",
-          "name": "description",
-          "label": "Description",
-          "value": "",
-          "valueType": "string"
+          "component": "aem-content",
+          "name": "primaryCta",
+          "label": "CTA Link"
         },
         {
-          "component": "text-input",
-          "name": "ctaText",
-          "label": "CTA Text",
-          "value": "",
-          "valueType": "string"
+          "component": "text",
+          "valueType": "string",
+          "name": "primaryCtaText",
+          "label": "CTA Text"
         },
         {
-          "component": "text-input",
-          "name": "ctaLink",
-          "label": "CTA Link",
-          "value": "",
-          "valueType": "string"
-        },
-        {
-          "component": "text-input",
+          "component": "text",
+          "valueType": "string",
           "name": "benefit1",
-          "label": "Benefit 1",
-          "value": "",
-          "valueType": "string"
+          "label": "Benefit 1"
         },
         {
-          "component": "text-input",
+          "component": "text",
+          "valueType": "string",
           "name": "benefit2",
-          "label": "Benefit 2",
-          "value": "",
-          "valueType": "string"
+          "label": "Benefit 2"
         },
         {
-          "component": "text-input",
+          "component": "text",
+          "valueType": "string",
           "name": "benefit3",
-          "label": "Benefit 3",
-          "value": "",
-          "valueType": "string"
+          "label": "Benefit 3"
         }
       ]
     }
