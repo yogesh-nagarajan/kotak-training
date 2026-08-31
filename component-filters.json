@@ -39,6 +39,9 @@
       "hero-811-business",
       "usp-cards-811-business",
       "hero-811-fd",
+      "carouselcard",
+      "carouselcard-item",
+      "heronewbanner",
       "producttab"
     ]
   },
@@ -52,6 +55,12 @@
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carouselcard",
+    "components": [
+      "carouselcard-item"
     ]
   },
   {
