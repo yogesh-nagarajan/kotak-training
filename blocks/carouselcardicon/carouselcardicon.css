@@ -33,6 +33,9 @@
   gap: 10px;
   width: max-content;
   padding: 0 0 10px 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .carouselcardicon-card {
@@ -44,16 +47,14 @@
   padding: 35px 26px 27px;
   border-radius: 27px;
   overflow: hidden;
-
   background:
     radial-gradient(
       circle at 100% 0%,
-      rgba(255, 150, 150, 0.9) 0%,
-      rgba(255, 70, 70, 0.55) 27%,
-      rgba(190, 0, 0, 0.75) 52%,
-      rgba(70, 0, 0, 1) 100%
+      rgb(255 150 150 / 90%) 0%,
+      rgb(255 70 70 / 55%) 27%,
+      rgb(190 0 0 / 75%) 52%,
+      rgb(70 0 0 / 100%) 100%
     );
-
   color: #fff;
 }
 
@@ -61,15 +62,13 @@
   content: '';
   position: absolute;
   inset: 0;
-
   background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.05),
+      rgb(255 255 255 / 5%),
       transparent 35%,
-      rgba(0, 0, 0, 0.18)
+      rgb(0 0 0 / 18%)
     );
-
   pointer-events: none;
 }
 
@@ -139,21 +138,16 @@
   position: absolute;
   left: 26px;
   bottom: 27px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   min-width: 108px;
   height: 37px;
   padding: 0 13px;
-
   box-sizing: border-box;
   border-radius: 22px;
-
   background: #fff;
   color: #111;
-
   font-size: 12px;
   line-height: 1;
   text-decoration: none;
@@ -165,23 +159,17 @@
   transform: translateY(-1px);
 }
 
-.carouselcardicon-cards {
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
 .carouselcardicon-cards::-webkit-scrollbar {
   display: none;
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   .carouselcardicon-cards {
     padding-left: calc((100vw - 1200px) / 2);
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .carouselcardicon {
     padding-top: 15px;
     padding-bottom: 30px;

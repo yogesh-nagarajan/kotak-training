@@ -20,10 +20,9 @@ module.exports = {
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
 
     'xwalk/max-cells': ['error', {
-  '*': 4,
-  carouselcardicon: 14,
-}],
-
-'xwalk/no-orphan-collapsible-fields': 'off',
+      '*': 4,
+      carouselcardicon: 14,
+    }],
+    'xwalk/no-orphan-collapsible-fields': 'off',
   },
 };

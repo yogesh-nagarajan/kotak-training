@@ -87,6 +87,7 @@ export default function decorate(block) {
 
     const icon = document.createElement('div');
     icon.className = 'carouselcardicon-icon';
+
     icon.innerHTML = `
       <span></span>
       <span></span>
