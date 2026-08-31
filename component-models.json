@@ -945,43 +945,6 @@
     ]
   },
   {
-    "id": "newproducttab",
-    "fields": []
-  },
-  {
-    "id": "newproducttab-item",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "tabLabel",
-        "label": "Tab Label",
-        "value": ""
-      },
-      {
-        "component": "richtext",
-        "name": "content",
-        "value": "",
-        "label": "Content",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "actions",
-        "value": "",
-        "label": "Actions",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      }
-    ]
-  },
-  {
     "id": "nri-banner",
     "fields": [
       {
@@ -1024,6 +987,43 @@
         "name": "linkText",
         "label": "Button Text",
         "value": "Apply Now"
+      }
+    ]
+  },
+  {
+    "id": "producttab",
+    "fields": []
+  },
+  {
+    "id": "producttab-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabLabel",
+        "label": "Tab Label",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Content",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "actions",
+        "label": "Actions",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
       }
     ]
   },
