@@ -334,6 +334,109 @@
     ]
   },
   {
+    "id": "carouselcardicon",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Section Label",
+        "valueType": "string",
+        "value": "Safe Banking Tips"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Main Title",
+        "valueType": "string",
+        "value": "Stay informed. Stay scam-free."
+      },
+      {
+        "component": "text",
+        "name": "card1Title",
+        "label": "Card 1 Title",
+        "valueType": "string",
+        "value": "Verify stays before you pay."
+      },
+      {
+        "component": "text",
+        "name": "card1Description",
+        "label": "Card 1 Description",
+        "valueType": "string",
+        "value": "Fake hotel or rental listings can look real. Check the source before booking."
+      },
+      {
+        "component": "text",
+        "name": "card1Button",
+        "label": "Card 1 Button",
+        "valueType": "string",
+        "value": "Know The Signs"
+      },
+      {
+        "component": "text",
+        "name": "card2Title",
+        "label": "Card 2 Title",
+        "valueType": "string",
+        "value": "Discount links that lead to fake payment pages"
+      },
+      {
+        "component": "text",
+        "name": "card2Description",
+        "label": "Card 2 Description",
+        "valueType": "string",
+        "value": "A “too good to be true” discount link can redirect you to fake payment pages that steal your money instantly."
+      },
+      {
+        "component": "text",
+        "name": "card2Button",
+        "label": "Card 2 Button",
+        "valueType": "string",
+        "value": "Know The Signs"
+      },
+      {
+        "component": "text",
+        "name": "card3Title",
+        "label": "Card 3 Title",
+        "valueType": "string",
+        "value": "Check the source before you scan"
+      },
+      {
+        "component": "text",
+        "name": "card3Description",
+        "label": "Card 3 Description",
+        "valueType": "string",
+        "value": "Scanning unknown QR codes can lead to money going out of your account—not coming in."
+      },
+      {
+        "component": "text",
+        "name": "card3Button",
+        "label": "Card 3 Button",
+        "valueType": "string",
+        "value": "Know The Signs"
+      },
+      {
+        "component": "text",
+        "name": "card4Title",
+        "label": "Card 4 Title",
+        "valueType": "string",
+        "value": "Save card details only when it’s secure"
+      },
+      {
+        "component": "text",
+        "name": "card4Description",
+        "label": "Card 4 Description",
+        "valueType": "string",
+        "value": "Saving your card details on unsecured websites can make you an easy target for unauthorised transactions."
+      },
+      {
+        "component": "text",
+        "name": "card4Button",
+        "label": "Card 4 Button",
+        "valueType": "string",
+        "value": "Know The Signs"
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -723,6 +826,94 @@
     ]
   },
   {
+    "id": "hero-new-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageAlt",
+        "label": "Background Image Alt Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_imageMobile",
+        "label": "Background Image (Mobile) — optional",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageMobileAlt",
+        "label": "Mobile Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Heading & Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta_link",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta_linkText",
+        "label": "CTA Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_1Icon",
+        "label": "Benefit 1 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_1",
+        "label": "Benefit 1"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_2Icon",
+        "label": "Benefit 2 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_2",
+        "label": "Benefit 2"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_3Icon",
+        "label": "Benefit 3 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_3",
+        "label": "Benefit 3"
+      }
+    ]
+  },
+  {
     "id": "hero-p",
     "fields": [
       {
@@ -916,73 +1107,6 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "heronewbanner",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "bg_image",
-        "label": "Background Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bg_imageAlt",
-        "label": "Background Image Alt Text"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "bg_imageMobile",
-        "label": "Background Image (Mobile) — optional",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bg_imageMobileAlt",
-        "label": "Mobile Image Alt Text"
-      },
-      {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Heading & Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "cta_link",
-        "label": "CTA Link"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cta_linkText",
-        "label": "CTA Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_1",
-        "label": "Benefit 1"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_2",
-        "label": "Benefit 2"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_3",
-        "label": "Benefit 3"
       }
     ]
   },
