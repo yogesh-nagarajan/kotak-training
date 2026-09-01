@@ -275,6 +275,65 @@
     ]
   },
   {
+    "id": "carouselcard",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "pretitle",
+        "label": "Pretitle"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Main Title"
+      },
+      {
+        "component": "textarea",
+        "valueType": "string",
+        "name": "description",
+        "label": "Description"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabs",
+        "label": "Navigation Tabs (pipe-separated e.g. Save | Borrow | Spend | Invest)"
+      }
+    ]
+  },
+  {
+    "id": "carouselcard-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Card Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title"
+      },
+      {
+        "component": "textarea",
+        "valueType": "string",
+        "name": "description",
+        "label": "Card Description"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta",
+        "label": "Button Link & Text"
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -1075,6 +1134,43 @@
         "name": "linkText",
         "label": "Button Text",
         "value": "Apply Now"
+      }
+    ]
+  },
+  {
+    "id": "producttab",
+    "fields": []
+  },
+  {
+    "id": "producttab-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabLabel",
+        "label": "Tab Label",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Content",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "actions",
+        "label": "Actions",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
       }
     ]
   },
