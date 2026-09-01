@@ -1241,6 +1241,91 @@
     ]
   },
   {
+    "id": "bento",
+    "fields": [
+      {
+        "component": "text",
+        "name": "pretitle",
+        "label": "Pre-title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style Variants",
+        "valueType": "string",
+        "options": [
+          { "name": "Dark Theme", "value": "theme-dark" },
+          { "name": "Kotak Layout", "value": "layout-kotak" },
+          { "name": "Stacked Layout", "value": "layout-stack" },
+          { "name": "Fluid Width", "value": "width-fluid" }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "cards",
+        "label": "Bento Cards",
+        "fields": [
+          {
+            "component": "select",
+            "name": "cardVariant",
+            "label": "Card Variant",
+            "valueType": "string",
+            "options": [
+              { "name": "Featured", "value": "featured" },
+              { "name": "Standard", "value": "standard" },
+              { "name": "Image / Media Card", "value": "imageCard" },
+              { "name": "Compact", "value": "compact" }
+            ]
+          },
+          {
+            "component": "text",
+            "name": "eyebrow",
+            "label": "Eyebrow",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "title",
+            "label": "Card Title",
+            "valueType": "string",
+            "required": true
+          },
+          {
+            "component": "text",
+            "name": "description",
+            "label": "Description",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "linkUrl",
+            "label": "Link URL",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "ctaText",
+            "label": "CTA Button Text (Featured only)",
+            "valueType": "string"
+          },
+          {
+            "component": "reference",
+            "name": "imagePath",
+            "label": "Image / Graphic Path",
+            "valueType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "producttab",
     "fields": []
   },

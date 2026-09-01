@@ -1,0 +1,47 @@
+﻿{
+  "total": 4,
+  "offset": 0,
+  "limit": 4,
+  "data": [
+    {
+      "cardVariant": "featured",
+      "eyebrow": "24x7 Support",
+      "title": "24x7 Assistant",
+      "description": "We're here to help anytime with your banking queries.",
+      "linkUrl": "/assistant",
+      "linkText": "Explore now",
+      "ctaText": "Explore now",
+      "imagePath": "/icons/infinity.svg"
+    },
+    {
+      "cardVariant": "standard",
+      "eyebrow": "Branches",
+      "title": "Branch Locator",
+      "description": "Find your nearest branch or ATM in seconds.",
+      "linkUrl": "/branches",
+      "linkText": "Locate",
+      "ctaText": "",
+      "imagePath": ""
+    },
+    {
+      "cardVariant": "imageCard",
+      "eyebrow": "Mobile App",
+      "title": "Mobile Banking",
+      "description": "Experience seamless banking on iOS & Android.",
+      "linkUrl": "/mobile-app",
+      "linkText": "Download",
+      "ctaText": "",
+      "imagePath": "/images/mobile-banking.jpg"
+    },
+    {
+      "cardVariant": "compact",
+      "eyebrow": "Chat",
+      "title": "WhatsApp Banking",
+      "description": "Get account updates instantly on WhatsApp.",
+      "linkUrl": "/whatsapp-banking",
+      "linkText": "Chat now",
+      "ctaText": "",
+      "imagePath": ""
+    }
+  ]
+}
