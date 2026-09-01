@@ -21,7 +21,7 @@ async function loadNavFragment() {
   // delivery `<name>.plain.html` variants are tried so it works in either env.
   const pageNavFragments = {
     '/nri-home-loan-features': '/nav-nri-home-loan',
-    '/811-business-demo': '/nav-variation',
+    '/811-buisness-demo': '/nav-variation',
   };
   const currentPath = window.location.pathname.split('.')[0];
   const pageNavKey = Object.keys(pageNavFragments)
