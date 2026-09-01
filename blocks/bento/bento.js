@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Bento Grid Component for Adobe Edge Delivery Services (EDS)
  * Supports featured tall cards, neutral standard tiles, media cards, and compact tiles.
  * @param {Element} block The Bento block element
@@ -51,7 +51,6 @@ export default function decorate(block) {
   for (let i = startIndex; i < rows.length; i += 1) {
     const row = rows[i];
     const cols = [...row.children];
-    if (!cols.length) continue;
 
     const card = document.createElement('article');
     card.className = 'bento__card';
@@ -94,7 +93,10 @@ export default function decorate(block) {
       }
     } else if (cols.length === 2) {
       // 2 columns: [image/logo, text content]
-      const textCol = picture ? (cols[0].contains(picture) ? cols[1] : cols[0]) : cols[1];
+      let textCol = cols[1];
+      if (picture) {
+        textCol = cols[0].contains(picture) ? cols[1] : cols[0];
+      }
       const headings = textCol.querySelectorAll('h1, h2, h3, h4, h5, h6');
       const paragraphs = textCol.querySelectorAll('p');
       if (headings.length > 0) {
@@ -111,7 +113,7 @@ export default function decorate(block) {
           description = p.textContent.trim();
         }
       });
-    } else {
+    } else if (cols.length === 1) {
       // Single column container
       const headings = cols[0].querySelectorAll('h1, h2, h3, h4, h5, h6');
       if (headings.length > 0) title = headings[0].textContent.trim();
@@ -217,7 +219,9 @@ export default function decorate(block) {
       });
     }
 
-    grid.append(card);
+    if (cols.length) {
+      grid.append(card);
+    }
   }
 
   container.append(grid);
