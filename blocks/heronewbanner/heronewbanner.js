@@ -326,11 +326,11 @@ export default function decorate(block) {
     block.append(benefitsContainer);
   }
 
-  /* eslint-disable no-console */
-  console.log('FINAL HERONEWBANNER DOM:', block.outerHTML);
-  console.log('hero classes:', hero.className);
-  console.log('image classes:', imageWrapper?.className);
-  console.log('content classes:', content.className);
-  console.log('benefits classes:', benefitsContainer?.className);
-  /* eslint-enable no-console */
+  // /* eslint-disable no-console */
+  // console.log('FINAL HERONEWBANNER DOM:', block.outerHTML);
+  // console.log('hero classes:', hero.className);
+  // console.log('image classes:', imageWrapper?.className);
+  // console.log('content classes:', content.className);
+  // console.log('benefits classes:', benefitsContainer?.className);
+  // /* eslint-enable no-console */
 }

@@ -67,7 +67,7 @@
         {
           "component": "reference",
           "valueType": "string",
-          "name": "benefit_1_icon",
+          "name": "benefit_1Icon",
           "label": "Benefit 1 Icon",
           "multi": false
         },
@@ -80,7 +80,7 @@
         {
           "component": "reference",
           "valueType": "string",
-          "name": "benefit_2_icon",
+          "name": "benefit_2Icon",
           "label": "Benefit 2 Icon",
           "multi": false
         },
@@ -93,7 +93,7 @@
         {
           "component": "reference",
           "valueType": "string",
-          "name": "benefit_3_icon",
+          "name": "benefit_3Icon",
           "label": "Benefit 3 Icon",
           "multi": false
         },
