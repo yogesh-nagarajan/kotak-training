@@ -35,18 +35,19 @@
   "models": [
     {
       "id": "producttab",
-      "fields": []
-    },
-    {
-      "id": "producttab-item",
       "fields": [
         {
           "component": "text",
           "valueType": "string",
-          "name": "tabLabel",
-          "label": "Tab Label",
+          "name": "tabs",
+          "label": "Tabs",
           "value": ""
-        },
+        }
+      ]
+    },
+    {
+      "id": "producttab-item",
+      "fields": [
         {
           "component": "richtext",
           "name": "content",
