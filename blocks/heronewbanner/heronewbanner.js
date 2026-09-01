@@ -1,243 +1,336 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+/**
+ * Moves instrumentation attributes from a source element to a target element.
+ * @param {Element} from Source element
+ * @param {Element} to Target element
+ */
+function moveInstrumentation(from, to) {
+  if (!from || !to || !from.attributes) return;
+  [...from.attributes].forEach((attr) => {
+    if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+      to.setAttribute(attr.name, attr.value);
+      from.removeAttribute(attr.name);
+    }
+  });
+}
 
 /**
- * loads and decorates the heronewbanner block
+ * Gets trimmed text content from a table row.
+ * @param {Element} row
+ * @returns {string}
+ */
+function getRowValue(row) {
+  return row?.textContent?.trim() || '';
+}
+
+/**
+ * Extracts picture, img or image link from a row.
+ * @param {Element} row
+ * @returns {Element|null}
+ */
+function getRowPicture(row) {
+  if (!row) return null;
+  const pic = row.querySelector('picture');
+  if (pic) return pic;
+  const img = row.querySelector('img');
+  if (img) return img;
+  const a = row.querySelector('a');
+  if (a && /\.(png|jpe?g|svg|webp|gif)(\?.*)?$/i.test(a.href)) {
+    const imgEl = document.createElement('img');
+    imgEl.src = a.href;
+    imgEl.alt = a.textContent?.trim() || '';
+    return imgEl;
+  }
+  return null;
+}
+
+/**
+ * Formats an image/picture element with proper classes and alt text.
+ * @param {Element} element
+ * @param {string} className
+ * @param {string} altText
+ * @returns {Element|null}
+ */
+function formatPicture(element, className, altText) {
+  if (!element) return null;
+  let picture;
+  if (element.tagName === 'PICTURE') {
+    picture = element.cloneNode(true);
+  } else if (element.tagName === 'IMG') {
+    picture = document.createElement('picture');
+    picture.append(element.cloneNode(true));
+  } else {
+    const innerPic = element.querySelector('picture');
+    if (innerPic) {
+      picture = innerPic.cloneNode(true);
+    } else {
+      const innerImg = element.querySelector('img');
+      if (innerImg) {
+        picture = document.createElement('picture');
+        picture.append(innerImg.cloneNode(true));
+      } else {
+        return null;
+      }
+    }
+  }
+
+  picture.className = className;
+  if (altText) {
+    const img = picture.querySelector('img');
+    if (img) img.alt = altText;
+  }
+
+  const origImg = element.querySelector('img') || (element.tagName === 'IMG' ? element : null);
+  const cloneImg = picture.querySelector('img');
+  if (origImg && cloneImg) {
+    moveInstrumentation(origImg, cloneImg);
+  }
+  return picture;
+}
+
+/**
+ * Loads and decorates the heronewbanner block.
+ * Universal Editor Model order (13 fields):
+ * 0: bg_image
+ * 1: bg_imageAlt
+ * 2: bg_imageMobile
+ * 3: bg_imageMobileAlt
+ * 4: text (richtext)
+ * 5: cta_link
+ * 6: cta_linkText
+ * 7: benefit_1_icon
+ * 8: benefit_1
+ * 9: benefit_2_icon
+ * 10: benefit_2
+ * 11: benefit_3_icon
+ * 12: benefit_3
+ *
  * @param {Element} block The heronewbanner block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
   if (rows.length === 0) return;
 
-  // 1. Identify and extract pictures/images
-  const allPictures = [...block.querySelectorAll('picture, img')].filter(
-    (el) => !(el.tagName === 'IMG' && el.closest('picture')),
-  );
+  let bgImageRow = null;
+  let bgImageAltRow = null;
+  let mobileImageRow = null;
+  let mobileImageAltRow = null;
+  let textRow = null;
+  let ctaLinkRow = null;
+  let ctaTextRow = null;
+  let benefit1IconRow = null;
+  let benefit1Row = null;
+  let benefit2IconRow = null;
+  let benefit2Row = null;
+  let benefit3IconRow = null;
+  let benefit3Row = null;
 
-  let desktopPic = null;
-  let mobilePic = null;
-
-  if (allPictures.length > 0) {
-    [desktopPic] = allPictures;
-    if (allPictures.length > 1) {
-      [, mobilePic] = allPictures;
+  if (rows.length >= 13) {
+    [
+      bgImageRow,
+      bgImageAltRow,
+      mobileImageRow,
+      mobileImageAltRow,
+      textRow,
+      ctaLinkRow,
+      ctaTextRow,
+      benefit1IconRow,
+      benefit1Row,
+      benefit2IconRow,
+      benefit2Row,
+      benefit3IconRow,
+      benefit3Row,
+    ] = rows;
+  } else {
+    // Graceful fallback for compact authored drafts
+    [bgImageRow, textRow, ctaLinkRow] = rows;
+    const compactBenefits = rows[3];
+    if (compactBenefits) {
+      const benefitParas = [...compactBenefits.querySelectorAll('p, li')];
+      const benefitCells = [...compactBenefits.children];
+      const items = benefitParas.length > 0 ? benefitParas : benefitCells;
+      [benefit1Row, benefit2Row, benefit3Row] = items;
     }
   }
 
-  // 2. Identify image rows vs text rows
-  const nonImageRows = rows.filter((row) => {
-    const pics = row.querySelectorAll('picture, img');
-    const text = row.textContent.trim();
-    return !(pics.length > 0 && text === '');
-  });
-
-  // 3. Extract CTA link, heading, description, and benefits
-  let ctaElement = null;
-  let headingElement = null;
-  const descriptionElements = [];
-  const benefitTexts = [];
-
-  const allLinks = [...block.querySelectorAll('a')];
-
-  nonImageRows.forEach((row, rowIndex) => {
-    // Check for benefit items in bullet list (if authored as <ul>)
-    const listItems = [...row.querySelectorAll('li')];
-    if (listItems.length > 0) {
-      listItems.forEach((li) => {
-        const t = li.textContent.trim();
-        if (t) benefitTexts.push(t);
-      });
-      return;
-    }
-
-    const isLastRow = rowIndex === nonImageRows.length - 1 && nonImageRows.length >= 3;
-    const cells = [...row.children];
-    const paras = [...row.querySelectorAll('p')];
-
-    // If it's the last row and has no headings and no CTA links, treat as benefits
-    if (isLastRow && !row.querySelector('h1, h2, h3, h4, h5, h6, a')) {
-      paras.forEach((p) => {
-        const t = p.textContent.trim();
-        if (t) benefitTexts.push(t);
-      });
-      if (benefitTexts.length === 0 && cells.length > 0) {
-        cells.forEach((c) => {
-          const t = c.textContent.trim();
-          if (t) benefitTexts.push(t);
-        });
-      }
-      return;
-    }
-
-    // Process cells
-    cells.forEach((cell) => {
-      // Check for headings
-      const h = cell.querySelector('h1, h2, h3, h4, h5, h6');
-      if (h && !headingElement) {
-        headingElement = h;
-      }
-
-      // Check for link / CTA
-      const a = cell.querySelector('a');
-      if (a && !ctaElement) {
-        ctaElement = a;
-      }
-
-      // Process children for description
-      const children = [...cell.children];
-      if (children.length === 0 && cell.textContent.trim()) {
-        const text = cell.textContent.trim();
-        if (!headingElement) {
-          const h2 = document.createElement('h2');
-          h2.textContent = text;
-          headingElement = h2;
-        } else if (!ctaElement && text.startsWith('http')) {
-          const cta = document.createElement('a');
-          cta.href = text;
-          cta.textContent = 'Learn More';
-          ctaElement = cta;
-        } else {
-          const p = document.createElement('p');
-          p.textContent = text;
-          descriptionElements.push(p);
-        }
-      } else {
-        children.forEach((child) => {
-          if (child === headingElement) return;
-          if (child === ctaElement || (ctaElement && child.contains(ctaElement))) return;
-          if (child.matches('picture') || child.querySelector('picture, img')) return;
-
-          if (isLastRow && !child.querySelector('h1, h2, h3, h4, h5, h6')) {
-            const t = child.textContent.trim();
-            if (t) benefitTexts.push(t);
-            return;
-          }
-
-          descriptionElements.push(child);
-        });
-      }
-    });
-  });
-
-  // Fallback for CTA link
-  if (!ctaElement && allLinks.length > 0) {
-    [ctaElement] = allLinks;
-  }
-
-  const cleanBenefits = benefitTexts.filter((b) => b.length > 0);
-
-  // 4. Build DOM Structure
+  // 1. Hero Card Wrapper
   const hero = document.createElement('div');
   hero.className = 'heronewbanner-hero';
 
-  // Image wrapper
-  if (desktopPic || mobilePic) {
-    const imageWrapper = document.createElement('div');
-    imageWrapper.className = 'heronewbanner-image';
+  // 2. Desktop & Mobile Image
+  const imageWrapper = document.createElement('div');
+  imageWrapper.className = 'heronewbanner-image';
 
-    if (desktopPic) {
-      const desktopImg = desktopPic.querySelector('img') || desktopPic;
-      const optimizedDesktop = createOptimizedPicture(
-        desktopImg.src,
-        desktopImg.alt || 'Hero Banner',
-        false,
-        [{ width: '1600' }],
-      );
-      optimizedDesktop.classList.add('heronewbanner-image-desktop');
-      moveInstrumentation(desktopImg, optimizedDesktop.querySelector('img'));
-      imageWrapper.append(optimizedDesktop);
-    }
+  const rawDesktop = getRowPicture(bgImageRow);
+  const desktopAlt = getRowValue(bgImageAltRow);
+  const desktopPicture = formatPicture(rawDesktop, 'heronewbanner-image-desktop', desktopAlt);
+  if (desktopPicture) {
+    imageWrapper.append(desktopPicture);
+  }
 
-    if (mobilePic) {
-      const mobileImg = mobilePic.querySelector('img') || mobilePic;
-      const optimizedMobile = createOptimizedPicture(
-        mobileImg.src,
-        mobileImg.alt || 'Hero Banner Mobile',
-        false,
-        [{ width: '750' }],
-      );
-      optimizedMobile.classList.add('heronewbanner-image-mobile');
-      moveInstrumentation(mobileImg, optimizedMobile.querySelector('img'));
-      imageWrapper.append(optimizedMobile);
-    }
+  const rawMobile = getRowPicture(mobileImageRow);
+  const mobileAlt = getRowValue(mobileImageAltRow);
+  const mobilePicture = formatPicture(rawMobile, 'heronewbanner-image-mobile', mobileAlt);
+  if (mobilePicture) {
+    imageWrapper.append(mobilePicture);
+  }
 
+  if (desktopPicture || mobilePicture) {
     hero.append(imageWrapper);
   }
 
-  // Overlay
+  // 3. Overlay
   const overlay = document.createElement('div');
   overlay.className = 'heronewbanner-overlay';
   hero.append(overlay);
 
-  // Content wrapper
+  // 4. Content (Title, Description, CTA)
   const content = document.createElement('div');
   content.className = 'heronewbanner-content';
 
-  if (headingElement) {
-    const h = document.createElement('h2');
-    h.className = 'heronewbanner-title';
-    h.innerHTML = headingElement.innerHTML;
-    moveInstrumentation(headingElement, h);
-    content.append(h);
-  }
+  // Process richtext textRow
+  const textCell = textRow?.firstElementChild || textRow;
+  if (textCell) {
+    const heading = textCell.querySelector('h1, h2, h3, h4, h5, h6');
+    if (heading) {
+      const title = document.createElement('h2');
+      title.className = 'heronewbanner-title';
+      title.innerHTML = heading.innerHTML;
+      moveInstrumentation(heading, title);
+      content.append(title);
+    }
 
-  if (descriptionElements.length > 0) {
-    const desc = document.createElement('div');
-    desc.className = 'heronewbanner-description';
-    descriptionElements.forEach((el) => {
-      desc.append(el);
+    const descNodes = [];
+    [...textCell.children].forEach((child) => {
+      if (child === heading) return;
+      if (
+        child.contains(heading)
+        && child.children.length === 1
+        && !child.textContent.replace(heading.textContent, '').trim()
+      ) {
+        return;
+      }
+      descNodes.push(child.cloneNode(true));
     });
-    content.append(desc);
+
+    if (!heading && textCell.textContent.trim()) {
+      const title = document.createElement('h2');
+      title.className = 'heronewbanner-title';
+      title.textContent = textCell.textContent.trim();
+      moveInstrumentation(textCell, title);
+      content.append(title);
+    } else if (descNodes.length > 0) {
+      const desc = document.createElement('div');
+      desc.className = 'heronewbanner-description';
+      descNodes.forEach((node) => desc.append(node));
+      content.append(desc);
+    }
   }
 
-  if (ctaElement) {
-    const cta = document.createElement('a');
-    cta.className = 'button heronewbanner-cta';
-    cta.href = ctaElement.getAttribute('href') || ctaElement.href || '#';
-    cta.textContent = ctaElement.textContent.trim() || 'Learn More';
-    if (ctaElement.target) cta.target = ctaElement.target;
-    moveInstrumentation(ctaElement, cta);
+  // Process CTA
+  const ctaLinkEl = ctaLinkRow?.querySelector('a');
+  const ctaHref = ctaLinkEl?.getAttribute('href') || ctaLinkEl?.href || getRowValue(ctaLinkRow);
+  const ctaText = getRowValue(ctaTextRow) || ctaLinkEl?.textContent?.trim() || 'Explore Cards';
 
+  if (ctaHref) {
     const ctaWrapper = document.createElement('div');
     ctaWrapper.className = 'heronewbanner-cta-wrapper';
+
+    const cta = document.createElement('a');
+    cta.className = 'heronewbanner-cta';
+    cta.href = ctaHref;
+    cta.textContent = ctaText;
+    if (ctaLinkEl?.target) cta.target = ctaLinkEl.target;
+
+    if (ctaLinkEl) {
+      moveInstrumentation(ctaLinkEl, cta);
+    } else if (ctaLinkRow) {
+      moveInstrumentation(ctaLinkRow, cta);
+    }
+
     ctaWrapper.append(cta);
     content.append(ctaWrapper);
   }
 
   hero.append(content);
 
-  // Benefits Section
+  // 5. Benefits Section
+  const benefitPairs = [
+    { iconRow: benefit1IconRow, textRow: benefit1Row },
+    { iconRow: benefit2IconRow, textRow: benefit2Row },
+    { iconRow: benefit3IconRow, textRow: benefit3Row },
+  ];
+
+  const defaultSvgIcon = `
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+      <circle cx="12" cy="13" r="2.5"/>
+    </svg>
+  `;
+
   let benefitsContainer = null;
-  if (cleanBenefits.length > 0) {
+  const hasBenefits = benefitPairs.some((p) => getRowValue(p.textRow));
+
+  if (hasBenefits) {
     benefitsContainer = document.createElement('div');
     benefitsContainer.className = 'heronewbanner-benefits';
 
-    cleanBenefits.forEach((benefitText) => {
-      const item = document.createElement('div');
-      item.className = 'heronewbanner-benefit';
+    benefitPairs.forEach(({ iconRow, textRow: bTextRow }) => {
+      const text = getRowValue(bTextRow);
+      if (!text) return;
 
-      const icon = document.createElement('span');
-      icon.className = 'heronewbanner-benefit-icon';
-      icon.setAttribute('aria-hidden', 'true');
-      icon.innerHTML = `
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M8 12.5L10.5 15L16 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      `;
+      const benefitItem = document.createElement('div');
+      benefitItem.className = 'heronewbanner-benefit';
 
-      const text = document.createElement('span');
-      text.className = 'heronewbanner-benefit-text';
-      text.textContent = benefitText;
+      const iconSpan = document.createElement('span');
+      iconSpan.className = 'heronewbanner-benefit-icon';
+      iconSpan.setAttribute('aria-hidden', 'true');
 
-      item.append(icon, text);
-      benefitsContainer.append(item);
+      let authoredIcon = null;
+      if (iconRow) {
+        authoredIcon = iconRow.querySelector('picture, img, svg, .icon');
+        if (!authoredIcon) {
+          const iconLink = iconRow.querySelector('a');
+          if (iconLink && /\.(svg|png|jpe?g|webp)(\?.*)?$/i.test(iconLink.href)) {
+            const img = document.createElement('img');
+            img.src = iconLink.href;
+            img.alt = '';
+            authoredIcon = img;
+          }
+        }
+      }
+
+      if (authoredIcon) {
+        const clonedIcon = authoredIcon.cloneNode(true);
+        moveInstrumentation(authoredIcon, clonedIcon);
+        iconSpan.append(clonedIcon);
+      } else {
+        iconSpan.innerHTML = defaultSvgIcon;
+      }
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'heronewbanner-benefit-text';
+      textSpan.textContent = text;
+
+      if (bTextRow) {
+        moveInstrumentation(bTextRow, textSpan);
+      }
+
+      benefitItem.append(iconSpan, textSpan);
+      benefitsContainer.append(benefitItem);
     });
   }
 
-  // Replace block children
+  // 6. Replace Block Children
   block.replaceChildren(hero);
-  if (benefitsContainer) {
+  if (benefitsContainer && benefitsContainer.children.length > 0) {
     block.append(benefitsContainer);
   }
+
+  // /* eslint-disable no-console */
+  // console.log('FINAL HERONEWBANNER DOM:', block.outerHTML);
+  // console.log('hero classes:', hero.className);
+  // console.log('image classes:', imageWrapper?.className);
+  // console.log('content classes:', content.className);
+  // console.log('benefits classes:', benefitsContainer?.className);
+  // /* eslint-enable no-console */
 }
