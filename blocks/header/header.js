@@ -11,11 +11,25 @@ const isDesktop = window.matchMedia('(min-width: 900px)');
  * @returns {HTMLElement|null} a container holding the fragment's top-level sections
  */
 async function loadNavFragment() {
-  // Page-specific header ONLY for /nri-home-loan-features (path may carry a
-  // .plain.html/.html suffix or a /content mount prefix). Every other page
-  // falls through to the existing global-nav logic below, unchanged.
-  if (window.location.pathname.split('.')[0].endsWith('/nri-home-loan-features')) {
-    const pageResp = await fetch('/content/nav-nri-home-loan.plain.html');
+  // Page-specific headers keyed by page path. Each entry maps a page (matched by
+  // the trailing path segment, ignoring any .plain.html/.html suffix or /content
+  // mount prefix) to a dedicated nav fragment. Any page not listed falls through
+  // to the global-nav logic below, unchanged.
+  // Each entry maps a page (matched by the trailing path segment, ignoring any
+  // .plain.html/.html suffix or /content mount prefix) to the base path of its
+  // dedicated nav fragment. Both the local `/content/<name>.plain.html` and the
+  // delivery `<name>.plain.html` variants are tried so it works in either env.
+  const pageNavFragments = {
+    '/nri-home-loan-features': '/nav-nri-home-loan',
+    '/811-business-demo': '/nav-variation',
+  };
+  const currentPath = window.location.pathname.split('.')[0];
+  const pageNavKey = Object.keys(pageNavFragments)
+    .find((page) => currentPath.endsWith(page));
+  if (pageNavKey) {
+    const base = pageNavFragments[pageNavKey];
+    let pageResp = await fetch(`/content${base}.plain.html`);
+    if (!pageResp.ok) pageResp = await fetch(`${base}.plain.html`);
     if (pageResp.ok) {
       const pageContainer = document.createElement('div');
       pageContainer.innerHTML = await pageResp.text();
