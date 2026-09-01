@@ -103,13 +103,13 @@
 
 .carouselcardicon-icon span:first-child {
   position: absolute;
-  left: 24px;
   top: 13px;
+  left: 24px;
+  z-index: 2;
   width: 17px;
   height: 5px;
   background: #fff;
   transform: rotate(-2deg);
-  z-index: 2;
 }
 
 .carouselcardicon-icon span:last-child {
@@ -118,8 +118,8 @@
 
 .carouselcardicon-card-title {
   position: relative;
-  margin: 0 0 10px;
   max-width: 220px;
+  margin: 0 0 10px;
   font-size: 16px;
   line-height: 1.35;
   font-weight: 500;
@@ -127,8 +127,8 @@
 
 .carouselcardicon-card-description {
   position: relative;
-  margin: 0;
   max-width: 220px;
+  margin: 0;
   font-size: 13px;
   line-height: 1.35;
   font-weight: 400;
@@ -136,8 +136,8 @@
 
 .carouselcardicon-button {
   position: absolute;
-  left: 26px;
   bottom: 27px;
+  left: 26px;
   display: inline-flex;
   align-items: center;
   justify-content: center;

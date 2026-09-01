@@ -173,6 +173,37 @@
           }
         },
         {
+          "title": "Carousel Card",
+          "id": "carouselcard",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Carousel Card",
+                  "model": "carouselcard",
+                  "filter": "carouselcard"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Carousel Card Item",
+          "id": "carouselcard-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Carousel Card Item",
+                  "model": "carouselcard-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Carousel Card Icon",
           "id": "carouselcardicon",
           "plugins": {
@@ -459,6 +490,21 @@
           }
         },
         {
+          "title": "Hero New Banner",
+          "id": "heronewbanner",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Hero New Banner",
+                  "model": "heronewbanner"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Img Container",
           "id": "img-container",
           "plugins": {
@@ -498,6 +544,37 @@
                 "template": {
                   "name": "NRI Banner",
                   "model": "nri-banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Tab",
+          "id": "producttab",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Product Tab",
+                  "model": "producttab",
+                  "filter": "producttab"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product",
+          "id": "producttab-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product",
+                  "model": "producttab-item"
                 }
               }
             }

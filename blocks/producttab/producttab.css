@@ -1,0 +1,141 @@
+.producttab {
+  width: 100%;
+}
+
+.producttab .producttab-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.producttab .producttab-tab {
+  flex: 1;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 24px;
+  background: transparent;
+  color: #666;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.producttab .producttab-tab[aria-selected='true'] {
+  background: #111;
+  color: #fff;
+  font-weight: 500;
+}
+
+.producttab .producttab-panels {
+  margin-top: 24px;
+}
+
+.producttab .producttab-panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.producttab .producttab-panel[hidden] {
+  display: none;
+}
+
+.producttab .producttab-content {
+  order: 1;
+}
+
+.producttab .producttab-content h1,
+.producttab .producttab-content h2,
+.producttab .producttab-content h3,
+.producttab .producttab-content h4 {
+  margin: 0;
+  color: #111;
+}
+
+.producttab .producttab-content p {
+  margin: 12px 0 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.producttab .producttab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  order: 2;
+}
+
+.producttab .producttab-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.producttab .producttab-actions a:first-child {
+  background: #111;
+  color: #fff;
+}
+
+.producttab .producttab-actions a:not(:first-child) {
+  color: #111;
+}
+
+.producttab .producttab-image {
+  order: 3;
+  overflow: hidden;
+  border-radius: 16px;
+  line-height: 0;
+}
+
+.producttab .producttab-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media (width >= 768px) {
+  .producttab .producttab-panel {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .producttab .producttab-content {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .producttab .producttab-actions {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .producttab .producttab-image {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+@media (width < 600px) {
+  .producttab .producttab-tabs {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .producttab .producttab-tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
