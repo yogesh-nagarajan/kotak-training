@@ -2,14 +2,14 @@
   "definitions": [
     {
       "title": "Hero New Banner",
-      "id": "heronewbanner",
+      "id": "hero-new-banner",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Hero New Banner",
-              "model": "heronewbanner"
+              "model": "hero-new-banner"
             }
           }
         }
@@ -18,7 +18,7 @@
   ],
   "models": [
     {
-      "id": "heronewbanner",
+      "id": "hero-new-banner",
       "fields": [
         {
           "component": "reference",

@@ -826,6 +826,94 @@
     ]
   },
   {
+    "id": "hero-new-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageAlt",
+        "label": "Background Image Alt Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_imageMobile",
+        "label": "Background Image (Mobile) — optional",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageMobileAlt",
+        "label": "Mobile Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Heading & Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta_link",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta_linkText",
+        "label": "CTA Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_1Icon",
+        "label": "Benefit 1 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_1",
+        "label": "Benefit 1"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_2Icon",
+        "label": "Benefit 2 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_2",
+        "label": "Benefit 2"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_3Icon",
+        "label": "Benefit 3 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_3",
+        "label": "Benefit 3"
+      }
+    ]
+  },
+  {
     "id": "hero-p",
     "fields": [
       {
@@ -1019,94 +1107,6 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "heronewbanner",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "bg_image",
-        "label": "Background Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bg_imageAlt",
-        "label": "Background Image Alt Text"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "bg_imageMobile",
-        "label": "Background Image (Mobile) — optional",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bg_imageMobileAlt",
-        "label": "Mobile Image Alt Text"
-      },
-      {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Heading & Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "cta_link",
-        "label": "CTA Link"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cta_linkText",
-        "label": "CTA Text"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "benefit_1Icon",
-        "label": "Benefit 1 Icon",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_1",
-        "label": "Benefit 1"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "benefit_2Icon",
-        "label": "Benefit 2 Icon",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_2",
-        "label": "Benefit 2"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "benefit_3Icon",
-        "label": "Benefit 3 Icon",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_3",
-        "label": "Benefit 3"
       }
     ]
   },
