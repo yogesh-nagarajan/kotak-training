@@ -50,178 +50,176 @@ export default function decorate(block) {
     const row = rows[i];
     const cols = [...row.children];
 
-    if (cols.length === 0) {
-      continue;
-    }
+    if (cols.length > 0) {
+      const card = document.createElement('article');
+      card.className = 'bento-card';
 
-    const card = document.createElement('article');
-    card.className = 'bento-card';
+      const picture = row.querySelector('picture');
+      const link = row.querySelector('a');
 
-    const picture = row.querySelector('picture');
-    const link = row.querySelector('a');
+      let variant = 'standard';
+      let eyebrow = '';
+      let title = '';
+      let description = '';
+      let ctaText = '';
+      let linkUrl = link ? link.getAttribute('href') : '#';
 
-    let variant = 'standard';
-    let eyebrow = '';
-    let title = '';
-    let description = '';
-    let ctaText = '';
-    let linkUrl = link ? link.getAttribute('href') : '#';
-
-    if (cols.length >= 3) {
-      const firstColText = cols[0].textContent.trim().toLowerCase();
-      if (['featured', 'standard', 'imagecard', 'image-card', 'compact', 'media'].includes(firstColText)) {
-        variant = firstColText === 'media' || firstColText === 'image-card' || firstColText === 'imagecard' ? 'image-card' : firstColText;
-        eyebrow = cols[1] ? cols[1].textContent.trim() : '';
-        title = cols[2] ? cols[2].textContent.trim() : '';
-        description = cols[3] ? cols[3].textContent.trim() : '';
-        if (cols[4]) {
-          const ctaLink = cols[4].querySelector('a');
-          ctaText = cols[4].textContent.trim();
-          if (ctaLink) {
-            linkUrl = ctaLink.getAttribute('href');
-            ctaText = ctaLink.textContent.trim() || ctaText;
+      if (cols.length >= 3) {
+        const firstColText = cols[0].textContent.trim().toLowerCase();
+        if (['featured', 'standard', 'imagecard', 'image-card', 'compact', 'media'].includes(firstColText)) {
+          variant = firstColText === 'media' || firstColText === 'image-card' || firstColText === 'imagecard' ? 'image-card' : firstColText;
+          eyebrow = cols[1] ? cols[1].textContent.trim() : '';
+          title = cols[2] ? cols[2].textContent.trim() : '';
+          description = cols[3] ? cols[3].textContent.trim() : '';
+          if (cols[4]) {
+            const ctaLink = cols[4].querySelector('a');
+            ctaText = cols[4].textContent.trim();
+            if (ctaLink) {
+              linkUrl = ctaLink.getAttribute('href');
+              ctaText = ctaLink.textContent.trim() || ctaText;
+            }
+          }
+        } else {
+          eyebrow = cols[0].textContent.trim();
+          title = cols[1].textContent.trim();
+          description = cols[2].textContent.trim();
+          if (cols[3]) {
+            const ctaLink = cols[3].querySelector('a');
+            if (ctaLink) {
+              linkUrl = ctaLink.getAttribute('href');
+            }
+            ctaText = cols[3].textContent.trim();
           }
         }
-      } else {
-        eyebrow = cols[0].textContent.trim();
-        title = cols[1].textContent.trim();
-        description = cols[2].textContent.trim();
-        if (cols[3]) {
-          const ctaLink = cols[3].querySelector('a');
-          if (ctaLink) {
-            linkUrl = ctaLink.getAttribute('href');
+      } else if (cols.length === 2) {
+        const [firstColumn, secondColumn] = cols;
+        let textCol = secondColumn;
+
+        if (picture && cols[0].contains(picture)) {
+          textCol = secondColumn;
+        } else if (picture && !cols[0].contains(picture)) {
+          textCol = firstColumn;
+        }
+
+        const headings = textCol.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        const paragraphs = textCol.querySelectorAll('p');
+        if (headings.length > 0) {
+          title = headings[0].textContent.trim();
+        }
+        paragraphs.forEach((p) => {
+          if (p.querySelector('a')) {
+            const a = p.querySelector('a');
+            linkUrl = a.getAttribute('href');
+            ctaText = a.textContent.trim();
+          } else if (!title) {
+            title = p.textContent.trim();
+          } else if (!description) {
+            description = p.textContent.trim();
           }
-          ctaText = cols[3].textContent.trim();
-        }
-      }
-    } else if (cols.length === 2) {
-      const [firstColumn, secondColumn] = cols;
-      let textCol = secondColumn;
-
-      if (picture && cols[0].contains(picture)) {
-        textCol = secondColumn;
-      } else if (picture && !cols[0].contains(picture)) {
-        textCol = firstColumn;
-      }
-
-      const headings = textCol.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      const paragraphs = textCol.querySelectorAll('p');
-      if (headings.length > 0) {
-        title = headings[0].textContent.trim();
-      }
-      paragraphs.forEach((p) => {
-        if (p.querySelector('a')) {
-          const a = p.querySelector('a');
-          linkUrl = a.getAttribute('href');
-          ctaText = a.textContent.trim();
-        } else if (!title) {
-          title = p.textContent.trim();
-        } else if (!description) {
-          description = p.textContent.trim();
-        }
-      });
-    } else {
-      const headings = cols[0].querySelectorAll('h1, h2, h3, h4, h5, h6');
-      if (headings.length > 0) {
-        title = headings[0].textContent.trim();
-      }
-      const paragraphs = cols[0].querySelectorAll('p');
-      paragraphs.forEach((p) => {
-        if (p.querySelector('a')) {
-          const a = p.querySelector('a');
-          linkUrl = a.getAttribute('href');
-          ctaText = a.textContent.trim();
-        } else if (!title) {
-          title = p.textContent.trim();
-        } else if (!description) {
-          description = p.textContent.trim();
-        }
-      });
-    }
-
-    if (picture && variant === 'standard') {
-      variant = 'image-card';
-    }
-
-    card.classList.add(`bento-card-${variant}`);
-
-    if (variant === 'image-card') {
-      if (picture) {
-        const imgWrapper = document.createElement('div');
-        imgWrapper.className = 'bento-card-image';
-        imgWrapper.append(picture);
-        card.append(imgWrapper);
-      }
-      const overlay = document.createElement('div');
-      overlay.className = 'bento-card-overlay';
-      card.append(overlay);
-    }
-
-    const content = document.createElement('div');
-    content.className = 'bento-card-content';
-
-    if (eyebrow) {
-      const eb = document.createElement('span');
-      eb.className = 'bento-card-eyebrow';
-      eb.textContent = eyebrow;
-      content.append(eb);
-    }
-
-    if (title) {
-      const h3 = document.createElement('h3');
-      h3.className = 'bento-card-heading';
-      h3.textContent = title;
-      content.append(h3);
-    }
-
-    if (description) {
-      const desc = document.createElement('p');
-      desc.className = 'bento-card-desc';
-      desc.textContent = description;
-      content.append(desc);
-    }
-
-    if (variant === 'featured') {
-      if (picture) {
-        const graphic = document.createElement('div');
-        graphic.className = 'bento-card-graphic';
-        graphic.append(picture);
-        content.append(graphic);
+        });
       } else {
-        const logo = document.createElement('div');
-        logo.className = 'bento-card-logo';
-        logo.textContent = '∞';
-        content.append(logo);
-      }
-
-      if (linkUrl && linkUrl !== '#') {
-        const pillBtn = document.createElement('a');
-        pillBtn.className = 'bento-pill-btn';
-        pillBtn.href = linkUrl;
-        pillBtn.innerHTML = `<span class="bento-pill-icon" aria-hidden="true">☎</span><span>${ctaText || 'Explore now'}</span>`;
-        content.append(pillBtn);
-      }
-    }
-
-    card.append(content);
-
-    if (variant !== 'featured' && linkUrl && linkUrl !== '#') {
-      const arrow = document.createElement('a');
-      arrow.className = 'bento-card-arrow';
-      arrow.href = linkUrl;
-      arrow.setAttribute('aria-label', `Open ${title || 'link'}`);
-      arrow.textContent = '↗';
-      card.append(arrow);
-
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', (e) => {
-        if (!e.target.closest('a')) {
-          window.location.href = linkUrl;
+        const headings = cols[0].querySelectorAll('h1, h2, h3, h4, h5, h6');
+        if (headings.length > 0) {
+          title = headings[0].textContent.trim();
         }
-      });
-    }
+        const paragraphs = cols[0].querySelectorAll('p');
+        paragraphs.forEach((p) => {
+          if (p.querySelector('a')) {
+            const a = p.querySelector('a');
+            linkUrl = a.getAttribute('href');
+            ctaText = a.textContent.trim();
+          } else if (!title) {
+            title = p.textContent.trim();
+          } else if (!description) {
+            description = p.textContent.trim();
+          }
+        });
+      }
 
-    grid.append(card);
+      if (picture && variant === 'standard') {
+        variant = 'image-card';
+      }
+
+      card.classList.add(`bento-card-${variant}`);
+
+      if (variant === 'image-card') {
+        if (picture) {
+          const imgWrapper = document.createElement('div');
+          imgWrapper.className = 'bento-card-image';
+          imgWrapper.append(picture);
+          card.append(imgWrapper);
+        }
+        const overlay = document.createElement('div');
+        overlay.className = 'bento-card-overlay';
+        card.append(overlay);
+      }
+
+      const content = document.createElement('div');
+      content.className = 'bento-card-content';
+
+      if (eyebrow) {
+        const eb = document.createElement('span');
+        eb.className = 'bento-card-eyebrow';
+        eb.textContent = eyebrow;
+        content.append(eb);
+      }
+
+      if (title) {
+        const h3 = document.createElement('h3');
+        h3.className = 'bento-card-heading';
+        h3.textContent = title;
+        content.append(h3);
+      }
+
+      if (description) {
+        const desc = document.createElement('p');
+        desc.className = 'bento-card-desc';
+        desc.textContent = description;
+        content.append(desc);
+      }
+
+      if (variant === 'featured') {
+        if (picture) {
+          const graphic = document.createElement('div');
+          graphic.className = 'bento-card-graphic';
+          graphic.append(picture);
+          content.append(graphic);
+        } else {
+          const logo = document.createElement('div');
+          logo.className = 'bento-card-logo';
+          logo.textContent = '∞';
+          content.append(logo);
+        }
+
+        if (linkUrl && linkUrl !== '#') {
+          const pillBtn = document.createElement('a');
+          pillBtn.className = 'bento-pill-btn';
+          pillBtn.href = linkUrl;
+          pillBtn.innerHTML = `<span class="bento-pill-icon" aria-hidden="true">☎</span><span>${ctaText || 'Explore now'}</span>`;
+          content.append(pillBtn);
+        }
+      }
+
+      card.append(content);
+
+      if (variant !== 'featured' && linkUrl && linkUrl !== '#') {
+        const arrow = document.createElement('a');
+        arrow.className = 'bento-card-arrow';
+        arrow.href = linkUrl;
+        arrow.setAttribute('aria-label', `Open ${title || 'link'}`);
+        arrow.textContent = '↗';
+        card.append(arrow);
+
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+          if (!e.target.closest('a')) {
+            window.location.href = linkUrl;
+          }
+        });
+      }
+
+      grid.append(card);
+    }
   }
 
   container.append(grid);
