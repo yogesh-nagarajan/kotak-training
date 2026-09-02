@@ -186,6 +186,23 @@
     ]
   },
   {
+    "id": "bento",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "subheading",
+        "label": "Subheading",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "breadcrumb-item",
     "fields": [
       {
@@ -1237,6 +1254,23 @@
         "name": "linkText",
         "label": "Button Text",
         "value": "Apply Now"
+      }
+    ]
+  },
+  {
+    "id": "bento",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "subheading",
+        "label": "Subheading",
+        "value": ""
       }
     ]
   },
