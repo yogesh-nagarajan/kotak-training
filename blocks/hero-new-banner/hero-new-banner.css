@@ -10,18 +10,28 @@
 }
 
 /* =========================================================
-   HERO CARD
+   HERO CARD (NO IMAGE: WHITE BG, CONTENT-SIZED HEIGHT)
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-hero {
   position: relative;
   width: 100%;
-  min-height: 420px;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   border-radius: 16px;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 24px 16px;
+}
+
+/* When background image is present: expand to full banner height */
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) {
+  min-height: 420px;
+  padding: 0;
   background-color: #1a1a1a;
 }
 
@@ -63,9 +73,14 @@
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-overlay {
+  display: none;
+}
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
+  display: block;
   background:
     linear-gradient(180deg,
       rgb(0 0 0 / 5%) 0%,
@@ -79,21 +94,31 @@
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-content {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  left: 50%;
-  bottom: 28px;
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
+  width: 100%;
   max-width: 680px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   box-sizing: border-box;
+  padding: 0;
+  color: #111827;
+  text-align: center;
+}
+
+/* Position at bottom when background image is present */
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  justify-content: flex-end;
   padding: 0 16px;
   color: #fff;
-  text-align: center;
 }
 
 /* =========================================================
@@ -103,11 +128,18 @@
 .hero-new-banner .hero-new-banner-title {
   max-width: 620px;
   margin: 0 0 12px;
+  color: #111827;
+  font-size: clamp(24px, 4.5vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-shadow: none;
+}
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-title {
   color: #fff;
   font-size: clamp(26px, 5vw, 44px);
-  font-weight: 600;
   line-height: 1.18;
-  letter-spacing: -0.02em;
   text-shadow: 0 1px 4px rgb(0 0 0 / 35%);
 }
 
@@ -118,10 +150,15 @@
 .hero-new-banner .hero-new-banner-description {
   max-width: 540px;
   margin: 0 0 18px;
-  color: rgb(255 255 255 / 94%);
+  color: #4b5563;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.5;
+  text-shadow: none;
+}
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-description {
+  color: rgb(255 255 255 / 94%);
   text-shadow: 0 1px 3px rgb(0 0 0 / 40%);
 }
 
@@ -152,13 +189,13 @@
   box-sizing: border-box;
   padding: 12px 30px;
   border-radius: 999px;
-  background: #fff;
-  color: #111;
+  background: #111827;
+  color: #fff;
   font-size: 15px;
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -166,12 +203,28 @@
 }
 
 .hero-new-banner .hero-new-banner-cta:hover {
-  background: #f4f4f4;
+  background: #000;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgb(0 0 0 / 22%);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 18%);
 }
 
 .hero-new-banner .hero-new-banner-cta:focus-visible {
+  outline: 3px solid #111827;
+  outline-offset: 3px;
+}
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta {
+  background: #fff;
+  color: #111;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+}
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta:hover {
+  background: #f4f4f4;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 22%);
+}
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta:focus-visible {
   outline: 3px solid #fff;
   outline-offset: 3px;
 }
@@ -256,11 +309,16 @@
 
 @media (width >=600px) {
   .hero-new-banner .hero-new-banner-hero {
-    min-height: 480px;
     border-radius: 20px;
+    padding: 28px 24px;
   }
 
-  .hero-new-banner .hero-new-banner-content {
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) {
+    min-height: 480px;
+    padding: 0;
+  }
+
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content {
     width: min(650px, calc(100% - 48px));
     bottom: 32px;
     padding: 0 24px;
@@ -283,8 +341,13 @@
 
 @media (width >=900px) {
   .hero-new-banner .hero-new-banner-hero {
-    min-height: 520px;
     border-radius: 24px;
+    padding: 32px 24px;
+  }
+
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) {
+    min-height: 520px;
+    padding: 0;
   }
 
   .hero-new-banner .hero-new-banner-image .hero-new-banner-image-desktop {
@@ -295,15 +358,15 @@
     display: none;
   }
 
-  .hero-new-banner .hero-new-banner-content {
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content {
     bottom: 34px;
   }
 
-  .hero-new-banner .hero-new-banner-title {
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-title {
     font-size: 44px;
   }
 
-  .hero-new-banner .hero-new-banner-description {
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-description {
     font-size: 16px;
   }
 
