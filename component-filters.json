@@ -47,6 +47,15 @@
     ]
   },
   {
+    "id": "bento",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title"
+    ]
+  },
+  {
     "id": "breadcrumb",
     "components": [
       "breadcrumb-item"
