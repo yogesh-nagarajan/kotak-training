@@ -2,14 +2,18 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 function isCardRow(row) {
   if (!row) return false;
-  if (row.getAttribute('data-aue-model') === 'bento-item' || row.getAttribute('data-aue-type') === 'component') {
+  const model = row.getAttribute('data-aue-model');
+  if (['bento-featured', 'bento-standard', 'bento-mini-standard', 'bento-compact', 'bento-item'].includes(model)
+    || row.getAttribute('data-aue-type') === 'component') {
     return true;
   }
   const cols = [...row.children];
   if (!cols.length) return false;
-  const firstText = cols[0].textContent.trim().toLowerCase();
-  if (['featured', 'standard', 'compact', 'image-card', 'imagecard', 'media'].includes(firstText)) {
-    return true;
+  for (let i = 0; i < Math.min(cols.length, 2); i += 1) {
+    const text = cols[i].textContent.trim().toLowerCase();
+    if (['featured', 'standard', 'mini-standard', 'mini standard', 'compact', 'image-card', 'imagecard', 'media'].includes(text)) {
+      return true;
+    }
   }
   if (row.querySelector('picture, img, a') || cols.length >= 3) {
     return true;
@@ -17,9 +21,35 @@ function isCardRow(row) {
   return false;
 }
 
+function detectVariant(model, label, cols) {
+  if (model === 'bento-featured') return 'featured';
+  if (model === 'bento-standard') return 'standard';
+  if (model === 'bento-mini-standard') return 'mini-standard';
+  if (model === 'bento-compact') return 'compact';
+
+  const cleanLabel = (label || '').toLowerCase();
+  if (cleanLabel.includes('featured')) return 'featured';
+  if (cleanLabel.includes('mini standard') || cleanLabel.includes('mini-standard')) return 'mini-standard';
+  if (cleanLabel.includes('compact')) return 'compact';
+  if (cleanLabel.includes('standard')) return 'standard';
+
+  for (let i = 0; i < Math.min(cols.length, 2); i += 1) {
+    const text = cols[i].textContent.trim().toLowerCase();
+    if (text === 'featured') return 'featured';
+    if (text === 'mini-standard' || text === 'mini standard') return 'mini-standard';
+    if (text === 'compact') return 'compact';
+    if (text === 'standard' || text === 'media' || text === 'image-card' || text === 'imagecard') return 'standard';
+  }
+  return 'standard';
+}
+
 /**
  * Bento Grid Component for Adobe Edge Delivery Services (EDS)
- * Supports featured tall card, neutral standard tiles (with optional image), and compact tiles.
+ * Supports:
+ * - Featured card (100% height): eyebrow, title, description, bg image, cta icon, cta button
+ * - Standard card (45% height): eyebrow, title, link, optional bg image (no description)
+ * - Mini standard card (40% height): eyebrow, title, link, optional bg image (no description)
+ * - Compact card (10% height): title, link only
  * @param {Element} block The Bento block element
  */
 export default function decorate(block) {
@@ -94,117 +124,99 @@ export default function decorate(block) {
     container.append(header);
   }
 
-  const grid = document.createElement('div');
-  grid.className = 'bento-grid';
+  const cards = [];
 
-  // Process card rows
+  // Parse card rows
   for (let i = startIndex; i < rows.length; i += 1) {
     const row = rows[i];
     const cols = [...row.children];
 
     if (cols.length > 0) {
+      // MUST read instrumentation BEFORE moveInstrumentation removes attributes from row
+      const model = row.getAttribute('data-aue-model');
+      const label = row.getAttribute('data-aue-label');
+      const variant = detectVariant(model, label, cols);
+
       const card = document.createElement('article');
       card.className = 'bento-card';
       moveInstrumentation(row, card);
 
-      const picture = row.querySelector('picture');
+      const pictures = [...row.querySelectorAll('picture')];
       const link = row.querySelector('a');
 
-      let variant = 'standard';
       let eyebrow = '';
       let title = '';
       let description = '';
       let ctaText = '';
-      let linkUrl = link ? link.getAttribute('href') : '#';
+      let linkUrl = link ? link.getAttribute('href') : '';
+      let bgPicture = null;
+      let ctaIconPic = null;
 
-      if (cols.length >= 3) {
-        const firstColText = cols[0].textContent.trim().toLowerCase();
-        if (['featured', 'standard', 'compact', 'image-card', 'imagecard', 'media'].includes(firstColText)) {
-          variant = firstColText === 'media' || firstColText === 'image-card' || firstColText === 'imagecard' ? 'standard' : firstColText;
-          eyebrow = cols[1] ? cols[1].textContent.trim() : '';
-          title = cols[2] ? cols[2].textContent.trim() : '';
-          const textCol = cols[3];
-          if (textCol) {
-            const a = textCol.querySelector('a');
-            if (a) {
-              linkUrl = a.getAttribute('href');
-              ctaText = a.textContent.trim();
-            }
-            const pList = textCol.querySelectorAll('p');
-            pList.forEach((p) => {
-              if (!p.querySelector('a') && !description) {
-                description = p.textContent.trim();
-              }
-            });
-            if (!description && !a) {
-              description = textCol.textContent.trim();
-            }
-          }
+      if (variant === 'featured') {
+        if (model === 'bento-featured') {
+          // Fields: [image, eyebrow, title, description, ctaIcon, ctaText, link]
+          bgPicture = cols[0]?.querySelector('picture') || cols[0]?.querySelector('img');
+          eyebrow = cols[1]?.textContent.trim() || '';
+          title = cols[2]?.textContent.trim() || '';
+          description = cols[3]?.textContent.trim() || '';
+          ctaIconPic = cols[4]?.querySelector('picture') || cols[4]?.querySelector('img');
+          ctaText = cols[5]?.textContent.trim() || '';
+          const authoredLink = cols[6]?.textContent.trim() || cols[6]?.querySelector('a')?.getAttribute('href');
+          if (authoredLink) linkUrl = authoredLink;
         } else {
-          eyebrow = cols[0].textContent.trim();
-          title = cols[1].textContent.trim();
-          description = cols[2].textContent.trim();
-          if (cols[3]) {
-            const ctaLink = cols[3].querySelector('a');
-            if (ctaLink) {
-              linkUrl = ctaLink.getAttribute('href');
-            }
-            ctaText = cols[3].textContent.trim();
+          if (pictures.length > 0) {
+            [bgPicture] = pictures;
+            if (pictures.length > 1) [, ctaIconPic] = pictures;
           }
-        }
-      } else if (cols.length === 2) {
-        const [firstColumn, secondColumn] = cols;
-        let textCol = secondColumn;
-
-        if (picture && cols[0].contains(picture)) {
-          textCol = secondColumn;
-        } else if (picture && !cols[0].contains(picture)) {
-          textCol = firstColumn;
-        }
-
-        const headings = textCol.querySelectorAll('h1, h2, h3, h4, h5, h6');
-        const paragraphs = textCol.querySelectorAll('p');
-        if (headings.length > 0) {
-          title = headings[0].textContent.trim();
-        }
-        paragraphs.forEach((p) => {
-          if (p.querySelector('a')) {
-            const a = p.querySelector('a');
-            linkUrl = a.getAttribute('href');
-            ctaText = a.textContent.trim();
-          } else if (!title) {
-            title = p.textContent.trim();
-          } else if (!description) {
-            description = p.textContent.trim();
+          const textCols = cols.filter((c) => !c.querySelector('picture, img') && c.textContent.trim());
+          if (textCols.length > 0 && textCols[0].textContent.trim().toLowerCase() === 'featured') {
+            textCols.shift();
           }
-        });
+          if (textCols[0]) eyebrow = textCols[0].textContent.trim();
+          if (textCols[1]) title = textCols[1].textContent.trim();
+          if (textCols[2]) description = textCols[2].textContent.trim();
+          if (textCols[3]) ctaText = textCols[3].textContent.trim();
+          if (textCols[4] && !linkUrl) linkUrl = textCols[4].textContent.trim();
+        }
+      } else if (variant === 'compact') {
+        // Compact card: title and link ONLY
+        if (model === 'bento-compact') {
+          title = cols[0]?.textContent.trim() || '';
+          const authoredLink = cols[1]?.textContent.trim() || cols[1]?.querySelector('a')?.getAttribute('href');
+          if (authoredLink) linkUrl = authoredLink;
+        } else {
+          const textCols = cols.filter((c) => c.textContent.trim());
+          if (textCols.length > 0 && textCols[0].textContent.trim().toLowerCase() === 'compact') {
+            textCols.shift();
+          }
+          if (textCols[0]) title = textCols[0].textContent.trim();
+          if (textCols[1] && !linkUrl) linkUrl = textCols[1].textContent.trim();
+        }
+      } else if (model === 'bento-standard' || model === 'bento-mini-standard') {
+        bgPicture = cols[0]?.querySelector('picture') || cols[0]?.querySelector('img');
+        eyebrow = cols[1]?.textContent.trim() || '';
+        title = cols[2]?.textContent.trim() || '';
+        const authoredLink = cols[3]?.textContent.trim() || cols[3]?.querySelector('a')?.getAttribute('href');
+        if (authoredLink) linkUrl = authoredLink;
       } else {
-        const headings = cols[0].querySelectorAll('h1, h2, h3, h4, h5, h6');
-        if (headings.length > 0) {
-          title = headings[0].textContent.trim();
+        if (pictures.length > 0) [bgPicture] = pictures;
+        const textCols = cols.filter((c) => !c.querySelector('picture, img') && c.textContent.trim());
+        if (textCols.length > 0 && ['standard', 'mini-standard', 'mini standard'].includes(textCols[0].textContent.trim().toLowerCase())) {
+          textCols.shift();
         }
-        const paragraphs = cols[0].querySelectorAll('p');
-        paragraphs.forEach((p) => {
-          if (p.querySelector('a')) {
-            const a = p.querySelector('a');
-            linkUrl = a.getAttribute('href');
-            ctaText = a.textContent.trim();
-          } else if (!title) {
-            title = p.textContent.trim();
-          } else if (!description) {
-            description = p.textContent.trim();
-          }
-        });
+        if (textCols[0]) eyebrow = textCols[0].textContent.trim();
+        if (textCols[1]) title = textCols[1].textContent.trim();
+        if (textCols[2] && !linkUrl) linkUrl = textCols[2].textContent.trim();
       }
 
       card.classList.add(`bento-card-${variant}`);
 
-      // If standard card contains a background image
-      if (picture && variant === 'standard') {
+      // Optional background image for featured, standard, and mini-standard
+      if (bgPicture && variant !== 'compact') {
         card.classList.add('bento-card-image-card');
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'bento-card-image';
-        imgWrapper.append(picture);
+        imgWrapper.append(bgPicture);
         card.append(imgWrapper);
         const overlay = document.createElement('div');
         overlay.className = 'bento-card-overlay';
@@ -214,13 +226,15 @@ export default function decorate(block) {
       const content = document.createElement('div');
       content.className = 'bento-card-content';
 
-      if (eyebrow) {
+      // Eyebrow (only for featured, standard, mini-standard - NOT compact)
+      if (eyebrow && variant !== 'compact') {
         const eb = document.createElement('span');
         eb.className = 'bento-card-eyebrow';
         eb.textContent = eyebrow;
         content.append(eb);
       }
 
+      // Title
       if (title) {
         const h3 = document.createElement('h3');
         h3.className = 'bento-card-heading';
@@ -228,41 +242,43 @@ export default function decorate(block) {
         content.append(h3);
       }
 
-      if (description) {
+      // Description (ONLY for featured card!)
+      if (variant === 'featured' && description) {
         const desc = document.createElement('p');
         desc.className = 'bento-card-desc';
         desc.textContent = description;
         content.append(desc);
       }
 
+      // Featured card elements (Logo / CTA button)
       if (variant === 'featured') {
-        if (picture) {
-          const graphic = document.createElement('div');
-          graphic.className = 'bento-card-graphic';
-          graphic.append(picture);
-          content.append(graphic);
-        } else {
+        if (!bgPicture) {
           const logo = document.createElement('div');
           logo.className = 'bento-card-logo';
-          logo.textContent = '∞';
+          logo.textContent = '\u221E';
           content.append(logo);
         }
 
         const pillBtn = document.createElement('a');
         pillBtn.className = 'bento-pill-btn';
         pillBtn.href = linkUrl && linkUrl !== '#' ? linkUrl : '#';
-        pillBtn.innerHTML = `<span class="bento-pill-icon" aria-hidden="true">☎</span><span>${ctaText || ''}</span>`;
+        let iconHtml = '<span class="bento-pill-icon" aria-hidden="true">\u260E</span>';
+        if (ctaIconPic) {
+          iconHtml = `<span class="bento-pill-icon bento-pill-icon-custom">${ctaIconPic.outerHTML}</span>`;
+        }
+        pillBtn.innerHTML = `${iconHtml}<span>${ctaText || ''}</span>`;
         content.append(pillBtn);
       }
 
       card.append(content);
 
+      // Slanting arrow for non-featured cards
       if (variant !== 'featured') {
         const arrow = document.createElement('a');
         arrow.className = 'bento-card-arrow';
         arrow.href = linkUrl && linkUrl !== '#' ? linkUrl : '#';
         arrow.setAttribute('aria-label', `Open ${title || 'link'}`);
-        arrow.textContent = '↗';
+        arrow.textContent = '\u2197';
         card.append(arrow);
 
         if (linkUrl && linkUrl !== '#' && linkUrl !== '') {
@@ -275,9 +291,57 @@ export default function decorate(block) {
         }
       }
 
-      grid.append(card);
+      cards.push(card);
     }
   }
+
+  // Organize cards into columns matching height proportions:
+  // Featured = 100% capacity (1 col = 1 featured)
+  // Standard = 45% capacity (1 col = 2 standard)
+  // Mini standard = 40% capacity, Compact = 10% capacity (1 col = 2 mini standard + 1 compact)
+  const columns = [];
+  let currentCol = [];
+  let currentCapacity = 0;
+
+  cards.forEach((card) => {
+    let cap = 45;
+    if (card.classList.contains('bento-card-featured')) {
+      cap = 100;
+    } else if (card.classList.contains('bento-card-mini-standard')) {
+      cap = 40;
+    } else if (card.classList.contains('bento-card-compact')) {
+      cap = 10;
+    }
+
+    if (currentCol.length > 0 && currentCapacity + cap > 100) {
+      columns.push(currentCol);
+      currentCol = [];
+      currentCapacity = 0;
+    }
+
+    currentCol.push(card);
+    currentCapacity += cap;
+
+    if (currentCapacity >= 90) {
+      columns.push(currentCol);
+      currentCol = [];
+      currentCapacity = 0;
+    }
+  });
+
+  if (currentCol.length > 0) {
+    columns.push(currentCol);
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'bento-grid';
+
+  columns.forEach((colCards) => {
+    const colDiv = document.createElement('div');
+    colDiv.className = 'bento-column';
+    colCards.forEach((c) => colDiv.append(c));
+    grid.append(colDiv);
+  });
 
   container.append(grid);
   block.textContent = '';

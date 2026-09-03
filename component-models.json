@@ -222,6 +222,136 @@
     ]
   },
   {
+    "id": "bento-featured",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Card Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow Text",
+        "description": "Small category badge (e.g. KOTAK ASSIST)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title",
+        "description": "Main card heading"
+      },
+      {
+        "component": "textarea",
+        "valueType": "string",
+        "name": "description",
+        "label": "Card Description"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "ctaIcon",
+        "label": "CTA Button Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaText",
+        "label": "CTA Button Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link",
+        "label": "CTA Link URL"
+      }
+    ]
+  },
+  {
+    "id": "bento-standard",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Card Background Image (Optional)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow Text",
+        "description": "Small category badge"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link",
+        "label": "Link URL"
+      }
+    ]
+  },
+  {
+    "id": "bento-mini-standard",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Card Background Image (Optional)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow Text",
+        "description": "Small category badge"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link",
+        "label": "Link URL"
+      }
+    ]
+  },
+  {
+    "id": "bento-compact",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link",
+        "label": "Link URL"
+      }
+    ]
+  },
+  {
     "id": "bento-item",
     "fields": [
       {
@@ -239,6 +369,10 @@
             "value": "standard"
           },
           {
+            "name": "Mini Standard Card",
+            "value": "mini-standard"
+          },
+          {
             "name": "Compact Card",
             "value": "compact"
           }
@@ -249,7 +383,6 @@
         "valueType": "string",
         "name": "eyebrow",
         "label": "Card Eyebrow",
-        "description": "Small category badge (e.g. KOTAK ASSIST, CARD SECURITY)",
         "value": ""
       },
       {
@@ -257,7 +390,6 @@
         "valueType": "string",
         "name": "title",
         "label": "Card Title",
-        "description": "Main card heading (e.g. How can we help today ?)",
         "value": ""
       },
       {
