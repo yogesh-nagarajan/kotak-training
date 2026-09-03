@@ -9,9 +9,11 @@ function isCardRow(row) {
   }
   const cols = [...row.children];
   if (!cols.length) return false;
-  const firstText = cols[0].textContent.trim().toLowerCase();
-  if (['featured', 'standard', 'mini-standard', 'mini standard', 'compact', 'image-card', 'imagecard', 'media'].includes(firstText)) {
-    return true;
+  for (let i = 0; i < Math.min(cols.length, 2); i += 1) {
+    const text = cols[i].textContent.trim().toLowerCase();
+    if (['featured', 'standard', 'mini-standard', 'mini standard', 'compact', 'image-card', 'imagecard', 'media'].includes(text)) {
+      return true;
+    }
   }
   if (row.querySelector('picture, img, a') || cols.length >= 3) {
     return true;
@@ -19,19 +21,24 @@ function isCardRow(row) {
   return false;
 }
 
-function detectVariant(row, cols) {
-  const model = row.getAttribute('data-aue-model');
+function detectVariant(model, label, cols) {
   if (model === 'bento-featured') return 'featured';
   if (model === 'bento-standard') return 'standard';
   if (model === 'bento-mini-standard') return 'mini-standard';
   if (model === 'bento-compact') return 'compact';
 
-  if (cols.length > 0) {
-    const firstText = cols[0].textContent.trim().toLowerCase();
-    if (firstText === 'featured') return 'featured';
-    if (firstText === 'mini-standard' || firstText === 'mini standard') return 'mini-standard';
-    if (firstText === 'compact') return 'compact';
-    if (firstText === 'standard' || firstText === 'media' || firstText === 'image-card' || firstText === 'imagecard') return 'standard';
+  const cleanLabel = (label || '').toLowerCase();
+  if (cleanLabel.includes('featured')) return 'featured';
+  if (cleanLabel.includes('mini standard') || cleanLabel.includes('mini-standard')) return 'mini-standard';
+  if (cleanLabel.includes('compact')) return 'compact';
+  if (cleanLabel.includes('standard')) return 'standard';
+
+  for (let i = 0; i < Math.min(cols.length, 2); i += 1) {
+    const text = cols[i].textContent.trim().toLowerCase();
+    if (text === 'featured') return 'featured';
+    if (text === 'mini-standard' || text === 'mini standard') return 'mini-standard';
+    if (text === 'compact') return 'compact';
+    if (text === 'standard' || text === 'media' || text === 'image-card' || text === 'imagecard') return 'standard';
   }
   return 'standard';
 }
@@ -125,11 +132,15 @@ export default function decorate(block) {
     const cols = [...row.children];
 
     if (cols.length > 0) {
+      // MUST read instrumentation BEFORE moveInstrumentation removes attributes from row
+      const model = row.getAttribute('data-aue-model');
+      const label = row.getAttribute('data-aue-label');
+      const variant = detectVariant(model, label, cols);
+
       const card = document.createElement('article');
       card.className = 'bento-card';
       moveInstrumentation(row, card);
 
-      const variant = detectVariant(row, cols);
       const pictures = [...row.querySelectorAll('picture')];
       const link = row.querySelector('a');
 
@@ -137,92 +148,65 @@ export default function decorate(block) {
       let title = '';
       let description = '';
       let ctaText = '';
-      let linkUrl = link ? link.getAttribute('href') : '#';
+      let linkUrl = link ? link.getAttribute('href') : '';
       let bgPicture = null;
       let ctaIconPic = null;
 
-      const model = row.getAttribute('data-aue-model');
-
-      if (model === 'bento-featured') {
-        // [image, eyebrow, title, description, ctaIcon, ctaText, link]
-        bgPicture = cols[0]?.querySelector('picture');
-        eyebrow = cols[1]?.textContent.trim() || '';
-        title = cols[2]?.textContent.trim() || '';
-        description = cols[3]?.textContent.trim() || '';
-        ctaIconPic = cols[4]?.querySelector('picture');
-        ctaText = cols[5]?.textContent.trim() || '';
-        const authoredLink = cols[6]?.textContent.trim() || cols[6]?.querySelector('a')?.getAttribute('href');
-        if (authoredLink) linkUrl = authoredLink;
+      if (variant === 'featured') {
+        if (model === 'bento-featured') {
+          // Fields: [image, eyebrow, title, description, ctaIcon, ctaText, link]
+          bgPicture = cols[0]?.querySelector('picture') || cols[0]?.querySelector('img');
+          eyebrow = cols[1]?.textContent.trim() || '';
+          title = cols[2]?.textContent.trim() || '';
+          description = cols[3]?.textContent.trim() || '';
+          ctaIconPic = cols[4]?.querySelector('picture') || cols[4]?.querySelector('img');
+          ctaText = cols[5]?.textContent.trim() || '';
+          const authoredLink = cols[6]?.textContent.trim() || cols[6]?.querySelector('a')?.getAttribute('href');
+          if (authoredLink) linkUrl = authoredLink;
+        } else {
+          if (pictures.length > 0) {
+            [bgPicture] = pictures;
+            if (pictures.length > 1) [, ctaIconPic] = pictures;
+          }
+          const textCols = cols.filter((c) => !c.querySelector('picture, img') && c.textContent.trim());
+          if (textCols.length > 0 && textCols[0].textContent.trim().toLowerCase() === 'featured') {
+            textCols.shift();
+          }
+          if (textCols[0]) eyebrow = textCols[0].textContent.trim();
+          if (textCols[1]) title = textCols[1].textContent.trim();
+          if (textCols[2]) description = textCols[2].textContent.trim();
+          if (textCols[3]) ctaText = textCols[3].textContent.trim();
+          if (textCols[4] && !linkUrl) linkUrl = textCols[4].textContent.trim();
+        }
+      } else if (variant === 'compact') {
+        // Compact card: title and link ONLY
+        if (model === 'bento-compact') {
+          title = cols[0]?.textContent.trim() || '';
+          const authoredLink = cols[1]?.textContent.trim() || cols[1]?.querySelector('a')?.getAttribute('href');
+          if (authoredLink) linkUrl = authoredLink;
+        } else {
+          const textCols = cols.filter((c) => c.textContent.trim());
+          if (textCols.length > 0 && textCols[0].textContent.trim().toLowerCase() === 'compact') {
+            textCols.shift();
+          }
+          if (textCols[0]) title = textCols[0].textContent.trim();
+          if (textCols[1] && !linkUrl) linkUrl = textCols[1].textContent.trim();
+        }
       } else if (model === 'bento-standard' || model === 'bento-mini-standard') {
-        // [image, eyebrow, title, link]
-        bgPicture = cols[0]?.querySelector('picture');
+        bgPicture = cols[0]?.querySelector('picture') || cols[0]?.querySelector('img');
         eyebrow = cols[1]?.textContent.trim() || '';
         title = cols[2]?.textContent.trim() || '';
         const authoredLink = cols[3]?.textContent.trim() || cols[3]?.querySelector('a')?.getAttribute('href');
         if (authoredLink) linkUrl = authoredLink;
-      } else if (model === 'bento-compact') {
-        // [title, link]
-        title = cols[0]?.textContent.trim() || '';
-        const authoredLink = cols[1]?.textContent.trim() || cols[1]?.querySelector('a')?.getAttribute('href');
-        if (authoredLink) linkUrl = authoredLink;
       } else {
-        // Generic bento-item or table row
-        if (pictures.length > 0) {
-          [bgPicture] = pictures;
-          if (pictures.length > 1) [, ctaIconPic] = pictures;
+        if (pictures.length > 0) [bgPicture] = pictures;
+        const textCols = cols.filter((c) => !c.querySelector('picture, img') && c.textContent.trim());
+        if (textCols.length > 0 && ['standard', 'mini-standard', 'mini standard'].includes(textCols[0].textContent.trim().toLowerCase())) {
+          textCols.shift();
         }
-
-        const firstColText = cols[0].textContent.trim().toLowerCase();
-        const hasVariantPrefix = ['featured', 'standard', 'mini-standard', 'mini standard', 'compact'].includes(firstColText);
-
-        if (variant === 'compact') {
-          title = hasVariantPrefix ? (cols[1]?.textContent.trim() || cols[2]?.textContent.trim() || '') : cols[0].textContent.trim();
-          if (link) linkUrl = link.getAttribute('href');
-        } else if (hasVariantPrefix) {
-          eyebrow = cols[1]?.textContent.trim() || '';
-          title = cols[2]?.textContent.trim() || '';
-          const textCol = cols[3];
-          if (textCol) {
-            const a = textCol.querySelector('a');
-            if (a) {
-              linkUrl = a.getAttribute('href');
-              ctaText = a.textContent.trim();
-            }
-            if (variant === 'featured') {
-              const pList = textCol.querySelectorAll('p');
-              pList.forEach((p) => {
-                if (!p.querySelector('a') && !description) {
-                  description = p.textContent.trim();
-                }
-              });
-              if (!description && !a) description = textCol.textContent.trim();
-            }
-          }
-        } else if (cols.length >= 3) {
-          eyebrow = cols[0].textContent.trim();
-          title = cols[1].textContent.trim();
-          if (variant === 'featured') description = cols[2].textContent.trim();
-          if (cols[3]) {
-            const ctaLink = cols[3].querySelector('a');
-            if (ctaLink) linkUrl = ctaLink.getAttribute('href');
-            ctaText = cols[3].textContent.trim();
-          }
-        } else {
-          const headings = row.querySelectorAll('h1, h2, h3, h4, h5, h6');
-          if (headings.length > 0) title = headings[0].textContent.trim();
-          const paragraphs = row.querySelectorAll('p');
-          paragraphs.forEach((p) => {
-            if (p.querySelector('a')) {
-              const a = p.querySelector('a');
-              linkUrl = a.getAttribute('href');
-              ctaText = a.textContent.trim();
-            } else if (!title) {
-              title = p.textContent.trim();
-            } else if (variant === 'featured' && !description) {
-              description = p.textContent.trim();
-            }
-          });
-        }
+        if (textCols[0]) eyebrow = textCols[0].textContent.trim();
+        if (textCols[1]) title = textCols[1].textContent.trim();
+        if (textCols[2] && !linkUrl) linkUrl = textCols[2].textContent.trim();
       }
 
       card.classList.add(`bento-card-${variant}`);
@@ -271,14 +255,14 @@ export default function decorate(block) {
         if (!bgPicture) {
           const logo = document.createElement('div');
           logo.className = 'bento-card-logo';
-          logo.textContent = '∞';
+          logo.textContent = '\u221E';
           content.append(logo);
         }
 
         const pillBtn = document.createElement('a');
         pillBtn.className = 'bento-pill-btn';
         pillBtn.href = linkUrl && linkUrl !== '#' ? linkUrl : '#';
-        let iconHtml = '<span class="bento-pill-icon" aria-hidden="true">☎</span>';
+        let iconHtml = '<span class="bento-pill-icon" aria-hidden="true">\u260E</span>';
         if (ctaIconPic) {
           iconHtml = `<span class="bento-pill-icon bento-pill-icon-custom">${ctaIconPic.outerHTML}</span>`;
         }
@@ -294,7 +278,7 @@ export default function decorate(block) {
         arrow.className = 'bento-card-arrow';
         arrow.href = linkUrl && linkUrl !== '#' ? linkUrl : '#';
         arrow.setAttribute('aria-label', `Open ${title || 'link'}`);
-        arrow.textContent = '↗';
+        arrow.textContent = '\u2197';
         card.append(arrow);
 
         if (linkUrl && linkUrl !== '#' && linkUrl !== '') {

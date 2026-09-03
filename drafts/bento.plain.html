@@ -7,7 +7,7 @@
       <div>Support, when you need</div>
     </div>
     
-    <!-- Column 1: 1 Featured Card (100% height) with bg image, eyebrow, title, description, cta icon, cta text, link -->
+    <!-- Column 1: Featured Card (100% height) -->
     <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item0" data-aue-type="component" data-aue-label="Featured Card" data-aue-model="bento-featured">
       <div><picture><img src="https://picsum.photos/seed/kotak-assist-bg/800/1000" alt=""></picture></div>
       <div>KOTAK ASSIST</div>
@@ -18,14 +18,14 @@
       <div>tel:0000000</div>
     </div>
 
-    <!-- Column 2: 2 Standard Cards (45% height each) - eyebrow, title, link, optional bg image (NO description) -->
-    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item1" data-aue-type="component" data-aue-label="Standard Card (Track Application)" data-aue-model="bento-standard">
+    <!-- Column 2: 2 Standard Cards (45% height each) -->
+    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item1" data-aue-type="component" data-aue-label="Standard Card" data-aue-model="bento-standard">
       <div><picture><img src="https://picsum.photos/seed/tech-sec/600/400" alt=""></picture></div>
       <div>CARD SECURITY</div>
       <div>Track Application</div>
       <div>#track</div>
     </div>
-    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item2" data-aue-type="component" data-aue-label="Standard Card (Submit complaint)" data-aue-model="bento-standard">
+    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item2" data-aue-type="component" data-aue-label="Standard Card" data-aue-model="bento-standard">
       <div></div>
       <div>HAVE A CONVERSATION</div>
       <div>Submit complaint</div>
@@ -33,19 +33,19 @@
     </div>
 
     <!-- Column 3: 2 Mini Standard Cards (40% height each) + 1 Compact Card (10% height) -->
-    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item3" data-aue-type="component" data-aue-label="Mini Standard Card (Submit complaint)" data-aue-model="bento-mini-standard">
+    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item3" data-aue-type="component" data-aue-label="Mini Standard Card" data-aue-model="bento-mini-standard">
       <div></div>
       <div>HAVE A CONVERSATION</div>
       <div>Submit complaint</div>
       <div>#complaint2</div>
     </div>
-    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item4" data-aue-type="component" data-aue-label="Mini Standard Card (Block card)" data-aue-model="bento-mini-standard">
+    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item4" data-aue-type="component" data-aue-label="Mini Standard Card" data-aue-model="bento-mini-standard">
       <div></div>
       <div>NEAR YOU</div>
       <div>Block card</div>
       <div>#block</div>
     </div>
-    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item5" data-aue-type="component" data-aue-label="Compact Card (Explore all)" data-aue-model="bento-compact">
+    <div data-aue-resource="urn:aemconnection:/content/demoproject/us/en/test-page/jcr:content/root/section/bento/item5" data-aue-type="component" data-aue-label="Compact Card" data-aue-model="bento-compact">
       <div>Explore all</div>
       <div>#explore</div>
     </div>
@@ -132,81 +132,84 @@
 <div id="ue-content-tree-panel">
   <div id="ue-content-tree-header">
     <span>Universal Editor: Content Tree</span>
-    <span style="font-size: 11px; color: #16a34a; font-weight: normal;">● Live Verified</span>
+    <span style="font-size: 11px; color: #16a34a; font-weight: normal;">Live Verified</span>
   </div>
   <div id="ue-content-tree-body"></div>
 </div>
 
 <script>
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const body = document.getElementById('ue-content-tree-body');
-      if (!body) return;
+  function renderContentTree() {
+    const body = document.getElementById('ue-content-tree-body');
+    if (!body) return;
 
-      const treeItems = [
-        { label: 'Page', icon: '📄', indent: 1 },
-        { label: 'Main', icon: '📁', indent: 2 },
-        { label: 'Section', icon: '📦', indent: 3 },
-      ];
+    const bentoBlock = document.querySelector('.bento');
+    if (!bentoBlock) {
+      setTimeout(renderContentTree, 200);
+      return;
+    }
 
-      const bentoBlock = document.querySelector('.bento');
-      if (bentoBlock) {
-        treeItems.push({
-          label: 'Bento',
-          icon: '🍱',
-          indent: 4,
-          element: bentoBlock,
-          badge: 'bento'
+    const cards = bentoBlock.querySelectorAll('.bento-card');
+    if (cards.length === 0) {
+      setTimeout(renderContentTree, 200);
+      return;
+    }
+
+    const treeItems = [
+      { label: 'Page', icon: '[P]', indent: 1 },
+      { label: 'Main', icon: '[M]', indent: 2 },
+      { label: 'Section', icon: '[S]', indent: 3 },
+      { label: 'Bento', icon: '[B]', indent: 4, element: bentoBlock, badge: 'bento' }
+    ];
+
+    cards.forEach((card, idx) => {
+      const model = card.getAttribute('data-aue-model') || 'bento-item';
+      const title = card.querySelector('.bento-card-heading')?.textContent.trim() || ('Card ' + (idx + 1));
+      let typeLabel = 'Standard (45%)';
+      if (card.classList.contains('bento-card-featured')) typeLabel = 'Featured (100%)';
+      else if (card.classList.contains('bento-card-mini-standard')) typeLabel = 'Mini Standard (40%)';
+      else if (card.classList.contains('bento-card-compact')) typeLabel = 'Compact (10%)';
+      
+      treeItems.push({
+        label: typeLabel + ': ' + title,
+        icon: '[C]',
+        indent: 5,
+        element: card,
+        badge: model
+      });
+    });
+
+    body.innerHTML = '';
+    treeItems.forEach((item) => {
+      const node = document.createElement('div');
+      node.className = 'ue-tree-node ue-tree-node-indent-' + item.indent;
+      node.innerHTML = '<span style="font-family:monospace;font-size:11px;">' + item.icon + '</span><span>' + item.label + '</span>';
+      if (item.badge) {
+        node.innerHTML += '<span class="ue-tree-node-badge">' + item.badge + '</span>';
+      }
+
+      if (item.element) {
+        node.addEventListener('click', () => {
+          document.querySelectorAll('.ue-tree-node').forEach(n => n.classList.remove('active'));
+          document.querySelectorAll('.ue-highlight-card').forEach(c => c.classList.remove('ue-highlight-card'));
+          node.classList.add('active');
+          item.element.classList.add('ue-highlight-card');
+          item.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
 
-        const cards = bentoBlock.querySelectorAll('.bento-card');
-        cards.forEach((card, idx) => {
-          const model = card.getAttribute('data-aue-model') || 'bento-item';
-          const title = card.querySelector('.bento-card-heading')?.textContent.trim() || `Card ${idx + 1}`;
-          let typeLabel = 'Standard (45%)';
-          if (card.classList.contains('bento-card-featured')) typeLabel = 'Featured (100%)';
-          else if (card.classList.contains('bento-card-mini-standard')) typeLabel = 'Mini Standard (40%)';
-          else if (card.classList.contains('bento-card-compact')) typeLabel = 'Compact (10%)';
-          
-          treeItems.push({
-            label: `${typeLabel}: ${title}`,
-            icon: '🎴',
-            indent: 5,
-            element: card,
-            badge: model
-          });
+        item.element.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return;
+          document.querySelectorAll('.ue-tree-node').forEach(n => n.classList.remove('active'));
+          document.querySelectorAll('.ue-highlight-card').forEach(c => c.classList.remove('ue-highlight-card'));
+          node.classList.add('active');
+          item.element.classList.add('ue-highlight-card');
         });
       }
 
-      body.innerHTML = '';
-      treeItems.forEach((item) => {
-        const node = document.createElement('div');
-        node.className = `ue-tree-node ue-tree-node-indent-${item.indent}`;
-        node.innerHTML = `<span>${item.icon}</span><span>${item.label}</span>`;
-        if (item.badge) {
-          node.innerHTML += `<span class="ue-tree-node-badge">${item.badge}</span>`;
-        }
+      body.appendChild(node);
+    });
+  }
 
-        if (item.element) {
-          node.addEventListener('click', () => {
-            document.querySelectorAll('.ue-tree-node').forEach(n => n.classList.remove('active'));
-            document.querySelectorAll('.ue-highlight-card').forEach(c => c.classList.remove('ue-highlight-card'));
-            node.classList.add('active');
-            item.element.classList.add('ue-highlight-card');
-            item.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          });
-
-          item.element.addEventListener('click', (e) => {
-            if (e.target.closest('a')) return;
-            document.querySelectorAll('.ue-tree-node').forEach(n => n.classList.remove('active'));
-            document.querySelectorAll('.ue-highlight-card').forEach(c => c.classList.remove('ue-highlight-card'));
-            node.classList.add('active');
-            item.element.classList.add('ue-highlight-card');
-          });
-        }
-
-        body.appendChild(node);
-      });
-    }, 400);
+  window.addEventListener('load', () => {
+    setTimeout(renderContentTree, 300);
   });
 </script>
