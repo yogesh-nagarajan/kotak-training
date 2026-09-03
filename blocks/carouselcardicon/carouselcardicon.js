@@ -70,7 +70,7 @@ export default function decorate(block) {
 
     const cardTitleText = cardTitleRow?.textContent?.trim() || '';
     const cardDescText = cardDescRow?.textContent?.trim() || '';
-    
+
     // Check for explicit link or raw text button label
     const linkEl = cardBtnRow?.querySelector('a');
     const cardBtnText = linkEl?.textContent?.trim() || cardBtnRow?.textContent?.trim() || '';
