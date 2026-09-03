@@ -255,7 +255,7 @@
 
 .bento .bento-card-standard .bento-card-content,
 .bento .bento-card-mini-standard .bento-card-content {
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .bento .bento-card-image-card {
@@ -314,6 +314,16 @@
 
 .bento .bento-card-image-card .bento-card-desc {
   color: rgb(255 255 255 / 90%);
+}
+
+.bento .bento-card-image-card .bento-card-arrow {
+  background-color: #fff;
+  color: #0f172a;
+}
+
+.bento .bento-card-image-card .bento-card-arrow:hover {
+  background-color: #f1f5f9;
+  color: #000;
 }
 
 .bento .bento-card-compact {
