@@ -251,7 +251,7 @@ export default function decorate(block) {
         const pillBtn = document.createElement('a');
         pillBtn.className = 'bento-pill-btn';
         pillBtn.href = linkUrl && linkUrl !== '#' ? linkUrl : '#';
-        pillBtn.innerHTML = `<span class="bento-pill-icon" aria-hidden="true">☎</span><span>${ctaText || 'Call Us At 0000000'}</span>`;
+        pillBtn.innerHTML = `<span class="bento-pill-icon" aria-hidden="true">☎</span><span>${ctaText || }</span>`;
         content.append(pillBtn);
       }
 
