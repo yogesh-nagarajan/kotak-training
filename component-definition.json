@@ -114,6 +114,21 @@
           }
         },
         {
+          "title": "Bento Card Item",
+          "id": "bento-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Bento Card Item",
+                  "model": "bento-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Breadcrumb",
           "id": "breadcrumb",
           "plugins": {
