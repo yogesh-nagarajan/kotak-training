@@ -1,120 +1,116 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+function transferInstrumentation(sourceRow, targetEl) {
+  if (!sourceRow || !targetEl) return;
+  const cell = sourceRow.firstElementChild || sourceRow;
+  if (
+    [...cell.attributes].some(
+      (a) => a.nodeName.startsWith('data-aue-') || a.nodeName.startsWith('data-richtext-'),
+    )
+  ) {
+    moveInstrumentation(cell, targetEl);
+  } else if (
+    [...sourceRow.attributes].some(
+      (a) => a.nodeName.startsWith('data-aue-') || a.nodeName.startsWith('data-richtext-'),
+    )
+  ) {
+    moveInstrumentation(sourceRow, targetEl);
+  }
+}
+
 export default function decorate(block) {
+  block.classList.add('carouselcardicon', 'carousel-card-icon');
+
+  // Collect all child rows/cells from authoring output
   const rows = [...block.children];
+  if (!rows.length) return;
 
-  const getValue = (index, fallback = '') => {
-    if (!rows[index]) return fallback;
+  // Extract author inputs dynamically
+  const labelRow = rows[0];
+  const titleRow = rows[1];
 
-    const value = rows[index].textContent.trim();
+  const labelText = labelRow?.textContent?.trim() || '';
+  const titleText = titleRow?.textContent?.trim() || '';
 
-    return value || fallback;
-  };
-
-  const label = getValue(0, 'Safe Banking Tips');
-  const title = getValue(1, 'Stay informed. Stay scam-free.');
-
-  const cards = [
-    {
-      title: getValue(2, 'Verify stays before you pay.'),
-      description: getValue(
-        3,
-        'Fake hotel or rental listings can look real. Check the source before booking.',
-      ),
-      button: getValue(4, 'Know The Signs'),
-    },
-    {
-      title: getValue(
-        5,
-        'Discount links that lead to fake payment pages',
-      ),
-      description: getValue(
-        6,
-        'A “too good to be true” discount link can redirect you to fake payment pages that steal your money instantly.',
-      ),
-      button: getValue(7, 'Know The Signs'),
-    },
-    {
-      title: getValue(
-        8,
-        'Check the source before you scan',
-      ),
-      description: getValue(
-        9,
-        'Scanning unknown QR codes can lead to money going out of your account—not coming in.',
-      ),
-      button: getValue(10, 'Know The Signs'),
-    },
-    {
-      title: getValue(
-        11,
-        'Save card details only when it’s secure',
-      ),
-      description: getValue(
-        12,
-        'Saving your card details on unsecured websites can make you an easy target for unauthorised transactions.',
-      ),
-      button: getValue(13, 'Know The Signs'),
-    },
-  ];
-
-  block.innerHTML = '';
-
+  // Header section setup
   const header = document.createElement('div');
   header.className = 'carouselcardicon-header';
 
-  const labelElement = document.createElement('p');
-  labelElement.className = 'carouselcardicon-label';
-  labelElement.textContent = label;
-
-  const titleElement = document.createElement('h2');
-  titleElement.className = 'carouselcardicon-title';
-
-  const titleParts = title.split('. ');
-
-  if (titleParts.length > 1) {
-    titleElement.innerHTML = `${titleParts[0]}.<br>${titleParts.slice(1).join('. ')}`;
-  } else {
-    titleElement.textContent = title;
+  if (labelText) {
+    const labelElement = document.createElement('p');
+    labelElement.className = 'carouselcardicon-label';
+    labelElement.textContent = labelText;
+    transferInstrumentation(labelRow, labelElement);
+    header.append(labelElement);
   }
 
-  header.append(labelElement, titleElement);
+  if (titleText) {
+    const titleElement = document.createElement('h2');
+    titleElement.className = 'carouselcardicon-title';
+    const titleParts = titleText.split('. ');
+    if (titleParts.length > 1) {
+      titleElement.innerHTML = `${titleParts[0]}.<br>${titleParts.slice(1).join('. ')}`;
+    } else {
+      titleElement.textContent = titleText;
+    }
+    transferInstrumentation(titleRow, titleElement);
+    header.append(titleElement);
+  }
 
+  // Cards container setup
   const cardsContainer = document.createElement('div');
   cardsContainer.className = 'carouselcardicon-cards';
 
-  cards.forEach((cardData) => {
-    const card = document.createElement('article');
-    card.className = 'carouselcardicon-card';
+  // Process authored cards (Group items in chunks of 3: Title, Description, Button)
+  const cardRows = rows.slice(2);
+  for (let i = 0; i < cardRows.length; i += 3) {
+    const cardTitleRow = cardRows[i];
+    const cardDescRow = cardRows[i + 1];
+    const cardBtnRow = cardRows[i + 2];
 
-    const icon = document.createElement('div');
-    icon.className = 'carouselcardicon-icon';
+    const cardTitleText = cardTitleRow?.textContent?.trim() || '';
+    const cardDescText = cardDescRow?.textContent?.trim() || '';
 
-    icon.innerHTML = `
-      <span></span>
-      <span></span>
-    `;
+    // Check for explicit link or raw text button label
+    const linkEl = cardBtnRow?.querySelector('a');
+    const cardBtnText = linkEl?.textContent?.trim() || cardBtnRow?.textContent?.trim() || '';
+    const cardBtnHref = linkEl?.getAttribute('href') || '#';
 
-    const cardTitle = document.createElement('h3');
-    cardTitle.className = 'carouselcardicon-card-title';
-    cardTitle.textContent = cardData.title;
+    if (cardTitleText || cardDescText || cardBtnText) {
+      const card = document.createElement('article');
+      card.className = 'carouselcardicon-card';
 
-    const description = document.createElement('p');
-    description.className = 'carouselcardicon-card-description';
-    description.textContent = cardData.description;
+      // Icon element
+      const icon = document.createElement('div');
+      icon.className = 'carouselcardicon-icon';
+      icon.innerHTML = `
+        <span></span>
+        <span></span>
+      `;
 
-    const button = document.createElement('a');
-    button.className = 'carouselcardicon-button';
-    button.href = '#';
-    button.textContent = cardData.button;
+      // Title element
+      const cardTitle = document.createElement('h3');
+      cardTitle.className = 'carouselcardicon-card-title';
+      cardTitle.textContent = cardTitleText;
+      if (cardTitleRow) transferInstrumentation(cardTitleRow, cardTitle);
 
-    card.append(
-      icon,
-      cardTitle,
-      description,
-      button,
-    );
+      // Description element
+      const description = document.createElement('p');
+      description.className = 'carouselcardicon-card-description';
+      description.textContent = cardDescText;
+      if (cardDescRow) transferInstrumentation(cardDescRow, description);
 
-    cardsContainer.append(card);
-  });
+      // Button element
+      const button = document.createElement('a');
+      button.className = 'carouselcardicon-button';
+      button.href = cardBtnHref;
+      button.textContent = cardBtnText || 'Know The Signs';
+      if (cardBtnRow) transferInstrumentation(cardBtnRow, button);
 
-  block.append(header, cardsContainer);
+      card.append(icon, cardTitle, description, button);
+      cardsContainer.append(card);
+    }
+  }
+
+  block.replaceChildren(header, cardsContainer);
 }
