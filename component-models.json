@@ -193,16 +193,14 @@
         "valueType": "string",
         "name": "pretitle",
         "label": "Pretitle",
-        "description": "Small category label (e.g. Quick Links)",
-        "value": "Quick Links"
+        "description": "Small category label (e.g. Quick Links)"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "title",
         "label": "Title",
-        "description": "Main heading (e.g. Support, when you need)",
-        "value": "Support, when you need"
+        "description": "Main heading (e.g. Support, when you need)"
       },
       {
         "component": "multiselect",
@@ -939,10 +937,18 @@
         "label": "Mobile Image Alt Text"
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "value": ""
+      },
+      {
         "component": "richtext",
         "name": "text",
         "value": "",
-        "label": "Heading & Text",
+        "label": "Text",
+        "description": "Description paragraph",
         "valueType": "string"
       },
       {
@@ -959,41 +965,41 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "benefit_1Icon",
+        "name": "benefit_1",
         "label": "Benefit 1 Icon",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "benefit_1",
-        "label": "Benefit 1"
+        "name": "benefit_1Text",
+        "label": "Benefit 1 Text"
       },
       {
         "component": "reference",
         "valueType": "string",
-        "name": "benefit_2Icon",
+        "name": "benefit_2",
         "label": "Benefit 2 Icon",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "benefit_2",
-        "label": "Benefit 2"
+        "name": "benefit_2Text",
+        "label": "Benefit 2 Text"
       },
       {
         "component": "reference",
         "valueType": "string",
-        "name": "benefit_3Icon",
+        "name": "benefit_3",
         "label": "Benefit 3 Icon",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "benefit_3",
-        "label": "Benefit 3"
+        "name": "benefit_3Text",
+        "label": "Benefit 3 Text"
       }
     ]
   },

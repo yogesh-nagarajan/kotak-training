@@ -98,20 +98,21 @@ function formatPicture(element, className, altText) {
 
 /**
  * Loads and decorates the hero-new-banner block.
- * Universal Editor Model order (13 fields):
+ * Universal Editor Model order (14 fields):
  * 0: bg_image
  * 1: bg_imageAlt
  * 2: bg_imageMobile
  * 3: bg_imageMobileAlt
- * 4: text (richtext)
- * 5: cta_link
- * 6: cta_linkText
- * 7: benefit_1_icon
- * 8: benefit_1
- * 9: benefit_2_icon
- * 10: benefit_2
- * 11: benefit_3_icon
- * 12: benefit_3
+ * 4: title
+ * 5: text
+ * 6: cta_link
+ * 7: cta_linkText
+ * 8: benefit_1Icon
+ * 9: benefit_1
+ * 10: benefit_2Icon
+ * 11: benefit_2
+ * 12: benefit_3Icon
+ * 13: benefit_3
  *
  * @param {Element} block The hero-new-banner block element
  */
@@ -123,6 +124,7 @@ export default function decorate(block) {
   let bgImageAltRow = null;
   let mobileImageRow = null;
   let mobileImageAltRow = null;
+  let titleRow = null;
   let textRow = null;
   let ctaLinkRow = null;
   let ctaTextRow = null;
@@ -133,12 +135,13 @@ export default function decorate(block) {
   let benefit3IconRow = null;
   let benefit3Row = null;
 
-  if (rows.length >= 13) {
+  if (rows.length >= 14) {
     [
       bgImageRow,
       bgImageAltRow,
       mobileImageRow,
       mobileImageAltRow,
+      titleRow,
       textRow,
       ctaLinkRow,
       ctaTextRow,
@@ -149,9 +152,33 @@ export default function decorate(block) {
       benefit3IconRow,
       benefit3Row,
     ] = rows;
-  } else {
-    // Graceful fallback for compact authored drafts
-    [bgImageRow, textRow, ctaLinkRow] = rows;
+  } else if (rows.length === 13) {
+    [
+      bgImageRow,
+      bgImageAltRow,
+      mobileImageRow,
+      mobileImageAltRow,
+      titleRow,
+      ctaLinkRow,
+      ctaTextRow,
+      benefit1IconRow,
+      benefit1Row,
+      benefit2IconRow,
+      benefit2Row,
+      benefit3IconRow,
+      benefit3Row,
+    ] = rows;
+  } else if (rows.length === 5) {
+    [bgImageRow, titleRow, textRow, ctaLinkRow] = rows;
+    const compactBenefits = rows[4];
+    if (compactBenefits) {
+      const benefitParas = [...compactBenefits.querySelectorAll('p, li')];
+      const benefitCells = [...compactBenefits.children];
+      const items = benefitParas.length > 0 ? benefitParas : benefitCells;
+      [benefit1Row, benefit2Row, benefit3Row] = items;
+    }
+  } else if (rows.length === 4) {
+    [bgImageRow, titleRow, ctaLinkRow] = rows;
     const compactBenefits = rows[3];
     if (compactBenefits) {
       const benefitParas = [...compactBenefits.querySelectorAll('p, li')];
@@ -159,6 +186,8 @@ export default function decorate(block) {
       const items = benefitParas.length > 0 ? benefitParas : benefitCells;
       [benefit1Row, benefit2Row, benefit3Row] = items;
     }
+  } else {
+    [bgImageRow, titleRow, ctaLinkRow] = rows;
   }
 
   // 1. Hero Card Wrapper
@@ -196,41 +225,44 @@ export default function decorate(block) {
   const content = document.createElement('div');
   content.className = 'hero-new-banner-content';
 
-  // Process richtext textRow
-  const textCell = textRow?.firstElementChild || textRow;
-  if (textCell) {
-    const heading = textCell.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      const title = document.createElement('h2');
+  // Process Title exclusively
+  if (titleRow) {
+    const titleCell = titleRow.firstElementChild || titleRow;
+    const titleHtml = (titleCell.innerHTML || '').trim();
+    const titleText = titleCell.textContent.trim();
+
+    if (titleText) {
+      const title = document.createElement('div');
       title.className = 'hero-new-banner-title';
-      title.innerHTML = heading.innerHTML;
-      moveInstrumentation(heading, title);
+      if (/<br\s*\/?>/i.test(titleHtml)) {
+        title.innerHTML = titleHtml;
+      } else {
+        title.textContent = titleText;
+      }
+      moveInstrumentation(titleCell, title);
       content.append(title);
     }
+  }
 
-    const descNodes = [];
-    [...textCell.children].forEach((child) => {
-      if (child === heading) return;
-      if (
-        child.contains(heading)
-        && child.children.length === 1
-        && !child.textContent.replace(heading.textContent, '').trim()
-      ) {
-        return;
-      }
-      descNodes.push(child.cloneNode(true));
-    });
-
-    if (!heading && textCell.textContent.trim()) {
-      const title = document.createElement('h2');
-      title.className = 'hero-new-banner-title';
-      title.textContent = textCell.textContent.trim();
-      moveInstrumentation(textCell, title);
-      content.append(title);
-    } else if (descNodes.length > 0) {
+  // Process Text / Description exclusively
+  if (textRow) {
+    const textCell = textRow.firstElementChild || textRow;
+    const descText = textCell.textContent.trim();
+    if (descText) {
       const desc = document.createElement('div');
       desc.className = 'hero-new-banner-description';
-      descNodes.forEach((node) => desc.append(node));
+
+      const paragraphs = textCell.querySelectorAll('p');
+      if (paragraphs.length > 0) {
+        paragraphs.forEach((p) => {
+          desc.append(p.cloneNode(true));
+        });
+      } else {
+        const p = document.createElement('p');
+        p.textContent = descText;
+        desc.append(p);
+      }
+      moveInstrumentation(textCell, desc);
       content.append(desc);
     }
   }
@@ -270,7 +302,7 @@ export default function decorate(block) {
   ];
 
   const defaultSvgIcon = `
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
       <circle cx="12" cy="13" r="2.5"/>
     </svg>
@@ -334,12 +366,4 @@ export default function decorate(block) {
   if (benefitsContainer && benefitsContainer.children.length > 0) {
     block.append(benefitsContainer);
   }
-
-  // /* eslint-disable no-console */
-  // console.log('FINAL HERONEWBANNER DOM:', block.outerHTML);
-  // console.log('hero classes:', hero.className);
-  // console.log('image classes:', imageWrapper?.className);
-  // console.log('content classes:', content.className);
-  // console.log('benefits classes:', benefitsContainer?.className);
-  // /* eslint-enable no-console */
 }
