@@ -10,33 +10,39 @@ export default function decorate(block) {
 
   if (headerRow) {
     const divs = [...headerRow.children];
-    // Assuming Universal Editor structure passes fields sequentially or as text divs
     const pretitleText = divs[0]?.textContent?.trim();
     const titleText = divs[1]?.textContent?.trim();
     const descText = divs[2]?.textContent?.trim();
     const tabsText = divs[3]?.textContent?.trim();
 
+    // Group text elements vertically in a left column container
+    const textContentDiv = document.createElement('div');
+    textContentDiv.className = 'carouselcard-text-content';
+
     if (pretitleText) {
       const pretitle = document.createElement('span');
       pretitle.className = 'pretitle';
       pretitle.textContent = pretitleText;
-      headerDiv.appendChild(pretitle);
+      textContentDiv.appendChild(pretitle);
     }
 
     if (titleText) {
       const title = document.createElement('h2');
       title.className = 'title';
       title.textContent = titleText;
-      headerDiv.appendChild(title);
+      textContentDiv.appendChild(title);
     }
 
     if (descText) {
       const desc = document.createElement('p');
       desc.className = 'description';
       desc.textContent = descText;
-      headerDiv.appendChild(desc);
+      textContentDiv.appendChild(desc);
     }
 
+    headerDiv.appendChild(textContentDiv);
+
+    // Process Navigation Tabs on the right
     if (tabsText) {
       const tabsWrapper = document.createElement('div');
       tabsWrapper.className = 'carouselcard-tabs';
@@ -64,7 +70,7 @@ export default function decorate(block) {
 
       const cols = [...itemRow.children];
 
-      // Extract Image
+      // Extract Background Image
       const picture = cols[0]?.querySelector('picture');
       if (picture) {
         const bgWrapper = document.createElement('div');
@@ -73,15 +79,32 @@ export default function decorate(block) {
         card.appendChild(bgWrapper);
       }
 
-      // Extract Text Content & Link
+      // Extract Card Content explicitly to match CSS targets
       const contentDiv = document.createElement('div');
       contentDiv.className = 'card-content';
 
-      cols.slice(1).forEach((col) => {
-        while (col.firstChild) {
-          contentDiv.appendChild(col.firstChild);
-        }
-      });
+      const cardTitleText = cols[1]?.textContent?.trim();
+      const cardDescText = cols[2]?.textContent?.trim();
+      const cardCtaText = cols[3]?.textContent?.trim();
+
+      if (cardTitleText) {
+        const h3 = document.createElement('h3');
+        h3.textContent = cardTitleText;
+        contentDiv.appendChild(h3);
+      }
+
+      if (cardDescText) {
+        const p = document.createElement('p');
+        p.textContent = cardDescText;
+        contentDiv.appendChild(p);
+      }
+
+      if (cardCtaText) {
+        const a = document.createElement('a');
+        a.href = '#';
+        a.textContent = cardCtaText;
+        contentDiv.appendChild(a);
+      }
 
       card.appendChild(contentDiv);
       track.appendChild(card);
