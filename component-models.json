@@ -197,16 +197,14 @@
         "valueType": "string",
         "name": "pretitle",
         "label": "Pretitle",
-        "description": "Small category label (e.g. Quick Links)",
-        "value": "Quick Links"
+        "description": "Small category label (e.g. Quick Links)"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "title",
         "label": "Title",
-        "description": "Main heading (e.g. Support, when you need)",
-        "value": "Support, when you need"
+        "description": "Main heading (e.g. Support, when you need)"
       },
       {
         "component": "multiselect",
