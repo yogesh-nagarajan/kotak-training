@@ -5,26 +5,33 @@
  * "Business Text" style option (models/_section.json). It scopes all rules to
  * .section.business-text so it never affects default content elsewhere or on
  * other branches. Styles AEM default content (headings, paragraphs, lists).
+ *
+ * Uses the Manrope font family to match the other 811 Business blocks
+ * (hero-811-business, card-811-business-new, usp-cards-811-business).
  */
 
 main .section.business-text .default-content-wrapper {
   --business-text-bullet-color: #e2231a;
 
   color: var(--text-color, #131313);
-  font-family: var(--body-font-family, roboto, roboto-fallback, sans-serif);
+  font-family: manrope, var(--body-font-family), sans-serif;
 }
 
-/* headings */
+/* headings — Manrope 700, tight leading like the 811 blocks */
 main .section.business-text .default-content-wrapper h1,
 main .section.business-text .default-content-wrapper h2,
 main .section.business-text .default-content-wrapper h3,
 main .section.business-text .default-content-wrapper h4 {
   margin: 0 0 12px;
-  font-family: var(--heading-font-family, roboto-condensed, roboto-condensed-fallback, sans-serif);
-  font-size: var(--heading-font-size-m, 22px);
+  font-family: manrope, var(--body-font-family), sans-serif;
   font-weight: 700;
   line-height: 1.2;
 }
+
+main .section.business-text .default-content-wrapper h1 { font-size: 30px; }
+main .section.business-text .default-content-wrapper h2 { font-size: 26px; }
+main .section.business-text .default-content-wrapper h3 { font-size: 20px; }
+main .section.business-text .default-content-wrapper h4 { font-size: 18px; }
 
 main .section.business-text .default-content-wrapper h1:not(:first-child),
 main .section.business-text .default-content-wrapper h2:not(:first-child),
@@ -33,11 +40,12 @@ main .section.business-text .default-content-wrapper h4:not(:first-child) {
   margin-top: 28px;
 }
 
-/* paragraphs */
+/* paragraphs — Manrope 400, 15px mobile / 18px desktop, matching the 811 blocks */
 main .section.business-text .default-content-wrapper p {
   margin: 0;
-  font-size: var(--body-font-size-xs, 17px);
-  line-height: 1.55;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 main .section.business-text .default-content-wrapper p + p {
@@ -55,7 +63,8 @@ main .section.business-text .default-content-wrapper ul li {
   position: relative;
   margin: 0 0 12px;
   padding-left: 20px;
-  font-size: var(--body-font-size-xs, 17px);
+  font-weight: 400;
+  font-size: 15px;
   line-height: 1.5;
 }
 
@@ -66,7 +75,7 @@ main .section.business-text .default-content-wrapper ul li:last-child {
 main .section.business-text .default-content-wrapper ul li::before {
   content: "";
   position: absolute;
-  top: 0.55em;
+  top: 0.6em;
   left: 4px;
   width: 6px;
   height: 6px;
@@ -76,40 +85,27 @@ main .section.business-text .default-content-wrapper ul li::before {
 
 /* tablet */
 @media (width >= 600px) {
-  main .section.business-text .default-content-wrapper h1,
-  main .section.business-text .default-content-wrapper h2,
-  main .section.business-text .default-content-wrapper h3,
-  main .section.business-text .default-content-wrapper h4 {
-    margin-bottom: 14px;
-    font-size: var(--heading-font-size-l, 28px);
-  }
+  main .section.business-text .default-content-wrapper h1 { font-size: 40px; }
+  main .section.business-text .default-content-wrapper h2 { font-size: 34px; }
+  main .section.business-text .default-content-wrapper h3 { font-size: 24px; }
+  main .section.business-text .default-content-wrapper h4 { font-size: 20px; }
 
   main .section.business-text .default-content-wrapper p,
   main .section.business-text .default-content-wrapper ul li {
-    font-size: var(--body-font-size-s, 19px);
+    font-size: 16px;
   }
 }
 
 /* desktop */
 @media (width >= 900px) {
-  main .section.business-text .default-content-wrapper h1,
-  main .section.business-text .default-content-wrapper h2,
-  main .section.business-text .default-content-wrapper h3,
-  main .section.business-text .default-content-wrapper h4 {
-    margin-bottom: 16px;
-    font-size: var(--heading-font-size-l, 34px);
-  }
-
-  main .section.business-text .default-content-wrapper h1:not(:first-child),
-  main .section.business-text .default-content-wrapper h2:not(:first-child),
-  main .section.business-text .default-content-wrapper h3:not(:first-child),
-  main .section.business-text .default-content-wrapper h4:not(:first-child) {
-    margin-top: 36px;
-  }
+  main .section.business-text .default-content-wrapper h1 { font-size: 48px; }
+  main .section.business-text .default-content-wrapper h2 { font-size: 40px; }
+  main .section.business-text .default-content-wrapper h3 { font-size: 28px; }
+  main .section.business-text .default-content-wrapper h4 { font-size: 22px; }
 
   main .section.business-text .default-content-wrapper p,
   main .section.business-text .default-content-wrapper ul li {
-    font-size: var(--body-font-size-m, 22px);
+    font-size: 18px;
     line-height: 1.6;
   }
 }
