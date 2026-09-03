@@ -135,7 +135,7 @@ export default function decorate(block) {
       // MUST read instrumentation BEFORE moveInstrumentation removes attributes from row
       const model = row.getAttribute('data-aue-model');
       const label = row.getAttribute('data-aue-label');
-      const variant = detectVariant(model, label, cols);
+      let variant = detectVariant(model, label, cols);
 
       const card = document.createElement('article');
       card.className = 'bento-card';
@@ -152,7 +152,36 @@ export default function decorate(block) {
       let bgPicture = null;
       let ctaIconPic = null;
 
-      if (variant === 'featured') {
+      if (model === 'bento-item') {
+        const varEl = row.querySelector('[data-aue-prop="variant"]');
+        const varText = (varEl?.textContent.trim() || cols[0]?.textContent.trim() || '').toLowerCase();
+        if (['featured', 'standard', 'mini-standard', 'compact'].includes(varText)) {
+          variant = varText;
+        }
+
+        const imgEl = row.querySelector('[data-aue-prop="image"]') || cols[1];
+        const ebEl = row.querySelector('[data-aue-prop="eyebrow"]') || cols[2];
+        const titleEl = row.querySelector('[data-aue-prop="title"]') || cols[3];
+        const descEl = row.querySelector('[data-aue-prop="description"]') || cols[4];
+        const ctaIconEl = row.querySelector('[data-aue-prop="ctaIcon"]') || cols[5];
+        const ctaTextEl = row.querySelector('[data-aue-prop="ctaText"]') || cols[6];
+        const linkEl = row.querySelector('[data-aue-prop="link"]') || cols[7];
+
+        title = titleEl?.textContent.trim() || '';
+        const rawLink = linkEl?.textContent.trim() || linkEl?.querySelector('a')?.getAttribute('href');
+        if (rawLink) linkUrl = rawLink;
+
+        if (variant !== 'compact') {
+          eyebrow = ebEl?.textContent.trim() || '';
+          bgPicture = imgEl?.querySelector('picture') || imgEl?.querySelector('img');
+        }
+
+        if (variant === 'featured') {
+          description = descEl?.textContent.trim() || '';
+          ctaIconPic = ctaIconEl?.querySelector('picture') || ctaIconEl?.querySelector('img');
+          ctaText = ctaTextEl?.textContent.trim() || '';
+        }
+      } else if (variant === 'featured') {
         if (model === 'bento-featured') {
           // Fields: [image, eyebrow, title, description, ctaIcon, ctaText, link]
           bgPicture = cols[0]?.querySelector('picture') || cols[0]?.querySelector('img');

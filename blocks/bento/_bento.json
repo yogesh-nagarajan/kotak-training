@@ -17,74 +17,14 @@
       }
     },
     {
-      "title": "Featured Card",
-      "id": "bento-featured",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Featured Card",
-              "model": "bento-featured"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Standard Card",
-      "id": "bento-standard",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Standard Card",
-              "model": "bento-standard"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Mini Standard Card",
-      "id": "bento-mini-standard",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Mini Standard Card",
-              "model": "bento-mini-standard"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Compact Card",
-      "id": "bento-compact",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Compact Card",
-              "model": "bento-compact"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Bento Card Item",
+      "title": "Bento Card",
       "id": "bento-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Bento Card Item",
+              "name": "Bento Card",
               "model": "bento-item"
             }
           }
@@ -100,162 +40,15 @@
           "component": "text",
           "valueType": "string",
           "name": "pretitle",
-          "label": "Pretitle",
-          "description": "Small category label (e.g. Quick Links)",
-          "value": "Quick Links"
+          "label": "Section Eyebrow / Pretitle",
+          "description": "Small category badge above main title (e.g. Quick Links)"
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "title",
-          "label": "Title",
-          "description": "Main heading (e.g. Support, when you need)",
-          "value": "Support, when you need"
-        },
-        {
-          "component": "multiselect",
-          "name": "classes",
-          "label": "Style Options",
-          "options": [
-            {
-              "name": "Dark Theme",
-              "value": "theme-dark"
-            },
-            {
-              "name": "Fluid Full Width",
-              "value": "width-fluid"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "bento-featured",
-      "fields": [
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "image",
-          "label": "Card Background Image",
-          "multi": false
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "eyebrow",
-          "label": "Eyebrow Text",
-          "description": "Small category badge (e.g. KOTAK ASSIST)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "title",
-          "label": "Card Title",
-          "description": "Main card heading"
-        },
-        {
-          "component": "textarea",
-          "valueType": "string",
-          "name": "description",
-          "label": "Card Description"
-        },
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "ctaIcon",
-          "label": "CTA Button Icon",
-          "multi": false
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "ctaText",
-          "label": "CTA Button Text"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "link",
-          "label": "CTA Link URL"
-        }
-      ]
-    },
-    {
-      "id": "bento-standard",
-      "fields": [
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "image",
-          "label": "Card Background Image (Optional)",
-          "multi": false
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "eyebrow",
-          "label": "Eyebrow Text",
-          "description": "Small category badge"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "title",
-          "label": "Card Title"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "link",
-          "label": "Link URL"
-        }
-      ]
-    },
-    {
-      "id": "bento-mini-standard",
-      "fields": [
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "image",
-          "label": "Card Background Image (Optional)",
-          "multi": false
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "eyebrow",
-          "label": "Eyebrow Text",
-          "description": "Small category badge"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "title",
-          "label": "Card Title"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "link",
-          "label": "Link URL"
-        }
-      ]
-    },
-    {
-      "id": "bento-compact",
-      "fields": [
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "title",
-          "label": "Card Title"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "link",
-          "label": "Link URL"
+          "label": "Section Title",
+          "description": "Main block title (e.g. Support, when you need)"
         }
       ]
     },
@@ -265,47 +58,110 @@
         {
           "component": "select",
           "name": "variant",
-          "label": "Card Variant",
+          "label": "Card Variation",
           "value": "standard",
           "options": [
             {
-              "name": "Featured (Big Card)",
+              "name": "Featured Card (100% height)",
               "value": "featured"
             },
             {
-              "name": "Standard Card",
+              "name": "Standard Card (45% height)",
               "value": "standard"
             },
             {
-              "name": "Mini Standard Card",
+              "name": "Mini Standard Card (40% height)",
               "value": "mini-standard"
             },
             {
-              "name": "Compact Card",
+              "name": "Compact Card (10% height)",
               "value": "compact"
             }
           ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Card Background Image",
+          "multi": false,
+          "condition": {
+            "!=": [
+              {
+                "var": "variant"
+              },
+              "compact"
+            ]
+          }
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "eyebrow",
           "label": "Card Eyebrow",
-          "value": ""
+          "condition": {
+            "!=": [
+              {
+                "var": "variant"
+              },
+              "compact"
+            ]
+          }
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "title",
-          "label": "Card Title",
-          "value": ""
+          "label": "Card Title"
         },
         {
-          "component": "richtext",
-          "name": "text",
-          "label": "Card Content (Description, Link, Image)",
-          "value": "",
-          "valueType": "string"
+          "component": "textarea",
+          "valueType": "string",
+          "name": "description",
+          "label": "Card Description (Featured Only)",
+          "condition": {
+            "==": [
+              {
+                "var": "variant"
+              },
+              "featured"
+            ]
+          }
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "ctaIcon",
+          "label": "CTA Button Icon (Featured Only)",
+          "multi": false,
+          "condition": {
+            "==": [
+              {
+                "var": "variant"
+              },
+              "featured"
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "ctaText",
+          "label": "CTA Button Text (Featured Only)",
+          "condition": {
+            "==": [
+              {
+                "var": "variant"
+              },
+              "featured"
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "link",
+          "label": "Link URL"
         }
       ]
     }
@@ -314,10 +170,6 @@
     {
       "id": "bento",
       "components": [
-        "bento-featured",
-        "bento-standard",
-        "bento-mini-standard",
-        "bento-compact",
         "bento-item"
       ]
     }

@@ -22,7 +22,7 @@ module.exports = {
     'xwalk/max-cells': ['error', {
       '*': 4,
       carouselcardicon: 14,
-      'bento-featured': 7,
+      'bento-item': 8,
     }],
     'xwalk/no-orphan-collapsible-fields': 'off',
   },
