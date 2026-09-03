@@ -1,0 +1,115 @@
+/*
+ * "Business Text" section style for 811 Business.
+ *
+ * Opt-in only: applies solely to sections where an author selects the
+ * "Business Text" style option (models/_section.json). It scopes all rules to
+ * .section.business-text so it never affects default content elsewhere or on
+ * other branches. Styles AEM default content (headings, paragraphs, lists).
+ */
+
+main .section.business-text .default-content-wrapper {
+  --business-text-bullet-color: #e2231a;
+
+  color: var(--text-color, #131313);
+  font-family: var(--body-font-family, roboto, roboto-fallback, sans-serif);
+}
+
+/* headings */
+main .section.business-text .default-content-wrapper h1,
+main .section.business-text .default-content-wrapper h2,
+main .section.business-text .default-content-wrapper h3,
+main .section.business-text .default-content-wrapper h4 {
+  margin: 0 0 12px;
+  font-family: var(--heading-font-family, roboto-condensed, roboto-condensed-fallback, sans-serif);
+  font-size: var(--heading-font-size-m, 22px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+main .section.business-text .default-content-wrapper h1:not(:first-child),
+main .section.business-text .default-content-wrapper h2:not(:first-child),
+main .section.business-text .default-content-wrapper h3:not(:first-child),
+main .section.business-text .default-content-wrapper h4:not(:first-child) {
+  margin-top: 28px;
+}
+
+/* paragraphs */
+main .section.business-text .default-content-wrapper p {
+  margin: 0;
+  font-size: var(--body-font-size-xs, 17px);
+  line-height: 1.55;
+}
+
+main .section.business-text .default-content-wrapper p + p {
+  margin-top: 1em;
+}
+
+/* bullet points with red round markers */
+main .section.business-text .default-content-wrapper ul {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+main .section.business-text .default-content-wrapper ul li {
+  position: relative;
+  margin: 0 0 12px;
+  padding-left: 20px;
+  font-size: var(--body-font-size-xs, 17px);
+  line-height: 1.5;
+}
+
+main .section.business-text .default-content-wrapper ul li:last-child {
+  margin-bottom: 0;
+}
+
+main .section.business-text .default-content-wrapper ul li::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--business-text-bullet-color);
+  border-radius: 50%;
+}
+
+/* tablet */
+@media (width >= 600px) {
+  main .section.business-text .default-content-wrapper h1,
+  main .section.business-text .default-content-wrapper h2,
+  main .section.business-text .default-content-wrapper h3,
+  main .section.business-text .default-content-wrapper h4 {
+    margin-bottom: 14px;
+    font-size: var(--heading-font-size-l, 28px);
+  }
+
+  main .section.business-text .default-content-wrapper p,
+  main .section.business-text .default-content-wrapper ul li {
+    font-size: var(--body-font-size-s, 19px);
+  }
+}
+
+/* desktop */
+@media (width >= 900px) {
+  main .section.business-text .default-content-wrapper h1,
+  main .section.business-text .default-content-wrapper h2,
+  main .section.business-text .default-content-wrapper h3,
+  main .section.business-text .default-content-wrapper h4 {
+    margin-bottom: 16px;
+    font-size: var(--heading-font-size-l, 34px);
+  }
+
+  main .section.business-text .default-content-wrapper h1:not(:first-child),
+  main .section.business-text .default-content-wrapper h2:not(:first-child),
+  main .section.business-text .default-content-wrapper h3:not(:first-child),
+  main .section.business-text .default-content-wrapper h4:not(:first-child) {
+    margin-top: 36px;
+  }
+
+  main .section.business-text .default-content-wrapper p,
+  main .section.business-text .default-content-wrapper ul li {
+    font-size: var(--body-font-size-m, 22px);
+    line-height: 1.6;
+  }
+}

@@ -140,6 +140,10 @@
           {
             "name": "Overlapping cards",
             "value": "overlap-cards"
+          },
+          {
+            "name": "Business Text",
+            "value": "business-text"
           }
         ]
       }

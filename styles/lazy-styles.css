@@ -1,1 +1,4 @@
 /* add global styles that can be loaded post LCP here */
+
+/* 811 Business "Business Text" section style (opt-in, scoped to .section.business-text) */
+@import url("./business-text.css");
