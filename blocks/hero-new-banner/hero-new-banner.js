@@ -88,7 +88,7 @@ function formatPicture(element, className, altText) {
 }
 
 /**
- * Loads and decorates the heronewbanner block.
+ * Loads and decorates the hero-new-banner block.
  * Universal Editor Model order (13 fields):
  * 0: bg_image
  * 1: bg_imageAlt
@@ -104,7 +104,7 @@ function formatPicture(element, className, altText) {
  * 11: benefit_3_icon
  * 12: benefit_3
  *
- * @param {Element} block The heronewbanner block element
+ * @param {Element} block The hero-new-banner block element
  */
 export default function decorate(block) {
   const rows = [...block.children];
@@ -154,22 +154,22 @@ export default function decorate(block) {
 
   // 1. Hero Card Wrapper
   const hero = document.createElement('div');
-  hero.className = 'heronewbanner-hero';
+  hero.className = 'hero-new-banner-hero';
 
   // 2. Desktop & Mobile Image
   const imageWrapper = document.createElement('div');
-  imageWrapper.className = 'heronewbanner-image';
+  imageWrapper.className = 'hero-new-banner-image';
 
   const rawDesktop = getRowPicture(bgImageRow);
   const desktopAlt = getRowValue(bgImageAltRow);
-  const desktopPicture = formatPicture(rawDesktop, 'heronewbanner-image-desktop', desktopAlt);
+  const desktopPicture = formatPicture(rawDesktop, 'hero-new-banner-image-desktop', desktopAlt);
   if (desktopPicture) {
     imageWrapper.append(desktopPicture);
   }
 
   const rawMobile = getRowPicture(mobileImageRow);
   const mobileAlt = getRowValue(mobileImageAltRow);
-  const mobilePicture = formatPicture(rawMobile, 'heronewbanner-image-mobile', mobileAlt);
+  const mobilePicture = formatPicture(rawMobile, 'hero-new-banner-image-mobile', mobileAlt);
   if (mobilePicture) {
     imageWrapper.append(mobilePicture);
   }
@@ -180,12 +180,12 @@ export default function decorate(block) {
 
   // 3. Overlay
   const overlay = document.createElement('div');
-  overlay.className = 'heronewbanner-overlay';
+  overlay.className = 'hero-new-banner-overlay';
   hero.append(overlay);
 
   // 4. Content (Title, Description, CTA)
   const content = document.createElement('div');
-  content.className = 'heronewbanner-content';
+  content.className = 'hero-new-banner-content';
 
   // Process richtext textRow
   const textCell = textRow?.firstElementChild || textRow;
@@ -193,7 +193,7 @@ export default function decorate(block) {
     const heading = textCell.querySelector('h1, h2, h3, h4, h5, h6');
     if (heading) {
       const title = document.createElement('h2');
-      title.className = 'heronewbanner-title';
+      title.className = 'hero-new-banner-title';
       title.innerHTML = heading.innerHTML;
       moveInstrumentation(heading, title);
       content.append(title);
@@ -214,13 +214,13 @@ export default function decorate(block) {
 
     if (!heading && textCell.textContent.trim()) {
       const title = document.createElement('h2');
-      title.className = 'heronewbanner-title';
+      title.className = 'hero-new-banner-title';
       title.textContent = textCell.textContent.trim();
       moveInstrumentation(textCell, title);
       content.append(title);
     } else if (descNodes.length > 0) {
       const desc = document.createElement('div');
-      desc.className = 'heronewbanner-description';
+      desc.className = 'hero-new-banner-description';
       descNodes.forEach((node) => desc.append(node));
       content.append(desc);
     }
@@ -233,10 +233,10 @@ export default function decorate(block) {
 
   if (ctaHref) {
     const ctaWrapper = document.createElement('div');
-    ctaWrapper.className = 'heronewbanner-cta-wrapper';
+    ctaWrapper.className = 'hero-new-banner-cta-wrapper';
 
     const cta = document.createElement('a');
-    cta.className = 'heronewbanner-cta';
+    cta.className = 'hero-new-banner-cta';
     cta.href = ctaHref;
     cta.textContent = ctaText;
     if (ctaLinkEl?.target) cta.target = ctaLinkEl.target;
@@ -272,17 +272,17 @@ export default function decorate(block) {
 
   if (hasBenefits) {
     benefitsContainer = document.createElement('div');
-    benefitsContainer.className = 'heronewbanner-benefits';
+    benefitsContainer.className = 'hero-new-banner-benefits';
 
     benefitPairs.forEach(({ iconRow, textRow: bTextRow }) => {
       const text = getRowValue(bTextRow);
       if (!text) return;
 
       const benefitItem = document.createElement('div');
-      benefitItem.className = 'heronewbanner-benefit';
+      benefitItem.className = 'hero-new-banner-benefit';
 
       const iconSpan = document.createElement('span');
-      iconSpan.className = 'heronewbanner-benefit-icon';
+      iconSpan.className = 'hero-new-banner-benefit-icon';
       iconSpan.setAttribute('aria-hidden', 'true');
 
       let authoredIcon = null;
@@ -308,7 +308,7 @@ export default function decorate(block) {
       }
 
       const textSpan = document.createElement('span');
-      textSpan.className = 'heronewbanner-benefit-text';
+      textSpan.className = 'hero-new-banner-benefit-text';
       textSpan.textContent = text;
 
       if (bTextRow) {
