@@ -4,10 +4,10 @@
 
 .hero-new-banner {
   width: 100%;
-  max-width: 1360px;
+  max-width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 0;
+  padding: 0 12px;
 }
 
 /* =========================================================
@@ -232,18 +232,18 @@
 }
 
 /* =========================================================
-   BENEFITS SECTION (BELOW HERO - DISTANCED FROM SIDES)
+   BENEFITS SECTION (BELOW HERO - ADAPTIVE TO FULL BANNER)
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-benefits {
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 8px;
   box-sizing: border-box;
   margin: 12px auto 0;
-  padding: 0 8px;
+  padding: 0;
 }
 
 /* =========================================================
@@ -316,6 +316,10 @@
    ========================================================= */
 
 @media (width >=600px) {
+  .hero-new-banner {
+    padding: 0 16px;
+  }
+
   .hero-new-banner .hero-new-banner-hero {
     border-radius: 24px;
     padding: 28px 24px;
@@ -333,8 +337,8 @@
   }
 
   .hero-new-banner .hero-new-banner-benefits {
-    max-width: 860px;
-    width: 90%;
+    max-width: 960px;
+    width: 92%;
     margin: 14px auto 0;
     padding: 0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -351,6 +355,10 @@
    ========================================================= */
 
 @media (width >=900px) {
+  .hero-new-banner {
+    padding: 0 20px;
+  }
+
   .hero-new-banner .hero-new-banner-hero {
     border-radius: 28px;
     padding: 32px 24px;
@@ -382,12 +390,12 @@
   }
 
   .hero-new-banner .hero-new-banner-benefits {
-    max-width: 960px;
-    width: 84%;
+    max-width: 1100px;
+    width: 88%;
     margin: 18px auto 0;
     padding: 0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    gap: 14px;
   }
 
   .hero-new-banner .hero-new-banner-benefit {
