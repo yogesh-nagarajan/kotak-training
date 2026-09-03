@@ -50,6 +50,10 @@
   {
     "id": "bento",
     "components": [
+      "bento-featured",
+      "bento-standard",
+      "bento-mini-standard",
+      "bento-compact",
       "bento-item"
     ]
   },
