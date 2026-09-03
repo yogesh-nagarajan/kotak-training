@@ -50,10 +50,7 @@
   {
     "id": "bento",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "bento-item"
     ]
   },
   {
