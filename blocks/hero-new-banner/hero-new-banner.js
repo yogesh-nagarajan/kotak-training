@@ -30,9 +30,18 @@ function getRowValue(row) {
 function getRowPicture(row) {
   if (!row) return null;
   const pic = row.querySelector('picture');
-  if (pic) return pic;
+  if (pic) {
+    const img = pic.querySelector('img');
+    const src = img?.getAttribute('src') || '';
+    if (!src || src === '#' || src.trim() === '') return null;
+    return pic;
+  }
   const img = row.querySelector('img');
-  if (img) return img;
+  if (img) {
+    const src = img.getAttribute('src') || '';
+    if (!src || src === '#' || src.trim() === '') return null;
+    return img;
+  }
   const a = row.querySelector('a');
   if (a && /\.(png|jpe?g|svg|webp|gif)(\?.*)?$/i.test(a.href)) {
     const imgEl = document.createElement('img');
