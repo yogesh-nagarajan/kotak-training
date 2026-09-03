@@ -79,7 +79,7 @@
           "label": "Card Title"
         },
         {
-          "component": "textarea",
+          "component": "richtext",
           "valueType": "string",
           "name": "description",
           "label": "Card Description"
