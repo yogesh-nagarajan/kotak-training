@@ -114,74 +114,14 @@
           }
         },
         {
-          "title": "Featured Card",
-          "id": "bento-featured",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Featured Card",
-                  "model": "bento-featured"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Standard Card",
-          "id": "bento-standard",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Standard Card",
-                  "model": "bento-standard"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Mini Standard Card",
-          "id": "bento-mini-standard",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Mini Standard Card",
-                  "model": "bento-mini-standard"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Compact Card",
-          "id": "bento-compact",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Compact Card",
-                  "model": "bento-compact"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Bento Card Item",
+          "title": "Bento Card",
           "id": "bento-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Bento Card Item",
+                  "name": "Bento Card",
                   "model": "bento-item"
                 }
               }
