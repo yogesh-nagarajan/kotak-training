@@ -367,46 +367,71 @@ export default function decorate(block) {
     }
   }
 
-  // Organize cards into columns matching height proportions:
-  // Featured = 100% capacity (1 col = 1 featured)
-  // Standard = 45% capacity (1 col = 2 standard)
-  // Mini standard = 40% capacity, Compact = 10% capacity (1 col = 2 mini standard + 1 compact)
+  // Organize cards into columns matching intended layout and capacity:
+  // - Featured card = 100% capacity (1 card per column)
+  // - Standard card = 45% capacity (up to 2 cards per column)
+  // - Mini standard (40%) & Compact (10%) =
+  //   up to 2 mini standard + 1 compact per column (total 90%)
   const columns = [];
-  let currentCol = [];
-  let currentCapacity = 0;
+  let openStandardCol = null;
+  let openMiniCol = null;
+  let openMiniCap = 0;
 
   cards.forEach((card) => {
-    let cap = 45;
     if (card.classList.contains('bento-card-featured')) {
-      cap = 100;
-    } else if (card.classList.contains('bento-card-mini-standard')) {
-      cap = 40;
-    } else if (card.classList.contains('bento-card-compact')) {
-      cap = 10;
-    }
-
-    if (currentCol.length > 0 && currentCapacity + cap > 100) {
-      columns.push(currentCol);
-      currentCol = [];
-      currentCapacity = 0;
-    }
-
-    currentCol.push(card);
-    currentCapacity += cap;
-
-    if (currentCapacity >= 90) {
-      columns.push(currentCol);
-      currentCol = [];
-      currentCapacity = 0;
+      columns.push([card]);
+    } else if (card.classList.contains('bento-card-standard')) {
+      if (openStandardCol && openStandardCol.length < 2) {
+        openStandardCol.push(card);
+        if (openStandardCol.length === 2) {
+          openStandardCol = null;
+        }
+      } else {
+        openStandardCol = [card];
+        columns.push(openStandardCol);
+      }
+    } else {
+      // Mini standard (cap = 40) or Compact (cap = 10)
+      const cap = card.classList.contains('bento-card-mini-standard') ? 40 : 10;
+      if (openMiniCol && openMiniCap + cap <= 100) {
+        openMiniCol.push(card);
+        openMiniCap += cap;
+        if (openMiniCap >= 90) {
+          openMiniCol = null;
+          openMiniCap = 0;
+        }
+      } else {
+        openMiniCol = [card];
+        openMiniCap = cap;
+        columns.push(openMiniCol);
+      }
     }
   });
 
-  if (currentCol.length > 0) {
-    columns.push(currentCol);
-  }
-
   const grid = document.createElement('div');
   grid.className = 'bento-grid';
+
+  const hasFeatured = columns.some((col) => col.some((c) => c.classList.contains('bento-card-featured')));
+
+  if (columns.length === 1) {
+    grid.style.gridTemplateColumns = '1fr';
+  } else if (columns.length === 2) {
+    if (hasFeatured) {
+      grid.style.gridTemplateColumns = columns[0].some((c) => c.classList.contains('bento-card-featured'))
+        ? '1.25fr 1fr'
+        : '1fr 1.25fr';
+    } else {
+      grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+    }
+  } else if (columns.length === 3) {
+    if (hasFeatured && columns[0].some((c) => c.classList.contains('bento-card-featured'))) {
+      grid.style.gridTemplateColumns = '1.25fr 1fr 1fr';
+    } else {
+      grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    }
+  } else if (columns.length > 3) {
+    grid.style.gridTemplateColumns = `repeat(${columns.length}, 1fr)`;
+  }
 
   columns.forEach((colCards) => {
     const colDiv = document.createElement('div');
