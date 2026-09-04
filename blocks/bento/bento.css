@@ -149,6 +149,10 @@
   min-height: 520px;
 }
 
+.bento .bento-card-featured.bento-card-image-card {
+  background: #0f172a;
+}
+
 .bento .bento-card-featured .bento-card-eyebrow {
   color: rgb(255 255 255 / 80%);
 }
