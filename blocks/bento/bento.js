@@ -21,6 +21,41 @@ function isCardRow(row) {
   return false;
 }
 
+function extractMedia(el) {
+  if (!el) return null;
+  if (el.tagName === 'PICTURE' || el.tagName === 'IMG') return el;
+  const pic = el.querySelector('picture');
+  if (pic) return pic;
+  const img = el.querySelector('img');
+  if (img) return img;
+  const a = el.tagName === 'A' ? el : el.querySelector('a');
+  if (a) {
+    const href = a.getAttribute('href') || a.textContent.trim();
+    if (href && (href.match(/\.(jpeg|jpg|png|gif|svg|webp|avif)(\?.*)?$/i)
+        || href.includes('/content/dam/')
+        || href.includes('/media_')
+        || href.startsWith('http')
+        || href.startsWith('/'))) {
+      const newImg = document.createElement('img');
+      newImg.src = href;
+      newImg.alt = a.textContent.trim() || '';
+      return newImg;
+    }
+  }
+  const text = el.textContent.trim();
+  if (text && (text.match(/\.(jpeg|jpg|png|gif|svg|webp|avif)(\?.*)?$/i)
+      || text.includes('/content/dam/')
+      || text.includes('/media_')
+      || text.startsWith('http')
+      || text.startsWith('/'))) {
+    const newImg = document.createElement('img');
+    newImg.src = text;
+    newImg.alt = '';
+    return newImg;
+  }
+  return null;
+}
+
 function detectVariant(model, label, cols) {
   if (model === 'bento-featured') return 'featured';
   if (model === 'bento-standard') return 'standard';
@@ -159,36 +194,42 @@ export default function decorate(block) {
           variant = varText;
         }
 
-        const imgEl = row.querySelector('[data-aue-prop="image"]') || cols[1];
-        const ebEl = row.querySelector('[data-aue-prop="eyebrow"]') || cols[2];
-        const titleEl = row.querySelector('[data-aue-prop="title"]') || cols[3];
-        const descEl = row.querySelector('[data-aue-prop="description"]') || cols[4];
-        const ctaIconEl = row.querySelector('[data-aue-prop="ctaIcon"]') || cols[5];
-        const ctaTextEl = row.querySelector('[data-aue-prop="ctaText"]') || cols[6];
-        const linkEl = row.querySelector('[data-aue-prop="link"]') || cols[7];
+        const imgEl = row.querySelector('[data-aue-prop="image"]');
+        const ebEl = row.querySelector('[data-aue-prop="eyebrow"]');
+        const titleEl = row.querySelector('[data-aue-prop="title"]');
+        const descEl = row.querySelector('[data-aue-prop="description"]');
+        const ctaIconEl = row.querySelector('[data-aue-prop="ctaIcon"]');
+        const ctaTextEl = row.querySelector('[data-aue-prop="ctaText"]');
+        const linkEl = row.querySelector('[data-aue-prop="link"]');
 
-        title = titleEl?.textContent.trim() || '';
-        const rawLink = linkEl?.textContent.trim() || linkEl?.querySelector('a')?.getAttribute('href');
+        title = titleEl?.textContent.trim() || (cols[0] && !cols[0].querySelector('picture, img') && cols.length <= 2 ? cols[0].textContent.trim() : (cols[3]?.textContent.trim() || ''));
+        const rawLink = linkEl?.textContent.trim() || linkEl?.querySelector('a')?.getAttribute('href') || cols[7]?.textContent.trim() || cols[7]?.querySelector('a')?.getAttribute('href');
         if (rawLink) linkUrl = rawLink;
 
         if (variant !== 'compact') {
-          eyebrow = ebEl?.textContent.trim() || '';
-          bgPicture = imgEl?.querySelector('picture') || imgEl?.querySelector('img');
+          eyebrow = ebEl?.textContent.trim() || cols[2]?.textContent.trim() || '';
+          bgPicture = extractMedia(imgEl)
+            || extractMedia(cols[1])
+            || (cols[0]?.querySelector('picture, img') ? extractMedia(cols[0]) : null)
+            || extractMedia(row.querySelector('picture, img'));
         }
 
         if (variant === 'featured') {
-          description = descEl?.textContent.trim() || '';
-          ctaIconPic = ctaIconEl?.querySelector('picture') || ctaIconEl?.querySelector('img');
-          ctaText = ctaTextEl?.textContent.trim() || '';
+          description = descEl?.textContent.trim() || cols[4]?.textContent.trim() || '';
+          ctaIconPic = extractMedia(ctaIconEl) || extractMedia(cols[5]);
+          if (ctaIconPic && ctaIconPic === bgPicture) {
+            ctaIconPic = null;
+          }
+          ctaText = ctaTextEl?.textContent.trim() || cols[6]?.textContent.trim() || '';
         }
       } else if (variant === 'featured') {
         if (model === 'bento-featured') {
           // Fields: [image, eyebrow, title, description, ctaIcon, ctaText, link]
-          bgPicture = cols[0]?.querySelector('picture') || cols[0]?.querySelector('img');
+          bgPicture = extractMedia(cols[0]);
           eyebrow = cols[1]?.textContent.trim() || '';
           title = cols[2]?.textContent.trim() || '';
           description = cols[3]?.textContent.trim() || '';
-          ctaIconPic = cols[4]?.querySelector('picture') || cols[4]?.querySelector('img');
+          ctaIconPic = extractMedia(cols[4]);
           ctaText = cols[5]?.textContent.trim() || '';
           const authoredLink = cols[6]?.textContent.trim() || cols[6]?.querySelector('a')?.getAttribute('href');
           if (authoredLink) linkUrl = authoredLink;
@@ -222,7 +263,7 @@ export default function decorate(block) {
           if (textCols[1] && !linkUrl) linkUrl = textCols[1].textContent.trim();
         }
       } else if (model === 'bento-standard' || model === 'bento-mini-standard') {
-        bgPicture = cols[0]?.querySelector('picture') || cols[0]?.querySelector('img');
+        bgPicture = extractMedia(cols[0]);
         eyebrow = cols[1]?.textContent.trim() || '';
         title = cols[2]?.textContent.trim() || '';
         const authoredLink = cols[3]?.textContent.trim() || cols[3]?.querySelector('a')?.getAttribute('href');
@@ -288,15 +329,17 @@ export default function decorate(block) {
           content.append(logo);
         }
 
-        const pillBtn = document.createElement('a');
-        pillBtn.className = 'bento-pill-btn';
-        pillBtn.href = linkUrl && linkUrl !== '#' ? linkUrl : '#';
-        let iconHtml = '<span class="bento-pill-icon" aria-hidden="true">\u260E</span>';
-        if (ctaIconPic) {
-          iconHtml = `<span class="bento-pill-icon bento-pill-icon-custom">${ctaIconPic.outerHTML}</span>`;
+        if (ctaText || ctaIconPic) {
+          const pillBtn = document.createElement('a');
+          pillBtn.className = 'bento-pill-btn';
+          pillBtn.href = linkUrl && linkUrl !== '#' ? linkUrl : '#';
+          let iconHtml = '';
+          if (ctaIconPic) {
+            iconHtml = `<span class="bento-pill-icon bento-pill-icon-custom">${ctaIconPic.outerHTML}</span>`;
+          }
+          pillBtn.innerHTML = `${iconHtml}<span>${ctaText || ''}</span>`;
+          content.append(pillBtn);
         }
-        pillBtn.innerHTML = `${iconHtml}<span>${ctaText || ''}</span>`;
-        content.append(pillBtn);
       }
 
       card.append(content);
@@ -324,46 +367,71 @@ export default function decorate(block) {
     }
   }
 
-  // Organize cards into columns matching height proportions:
-  // Featured = 100% capacity (1 col = 1 featured)
-  // Standard = 45% capacity (1 col = 2 standard)
-  // Mini standard = 40% capacity, Compact = 10% capacity (1 col = 2 mini standard + 1 compact)
+  // Organize cards into columns matching intended layout and capacity:
+  // - Featured card = 100% capacity (1 card per column)
+  // - Standard card = 45% capacity (up to 2 cards per column)
+  // - Mini standard (40%) & Compact (10%) =
+  //   up to 2 mini standard + 1 compact per column (total 90%)
   const columns = [];
-  let currentCol = [];
-  let currentCapacity = 0;
+  let openStandardCol = null;
+  let openMiniCol = null;
+  let openMiniCap = 0;
 
   cards.forEach((card) => {
-    let cap = 45;
     if (card.classList.contains('bento-card-featured')) {
-      cap = 100;
-    } else if (card.classList.contains('bento-card-mini-standard')) {
-      cap = 40;
-    } else if (card.classList.contains('bento-card-compact')) {
-      cap = 10;
-    }
-
-    if (currentCol.length > 0 && currentCapacity + cap > 100) {
-      columns.push(currentCol);
-      currentCol = [];
-      currentCapacity = 0;
-    }
-
-    currentCol.push(card);
-    currentCapacity += cap;
-
-    if (currentCapacity >= 90) {
-      columns.push(currentCol);
-      currentCol = [];
-      currentCapacity = 0;
+      columns.push([card]);
+    } else if (card.classList.contains('bento-card-standard')) {
+      if (openStandardCol && openStandardCol.length < 2) {
+        openStandardCol.push(card);
+        if (openStandardCol.length === 2) {
+          openStandardCol = null;
+        }
+      } else {
+        openStandardCol = [card];
+        columns.push(openStandardCol);
+      }
+    } else {
+      // Mini standard (cap = 40) or Compact (cap = 10)
+      const cap = card.classList.contains('bento-card-mini-standard') ? 40 : 10;
+      if (openMiniCol && openMiniCap + cap <= 100) {
+        openMiniCol.push(card);
+        openMiniCap += cap;
+        if (openMiniCap >= 90) {
+          openMiniCol = null;
+          openMiniCap = 0;
+        }
+      } else {
+        openMiniCol = [card];
+        openMiniCap = cap;
+        columns.push(openMiniCol);
+      }
     }
   });
 
-  if (currentCol.length > 0) {
-    columns.push(currentCol);
-  }
-
   const grid = document.createElement('div');
   grid.className = 'bento-grid';
+
+  const hasFeatured = columns.some((col) => col.some((c) => c.classList.contains('bento-card-featured')));
+
+  if (columns.length === 1) {
+    grid.style.gridTemplateColumns = '1fr';
+  } else if (columns.length === 2) {
+    if (hasFeatured) {
+      grid.style.gridTemplateColumns = columns[0].some((c) => c.classList.contains('bento-card-featured'))
+        ? '1.25fr 1fr'
+        : '1fr 1.25fr';
+    } else {
+      grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+    }
+  } else if (columns.length === 3) {
+    if (hasFeatured && columns[0].some((c) => c.classList.contains('bento-card-featured'))) {
+      grid.style.gridTemplateColumns = '1.25fr 1fr 1fr';
+    } else {
+      grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    }
+  } else if (columns.length > 3) {
+    grid.style.gridTemplateColumns = `repeat(${columns.length}, 1fr)`;
+  }
 
   columns.forEach((colCards) => {
     const colDiv = document.createElement('div');
