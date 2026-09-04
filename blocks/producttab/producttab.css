@@ -7,23 +7,35 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5;
-  border-radius: 24px;
-  overflow: hidden;
+  margin: 0 0 40px;
+  padding: 6px;
+  background: #f4f4f4;
+  border-radius: 50px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.producttab .producttab-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .producttab .producttab-tab {
-  flex: 1;
-  padding: 10px 20px;
+  flex: 1 1 auto;
+  padding: 12px 24px;
   border: 0;
-  border-radius: 24px;
+  border-radius: 40px;
   background: transparent;
-  color: #666;
-  font-size: 13px;
+  color: #555;
+  font-size: 15px;
   font-weight: 400;
   cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.producttab .producttab-tab:hover {
+  color: #111;
 }
 
 .producttab .producttab-tab[aria-selected='true'] {
@@ -33,13 +45,12 @@
 }
 
 .producttab .producttab-panels {
-  margin-top: 24px;
+  width: 100%;
 }
 
 .producttab .producttab-panel {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .producttab .producttab-panel[hidden] {
@@ -47,7 +58,9 @@
 }
 
 .producttab .producttab-content {
-  order: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .producttab .producttab-content h1,
@@ -56,45 +69,61 @@
 .producttab .producttab-content h4 {
   margin: 0;
   color: #111;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .producttab .producttab-content p {
-  margin: 12px 0 0;
+  margin: 0;
   color: #555;
+  font-size: 16px;
   line-height: 1.5;
 }
 
 .producttab .producttab-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  order: 2;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  margin-bottom: 36px;
 }
 
 .producttab .producttab-actions a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 14px 28px;
+  border-radius: 50px;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.producttab .producttab-actions a:hover {
+  opacity: 0.85;
 }
 
 .producttab .producttab-actions a:first-child {
   background: #111;
   color: #fff;
+  border: 1px solid #111;
 }
 
 .producttab .producttab-actions a:not(:first-child) {
+  background: transparent;
   color: #111;
+  border: 0;
+  padding: 14px 20px;
 }
 
 .producttab .producttab-image {
-  order: 3;
+  width: 100%;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 36px;
   line-height: 0;
 }
 
@@ -103,39 +132,36 @@
   width: 100%;
   height: auto;
   object-fit: cover;
+  border-radius: 36px;
 }
 
 @media (width >= 768px) {
-  .producttab .producttab-panel {
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 40px;
-  }
-
   .producttab .producttab-content {
-    grid-column: 1;
-    grid-row: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 48px;
   }
 
-  .producttab .producttab-actions {
-    grid-column: 1;
-    grid-row: 2;
+  .producttab .producttab-content h1,
+  .producttab .producttab-content h2,
+  .producttab .producttab-content h3,
+  .producttab .producttab-content h4 {
+    flex: 1 1 auto;
+    font-size: 48px;
   }
 
-  .producttab .producttab-image {
-    grid-column: 2;
-    grid-row: 1 / span 2;
+  .producttab .producttab-content p {
+    flex: 0 1 380px;
   }
 }
 
 @media (width < 600px) {
   .producttab .producttab-tabs {
     justify-content: flex-start;
-    overflow-x: auto;
   }
 
   .producttab .producttab-tab {
     flex: 0 0 auto;
-    white-space: nowrap;
   }
 }
