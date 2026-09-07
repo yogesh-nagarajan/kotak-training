@@ -1,0 +1,42 @@
+.safe-banking-cards {
+  width: 100%;
+  padding: 40px 0;
+  overflow: hidden;
+}
+
+.safe-banking-cards-header {
+  max-width: 1000px;
+  margin-bottom: 32px;
+}
+
+.safe-banking-cards-header p:first-child {
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #171717;
+}
+
+.safe-banking-cards-header p:last-child {
+  margin: 0;
+  max-width: 500px;
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 400;
+  color: #171717;
+}
+
+.safe-banking-cards-items {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+}
+
+.safe-banking-cards-items::-webkit-scrollbar {
+  display: none;
+}
+
+.safe-banking-cards-items > * {
+  flex: 0 0 272px;
+}

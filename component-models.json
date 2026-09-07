@@ -334,109 +334,6 @@
     ]
   },
   {
-    "id": "carouselcardicon",
-    "fields": [
-      {
-        "component": "text",
-        "name": "label",
-        "label": "Section Label",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Main Title",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "card1Title",
-        "label": "Card 1 Title",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "textarea",
-        "name": "card1Description",
-        "label": "Card 1 Description",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "card1Button",
-        "label": "Card 1 Button",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "card2Title",
-        "label": "Card 2 Title",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "textarea",
-        "name": "card2Description",
-        "label": "Card 2 Description",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "card2Button",
-        "label": "Card 2 Button",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "card3Title",
-        "label": "Card 3 Title",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "textarea",
-        "name": "card3Description",
-        "label": "Card 3 Description",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "card3Button",
-        "label": "Card 3 Button",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "card4Title",
-        "label": "Card 4 Title",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "textarea",
-        "name": "card4Description",
-        "label": "Card 4 Description",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "name": "card4Button",
-        "label": "Card 4 Button",
-        "valueType": "string",
-        "value": ""
-      }
-    ]
-  },
-  {
     "id": "columns",
     "fields": [
       {
@@ -1404,6 +1301,59 @@
         "label": "Read Less Label",
         "description": "Label for the collapse link (e.g. Read Less)",
         "value": "Read Less"
+      }
+    ]
+  },
+  {
+    "id": "safe-banking-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "buttonLabel",
+        "label": "Button Label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "buttonLink",
+        "label": "Button Link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "safe-banking-cards",
+    "fields": [
+      {
+        "component": "text",
+        "name": "preTitle",
+        "label": "Pre Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
       }
     ]
   },

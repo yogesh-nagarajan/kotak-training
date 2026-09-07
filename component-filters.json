@@ -43,7 +43,8 @@
       "carouselcard",
       "carouselcard-item",
       "heronewbanner",
-      "producttab"
+      "producttab",
+      "safe-banking-cards"
     ]
   },
   {
@@ -113,6 +114,12 @@
     "id": "related-products",
     "components": [
       "related-product"
+    ]
+  },
+  {
+    "id": "safe-banking-cards",
+    "components": [
+      "safe-banking-card"
     ]
   },
   {

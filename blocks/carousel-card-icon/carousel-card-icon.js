@@ -1,3 +1,3 @@
-import decorate from '../carouselcardicon/carouselcardicon.js';
+import decorate from '../carouselcard/carouselcard.js';
 
 export default decorate;
