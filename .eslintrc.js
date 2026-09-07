@@ -23,6 +23,7 @@ module.exports = {
       '*': 4,
       carouselcardicon: 14,
       'safe-banking-card': 5,
+      'bento-item': 8,
     }],
     'xwalk/no-orphan-collapsible-fields': 'off',
   },
