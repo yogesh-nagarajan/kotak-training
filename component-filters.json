@@ -44,7 +44,16 @@
       "carouselcard-item",
       "heronewbanner",
       "producttab",
-      "safe-banking-cards"
+      "safe-banking-cards",
+      "hero-new-banner",
+      "producttab",
+      "bento"
+    ]
+  },
+  {
+    "id": "bento",
+    "components": [
+      "bento-item"
     ]
   },
   {

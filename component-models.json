@@ -186,6 +186,133 @@
     ]
   },
   {
+    "id": "bento",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "pretitle",
+        "label": "Pretitle",
+        "description": "Small category label (e.g. Quick Links)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "description": "Main heading (e.g. Support, when you need)"
+      },
+      {
+        "component": "select",
+        "name": "variant",
+        "label": "Card Variation",
+        "value": "standard",
+        "options": [
+          {
+            "name": "Featured Card (100% height)",
+            "value": "featured"
+          },
+          {
+            "name": "Standard Card (45% height)",
+            "value": "standard"
+          },
+          {
+            "name": "Mini Standard Card (40% height)",
+            "value": "mini-standard"
+          },
+          {
+            "name": "Compact Card (10% height)",
+            "value": "compact"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Card Background Image",
+        "multi": false,
+        "condition": {
+          "!=": [
+            {
+              "var": "variant"
+            },
+            "compact"
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Card Eyebrow",
+        "condition": {
+          "!=": [
+            {
+              "var": "variant"
+            },
+            "compact"
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Card Title"
+      },
+      {
+        "component": "textarea",
+        "valueType": "string",
+        "name": "description",
+        "label": "Card Description (Featured Only)",
+        "condition": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "featured"
+          ]
+        }
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "ctaIcon",
+        "label": "CTA Button Icon (Featured Only)",
+        "multi": false,
+        "condition": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "featured"
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaText",
+        "label": "CTA Button Text (Featured Only)",
+        "condition": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "featured"
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link",
+        "label": "Link URL"
+      }
+    ]
+  },
+  {
     "id": "breadcrumb-item",
     "fields": [
       {
@@ -320,7 +447,7 @@
         "label": "Card Title"
       },
       {
-        "component": "textarea",
+        "component": "richtext",
         "valueType": "string",
         "name": "description",
         "label": "Card Description"
@@ -723,6 +850,94 @@
     ]
   },
   {
+    "id": "hero-new-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageAlt",
+        "label": "Background Image Alt Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "bg_imageMobile",
+        "label": "Background Image (Mobile) — optional",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bg_imageMobileAlt",
+        "label": "Mobile Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Heading & Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta_link",
+        "label": "CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta_linkText",
+        "label": "CTA Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_1Icon",
+        "label": "Benefit 1 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_1",
+        "label": "Benefit 1"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_2Icon",
+        "label": "Benefit 2 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_2",
+        "label": "Benefit 2"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "benefit_3Icon",
+        "label": "Benefit 3 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "benefit_3",
+        "label": "Benefit 3"
+      }
+    ]
+  },
+  {
     "id": "hero-p",
     "fields": [
       {
@@ -916,73 +1131,6 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "heronewbanner",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "bg_image",
-        "label": "Background Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bg_imageAlt",
-        "label": "Background Image Alt Text"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "bg_imageMobile",
-        "label": "Background Image (Mobile) — optional",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bg_imageMobileAlt",
-        "label": "Mobile Image Alt Text"
-      },
-      {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Heading & Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "cta_link",
-        "label": "CTA Link"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cta_linkText",
-        "label": "CTA Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_1",
-        "label": "Benefit 1"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_2",
-        "label": "Benefit 2"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "benefit_3",
-        "label": "Benefit 3"
       }
     ]
   },
