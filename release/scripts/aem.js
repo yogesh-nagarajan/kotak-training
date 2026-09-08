@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+console.log('Loading AEM scripts...');
 /* eslint-env browser */
 function sampleRUM(checkpoint, data) {
   // eslint-disable-next-line max-len
