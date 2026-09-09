@@ -23,6 +23,7 @@ module.exports = {
       '*': 4,
       carouselcardicon: 14,
       'bento-item': 8,
+      footer: 8,
     }],
     'xwalk/no-orphan-collapsible-fields': 'off',
   },

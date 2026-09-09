@@ -1,0 +1,227 @@
+{
+  "definitions": [
+    {
+      "title": "Footer",
+      "id": "footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Footer",
+              "model": "footer",
+              "filter": "footer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Column",
+      "id": "footer-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Footer Column",
+              "model": "footer-column",
+              "filter": "footer-column"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Footer Link",
+      "id": "footer-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Footer Link",
+              "model": "footer-link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer",
+      "fields": [
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Variant",
+          "valueType": "string",
+          "value": "variant1",
+          "description": "Variant 1 includes CIN and the red legal bar. Variant 2 is the link columns only.",
+          "options": [
+            {
+              "name": "Variant 1 — full (CIN + red bar)",
+              "value": "variant1"
+            },
+            {
+              "name": "Variant 2 — inner columns only",
+              "value": "variant2"
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "logo",
+          "label": "Logo",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "logoAlt",
+          "label": "Logo Alt Text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "cinTitle",
+          "label": "CIN Title",
+          "condition": {
+            "!=": [
+              {
+                "var": "classes"
+              },
+              "variant2"
+            ]
+          }
+        },
+        {
+          "component": "textarea",
+          "valueType": "string",
+          "name": "cinSubtitle",
+          "label": "CIN Subtitle",
+          "condition": {
+            "!=": [
+              {
+                "var": "classes"
+              },
+              "variant2"
+            ]
+          }
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "cinBackground",
+          "label": "CIN Background Image",
+          "multi": false,
+          "condition": {
+            "!=": [
+              {
+                "var": "classes"
+              },
+              "variant2"
+            ]
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "legalText",
+          "label": "Red Bar — Legal Text",
+          "valueType": "string",
+          "condition": {
+            "!=": [
+              {
+                "var": "classes"
+              },
+              "variant2"
+            ]
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "socialLinks",
+          "label": "Red Bar — Social / Extra Links",
+          "valueType": "string",
+          "condition": {
+            "!=": [
+              {
+                "var": "classes"
+              },
+              "variant2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "footer-column",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Column Title"
+        },
+        {
+          "component": "select",
+          "name": "maxRows",
+          "label": "Max Rows",
+          "valueType": "string",
+          "value": "4",
+          "description": "How many link rows to show in this column (1–4). Extra links wrap to the next column.",
+          "options": [
+            {
+              "name": "1 row",
+              "value": "1"
+            },
+            {
+              "name": "2 rows",
+              "value": "2"
+            },
+            {
+              "name": "3 rows",
+              "value": "3"
+            },
+            {
+              "name": "4 rows",
+              "value": "4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "linkText",
+          "label": "Link Text"
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer",
+      "components": [
+        "footer-column"
+      ]
+    },
+    {
+      "id": "footer-column",
+      "components": [
+        "footer-link"
+      ]
+    }
+  ]
+}

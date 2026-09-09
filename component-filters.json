@@ -44,7 +44,8 @@
       "carouselcard-item",
       "hero-new-banner",
       "producttab",
-      "bento"
+      "bento",
+      "footer"
     ]
   },
   {
@@ -102,6 +103,18 @@
     "id": "feature-nri",
     "components": [
       "feature-nri-card"
+    ]
+  },
+  {
+    "id": "footer",
+    "components": [
+      "footer-column"
+    ]
+  },
+  {
+    "id": "footer-column",
+    "components": [
+      "footer-link"
     ]
   },
   {
