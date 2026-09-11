@@ -46,6 +46,21 @@
           }
         }
       }
+    },
+    {
+      "title": "Footer Badge",
+      "id": "footer-badge",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Footer Badge",
+              "model": "footer-badge"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -57,17 +72,11 @@
           "name": "classes",
           "label": "Variant",
           "valueType": "string",
-          "value": "variant1",
-          "description": "Variant 1 includes CIN and the red legal bar. Variant 2 is the link columns only.",
+          "value": "footer-hero",
+          "description": "Footer Hero shows the red band (logo + headline + subheadline) above the columns. Footer Simple shows the link columns only.",
           "options": [
-            {
-              "name": "Variant 1 — full (CIN + red bar)",
-              "value": "variant1"
-            },
-            {
-              "name": "Variant 2 — inner columns only",
-              "value": "variant2"
-            }
+            { "name": "Footer Hero — red band + columns", "value": "footer-hero" },
+            { "name": "Footer Simple — columns only", "value": "footer-simple" }
           ]
         },
         {
@@ -75,84 +84,42 @@
           "valueType": "string",
           "name": "logo",
           "label": "Logo",
-          "multi": false
+          "multi": false,
+          "condition": { "!=": [{ "var": "classes" }, "footer-simple"] }
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "logoAlt",
-          "label": "Logo Alt Text"
+          "label": "Logo Alt Text",
+          "value": "",
+          "condition": { "!=": [{ "var": "classes" }, "footer-simple"] }
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "cinTitle",
-          "label": "CIN Title",
-          "condition": {
-            "!=": [
-              {
-                "var": "classes"
-              },
-              "variant2"
-            ]
-          }
+          "name": "headline",
+          "label": "Headline",
+          "description": "Red band headline, e.g. \"Forty-million reasons to belong.\"",
+          "value": "",
+          "condition": { "!=": [{ "var": "classes" }, "footer-simple"] }
         },
         {
           "component": "textarea",
           "valueType": "string",
-          "name": "cinSubtitle",
-          "label": "CIN Subtitle",
-          "condition": {
-            "!=": [
-              {
-                "var": "classes"
-              },
-              "variant2"
-            ]
-          }
-        },
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "cinBackground",
-          "label": "CIN Background Image",
-          "multi": false,
-          "condition": {
-            "!=": [
-              {
-                "var": "classes"
-              },
-              "variant2"
-            ]
-          }
+          "name": "subheadline",
+          "label": "Subheadline",
+          "description": "Red band supporting line",
+          "value": "",
+          "condition": { "!=": [{ "var": "classes" }, "footer-simple"] }
         },
         {
           "component": "richtext",
-          "name": "legalText",
-          "label": "Red Bar — Legal Text",
           "valueType": "string",
-          "condition": {
-            "!=": [
-              {
-                "var": "classes"
-              },
-              "variant2"
-            ]
-          }
-        },
-        {
-          "component": "richtext",
-          "name": "socialLinks",
-          "label": "Red Bar — Social / Extra Links",
-          "valueType": "string",
-          "condition": {
-            "!=": [
-              {
-                "var": "classes"
-              },
-              "variant2"
-            ]
-          }
+          "name": "copyright",
+          "label": "Copyright / Legal",
+          "description": "Bottom bar text, e.g. \"© Kotak Mahindra Bank 2026\"",
+          "value": ""
         }
       ]
     },
@@ -163,33 +130,8 @@
           "component": "text",
           "valueType": "string",
           "name": "title",
-          "label": "Column Title"
-        },
-        {
-          "component": "select",
-          "name": "maxRows",
-          "label": "Max Rows",
-          "valueType": "string",
-          "value": "4",
-          "description": "How many link rows to show in this column (1–4). Extra links wrap to the next column.",
-          "options": [
-            {
-              "name": "1 row",
-              "value": "1"
-            },
-            {
-              "name": "2 rows",
-              "value": "2"
-            },
-            {
-              "name": "3 rows",
-              "value": "3"
-            },
-            {
-              "name": "4 rows",
-              "value": "4"
-            }
-          ]
+          "label": "Column Title",
+          "value": ""
         }
       ]
     },
@@ -197,15 +139,56 @@
       "id": "footer-link",
       "fields": [
         {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link"
+        },
+        {
           "component": "text",
           "valueType": "string",
           "name": "linkText",
-          "label": "Link Text"
+          "label": "Link Text",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "footer-badge",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "groupTitle",
+          "label": "Group Title",
+          "description": "e.g. \"Download the App\" or \"Bank with confidence\"",
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "icon",
+          "label": "Icon / Badge Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "iconAlt",
+          "label": "Icon Alt Text",
+          "value": ""
         },
         {
           "component": "aem-content",
           "name": "link",
           "label": "Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "linkText",
+          "label": "Label",
+          "description": "e.g. \"Kotak Bank App\" or DICGC link text",
+          "value": ""
         }
       ]
     }
@@ -213,15 +196,11 @@
   "filters": [
     {
       "id": "footer",
-      "components": [
-        "footer-column"
-      ]
+      "components": ["footer-column", "footer-badge"]
     },
     {
       "id": "footer-column",
-      "components": [
-        "footer-link"
-      ]
+      "components": ["footer-link"]
     }
   ]
 }

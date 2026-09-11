@@ -108,7 +108,8 @@
   {
     "id": "footer",
     "components": [
-      "footer-column"
+      "footer-column",
+      "footer-badge"
     ]
   },
   {

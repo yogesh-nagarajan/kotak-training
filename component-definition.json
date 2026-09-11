@@ -433,6 +433,21 @@
           }
         },
         {
+          "title": "Footer Badge",
+          "id": "footer-badge",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Badge",
+                  "model": "footer-badge"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Fragment",
           "id": "fragment",
           "plugins": {
