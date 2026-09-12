@@ -566,14 +566,14 @@
           }
         },
         {
-          "title": "Product",
+          "title": "Product Tab Item",
           "id": "producttab-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Product",
+                  "name": "Product Tab Item",
                   "model": "producttab-item"
                 }
               }

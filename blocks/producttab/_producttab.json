@@ -17,14 +17,14 @@
       }
     },
     {
-      "title": "Product",
+      "title": "Product Tab Item",
       "id": "producttab-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Product",
+              "name": "Product Tab Item",
               "model": "producttab-item"
             }
           }
@@ -35,19 +35,18 @@
   "models": [
     {
       "id": "producttab",
-      "fields": [
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "tabs",
-          "label": "Tabs",
-          "value": ""
-        }
-      ]
+      "fields": []
     },
     {
       "id": "producttab-item",
       "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tabLabel",
+          "label": "Tab Label",
+          "value": ""
+        },
         {
           "component": "richtext",
           "name": "content",

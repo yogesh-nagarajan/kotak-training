@@ -1,18 +1,22 @@
 .producttab {
   width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 
 .producttab .producttab-tabs {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin: 0 0 40px;
-  padding: 6px;
-  background: #f4f4f4;
-  border-radius: 50px;
+  gap: 10px;
+  margin: 0 0 28px;
+  padding: 8px 10px;
+  background: #eceaea;
+  border-radius: 999px;
   overflow-x: auto;
   scrollbar-width: none;
+  width: 100%;
 }
 
 .producttab .producttab-tabs::-webkit-scrollbar {
@@ -20,28 +24,35 @@
 }
 
 .producttab .producttab-tab {
-  flex: 1 1 auto;
-  padding: 12px 24px;
+  appearance: none;
   border: 0;
-  border-radius: 40px;
   background: transparent;
-  color: #555;
-  font-size: 15px;
+  color: #3a3a3a;
+  font-size: 1.02rem;
   font-weight: 400;
+  line-height: 1.3;
+  padding: 12px 22px;
+  border-radius: 999px;
   cursor: pointer;
   white-space: nowrap;
+  flex: 1 1 0;
   text-align: center;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .producttab .producttab-tab:hover {
   color: #111;
 }
 
+.producttab .producttab-tab:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+
 .producttab .producttab-tab[aria-selected='true'] {
-  background: #111;
+  background: #1c1c1c;
   color: #fff;
-  font-weight: 500;
+  box-shadow: 0 8px 18px rgb(17 17 17 / 12%);
 }
 
 .producttab .producttab-panels {
@@ -49,8 +60,7 @@
 }
 
 .producttab .producttab-panel {
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 
 .producttab .producttab-panel[hidden] {
@@ -58,28 +68,43 @@
 }
 
 .producttab .producttab-content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr);
+  gap: 12px 40px;
+  align-items: end;
+  margin-bottom: 10px;
+}
+
+.producttab .producttab-content > * {
+  margin: 0;
 }
 
 .producttab .producttab-content h1,
 .producttab .producttab-content h2,
 .producttab .producttab-content h3,
-.producttab .producttab-content h4 {
+.producttab .producttab-content h4,
+.producttab .producttab-content h5,
+.producttab .producttab-content h6 {
   margin: 0;
-  color: #111;
-  font-size: 32px;
+  color: #171717;
+  font-size: clamp(3rem, 3.8vw, 4.5rem);
   font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+}
+
+.producttab .producttab-content p,
+.producttab .producttab-content li,
+.producttab .producttab-content span {
+  margin: 0;
+  color: #4d4d4d;
+  font-size: 1.05rem;
+  line-height: 1.5;
 }
 
 .producttab .producttab-content p {
-  margin: 0;
-  color: #555;
-  font-size: 16px;
-  line-height: 1.5;
+  justify-self: end;
+  max-width: 470px;
 }
 
 .producttab .producttab-actions {
@@ -87,81 +112,114 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-top: 28px;
-  margin-bottom: 36px;
+  margin: 0 0 24px;
 }
 
-.producttab .producttab-actions a {
+.producttab .producttab-actions p {
+  margin: 0;
+}
+
+.producttab .producttab-actions a,
+.producttab .producttab-actions button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 28px;
-  border-radius: 50px;
+  min-height: 46px;
+  padding: 11px 20px;
+  border-radius: 999px;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 0.98rem;
   font-weight: 500;
-  transition: opacity 0.2s ease;
+  line-height: 1.2;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.producttab .producttab-actions a:hover {
-  opacity: 0.85;
-}
-
-.producttab .producttab-actions a:first-child {
-  background: #111;
+.producttab .producttab-actions p:first-child a,
+.producttab .producttab-actions p:first-child button {
+  background: #171717;
   color: #fff;
-  border: 1px solid #111;
+  border: 1px solid #171717;
 }
 
-.producttab .producttab-actions a:not(:first-child) {
+.producttab .producttab-actions p:not(:first-child) a,
+.producttab .producttab-actions p:not(:first-child) button {
   background: transparent;
-  color: #111;
+  color: #171717;
   border: 0;
-  padding: 14px 20px;
+  padding-left: 0;
+  padding-right: 0;
+  min-height: auto;
+}
+
+.producttab .producttab-actions a:hover,
+.producttab .producttab-actions button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 .producttab .producttab-image {
   width: 100%;
+  min-height: 360px;
+  background: #dfe1e2;
+  border-radius: 28px;
   overflow: hidden;
-  border-radius: 36px;
   line-height: 0;
 }
 
-.producttab .producttab-image img {
+.producttab .producttab-image img,
+.producttab .producttab-image picture,
+.producttab .producttab-image source {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  max-height: 520px;
   object-fit: cover;
-  border-radius: 36px;
 }
 
-@media (width >= 768px) {
-  .producttab .producttab-content {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 48px;
-  }
-
-  .producttab .producttab-content h1,
-  .producttab .producttab-content h2,
-  .producttab .producttab-content h3,
-  .producttab .producttab-content h4 {
-    flex: 1 1 auto;
-    font-size: 48px;
-  }
-
-  .producttab .producttab-content p {
-    flex: 0 1 380px;
-  }
+.producttab .producttab-image img {
+  border-radius: 28px;
 }
 
-@media (width < 600px) {
+@media (width <= 767px) {
+  .producttab {
+    padding: 0 20px;
+  }
+
   .producttab .producttab-tabs {
+    width: 100%;
     justify-content: flex-start;
   }
 
   .producttab .producttab-tab {
+    padding: 12px 18px;
+    font-size: 0.96rem;
     flex: 0 0 auto;
+  }
+
+  .producttab .producttab-content {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .producttab .producttab-content p {
+    justify-self: start;
+    max-width: none;
+  }
+
+  .producttab .producttab-actions {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .producttab .producttab-actions a,
+  .producttab .producttab-actions button {
+    width: auto;
+    min-height: 44px;
+    font-size: 0.95rem;
+  }
+
+  .producttab .producttab-image {
+    min-height: 240px;
   }
 }

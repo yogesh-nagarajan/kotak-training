@@ -1242,19 +1242,18 @@
   },
   {
     "id": "producttab",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "tabs",
-        "label": "Tabs",
-        "value": ""
-      }
-    ]
+    "fields": []
   },
   {
     "id": "producttab-item",
     "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabLabel",
+        "label": "Tab Label",
+        "value": ""
+      },
       {
         "component": "richtext",
         "name": "content",
