@@ -134,6 +134,12 @@
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+.producttab .producttab-actions a:hover,
+.producttab .producttab-actions button:hover {
+  opacity: .9;
+  transform: translateY(-1px);
+}
+
 .producttab .producttab-actions p:first-child a,
 .producttab .producttab-actions p:first-child button {
   background: #171717;
@@ -149,12 +155,6 @@
   padding-left: 0;
   padding-right: 0;
   min-height: auto;
-}
-
-.producttab .producttab-actions a:hover,
-.producttab .producttab-actions button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
 }
 
 .producttab .producttab-image {
