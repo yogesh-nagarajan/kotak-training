@@ -106,7 +106,7 @@
         {
           "component": "text",
           "valueType": "string",
-          "name": "title",
+          "name": "cardTitle",
           "label": "Card Title"
         },
         {
