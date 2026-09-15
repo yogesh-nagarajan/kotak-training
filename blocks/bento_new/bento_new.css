@@ -1,0 +1,216 @@
+.bento {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.bento-pretitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #718096;
+  margin-bottom: 8px;
+}
+
+.bento-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 28px;
+}
+
+.bento-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  height: 520px;
+  width: 100%;
+}
+
+.bento-col {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Column 1: Featured Anchor (100% Height) --- */
+.bento-col-1 {
+  flex: 1.2;
+}
+
+.bento-card-featured {
+  height: 100%;
+  border-radius: 28px;
+  padding: 36px 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  background-color: #e2e8f0; /* Neutral canvas background until author uploads image */
+}
+
+.bento-card-emblem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.bento-card-emblem img {
+  max-width: 140px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.bento-btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #fff;
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 14px 20px;
+  border-radius: 30px;
+  box-sizing: border-box;
+}
+
+/* --- Column 2: Two Cards (45% Each) + 10% Remaining Gap --- */
+.bento-col-2 {
+  flex: 1;
+  justify-content: space-between;
+}
+
+.bento-col-2 .bento-card-std {
+  height: 45%;
+  background-color: #f8fafc;
+  border-radius: 20px;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  position: relative;
+}
+
+/* --- Column 3: Two Cards (40% Each) + One Compact (10%) --- */
+.bento-col-3 {
+  flex: 1;
+  justify-content: space-between;
+}
+
+.bento-col-3 .bento-card-mini {
+  height: 40%;
+  background-color: #f8fafc;
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-col-3 .bento-card-compact {
+  height: 10%;
+  background-color: #f8fafc;
+  border-radius: 16px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+/* --- Card Typography & User-Authored Icons --- */
+.bento-eyebrow {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.bento-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  line-height: 1.25;
+}
+
+.bento-card-desc {
+  font-size: 14px;
+  opacity: 0.9;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.bento-card-featured .bento-eyebrow,
+.bento-card-featured .bento-card-title,
+.bento-card-featured .bento-card-desc {
+  color: #fff;
+}
+
+.bento-card-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.bento-card-icon {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 5%);
+}
+
+.bento-card-compact .bento-card-icon {
+  position: static;
+}
+
+.bento-card-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+/* --- Responsive Fallbacks --- */
+@media (width <= 900px) {
+  .bento-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .bento-col {
+    height: auto;
+    gap: 16px;
+  }
+
+  .bento-card-featured,
+  .bento-col-2 .bento-card-std,
+  .bento-col-3 .bento-card-mini,
+  .bento-col-3 .bento-card-compact {
+    height: auto;
+    min-height: 140px;
+  }
+}

@@ -49,7 +49,12 @@
           "name": "title",
           "label": "Title",
           "description": "Main heading (e.g. Support, when you need)"
-        },
+        }
+      ]
+    },
+    {
+      "id": "bento-item",
+      "fields": [
         {
           "component": "select",
           "name": "variant",

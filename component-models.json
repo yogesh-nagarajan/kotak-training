@@ -192,15 +192,15 @@
         "component": "text",
         "valueType": "string",
         "name": "pretitle",
-        "label": "Section Eyebrow / Pretitle",
-        "description": "Small category badge above main title (e.g. Quick Links)"
+        "label": "Pretitle",
+        "description": "Small category label (e.g. Quick Links)"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "title",
-        "label": "Section Title",
-        "description": "Main block title (e.g. Support, when you need)"
+        "label": "Title",
+        "description": "Main heading (e.g. Support, when you need)"
       }
     ]
   },
@@ -316,6 +316,10 @@
         "label": "Link URL"
       }
     ]
+  },
+  {
+    "id": "bento-new",
+    "fields": []
   },
   {
     "id": "breadcrumb-item",
