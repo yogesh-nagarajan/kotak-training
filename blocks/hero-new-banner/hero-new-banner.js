@@ -97,6 +97,101 @@ function formatPicture(element, className, altText) {
 }
 
 /**
+ * Extracts benefits from a compact benefits container row.
+ * @param {Element} row
+ * @returns {Array<Object>}
+ */
+function extractCompactBenefits(row) {
+  if (!row) return [];
+  const benefits = [];
+  const cell = row.firstElementChild || row;
+
+  // 1. Check list items
+  const listItems = [...cell.querySelectorAll('li')];
+  if (listItems.length > 0) {
+    listItems.forEach((li) => {
+      const icon = li.querySelector('picture, img, svg, .icon');
+      const clone = li.cloneNode(true);
+      const cloneIcon = clone.querySelector('picture, img, svg, .icon');
+      if (cloneIcon) cloneIcon.remove();
+      const text = clone.textContent.trim() || li.textContent.trim();
+      if (text) {
+        benefits.push({
+          icon, text, sourceEl: li, iconSourceEl: icon,
+        });
+      }
+    });
+    return benefits;
+  }
+
+  // 2. Check paragraphs (handles alternating icon <p> + text <p>, or inline icon + text <p>)
+  const paras = [...cell.querySelectorAll('p')];
+  if (paras.length > 0) {
+    let pendingIcon = null;
+    let pendingIconEl = null;
+
+    paras.forEach((p) => {
+      const pic = p.querySelector('picture, img, svg, .icon');
+      const clone = p.cloneNode(true);
+      const clonePic = clone.querySelector('picture, img, svg, .icon');
+      if (clonePic) clonePic.remove();
+      const text = clone.textContent.trim();
+
+      if (pic && !text) {
+        // Pure icon paragraph
+        pendingIcon = pic;
+        pendingIconEl = p;
+      } else if (pic && text) {
+        // Both icon and text in one paragraph
+        benefits.push({
+          icon: pic, text, sourceEl: p, iconSourceEl: pic,
+        });
+        pendingIcon = null;
+        pendingIconEl = null;
+      } else if (text) {
+        // Text paragraph (with pending icon if available)
+        benefits.push({
+          icon: pendingIcon, text, sourceEl: p, iconSourceEl: pendingIconEl,
+        });
+        pendingIcon = null;
+        pendingIconEl = null;
+      }
+    });
+
+    if (benefits.length > 0) return benefits;
+  }
+
+  // 3. Check child div cells
+  const childDivs = [...cell.children].filter((c) => c.tagName === 'DIV');
+  if (childDivs.length > 0) {
+    childDivs.forEach((div) => {
+      const pic = div.querySelector('picture, img, svg, .icon');
+      const clone = div.cloneNode(true);
+      const clonePic = clone.querySelector('picture, img, svg, .icon');
+      if (clonePic) clonePic.remove();
+      const text = clone.textContent.trim() || div.textContent.trim();
+      if (text) {
+        benefits.push({
+          icon: pic, text, sourceEl: div, iconSourceEl: pic,
+        });
+      }
+    });
+    if (benefits.length > 0) return benefits;
+  }
+
+  // 4. Fallback: single cell text
+  const text = cell.textContent.trim();
+  if (text) {
+    const icon = cell.querySelector('picture, img, svg, .icon');
+    benefits.push({
+      icon, text, sourceEl: cell, iconSourceEl: icon,
+    });
+  }
+
+  return benefits;
+}
+
+/**
  * Loads and decorates the hero-new-banner block.
  * Universal Editor Model order (14 fields):
  * 0: bg_image
@@ -113,6 +208,8 @@ function formatPicture(element, className, altText) {
  * 11: benefit_2
  * 12: benefit_3Icon
  * 13: benefit_3
+ *
+ * Also supports compact authoring models (4 rows or 5 rows).
  *
  * @param {Element} block The hero-new-banner block element
  */
@@ -134,6 +231,7 @@ export default function decorate(block) {
   let benefit2Row = null;
   let benefit3IconRow = null;
   let benefit3Row = null;
+  let compactBenefitsRow = null;
 
   if (rows.length >= 14) {
     [
@@ -169,23 +267,9 @@ export default function decorate(block) {
       benefit3Row,
     ] = rows;
   } else if (rows.length === 5) {
-    [bgImageRow, titleRow, textRow, ctaLinkRow] = rows;
-    const compactBenefits = rows[4];
-    if (compactBenefits) {
-      const benefitParas = [...compactBenefits.querySelectorAll('p, li')];
-      const benefitCells = [...compactBenefits.children];
-      const items = benefitParas.length > 0 ? benefitParas : benefitCells;
-      [benefit1Row, benefit2Row, benefit3Row] = items;
-    }
+    [bgImageRow, titleRow, textRow, ctaLinkRow, compactBenefitsRow] = rows;
   } else if (rows.length === 4) {
-    [bgImageRow, titleRow, ctaLinkRow] = rows;
-    const compactBenefits = rows[3];
-    if (compactBenefits) {
-      const benefitParas = [...compactBenefits.querySelectorAll('p, li')];
-      const benefitCells = [...compactBenefits.children];
-      const items = benefitParas.length > 0 ? benefitParas : benefitCells;
-      [benefit1Row, benefit2Row, benefit3Row] = items;
-    }
+    [bgImageRow, titleRow, ctaLinkRow, compactBenefitsRow] = rows;
   } else {
     [bgImageRow, titleRow, ctaLinkRow] = rows;
   }
@@ -213,6 +297,7 @@ export default function decorate(block) {
   }
 
   if (desktopPicture || mobilePicture) {
+    hero.classList.add('has-image');
     hero.append(imageWrapper);
   }
 
@@ -225,46 +310,80 @@ export default function decorate(block) {
   const content = document.createElement('div');
   content.className = 'hero-new-banner-content';
 
-  // Process Title exclusively
+  // Process Title & Description
+  let titleEl = null;
+  let descEls = [];
+
   if (titleRow) {
     const titleCell = titleRow.firstElementChild || titleRow;
-    const titleHtml = (titleCell.innerHTML || '').trim();
-    const titleText = titleCell.textContent.trim();
+    const headings = [...titleCell.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+    const paras = [...titleCell.querySelectorAll('p')];
 
-    if (titleText) {
-      const title = document.createElement('div');
-      title.className = 'hero-new-banner-title';
-      if (/<br\s*\/?>/i.test(titleHtml)) {
-        title.innerHTML = titleHtml;
-      } else {
-        title.textContent = titleText;
+    if (headings.length > 0) {
+      // Explicit heading tag present (e.g. <h2><strong>...</strong></h2>)
+      titleEl = document.createElement('div');
+      titleEl.className = 'hero-new-banner-title';
+      titleEl.innerHTML = headings[0].innerHTML;
+      moveInstrumentation(headings[0], titleEl);
+
+      // If no separate textRow was supplied, use remaining paragraphs in cell as description
+      if (!textRow && paras.length > 0) {
+        descEls = paras.map((p) => p.cloneNode(true));
       }
-      moveInstrumentation(titleCell, title);
-      content.append(title);
+    } else if (!textRow && paras.length > 1) {
+      // First paragraph is title, rest are description
+      titleEl = document.createElement('div');
+      titleEl.className = 'hero-new-banner-title';
+      titleEl.innerHTML = paras[0].innerHTML;
+      moveInstrumentation(paras[0], titleEl);
+      descEls = paras.slice(1).map((p) => p.cloneNode(true));
+    } else {
+      // Standard text/html title
+      const titleHtml = (titleCell.innerHTML || '').trim();
+      const titleText = titleCell.textContent.trim();
+      if (titleText) {
+        titleEl = document.createElement('div');
+        titleEl.className = 'hero-new-banner-title';
+        if (/<br\s*\/?>/i.test(titleHtml) && !/<p\b/i.test(titleHtml)) {
+          titleEl.innerHTML = titleHtml;
+        } else if (paras.length === 1) {
+          titleEl.innerHTML = paras[0].innerHTML;
+        } else {
+          titleEl.textContent = titleText;
+        }
+        moveInstrumentation(titleCell, titleEl);
+      }
     }
   }
 
-  // Process Text / Description exclusively
+  // If textRow was explicitly supplied, override description
   if (textRow) {
     const textCell = textRow.firstElementChild || textRow;
-    const descText = textCell.textContent.trim();
-    if (descText) {
-      const desc = document.createElement('div');
-      desc.className = 'hero-new-banner-description';
-
-      const paragraphs = textCell.querySelectorAll('p');
-      if (paragraphs.length > 0) {
-        paragraphs.forEach((p) => {
-          desc.append(p.cloneNode(true));
-        });
-      } else {
+    const textParas = [...textCell.querySelectorAll('p')];
+    if (textParas.length > 0) {
+      descEls = textParas.map((p) => p.cloneNode(true));
+    } else {
+      const descText = textCell.textContent.trim();
+      if (descText) {
         const p = document.createElement('p');
         p.textContent = descText;
-        desc.append(p);
+        descEls = [p];
       }
-      moveInstrumentation(textCell, desc);
-      content.append(desc);
     }
+  }
+
+  if (titleEl) {
+    content.append(titleEl);
+  }
+
+  if (descEls.length > 0) {
+    const desc = document.createElement('div');
+    desc.className = 'hero-new-banner-description';
+    descEls.forEach((p) => desc.append(p));
+    if (textRow) {
+      moveInstrumentation(textRow.firstElementChild || textRow, desc);
+    }
+    content.append(desc);
   }
 
   // Process CTA
@@ -295,12 +414,6 @@ export default function decorate(block) {
   hero.append(content);
 
   // 5. Benefits Section
-  const benefitPairs = [
-    { iconRow: benefit1IconRow, textRow: benefit1Row },
-    { iconRow: benefit2IconRow, textRow: benefit2Row },
-    { iconRow: benefit3IconRow, textRow: benefit3Row },
-  ];
-
   const defaultSvgIcon = `
     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
@@ -308,23 +421,20 @@ export default function decorate(block) {
     </svg>
   `;
 
-  let benefitsContainer = null;
-  const hasBenefits = benefitPairs.some((p) => getRowValue(p.textRow));
+  let parsedBenefits = [];
 
-  if (hasBenefits) {
-    benefitsContainer = document.createElement('div');
-    benefitsContainer.className = 'hero-new-banner-benefits';
+  if (compactBenefitsRow) {
+    parsedBenefits = extractCompactBenefits(compactBenefitsRow);
+  } else if (rows.length >= 13) {
+    const benefitPairs = [
+      { iconRow: benefit1IconRow, textRow: benefit1Row },
+      { iconRow: benefit2IconRow, textRow: benefit2Row },
+      { iconRow: benefit3IconRow, textRow: benefit3Row },
+    ];
 
     benefitPairs.forEach(({ iconRow, textRow: bTextRow }) => {
       const text = getRowValue(bTextRow);
       if (!text) return;
-
-      const benefitItem = document.createElement('div');
-      benefitItem.className = 'hero-new-banner-benefit';
-
-      const iconSpan = document.createElement('span');
-      iconSpan.className = 'hero-new-banner-benefit-icon';
-      iconSpan.setAttribute('aria-hidden', 'true');
 
       let authoredIcon = null;
       if (iconRow) {
@@ -340,9 +450,35 @@ export default function decorate(block) {
         }
       }
 
-      if (authoredIcon) {
-        const clonedIcon = authoredIcon.cloneNode(true);
-        moveInstrumentation(authoredIcon, clonedIcon);
+      parsedBenefits.push({
+        icon: authoredIcon,
+        text,
+        sourceEl: bTextRow,
+        iconSourceEl: iconRow,
+      });
+    });
+  }
+
+  let benefitsContainer = null;
+  if (parsedBenefits.length > 0) {
+    benefitsContainer = document.createElement('div');
+    benefitsContainer.className = 'hero-new-banner-benefits';
+
+    parsedBenefits.forEach(({
+      icon, text, sourceEl, iconSourceEl,
+    }) => {
+      const benefitItem = document.createElement('div');
+      benefitItem.className = 'hero-new-banner-benefit';
+
+      const iconSpan = document.createElement('span');
+      iconSpan.className = 'hero-new-banner-benefit-icon';
+      iconSpan.setAttribute('aria-hidden', 'true');
+
+      if (icon) {
+        const clonedIcon = icon.cloneNode(true);
+        if (iconSourceEl) {
+          moveInstrumentation(iconSourceEl, clonedIcon);
+        }
         iconSpan.append(clonedIcon);
       } else {
         iconSpan.innerHTML = defaultSvgIcon;
@@ -352,8 +488,8 @@ export default function decorate(block) {
       textSpan.className = 'hero-new-banner-benefit-text';
       textSpan.textContent = text;
 
-      if (bTextRow) {
-        moveInstrumentation(bTextRow, textSpan);
+      if (sourceEl) {
+        moveInstrumentation(sourceEl, textSpan);
       }
 
       benefitItem.append(iconSpan, textSpan);

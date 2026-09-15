@@ -7,11 +7,11 @@
   max-width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 0 12px;
+  padding: 0 8px;
 }
 
 /* =========================================================
-   HERO CARD (NO IMAGE: WHITE BG, CONTENT-SIZED HEIGHT)
+   HERO CARD (RECTANGULAR ASPECT RATIO)
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-hero {
@@ -28,10 +28,11 @@
   padding: 24px 16px;
 }
 
-/* When background image is present: expand to full banner height */
+/* When background image is present: rectangular landscape banner */
 
-.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) {
-  min-height: 400px;
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image),
+.hero-new-banner .hero-new-banner-hero.has-image {
+  min-height: 380px;
   padding: 0;
   background-color: #1a1a1a;
 }
@@ -65,7 +66,8 @@
   display: block;
 }
 
-.hero-new-banner .hero-new-banner-image:has(.hero-new-banner-image-mobile) .hero-new-banner-image-desktop {
+.hero-new-banner .hero-new-banner-image:has(.hero-new-banner-image-mobile) .hero-new-banner-image-desktop,
+.hero-new-banner .hero-new-banner-image.has-mobile .hero-new-banner-image-desktop {
   display: none;
 }
 
@@ -77,7 +79,8 @@
   display: none;
 }
 
-.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-overlay {
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-overlay,
+.hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -85,8 +88,8 @@
   background:
     linear-gradient(180deg,
       rgb(0 0 0 / 0%) 0%,
-      rgb(0 0 0 / 18%) 40%,
-      rgb(0 0 0 / 65%) 100%);
+      rgb(0 0 0 / 12%) 35%,
+      rgb(0 0 0 / 62%) 100%);
   pointer-events: none;
 }
 
@@ -98,7 +101,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 620px;
+  max-width: 640px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,57 +114,66 @@
 
 /* Position at bottom when background image is present */
 
-.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content {
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content,
+.hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-content {
   position: absolute;
   left: 50%;
-  bottom: 26px;
+  bottom: 22px;
   transform: translateX(-50%);
-  width: calc(100% - 32px);
+  width: calc(100% - 24px);
   justify-content: flex-end;
-  padding: 0 16px;
+  padding: 0 12px;
   color: #fff;
 }
 
 /* =========================================================
-   TITLE
+   TITLE (REDUCED SIZE & SOFTENED BOLDNESS)
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-title {
   max-width: 600px;
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   color: #111827;
-  font-size: clamp(24px, 4.5vw, 40px);
-  font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: -0.02em;
+  font-size: clamp(20px, 4.5vw, 32px);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
   text-shadow: none;
 }
 
-.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-title {
+.hero-new-banner .hero-new-banner-title strong,
+.hero-new-banner .hero-new-banner-title b {
+  font-weight: 600;
+}
+
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-title,
+.hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-title {
   color: #fff;
-  font-size: clamp(26px, 4vw, 42px);
-  line-height: 1.15;
-  text-shadow: 0 1px 4px rgb(0 0 0 / 35%);
+  font-size: clamp(22px, 3.2vw, 36px);
+  font-weight: 400;
+  line-height: 1.18;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 22%);
 }
 
 /* =========================================================
-   DESCRIPTION
+   DESCRIPTION (WRAPS TO 2 LINES AT "MOST ON")
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-description {
-  max-width: 480px;
-  margin: 0 0 18px;
+  max-width: 412px;
+  margin: 0 auto 18px;
   color: #4b5563;
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.45;
   text-shadow: none;
 }
 
-.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-description {
-  color: rgb(255 255 255 / 92%);
-  margin-bottom: 20px;
-  text-shadow: 0 1px 3px rgb(0 0 0 / 40%);
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-description,
+.hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-description {
+  color: rgb(255 255 255 / 94%);
+  margin: 0 auto 20px;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
 }
 
 .hero-new-banner .hero-new-banner-description p {
@@ -169,32 +181,35 @@
 }
 
 .hero-new-banner .hero-new-banner-description p+p {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 /* =========================================================
-   CTA BUTTON
+   CTA BUTTON (LOWER HEIGHT, WIDER PILL, CENTERED TEXT)
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-cta-wrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
   margin: 0;
 }
 
 .hero-new-banner .hero-new-banner-cta {
-  min-width: 150px;
-  min-height: 42px;
+  min-width: 195px;
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   box-sizing: border-box;
-  padding: 11px 28px;
+  padding: 10px 46px;
   border-radius: 999px;
   background: #111827;
   color: #fff;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1;
   text-decoration: none;
   box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
@@ -207,7 +222,7 @@
 .hero-new-banner .hero-new-banner-cta:hover {
   background: #000;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 16%);
 }
 
 .hero-new-banner .hero-new-banner-cta:focus-visible {
@@ -215,86 +230,94 @@
   outline-offset: 3px;
 }
 
-.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta {
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta,
+.hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-cta {
   background: #fff;
   color: #111;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+  font-weight: 500;
 }
 
-.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta:hover {
-  background: #f4f4f4;
-  box-shadow: 0 5px 16px rgb(0 0 0 / 22%);
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta:hover,
+.hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-cta:hover {
+  background: #f8f8f8;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
 }
 
-.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta:focus-visible {
+.hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-cta:focus-visible,
+.hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-cta:focus-visible {
   outline: 3px solid #fff;
   outline-offset: 3px;
 }
 
 /* =========================================================
-   BENEFITS SECTION (BELOW HERO - ADAPTIVE TO FULL BANNER)
+   BENEFITS SECTION (LOWER HEIGHT & CENTERED WITH SIDE SPACE)
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-benefits {
   width: 100%;
-  max-width: 520px;
-  display: grid;
-  grid-template-columns: 1fr;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   box-sizing: border-box;
-  margin: 12px auto 0;
+  margin: 10px auto 0;
   padding: 0;
 }
 
 /* =========================================================
-   BENEFIT ITEM (CAPSULE - LEFT ALIGNED ICON, RIGHT EMPTY SPACE)
+   BENEFIT ITEM (LOW-PROFILE COMPACT PILL)
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-benefit {
-  min-height: 44px;
-  display: flex;
+  min-height: 36px;
+  flex: 1 1 0;
+  display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 8px;
   box-sizing: border-box;
-  padding: 6px 18px 6px 8px;
+  padding: 4px 16px 4px 6px;
   border-radius: 999px;
   background: #f2f3f5;
   color: #1f2937;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 1.3;
   text-align: left;
 }
 
 /* =========================================================
-   BENEFIT ICON (SLIGHTLY DARKER CIRCLE BACKGROUND)
+   BENEFIT ICON (COMPACT CIRCULAR BADGE)
    ========================================================= */
 
 .hero-new-banner .hero-new-banner-benefit-icon {
-  flex: 0 0 26px;
-  width: 26px;
-  height: 26px;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  background: #e2e4e8;
+  background: #e2e5ea;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  color: #374151;
+  color: #1f2937;
   line-height: 1;
+  overflow: hidden;
 }
 
 .hero-new-banner .hero-new-banner-benefit-icon svg {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
+  stroke: currentcolor;
+  stroke-width: 1.8;
   display: block;
 }
 
 .hero-new-banner .hero-new-banner-benefit-icon img,
 .hero-new-banner .hero-new-banner-benefit-icon picture {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   object-fit: contain;
   display: block;
 }
@@ -306,7 +329,7 @@
 .hero-new-banner .hero-new-banner-benefit-text {
   min-width: 0;
   color: #1f2937;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
   white-space: normal;
 }
@@ -315,38 +338,43 @@
    TABLET (WIDTH >= 600PX)
    ========================================================= */
 
-@media (width >=600px) {
+@media (width >= 600px) {
   .hero-new-banner {
-    padding: 0 16px;
+    padding: 0 12px;
   }
 
   .hero-new-banner .hero-new-banner-hero {
     border-radius: 24px;
-    padding: 28px 24px;
+    padding: 24px 20px;
   }
 
-  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) {
-    min-height: 460px;
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image),
+  .hero-new-banner .hero-new-banner-hero.has-image {
+    min-height: 430px;
     padding: 0;
   }
 
-  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content {
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content,
+  .hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-content {
     width: min(600px, calc(100% - 48px));
-    bottom: 30px;
-    padding: 0 24px;
+    bottom: 26px;
+    padding: 0 20px;
   }
 
   .hero-new-banner .hero-new-banner-benefits {
-    max-width: 960px;
-    width: 92%;
-    margin: 14px auto 0;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 90%;
+    width: 90%;
+    gap: 12px;
+    margin: 12px auto 0;
     padding: 0;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
   }
 
   .hero-new-banner .hero-new-banner-benefit {
-    padding: 6px 18px 6px 8px;
+    flex: 1 1 0;
+    min-height: 38px;
+    padding: 5px 16px 5px 7px;
   }
 }
 
@@ -354,18 +382,19 @@
    DESKTOP (WIDTH >= 900PX)
    ========================================================= */
 
-@media (width >=900px) {
+@media (width >= 900px) {
   .hero-new-banner {
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   .hero-new-banner .hero-new-banner-hero {
     border-radius: 28px;
-    padding: 32px 24px;
+    padding: 28px 24px;
   }
 
-  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) {
-    min-height: 500px;
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image),
+  .hero-new-banner .hero-new-banner-hero.has-image {
+    min-height: 490px;
     padding: 0;
   }
 
@@ -377,34 +406,105 @@
     display: none;
   }
 
-  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content {
-    bottom: 34px;
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content,
+  .hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-content {
+    bottom: 32px;
+    max-width: 600px;
+    width: auto;
   }
 
   .hero-new-banner .hero-new-banner-title {
-    font-size: 40px;
+    font-size: 34px;
   }
 
   .hero-new-banner .hero-new-banner-description {
-    font-size: 15px;
+    font-size: 14.5px;
+    max-width: 412px;
+    margin: 0 auto 20px;
+  }
+
+  .hero-new-banner .hero-new-banner-cta {
+    min-width: 200px;
+    min-height: 42px;
+    padding: 11px 48px;
+    font-size: 14.5px;
   }
 
   .hero-new-banner .hero-new-banner-benefits {
-    max-width: 1100px;
-    width: 88%;
-    margin: 18px auto 0;
-    padding: 0;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    flex-direction: row;
+    justify-content: center;
+    max-width: 86%;
+    width: 86%;
     gap: 14px;
+    margin: 14px auto 0;
+    padding: 0;
   }
 
   .hero-new-banner .hero-new-banner-benefit {
-    padding: 6px 20px 6px 8px;
+    flex: 1 1 0;
+    min-height: 38px;
+    padding: 5px 18px 5px 8px;
+    font-size: 13px;
   }
 
   .hero-new-banner .hero-new-banner-benefit-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+/* =========================================================
+   WIDE DESKTOP (WIDTH >= 1200PX)
+   ========================================================= */
+
+@media (width >= 1200px) {
+  .hero-new-banner {
+    padding: 0 16px;
+  }
+
+  .hero-new-banner .hero-new-banner-hero {
+    border-radius: 32px;
+  }
+
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image),
+  .hero-new-banner .hero-new-banner-hero.has-image {
+    min-height: 520px;
+  }
+
+  .hero-new-banner .hero-new-banner-hero:has(.hero-new-banner-image) .hero-new-banner-content,
+  .hero-new-banner .hero-new-banner-hero.has-image .hero-new-banner-content {
+    bottom: 34px;
+    max-width: 620px;
+  }
+
+  .hero-new-banner .hero-new-banner-title {
+    font-size: 38px;
+  }
+
+  .hero-new-banner .hero-new-banner-description {
+    font-size: 15px;
+    max-width: 412px;
+    margin: 0 auto 22px;
+  }
+
+  .hero-new-banner .hero-new-banner-cta {
+    min-width: 210px;
+    min-height: 42px;
+    padding: 11px 52px;
+    font-size: 14.5px;
+  }
+
+  .hero-new-banner .hero-new-banner-benefits {
+    max-width: 82%;
+    width: 82%;
+    gap: 16px;
+    margin: 14px auto 0;
+  }
+
+  .hero-new-banner .hero-new-banner-benefit {
+    min-height: 40px;
+    padding: 6px 20px 6px 8px;
+    font-size: 13.5px;
   }
 }
