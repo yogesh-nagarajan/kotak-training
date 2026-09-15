@@ -129,6 +129,21 @@
           }
         },
         {
+          "title": "Bento New",
+          "id": "bento-new",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Bento New",
+                  "model": "bento-new"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Breadcrumb",
           "id": "breadcrumb",
           "plugins": {
